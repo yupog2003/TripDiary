@@ -1,0 +1,15 @@
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/classes/release
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-e4dc48d441ef100f9ed7ce7d6aefed6861aa5744.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/slf4j-api-1.7.6-08d19557b0963cb5f7ea5d25492e5608a1d98cf7.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpmime-4.3.1-7cbe7540630db074858b0e433ab449a6653c696e.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/achartengine-1.0.0-26ba6f07b3ee513ed3b5678f6497e0a73e03fc0e.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpclient-cache-4.3.1-456bb1a392f9f03dc4993221da21a6375bc744f4.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/commons-io-2.4-877f7810d7504b9b7553e51f369a960fc146f760.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/libthrift-0.9.1-0fbb52ffe256dbfcb85adf4f663d516005a850ec.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpcore-4.3-d905ba6a4a4de3bcdeb0fbedd7e8912b05a61b21.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/universal-image-loader-1.8.6-with-sources-4e4bba39865ba27977a39617df90be510227abff.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpclient-4.3.1-b0279fc0845f78dd696ca5c7785d8bee6c7fbb11.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-b82bd1d2b307e245be6fff4a87019c6c0ca5ddb3.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/libGoogleAnalyticsServices-a5fc8dd082759d392a2097ce37894d832e978641.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/android-support-v13-7eed1cac9e4e2347885db0fe7eb1a20e2890af1d.jar
+/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-2d874cad09a44274defdfd28ae5c8d6d7eb2a008.jar
