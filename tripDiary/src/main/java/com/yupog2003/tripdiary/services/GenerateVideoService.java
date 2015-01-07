@@ -75,7 +75,7 @@ public class GenerateVideoService extends IntentService {
         nm.notify(1, nb.build());
         tempDir = new File(getCacheDir(), "VideoCache");
         FileHelper.deletedir(tempDir.getPath());
-        tempDir.mkdir();
+        tempDir.mkdirs();
         ffmpegFile = new File(getFilesDir().getParent(), "ffmpeg");
         if (!ffmpegFile.exists()) {
             copyFFmpeg();
@@ -96,8 +96,9 @@ public class GenerateVideoService extends IntentService {
         if (trackVideoNames.length - poiVideoNames.length != 1) {
             return null;
         }
-        String rootPath = PreferenceManager.getDefaultSharedPreferences(this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary");
-        String resultVideoPath = rootPath + "/" + tripName + ".mp4";
+        File moviesDir=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+        moviesDir.mkdirs();
+        String resultVideoPath = moviesDir.getPath()+"/"+tripName+".mp4";
         File tempFile = new File(tempDir, "temp.mpg");
         for (int i = 0; i < poiVideoNames.length; i++) {
             concatFiles(new File(tempDir, trackVideoNames[i]), tempFile);
@@ -109,8 +110,7 @@ public class GenerateVideoService extends IntentService {
         new File(tempDir, trackVideoNames[trackVideoNames.length - 1]).delete();
         new File(resultVideoPath).delete();
         runCommand(new String[]{"ffmpeg", "-i", "temp.mpg", "-strict", "-2", "-c", "copy", resultVideoPath}, null, null);
-        //runCommand("ffmpeg -i temp.mpg -strict -2 -c copy " + resultVideoPath);
-        new File(tempDir, "temp.mpg").delete();
+        tempFile.delete();
         return resultVideoPath;
     }
 
