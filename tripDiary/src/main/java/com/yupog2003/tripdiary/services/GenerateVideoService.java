@@ -163,7 +163,7 @@ public class GenerateVideoService extends IntentService {
         }
         bitmap.recycle();
         String cmdDescription = poi.title + "-" + getString(R.string.diary);
-        runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", videoName}, cmdDescription, secondsPerDiary);
+        runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", videoName}, cmdDescription, (num_bitmaps + 2) * secondsPerDiary);
         num_processed_materials++;
     }
 
@@ -207,7 +207,7 @@ public class GenerateVideoService extends IntentService {
                 }
             }
             String cmdDescription = poi.title + "-" + getString(R.string.photo);
-            runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, secondsPerPicture * poi.picFiles.length);
+            runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, secondsPerPicture * (poi.picFiles.length + 2));
             concatFiles(new File(tempDir, "temp.mpg"), new File(tempDir, videoName));
             new File(tempDir, "input.txt").delete();
             new File(tempDir, "temp.mpg").delete();
@@ -298,7 +298,6 @@ public class GenerateVideoService extends IntentService {
                 }
                 bufferedWriter.flush();
                 bufferedWriter.close();
-                gmapBitmap.recycle();
                 String trackVideoName = "track_" + String.valueOf(i) + ".mpg";
                 trackVideoNames[i] = trackVideoName;
                 runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", trackVideoName}, trackVideoName, secondsPerTrack);
@@ -308,6 +307,7 @@ public class GenerateVideoService extends IntentService {
                 }
                 num_processed_materials++;
             }
+            gmapBitmap.recycle();
         } catch (IOException e) {
             e.printStackTrace();
         }
