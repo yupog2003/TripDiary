@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
@@ -54,6 +55,7 @@ public class GenerateVideoService extends IntentService {
     public static final int secondsPerPicture = 2;
     public static final int videoWidth = 1920;
     public static final int videoHeight = 1080;
+    public static final int textSize = 66; //in px
 
     public static final String tag_gmapBitmap = "gmapBitmap";
     public static final String tag_points = "points";
@@ -96,9 +98,9 @@ public class GenerateVideoService extends IntentService {
         if (trackVideoNames.length - poiVideoNames.length != 1) {
             return null;
         }
-        File moviesDir=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+        File moviesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
         moviesDir.mkdirs();
-        String resultVideoPath = moviesDir.getPath()+"/"+tripName+".mp4";
+        String resultVideoPath = moviesDir.getPath() + "/" + tripName + ".mp4";
         File tempFile = new File(tempDir, "temp.mpg");
         for (int i = 0; i < poiVideoNames.length; i++) {
             concatFiles(new File(tempDir, trackVideoNames[i]), tempFile);
@@ -130,36 +132,39 @@ public class GenerateVideoService extends IntentService {
 
     private void generateDiaryVideo(String videoName, POI poi) {
         String text = poi.title + "\n" + poi.diary;
-        Bitmap bitmap = Bitmap.createBitmap(videoWidth, videoHeight, Bitmap.Config.RGB_565);
-        bitmap.eraseColor(Color.BLACK);
-        Canvas canvas = new Canvas(bitmap);
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(Color.WHITE);
-        textPaint.setTextSize((int) (Math.pow((videoWidth - 40) * (videoHeight - 40) / text.length(), 0.5) * 0.8));
-        StaticLayout staticLayout = new StaticLayout(text, textPaint, canvas.getWidth(), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-        canvas.save();
-        canvas.translate(20, 20);
+        textPaint.setTextSize(textSize);
+        StaticLayout staticLayout = new StaticLayout(text, textPaint, videoWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        int num_bitmaps = staticLayout.getHeight() / videoHeight + 1;
+        Bitmap bitmap = Bitmap.createBitmap(staticLayout.getWidth(), num_bitmaps * videoHeight, Bitmap.Config.RGB_565);
+        bitmap.eraseColor(Color.BLACK);
+        Canvas canvas = new Canvas(bitmap);
         staticLayout.draw(canvas);
-        canvas.restore();
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(tempDir, "diary_0.jpg"));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-            FileHelper.copyFile(new File(tempDir, "diary_0.jpg"), new File(tempDir, "diary_1.jpg"));
-            FileHelper.copyFile(new File(tempDir, "diary_0.jpg"), new File(tempDir, "diary_2.jpg"));
-            String cmdDescription = poi.title + "-" + getString(R.string.diary);
-            runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", videoName}, cmdDescription, secondsPerDiary);
-            new File(tempDir, "diary_0.jpg").delete();
-            new File(tempDir, "diary_1.jpg").delete();
-            new File(tempDir, "diary_2.jpg").delete();
-            num_processed_materials++;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 0; i < num_bitmaps; i++) {
+            try {
+                Bitmap diaryBitmap = Bitmap.createBitmap(bitmap, 0, i * videoHeight, videoWidth, videoHeight);
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(tempDir, "diary_" + String.valueOf(i + 1) + ".jpg"));
+                diaryBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                fileOutputStream.flush();
+                fileOutputStream.close();
+                diaryBitmap.recycle();
+                if (i == 0) {//for compensate ffmpeg bug - first frame may be skipped
+                    FileHelper.copyFile(new File(tempDir, "diary_1.jpg"), new File(tempDir, "diary_0.jpg"));
+                }
+                if (i == num_bitmaps - 1) { //for compensate ffmpeg bug - last frame may be skipped
+                    FileHelper.copyFile(new File(tempDir, "diary_" + String.valueOf(i + 1) + ".jpg"), new File(tempDir, "diary_" + String.valueOf(i + 2) + ".jpg"));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
+        bitmap.recycle();
+        String cmdDescription = poi.title + "-" + getString(R.string.diary);
+        runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", videoName}, cmdDescription, secondsPerDiary);
+        num_processed_materials++;
     }
 
     private void generatePicVideo(String videoName, POI poi) {
@@ -204,6 +209,7 @@ public class GenerateVideoService extends IntentService {
             String cmdDescription = poi.title + "-" + getString(R.string.photo);
             runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, secondsPerPicture * poi.picFiles.length);
             concatFiles(new File(tempDir, "temp.mpg"), new File(tempDir, videoName));
+            new File(tempDir, "input.txt").delete();
             new File(tempDir, "temp.mpg").delete();
             for (int i = 0; i < poi.picFiles.length + 2; i++) {
                 new File(tempDir, "image_" + String.valueOf(i) + ".jpg").delete();
@@ -292,6 +298,7 @@ public class GenerateVideoService extends IntentService {
                 }
                 bufferedWriter.flush();
                 bufferedWriter.close();
+                gmapBitmap.recycle();
                 String trackVideoName = "track_" + String.valueOf(i) + ".mpg";
                 trackVideoNames[i] = trackVideoName;
                 runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", trackVideoName}, trackVideoName, secondsPerTrack);
@@ -336,7 +343,8 @@ public class GenerateVideoService extends IntentService {
                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                         String s;
                         while ((s = bufferedReader.readLine()) != null) {
-                            Log.i("trip", s);
+                            if (!s.contains("buffer underflow") && !s.contains("packet too large"))
+                                Log.i("trip", s);
                             if (predicetedTimeLength != null) {
                                 String[] toks = s.split(" ");
                                 for (int i = 0; i < toks.length; i++) {

@@ -32,6 +32,12 @@ public class DeviceHelper {
         return dp * c.getResources().getDisplayMetrics().density;
     }
 
+    public static float pxFromSp(Context c, float sp) {
+        if (c == null)
+            return 0;
+        return sp * c.getResources().getDisplayMetrics().scaledDensity;
+    }
+
     public static boolean isMobileNetworkAvailable(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
