@@ -149,13 +149,6 @@ public class GenerateVideoService extends IntentService {
             FileHelper.copyFile(new File(tempDir, "diary_0.jpg"), new File(tempDir, "diary_1.jpg"));
             FileHelper.copyFile(new File(tempDir, "diary_0.jpg"), new File(tempDir, "diary_2.jpg"));
             String cmdDescription = poi.title + "-" + getString(R.string.diary);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(tempDir, "input.txt")));
-            for (int i = 0; i < secondsPerDiary * fps; i++) {
-                bufferedWriter.write("file 'diary_0.jpg'\n");
-            }
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            //runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", videoName}, cmdDescription, secondsPerDiary);
             runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", videoName}, cmdDescription, secondsPerDiary);
             new File(tempDir, "diary_0.jpg").delete();
             new File(tempDir, "diary_1.jpg").delete();
@@ -194,14 +187,14 @@ public class GenerateVideoService extends IntentService {
                 finalBitmap.eraseColor(Color.BLACK);
                 Canvas canvas = new Canvas(finalBitmap);
                 canvas.drawBitmap(bitmap, sourceRect, destRect, null);
-                String fileName = "image_" + String.valueOf(i+1) + ".jpg";
+                String fileName = "image_" + String.valueOf(i + 1) + ".jpg";
                 FileOutputStream fileOutputStream = new FileOutputStream(new File(tempDir, fileName));
                 finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
                 fileOutputStream.flush();
                 fileOutputStream.close();
                 bitmap.recycle();
                 finalBitmap.recycle();
-                if (i==0){//for compensate ffmpeg bug - first frame may be skipped
+                if (i == 0) {//for compensate ffmpeg bug - first frame may be skipped
                     FileHelper.copyFile(new File(tempDir, fileName), new File(tempDir, "image_" + String.valueOf(0) + ".jpg"));
                 }
                 if (i == poi.picFiles.length - 1) { //for compensate ffmpeg bug - last frame may be skipped
@@ -212,7 +205,7 @@ public class GenerateVideoService extends IntentService {
             runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, secondsPerPicture * poi.picFiles.length);
             concatFiles(new File(tempDir, "temp.mpg"), new File(tempDir, videoName));
             new File(tempDir, "temp.mpg").delete();
-            for (int i = 0; i < poi.picFiles.length+2; i++) {
+            for (int i = 0; i < poi.picFiles.length + 2; i++) {
                 new File(tempDir, "image_" + String.valueOf(i) + ".jpg").delete();
             }
             num_processed_materials++;
@@ -260,7 +253,6 @@ public class GenerateVideoService extends IntentService {
                 int length = Integer.valueOf(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000;
                 String cmdDescription = poi.title + "-" + getString(R.string.video) + "-" + poi.audioFiles[i].getName();
                 runCommand(new String[]{"ffmpeg", "-i", poi.audioFiles[i].getAbsolutePath(), "temp.mpg"}, cmdDescription, length);
-                //runCommand("ffmpeg -i " + poi.audioFiles[i].getAbsolutePath() + " temp.mpg");
                 concatFiles(new File(tempDir, "temp.mpg"), new File(tempDir, videoName));
                 new File(tempDir, "temp.mpg").delete();
                 num_processed_materials++;
@@ -303,7 +295,6 @@ public class GenerateVideoService extends IntentService {
                 String trackVideoName = "track_" + String.valueOf(i) + ".mpg";
                 trackVideoNames[i] = trackVideoName;
                 runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", trackVideoName}, trackVideoName, secondsPerTrack);
-                //runCommand("ffmpeg -f concat -i input.txt " + trackVideoName);
                 new File(tempDir, "input.txt").delete();
                 for (int j = 0; j < fileNames.length; j++) {
                     new File(tempDir, fileNames[j]).delete();
@@ -399,6 +390,7 @@ public class GenerateVideoService extends IntentService {
             while ((len = fileInputStream.read(buffer)) > 0) {
                 fileOutputStream.write(buffer, 0, len);
             }
+            fileOutputStream.flush();
             fileInputStream.close();
             fileOutputStream.close();
             return true;
@@ -423,9 +415,9 @@ public class GenerateVideoService extends IntentService {
             fileOutputStream.close();
             inputStream.close();
             try {
-                ProcessBuilder processBuilder=new ProcessBuilder(new String[]{"chmod", "777", ffmpegFile.getPath()});
+                ProcessBuilder processBuilder = new ProcessBuilder(new String[]{"chmod", "777", ffmpegFile.getPath()});
                 processBuilder.redirectErrorStream(true);
-                Process process=processBuilder.start();
+                Process process = processBuilder.start();
                 process.waitFor();
             } catch (InterruptedException e) {
                 e.printStackTrace();
