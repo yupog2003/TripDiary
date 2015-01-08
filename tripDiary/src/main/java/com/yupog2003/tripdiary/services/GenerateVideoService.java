@@ -113,6 +113,7 @@ public class GenerateVideoService extends IntentService {
         new File(resultVideoPath).delete();
         runCommand(new String[]{"ffmpeg", "-i", "temp.mpg", "-strict", "-2", "-c", "copy", resultVideoPath}, null, null);
         tempFile.delete();
+        System.gc();
         return resultVideoPath;
     }
 
@@ -163,7 +164,12 @@ public class GenerateVideoService extends IntentService {
         }
         bitmap.recycle();
         String cmdDescription = poi.title + "-" + getString(R.string.diary);
-        runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", videoName}, cmdDescription, (num_bitmaps + 2) * secondsPerDiary);
+        runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, (num_bitmaps + 2) * secondsPerDiary);
+        runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mpg", "-shortest", "-c:v", "copy", videoName}, cmdDescription, null);
+        new File(tempDir, "temp.mpg").delete();
+        for (int i = 0; i < num_bitmaps + 2; i++) {
+            new File(tempDir, "diary_" + String.valueOf(i) + ".jpg").delete();
+        }
         num_processed_materials++;
     }
 
@@ -208,9 +214,10 @@ public class GenerateVideoService extends IntentService {
             }
             String cmdDescription = poi.title + "-" + getString(R.string.photo);
             runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, secondsPerPicture * (poi.picFiles.length + 2));
-            concatFiles(new File(tempDir, "temp.mpg"), new File(tempDir, videoName));
-            new File(tempDir, "input.txt").delete();
+            runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mpg", "-shortest", "-c:v", "copy", "temp2.mpg"}, cmdDescription, null);
+            concatFiles(new File(tempDir, "temp2.mpg"), new File(tempDir, videoName));
             new File(tempDir, "temp.mpg").delete();
+            new File(tempDir, "temp2.mpg").delete();
             for (int i = 0; i < poi.picFiles.length + 2; i++) {
                 new File(tempDir, "image_" + String.valueOf(i) + ".jpg").delete();
             }
@@ -252,22 +259,46 @@ public class GenerateVideoService extends IntentService {
 
     private void generateAudioVideo(String videoName, POI poi) {
         if (poi.audioFiles.length == 0) return;
-        MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
-        for (int i = 0; i < poi.audioFiles.length; i++) {
-            try {
+        try {
+            MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+            Bitmap musicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_music);
+            Bitmap posterBitmap = Bitmap.createBitmap(videoWidth, videoHeight, Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(posterBitmap);
+            int left = (posterBitmap.getWidth() - musicBitmap.getWidth()) / 2;
+            int top = (posterBitmap.getHeight() - musicBitmap.getHeight()) / 2;
+            canvas.drawBitmap(musicBitmap, left, top, null);
+            musicBitmap.recycle();
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(tempDir, "0.jpg"));
+            posterBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            FileHelper.copyFile(new File(tempDir, "0.jpg"), new File(tempDir, "1.jpg"));
+            FileHelper.copyFile(new File(tempDir, "0.jpg"), new File(tempDir, "2.jpg"));
+            for (int i = 0; i < poi.audioFiles.length; i++) {
                 metaRetriever.setDataSource(poi.audioFiles[i].getPath());
                 int length = Integer.valueOf(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000;
                 String cmdDescription = poi.title + "-" + getString(R.string.video) + "-" + poi.audioFiles[i].getName();
-                runCommand(new String[]{"ffmpeg", "-i", poi.audioFiles[i].getAbsolutePath(), "temp.mpg"}, cmdDescription, length);
-                concatFiles(new File(tempDir, "temp.mpg"), new File(tempDir, videoName));
+                runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(length), "-i", "%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, null);
+                runCommand(new String[]{"ffmpeg", "-i", "temp.mpg", "-i", poi.audioFiles[i].getAbsolutePath(), "-c", "copy", "-strict", "-2", "-shortest", "temp2.mpg"}, cmdDescription, length);
+                concatFiles(new File(tempDir, "temp2.mpg"), new File(tempDir, videoName));
                 new File(tempDir, "temp.mpg").delete();
+                new File(tempDir, "temp2.mpg").delete();
                 num_processed_materials++;
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
             }
+            new File(tempDir, "0.jpg").delete();
+            new File(tempDir, "1.jpg").delete();
+            new File(tempDir, "2.jpg").delete();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
 
     private String[] generateTrackVideos(Bitmap gmapBitmap, Point[] trackPoints) {
@@ -300,8 +331,10 @@ public class GenerateVideoService extends IntentService {
                 bufferedWriter.close();
                 String trackVideoName = "track_" + String.valueOf(i) + ".mpg";
                 trackVideoNames[i] = trackVideoName;
-                runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", trackVideoName}, trackVideoName, secondsPerTrack);
+                runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", "temp.mpg"}, trackVideoName, secondsPerTrack);
+                runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mpg", "-shortest", "-c:v", "copy", trackVideoName}, trackVideoName, null);
                 new File(tempDir, "input.txt").delete();
+                new File(tempDir, "temp.mpg").delete();
                 for (int j = 0; j < fileNames.length; j++) {
                     new File(tempDir, fileNames[j]).delete();
                 }
@@ -314,18 +347,15 @@ public class GenerateVideoService extends IntentService {
         return trackVideoNames;
     }
 
-    private boolean runCommand(String[] cmds, final String description, final Integer predicetedTimeLength) {
+    private boolean runCommand(String[] cmds, String description, final Integer predicetedTimeLength) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < cmds.length; i++) {
             sb.append(cmds[i]).append(" ");
         }
-        final String cmd = sb.toString();
+       String cmd = sb.toString();
         Log.i("trip", "cmd:" + cmd);
-        if (description != null) {
-            nb.setContentText(description);
-        } else {
-            nb.setContentText(cmd);
-        }
+        final String des=description==null?cmd:description;
+        nb.setContentText(des);
         nm.notify(1, nb.build());
         try {
             if (cmds[0].equals("ffmpeg")) {
@@ -354,11 +384,7 @@ public class GenerateVideoService extends IntentService {
                                         float timeLength = Integer.valueOf(timeToks[0]) * 60 * 60 + Integer.valueOf(timeToks[1]) * 60 + Float.valueOf(timeToks[2]);
                                         int progress = (int) (100 * (num_processed_materials + timeLength / predicetedTimeLength) / num_total_materials);
                                         nb.setProgress(100, progress, false);
-                                        if (description != null) {
-                                            nb.setContentText(description + " " + timeStr);
-                                        } else {
-                                            nb.setContentText(cmd + " " + timeStr);
-                                        }
+                                        nb.setContentText(des+" "+timeStr);
                                         nm.notify(1, nb.build());
                                         break;
                                     }
