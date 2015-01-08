@@ -48,7 +48,7 @@ public class AllPictureFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		int screenWidth = DeviceHelper.getScreenWidth(getActivity());
 		int screenHeight = DeviceHelper.getScreenHeight(getActivity());
 		if (screenWidth > screenHeight) {
@@ -68,7 +68,7 @@ public class AllPictureFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+
 		super.onResume();
 	}
 
@@ -94,13 +94,13 @@ public class AllPictureFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+
 		inflater.inflate(R.menu.fragment_all, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		switch (item.getItemId()) {
 		case R.id.expandall:
 			expandAll();
@@ -134,24 +134,24 @@ public class AllPictureFragment extends Fragment {
 		}
 
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			if (pictures == null)
 				return 0;
 			return pictures.length;
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return pictures[position];
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			if (convertView == null) {
 				ImageView imageView = new ImageView(getActivity());
 				imageView.setLayoutParams(new AbsListView.LayoutParams(width, width));
@@ -164,7 +164,7 @@ public class AllPictureFragment extends Fragment {
 		}
 
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-			// TODO Auto-generated method stub
+
 			Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.fromFile(pictures[position]), "image/*");
 			getActivity().startActivity(intent);
@@ -190,7 +190,7 @@ public class AllPictureFragment extends Fragment {
 
 		@Override
 		public void onGroupExpanded(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
 				expand[groupPosition] = true;
 			}
@@ -199,7 +199,7 @@ public class AllPictureFragment extends Fragment {
 
 		@Override
 		public void onGroupCollapsed(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
 				expand[groupPosition] = false;
 			}
@@ -207,39 +207,39 @@ public class AllPictureFragment extends Fragment {
 		}
 
 		public Object getChild(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return pictures[groupPosition];
 		}
 
 		public long getChildId(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition;
 		}
 
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			return (UnScrollableGridView) getChild(groupPosition, childPosition);
 		}
 
 		public int getChildrenCount(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return 1;
 		}
 
 		public Object getGroup(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return pois[groupPosition];
 		}
 
 		public int getGroupCount() {
-			// TODO Auto-generated method stub
+
 			if (pois == null)
 				return 0;
 			return pois.length;
 		}
 
 		public long getGroupId(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition;
 		}
 		class GroupViewHolder {
@@ -247,7 +247,7 @@ public class AllPictureFragment extends Fragment {
 			TextView poiExtra;
 		}
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			GroupViewHolder holder;
 			if (convertView == null) {
 				convertView=getActivity().getLayoutInflater().inflate(R.layout.poi_group_item, parent,false);
@@ -264,12 +264,12 @@ public class AllPictureFragment extends Fragment {
 		}
 
 		public boolean hasStableIds() {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 

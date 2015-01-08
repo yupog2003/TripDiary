@@ -14,7 +14,7 @@ public class ComparatorHelper {
 		return new Comparator<CostData>() {
 
 			public int compare(CostData lhs, CostData rhs) {
-				// TODO Auto-generated method stub
+
 				switch(sort_by){
 				case sort_by_cost_POI:
 					return (ascending?lhs.POI.compareTo(rhs.POI):rhs.POI.compareTo(lhs.POI));

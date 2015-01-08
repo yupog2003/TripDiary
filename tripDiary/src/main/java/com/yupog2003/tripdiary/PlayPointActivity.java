@@ -90,7 +90,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
 
         @Override
         protected ArrayList<View> doInBackground(String... params) {
-            // TODO Auto-generated method stub
+
             // ---------------------------------text-------------------------------
             publishProgress(getString(R.string.prepare_diary));
             final TextView textView = new TextView(PlayPointActivity.this);
@@ -110,7 +110,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             runOnUiThread(new Runnable() {
 
                 public void run() {
-                    // TODO Auto-generated method stub
+
                     viewFlipper.addView(textView);
                 }
 
@@ -136,7 +136,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                 runOnUiThread(new Runnable() {
 
                     public void run() {
-                        // TODO Auto-generated method stub
+
                         viewFlipper.addView(img);
                     }
                 });
@@ -149,7 +149,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                 handler.post(new Runnable() {
 
                     public void run() {
-                        // TODO Auto-generated method stub
+
                         VideoView videoView = new VideoView(PlayPointActivity.this);
                         videoView.setVideoPath(poi.videoFiles[index].getPath());
                         videoView.setMediaController(new MediaController(PlayPointActivity.this));
@@ -168,7 +168,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                 runOnUiThread(new Runnable() {
 
                     public void run() {
-                        // TODO Auto-generated method stub
+
                         viewFlipper.addView(audiotext);
                     }
                 });
@@ -199,7 +199,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             playThread = new Thread(new Runnable() {
 
                 public void run() {
-                    // TODO Auto-generated method stub
+
                     for (currentIndex = 0; currentIndex < viewFlipper.getChildCount(); currentIndex++) {
                         if (viewFlipper.getChildAt(currentIndex) instanceof ImageView) {
                             final ImageView img = (ImageView) viewFlipper.getChildAt(currentIndex);
@@ -218,14 +218,14 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             final Bitmap b = bitmap;
                             handler.post(new Runnable() {
                                 public void run() {
-                                    // TODO Auto-generated method stub
+
                                     img.setImageBitmap(b);
                                 }
                             });
                             try {
                                 Thread.sleep(interval);
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
+
                                 e.printStackTrace();
                             }
                         } else if (viewFlipper.getChildAt(currentIndex) instanceof VideoView) {
@@ -235,7 +235,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             videoView.setOnCompletionListener(new OnCompletionListener() {
 
                                 public void onCompletion(MediaPlayer mp) {
-                                    // TODO Auto-generated method stub
+
                                     mediafinish = true;
                                 }
                             });
@@ -243,7 +243,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                                 try {
                                     Thread.sleep(50);
                                 } catch (InterruptedException e) {
-                                    // TODO Auto-generated catch block
+
                                     e.printStackTrace();
                                 }
                             }
@@ -252,7 +252,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                                 TextView textView=(TextView)viewFlipper.getChildAt(currentIndex);
                                 Thread.sleep(textView.getText().length()*readTextSpeed);
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
+
                                 e.printStackTrace();
                             }
                         } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView) {
@@ -262,7 +262,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             mp.setOnCompletionListener(new OnCompletionListener() {
 
                                 public void onCompletion(MediaPlayer mp) {
-                                    // TODO Auto-generated method stub
+
                                     mediafinish = true;
                                 }
                             });
@@ -270,7 +270,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                                 try {
                                     Thread.sleep(50);
                                 } catch (InterruptedException e) {
-                                    // TODO Auto-generated catch block
+
                                     e.printStackTrace();
                                 }
                             }
@@ -281,14 +281,14 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             try {
                                 Thread.sleep(50);
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
+
                                 e.printStackTrace();
                             }
                         }
                         runOnUiThread(new Runnable() {
 
                             public void run() {
-                                // TODO Auto-generated method stub
+
                                 viewFlipper.showNext();
                             }
                         });
@@ -301,7 +301,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     }
 
     public void onClick(View v) {
-        // TODO Auto-generated method stub
+
         if (v.equals(skip)) {
             if (mp != null) {
                 mp.stop();

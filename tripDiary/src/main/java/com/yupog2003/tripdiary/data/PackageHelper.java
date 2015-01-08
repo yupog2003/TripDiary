@@ -32,7 +32,7 @@ public class PackageHelper {
 		ab.setPositiveButton(context.getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
+
 				Uri uri = Uri.parse("market://search?q=pname:" + packageName);
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {

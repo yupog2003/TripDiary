@@ -86,7 +86,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		View view = inflater.inflate(R.layout.fragment_remotetrips, container, false);
 		listView = (ListView) view.findViewById(R.id.listView);
 		// listView.setBackgroundColor(getResources().getColor(R.color.item_background));
@@ -99,7 +99,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+
 		super.onResume();
 		this.trip_option = getArguments().getInt(tag_option, 0);
 		setHasOptionsMenu(true);
@@ -108,7 +108,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
+
 		super.onSaveInstanceState(outState);
 		if (outState.isEmpty()) {
 			outState.putBoolean("bug:fix", true);
@@ -136,7 +136,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 			TProtocol protocol = new TBinaryProtocol(transport);
 			client = new TripDiary.Client(protocol, protocol);
 		} catch (TTransportException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return client;
@@ -146,13 +146,13 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 
 		}
 
 		@Override
 		protected Trip[] doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			if (client == null)
 				return null;
 			try {
@@ -171,7 +171,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 				}
 				return trips.toArray(new Trip[trips.size()]);
 			} catch (TException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			return null;
@@ -179,7 +179,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected void onPostExecute(Trip[] result) {
-			// TODO Auto-generated method stub
+
 			if (result != null) {
 				adapter = new TripAdapter(new ArrayList<Trip>(Arrays.asList(result)));
 				listView.setAdapter(adapter);
@@ -195,7 +195,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			// TODO Auto-generated method stub
+
 			super.onProgressUpdate(values);
 		}
 	}
@@ -214,7 +214,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			if (token == null || tripPath == null)
 				return null;
 			try {
@@ -236,7 +236,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 					break;
 				}
 			} catch (TException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			return null;
@@ -244,7 +244,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+
 			super.onPostExecute(result);
 			adapter = null;
 			RemoteTripsFragment.this.onResume();
@@ -256,19 +256,19 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			try {
 				token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
 				new GetTripsTask().execute();
 			} catch (UserRecoverableAuthException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				loginIntent = e.getIntent();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (GoogleAuthException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -281,13 +281,13 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 	class LoadMoreTripTask extends AsyncTask<String, String, ArrayList<Trip>> {
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 
 		}
 
 		@Override
 		protected ArrayList<Trip> doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			if (trip_option == option_public) {
 				try {
 					List<com.yupog2003.tripdiary.thrift.Trip> tripList = client.getTrips(token, true, account, adapter.getCount() / 20);
@@ -302,7 +302,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 					}
 					return trips;
 				} catch (TException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
@@ -311,13 +311,13 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			// TODO Auto-generated method stub
+
 
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<Trip> result) {
-			// TODO Auto-generated method stub
+
 			if (result != null && adapter != null) {
 				adapter.addTrips(result);
 			}
@@ -337,15 +337,15 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 			isLoading = false;
 		}
 
-		public int getCount() { // TODO Auto-generated method stub return
+		public int getCount() {
 			return trips.size();
 		}
 
-		public Object getItem(int position) { // TODO Auto-generated method stub
+		public Object getItem(int position) {
 			return trips.get(position);
 		}
 
-		public long getItemId(int position) { // TODO Auto-generated method stub
+		public long getItemId(int position) {
 			return position;
 		}
 
@@ -356,7 +356,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			TextView textView = new TextView(getActivity());
 			textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Large);
 			textView.setText(trips.get(position).name);
@@ -413,7 +413,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 				ab.setView(editText);
 				ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
-					public void onClick(DialogInterface dialog, int which) { // TODO
+					public void onClick(DialogInterface dialog, int which) {
 						boolean conflict = false;
 						String newTripName = editText.getText().toString();
 						for (int i = 0; i < trips.size(); i++) {
@@ -438,7 +438,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 				ab2.setIcon(R.drawable.ic_alert);
 				ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
-					public void onClick(DialogInterface dialog, int which) { // TODO
+					public void onClick(DialogInterface dialog, int which) {
 						for (int i = 0; i < checksName.size(); i++) {
 							String tripPath = checksName.get(i).path;
 							new UpdateDataTask(Task.delete_trip, token, tripPath).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, "");
@@ -465,7 +465,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 		boolean[] checks;
 		boolean checkAll;
 
-		public boolean onCreateActionMode(ActionMode mode, Menu menu) { // TODO
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
 			mode.getMenuInflater().inflate(R.menu.remote_trip_menu, menu);
 			if (account.equals("public")) {
@@ -482,8 +482,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 		}
 
 		public void onDestroyActionMode(ActionMode mode) {
-			// TODO Auto-generatedmethod stub
-			mode = null;
+			 mode = null;
 			onActionMode = false;
 		}
 
@@ -491,7 +490,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 			return false;
 		}
 
-		public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) { // TODO
+		public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
 
 			checks[position] = checked;
 			int selects = 0;
@@ -506,7 +505,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 		}
 
 		public boolean onQueryTextChange(String newText) {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
@@ -539,7 +538,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 					choose.setSingleChoiceItems(founds.toArray(new String[founds.size()]), -1, new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							String tripPath = founds.get(which).path;
 							String tripName = founds.get(which).name;
 							String uri = MainActivity.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath;
@@ -562,7 +561,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-			// TODO Auto-generated method stub
+
 			boolean loadMore = firstVisibleItem + visibleItemCount >= totalItemCount - 1;
 			if (loadMore && !isLoading) {
 				isLoading = true;
@@ -583,7 +582,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+
 		inflater.inflate(R.menu.fragment_remote_trip, menu);
 		if (account.equals("public") || token != null) {
 			menu.removeItem(R.id.login);
@@ -596,7 +595,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		switch (item.getItemId()) {
 		case R.id.login:
 			if (loginIntent != null) {
@@ -609,7 +608,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
+
 		if (requestCode == REQUEST_GET_TOKEN && resultCode == Activity.RESULT_OK) {
 			new GetAccessTokenTask().execute();
 		}
@@ -617,7 +616,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
 	@Override
 	public void onRefresh() {
-		// TODO Auto-generated method stub
+
 		loaddata();
 	}
 

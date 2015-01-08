@@ -28,7 +28,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.text.format.Time;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,7 +42,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -157,7 +155,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
+
         rootView = inflater.inflate(R.layout.fragment_view_map, null);
         mapFragment = MapFragment.newInstance();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -199,7 +197,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     @Override
     public void onResume() {
-        // TODO Auto-generated method stub
+
         super.onResume();
         setHasOptionsMenu(true);
         if (gmap == null) {
@@ -207,7 +205,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
-                    // TODO Auto-generated method stub
+
                     gmap = googleMap;
                     gmap.setMyLocationEnabled(true);
                     gmap.getUiSettings().setZoomControlsEnabled(true);
@@ -240,7 +238,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         search.setOnQueryTextListener(new OnQueryTextListener() {
 
             public boolean onQueryTextSubmit(String query) {
-                // TODO Auto-generated method stub
+
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
                 search.clearFocus();
@@ -268,7 +266,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                         choose.setSingleChoiceItems(foundsname, -1, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
+
                                 gmap.animateCamera(CameraUpdateFactory.newLatLng(founds.get(which).getPosition()));
                                 founds.get(which).showInfoWindow();
                                 dialog.dismiss();
@@ -281,7 +279,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             }
 
             public boolean onQueryTextChange(String newText) {
-                // TODO Auto-generated method stub
+
                 return false;
             }
         });
@@ -308,7 +306,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             ab.setSingleChoiceItems(bys, -1, new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
+
                     switch (which) {
                         case 0:
                             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -326,7 +324,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                             ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // TODO Auto-generated method stub
+
                                     File kmlFile = new File(filepath.getText().toString());
                                     FileHelper.convertToKml(markers, lat, kmlFile, ViewTripActivity.trip.note);
                                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -349,7 +347,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                                 ab2.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
-                                        // TODO Auto-generated method stub
+
                                         uploadPublic = true;
                                         new GetAccessTokenTask().execute();
                                     }
@@ -357,7 +355,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                                 ab2.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
-                                        // TODO Auto-generated method stub
+
                                         uploadPublic = false;
                                         new GetAccessTokenTask().execute();
                                     }
@@ -377,7 +375,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
+
                     AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                     ListView listView = new ListView(getActivity());
                     final DirAdapter adapter = new DirAdapter(getActivity(), false, Environment.getExternalStorageDirectory());
@@ -388,7 +386,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
+
                             EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "import_memory", ViewTripActivity.trip.dir.getName(), null).build());
                             new ImportMemoryTask(ViewTripActivity.trip.dir, adapter.getRoot()).execute();
                         }
@@ -426,7 +424,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
+
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setTitle(getString(R.string.importing));
             LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
@@ -437,7 +435,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
+
                     cancel = true;
                 }
             });
@@ -447,7 +445,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected String doInBackground(File... params) {
-            // TODO Auto-generated method stub
+
             publishProgress("Sorting...", "0");
             if (ViewTripActivity.trip.pois.length < 1 || cache.times == null)
                 return null;
@@ -537,7 +535,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                         timeMills = time1.toMillis(false);
                     }
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
             } else {
@@ -548,7 +546,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected void onProgressUpdate(String... values) {
-            // TODO Auto-generated method stub
+
             if (values[0].equals("setMax")) {
                 progress.setMax(Integer.valueOf(values[1]));
                 progressMessage.setText("0/" + values[1]);
@@ -561,7 +559,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
+
             if (!isAdded() || getActivity() == null)
                 return;
             dialog.dismiss();
@@ -572,7 +570,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
+
                     FileHelper.deletedir(memory.getPath());
                 }
             });
@@ -588,14 +586,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
+
                 importGpx();
             }
         });
         ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
+
                 Toast.makeText(getActivity(), getString(R.string.there_is_no_data_to_display), Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
@@ -643,7 +641,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO Auto-generated method stub
+
                 if (view instanceof TextView) {
                     ((TextView) view).setTextColor(getResources().getColor(R.color.textColorPrimary));
                 }
@@ -656,7 +654,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+
 
             }
         });
@@ -712,7 +710,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             listener = new ProgressChangedListener() {
 
                 public void onProgressChanged(long progress) {
-                    // TODO Auto-generated method stub
+
                     if (fileSize != 0)
                         publishProgress(0, (int) (progress * 100 / fileSize));
                 }
@@ -725,7 +723,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected LatLng[] doInBackground(Integer... arg0) {
-            // TODO Auto-generated method stub
+
             option = arg0[0];
             if (isAdded()) {
                 publishProgress(ViewTripActivity.trip.cacheFile.exists() ? 1 : 2);
@@ -802,7 +800,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     public void onInfoWindowClick(Marker marker) {
-        // TODO Auto-generated method stub
+
         String pointtitle = marker.getTitle();
         viewPOI(pointtitle);
     }
@@ -853,7 +851,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     public void onMapLongClick(final LatLng latlng) {
-        // TODO Auto-generated method stub
+
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
         ab.setTitle(getString(R.string.add_poi));
         View layout = getActivity().getLayoutInflater().inflate(R.layout.edit_poi, null);
@@ -876,7 +874,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
+
                 String title = edittitle.getText().toString();
                 String latStr = editlatitude.getText().toString();
                 String lngStr = editlongitude.getText().toString();
@@ -936,25 +934,25 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     public void onMarkerDrag(Marker marker) {
-        // TODO Auto-generated method stub
+
 
     }
 
     public void onMarkerDragEnd(Marker marker) {
-        // TODO Auto-generated method stub
+
         POI poi = new POI(new File(path + "/" + name + "/" + marker.getTitle()));
         poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
         updateAll();
     }
 
     public void onMarkerDragStart(Marker marker) {
-        // TODO Auto-generated method stub
+
 
     }
 
     @TargetApi(19)
     public void onClick(View v) {
-        // TODO Auto-generated method stub
+
         if (v == null)
             return;
         if (v.equals(viewInformation)) {
@@ -1078,7 +1076,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 streetman.setOnClickListener(new OnClickListener() {
 
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
+
                         mapLayout.removeView(streetman);
                         LatLng latlng = gmap.getCameraPosition().target;
                         Uri uri = Uri.parse("google.streetview:cbll=" + String.valueOf(latlng.latitude) + "," + String.valueOf(latlng.longitude));
@@ -1109,7 +1107,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             ab.setNegativeButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
+
                     dialog.dismiss();
                     AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
                     ab2.setTitle(getString(R.string.edit) + " " + getString(R.string.Note));
@@ -1119,7 +1117,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
+
                             ViewTripActivity.trip.updateNote(editText.getText().toString());
                         }
                     });
@@ -1272,7 +1270,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         public void run() {
-            // TODO Auto-generated method stub
+
             for (int i = index; i < index + add; i++) {
                 if (run && markersMap.get(i) != null) {
                     setPosition(i);
@@ -1330,7 +1328,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            // TODO Auto-generated method stub
+
             if (fromUser) {
                 index = progress;
                 setPosition(index);
@@ -1338,12 +1336,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
+
             pause();
         }
 
         public void onStopTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
+
             resume();
         }
 
@@ -1390,7 +1388,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
+
             try {
                 token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
                 Intent intent = new Intent(getActivity(), SendTripService.class);
@@ -1401,14 +1399,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 getActivity().startService(intent);
                 EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "share_track_by_tripdiary", ViewTripActivity.trip.dir.getName(), null).build());
             } catch (UserRecoverableAuthException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
                 startActivityForResult(e.getIntent(), REQUEST_GET_TOKEN);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             } catch (GoogleAuthException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1421,6 +1419,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     public static Point[] trackPoints;
 
     private void generateVideo() {
+        EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "generate_video", ViewTripActivity.trip.dir.getName(), null).build());
         final int videoWidth = GenerateVideoService.videoWidth;
         final int videoHeight = GenerateVideoService.videoHeight;
         final int secondsPerTrack = GenerateVideoService.secondsPerTrack;
@@ -1430,9 +1429,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         ab.setView(mapView);
         final AlertDialog alertDialog = ab.create();
         alertDialog.show();
-        int dp32=(int)DeviceHelper.pxFromDp(getActivity(), 32);
-        alertDialog.getWindow().setLayout(videoWidth+dp32, videoHeight+dp32);
-         mapView.onCreate(new Bundle());
+        int dp32 = (int) DeviceHelper.pxFromDp(getActivity(), 32);
+        alertDialog.getWindow().setLayout(videoWidth + dp32, videoHeight + dp32);
+        mapView.onCreate(new Bundle());
         mapView.onResume();
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -1518,7 +1517,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
+
         if (setLocusTask != null && !setLocusTask.isCancelled()) {
             setLocusTask.stop();
         }

@@ -51,7 +51,7 @@ public class ViewActivity extends MyActivity{
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
-			// TODO Auto-generated constructor stub
+			 Auto-generated constructor stub
 			fragments = new Fragment[3];
 			fragments[0] = new RemoteTripsFragment();
 			Bundle personalTripFragmentBundle=new Bundle();
@@ -69,7 +69,7 @@ public class ViewActivity extends MyActivity{
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// TODO Auto-generated method stub
+
 			switch (position) {
 			case 0:
 				return getString(R.string.remote_personal_trips);
@@ -83,13 +83,13 @@ public class ViewActivity extends MyActivity{
 
 		@Override
 		public Fragment getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return fragments[position];
 		}
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return fragments.length;
 		}
 	}
@@ -101,7 +101,7 @@ public class ViewActivity extends MyActivity{
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		if (item.getItemId() == android.R.id.home){
 			finish();
 			return true;

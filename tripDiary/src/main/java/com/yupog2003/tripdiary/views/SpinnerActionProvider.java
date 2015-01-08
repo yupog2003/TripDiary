@@ -19,12 +19,12 @@ public class SpinnerActionProvider extends ActionProvider {
 		this.context = context;
 		this.spinner = new Spinner(context);
 		
-		// TODO Auto-generated constructor stub
+		 Auto-generated constructor stub
 	}
 
 	@Override
 	public View onCreateActionView() {
-		// TODO Auto-generated method stub
+
 		return spinner;
 	}
 

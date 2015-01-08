@@ -56,7 +56,7 @@ public class POI {
 			try {
 				diaryFile.createNewFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		this.picFiles = picDir.listFiles(FileHelper.getPictureFileFilter());
@@ -77,7 +77,7 @@ public class POI {
 			try {
 				basicInformationFile.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -111,10 +111,10 @@ public class POI {
 			}
 			diary = sb.toString();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -140,7 +140,7 @@ public class POI {
 			bw.flush();
 			bw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -154,7 +154,7 @@ public class POI {
 				bw.flush();
 				bw.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -192,7 +192,7 @@ public class POI {
 			bw.close();
 			this.costFiles = costDir.listFiles();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -258,13 +258,13 @@ public class POI {
 				return new LatLng(latitude, longitude);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return null;

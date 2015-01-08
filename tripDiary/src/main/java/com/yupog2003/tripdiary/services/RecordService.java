@@ -113,7 +113,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 					temp.delete();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -170,7 +170,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 	}
 
 	protected void updateNotification() {
-		// TODO Auto-generated method stub
+
 		if (run && screenOn) {
 			totalTime = System.currentTimeMillis() / 1000 - startTime;
 			nb.setStyle(getContent());
@@ -191,7 +191,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
 	@Override
 	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -209,7 +209,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
+
 			run = false;
 			try {
 				if (bw != null) {
@@ -220,7 +220,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 					bw.close();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			trip.deleteCache();
@@ -238,7 +238,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
+
 			run = !run;
 			nb = new NotificationCompat.Builder(RecordService.this);
 			nb.setContentTitle(name);
@@ -285,7 +285,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
+
 			if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
 				screenOn = true;
 				new Thread(RecordService.this).start();
@@ -326,42 +326,42 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 				bw.flush();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
 
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
+
 		nb.setSmallIcon(R.drawable.ic_pause);
 		startForeground(1, nb.build());
 	}
 
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
+
 		nb.setSmallIcon(R.drawable.ic_satellite);
 		startForeground(1, nb.build());
 	}
 
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
+
 	}
 
 	public void run() {
-		// TODO Auto-generated method stub
+
 		while (run && screenOn) {
 			try {
 				Thread.sleep(updateDuration);
 				updateNotification();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
 	}
 
 	public void onGpsStatusChanged(int event) {
-		// TODO Auto-generated method stub
+
 		switch (event) {
 		case GpsStatus.GPS_EVENT_FIRST_FIX:
 			if (run) {
@@ -382,7 +382,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
+
 
 	}
 
@@ -392,7 +392,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 	public static final int min_diffTime_between_add_poi = 5000; // milliseconds
 
 	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
+
 		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 			long diffTime = System.currentTimeMillis() - lastUpadateSensor;
 			if (diffTime > 100) {

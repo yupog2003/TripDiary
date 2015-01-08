@@ -56,7 +56,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        // TODO Auto-generated method stub
+
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -85,7 +85,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
     }
 
     public void setText() {
-        // TODO Auto-generated method stub
+
         if (!isAdded() || getView() == null || getActivity() == null)
             return;
         text.setText("");
@@ -108,7 +108,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
 
     @Override
     public boolean onLongClick(View v) {
-        // TODO Auto-generated method stub
+
 
         return true;
     }
@@ -123,7 +123,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
+
         if (v.equals(enter)) {
             ViewPointActivity.poi.updateDiary(editText.getText().toString());
             text.setText(ViewPointActivity.poi.diary);

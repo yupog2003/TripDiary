@@ -46,7 +46,7 @@ public class AllVideoFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		listView = new FloatingGroupExpandableListView(getActivity());
 		listView.setGroupIndicator(null);
 		// listView.setBackgroundColor(getResources().getColor(R.color.item_background));
@@ -57,7 +57,7 @@ public class AllVideoFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+
 		super.onResume();
 
 	}
@@ -84,13 +84,13 @@ public class AllVideoFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+
 		inflater.inflate(R.menu.fragment_all, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		switch (item.getItemId()) {
 		case R.id.expandall:
 			expandAll();
@@ -133,24 +133,24 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			if (videos == null)
 				return 0;
 			return videos.length;
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return videos[position];
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(int position, View view, ViewGroup viewGroup) {
-			// TODO Auto-generated method stub
+
 			ImageView image = new ImageView(getActivity());
 			mmr.setDataSource(videos[position].getPath());
 			Bitmap b = mmr.getFrameAtTime();
@@ -162,7 +162,7 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-			// TODO Auto-generated method stub
+
 			Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.fromFile(videos[position]), "video/*");
 			getActivity().startActivity(intent);
@@ -199,39 +199,39 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public Object getChild(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return videos[groupPosition];
 		}
 
 		public long getChildId(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition * 1000 + childPosition;
 		}
 
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			return (UnScrollableGridView) getChild(groupPosition, childPosition);
 		}
 
 		public int getChildrenCount(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return 1;
 		}
 
 		public Object getGroup(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return pois[groupPosition];
 		}
 
 		public int getGroupCount() {
-			// TODO Auto-generated method stub
+
 			if (pois == null)
 				return 0;
 			return pois.length;
 		}
 
 		public long getGroupId(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition;
 		}
 
@@ -241,7 +241,7 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			GroupViewHolder holder;
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.poi_group_item, parent, false);
@@ -258,18 +258,18 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public boolean hasStableIds() {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
 		@Override
 		public void onGroupExpanded(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
 				expand[groupPosition] = true;
 			}
@@ -278,7 +278,7 @@ public class AllVideoFragment extends Fragment {
 
 		@Override
 		public void onGroupCollapsed(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
 				expand[groupPosition] = false;
 			}

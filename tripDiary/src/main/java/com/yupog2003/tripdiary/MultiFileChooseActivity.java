@@ -80,7 +80,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
 				@Override
 				public int compare(File lhs, File rhs) {
-					// TODO Auto-generated method stub
+
 					return lhs.getName().compareTo(rhs.getName());
 				}
 			});
@@ -113,19 +113,19 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return filedatas.length;
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return filedatas[position];
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
@@ -162,7 +162,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
+
 				if (isChecked) {
 					addFile(file);
 				} else if (choosedFiles.contains(file)) {
@@ -172,7 +172,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
 				if (file.isDirectory()) {
 					setDir(file, filter);
 				}
@@ -209,14 +209,14 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			return filedatas[position].layout;
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
 		if (v.equals(ok)) {
 			Bundle bundle = new Bundle();
 			bundle.putStringArrayList("files", choosedFiles);

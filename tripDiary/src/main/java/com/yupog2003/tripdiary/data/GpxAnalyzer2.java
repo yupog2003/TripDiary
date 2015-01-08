@@ -123,7 +123,7 @@ public class GpxAnalyzer2 {
 		handler.post(new Runnable() {
 
 			public void run() {
-				// TODO Auto-generated method stub
+
 				try {
 					View view = ChartFactory.getLineChartView(context, dataset, render);
 					view.setDrawingCacheEnabled(true);
@@ -145,10 +145,10 @@ public class GpxAnalyzer2 {
 						Toast.makeText(context, "bitmap is null", Toast.LENGTH_SHORT).show();
 					}
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (OutOfMemoryError e) {
 					e.printStackTrace();

@@ -43,7 +43,7 @@ public class ViewCostFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		this.option = getArguments().getInt("option");
 		this.path = getArguments().getString("path");
 		this.title = getArguments().getString("title");
@@ -69,7 +69,7 @@ public class ViewCostFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+
 		super.onResume();
 		setHasOptionsMenu(true);
 	}
@@ -89,7 +89,7 @@ public class ViewCostFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+
 		inflater.inflate(R.menu.activity_view_cost, menu);
 		if (option == optionTrip) {
 			menu.findItem(R.id.addcost).setVisible(false);
@@ -99,7 +99,7 @@ public class ViewCostFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		if (item.getItemId() == R.id.addcost) {
 			if (option == optionPOI) {
 				AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
@@ -109,7 +109,7 @@ public class ViewCostFragment extends Fragment {
 				ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						EditText costName = (EditText) layout.findViewById(R.id.costname);
 						RadioGroup costType = (RadioGroup) layout.findViewById(R.id.costtype);
 						EditText costDollar = (EditText) layout.findViewById(R.id.costdollar);
@@ -136,7 +136,7 @@ public class ViewCostFragment extends Fragment {
 								bw.close();
 								refresh();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+
 								e.printStackTrace();
 							}
 						}
@@ -157,7 +157,7 @@ public class ViewCostFragment extends Fragment {
 
 		public TabsAdapter(FragmentManager fm) {
 			super(fm);
-			// TODO Auto-generated constructor stub
+			 Auto-generated constructor stub
 			costListFragment = new CostListFragment();
 			costPieChartFragment = new CostPieChartFragment();
 			costBarChartFragment = new CostBarChartFragment();
@@ -172,7 +172,7 @@ public class ViewCostFragment extends Fragment {
 
 		@Override
 		public void unregisterDataSetObserver(DataSetObserver observer) {
-			// TODO Auto-generated method stub
+
 			if (observer != null) {
 				super.unregisterDataSetObserver(observer);
 			}
@@ -181,7 +181,7 @@ public class ViewCostFragment extends Fragment {
 
 		@Override
 		public Fragment getItem(int position) {
-			// TODO Auto-generated method stub
+
 			switch (position) {
 			case 0:
 				return costListFragment;
@@ -196,13 +196,13 @@ public class ViewCostFragment extends Fragment {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return 3;
 		}
 
 		@Override
 		public void onTabChanged(String tabId) {
-			// TODO Auto-generated method stub
+
 			if (viewPager!=null){
 				if (tabId.equals("list")) {
 					viewPager.setCurrentItem(0);
@@ -216,19 +216,19 @@ public class ViewCostFragment extends Fragment {
 
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
-			// TODO Auto-generated method stub
+
 
 		}
 
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
-			// TODO Auto-generated method stub
+
 
 		}
 
 		@Override
 		public void onPageSelected(int arg0) {
-			// TODO Auto-generated method stub
+
 			tabHost.setCurrentTab(arg0);
 		}
 

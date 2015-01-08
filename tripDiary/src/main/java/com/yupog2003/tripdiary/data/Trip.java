@@ -47,7 +47,7 @@ public class Trip {
 			try {
 				gpxFile.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -58,7 +58,7 @@ public class Trip {
 			try {
 				noteFile.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -73,10 +73,10 @@ public class Trip {
 			note = sb.toString();
 			br.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		this.tripName = dir.getName();
@@ -127,7 +127,7 @@ public class Trip {
 				bw.close();
 				this.note = note;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -148,7 +148,7 @@ public class Trip {
 
 				@Override
 				public int compare(POI lhs, POI rhs) {
-					// TODO Auto-generated method stub
+
 					if (lhs == null || rhs == null || lhs.time == null || rhs.time == null)
 						return 0;
 					if (lhs.time.after(rhs.time))

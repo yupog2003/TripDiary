@@ -58,7 +58,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
+
 		// adapter.run=false;
 		super.onPause();
 	}
@@ -74,7 +74,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
+
 		super.onSaveInstanceState(outState);
 		if (outState.isEmpty()) {
 			outState.putBoolean("bug:fix", true);
@@ -114,22 +114,22 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return files.length;
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return files[position];
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			if (convertView == null) {
 				ImageView i = new ImageView(getActivity());
 				i.setMaxWidth(width);
@@ -145,22 +145,22 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 				ImageLoader.getInstance().displayImage("file://" + files[position].getPath(), (ImageView) convertView.getTag(), options, new ImageLoadingListener() {
 
 					public void onLoadingStarted(String imageUri, View view) {
-						// TODO Auto-generated method stub
+
 
 					}
 
 					public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-						// TODO Auto-generated method stub
+
 
 					}
 
 					public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-						// TODO Auto-generated method stub
+
 						bitmaps[position] = loadedImage;
 					}
 
 					public void onLoadingCancelled(String imageUri, View view) {
-						// TODO Auto-generated method stub
+
 
 					}
 				});
@@ -183,7 +183,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			// TODO Auto-generated method stub
+
 			final ArrayList<File> checksName = new ArrayList<File>();
 			for (int i = 0; i < checks.length; i++) {
 				if (checks[i]) {
@@ -198,7 +198,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 				ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						for (int i = 0; i < checksName.size(); i++) {
 							checksName.get(i).delete();
 						}
@@ -222,7 +222,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 					ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							String s = name.getText().toString();
                             checkFile.renameTo(new File(checkFile.getParent() + "/" + s));
 							adapter.reFresh();
@@ -251,7 +251,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						PrintHelper photoPrinter = new PrintHelper(getActivity());
 						photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
 						Bitmap bitmap = BitmapFactory.decodeFile(picFile.getPath());
@@ -277,7 +277,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
 					@Override
 					public boolean accept(File dir, String filename) {
-						// TODO Auto-generated method stub
+
 						if (filename.equals(ViewPointActivity.poi.dir.getName())) {
 							return false;
 						}
@@ -293,7 +293,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						File[] fromFiles = checksName.toArray(new File[checksName.size()]);
 						File[] toFiles = new File[checksName.size()];
 						for (int i = 0; i < toFiles.length; i++) {
@@ -303,7 +303,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
 							@Override
 							public void onFinish() {
-								// TODO Auto-generated method stub
+
 								adapter.reFresh();
 								Intent data = new Intent();
 								data.putExtra("update", true);
@@ -320,7 +320,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public boolean onCreateActionMode(final ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
 			checks = new boolean[adapter.getCount()];
 			for (int i = 0; i < checks.length; i++) {
@@ -331,17 +331,17 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public void onDestroyActionMode(ActionMode mode) {
-			// TODO Auto-generated method stub
+
 			mode = null;
 		}
 
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			return true;
 		}
 
 		public void onItemCheckedStateChanged(final ActionMode mode, int position, long id, boolean checked) {
-			// TODO Auto-generated method stub
+
 			checks[position] = checked;
 			int selects = 0;
 			for (int i = 0; i < checks.length; i++) {
@@ -357,7 +357,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 	}
 
 	public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-		// TODO Auto-generated method stub
+
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(Uri.fromFile((File) adapter.getItem(position)), "image/*");
 		getActivity().startActivity(intent);

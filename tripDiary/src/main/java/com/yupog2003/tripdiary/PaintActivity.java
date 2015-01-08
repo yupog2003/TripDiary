@@ -96,18 +96,18 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 	}
 
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
 		if (v.equals(paintColor)) {
 			AmbilWarnaDialog.OnAmbilWarnaListener listener = new AmbilWarnaDialog.OnAmbilWarnaListener() {
 
 				public void onOk(AmbilWarnaDialog dialog, int color) {
-					// TODO Auto-generated method stub
+
 					brushColor = color;
 					paint.setColor(brushColor);
 				}
 
 				public void onCancel(AmbilWarnaDialog dialog) {
-					// TODO Auto-generated method stub
+
 
 				}
 			};
@@ -124,17 +124,17 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 			thicknessBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 				public void onStopTrackingTouch(SeekBar seekBar) {
-					// TODO Auto-generated method stub
+
 
 				}
 
 				public void onStartTrackingTouch(SeekBar seekBar) {
-					// TODO Auto-generated method stub
+
 
 				}
 
 				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-					// TODO Auto-generated method stub
+
 					thicknessValue = progress;
 
 				}
@@ -146,7 +146,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 			checkEmboss.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					// TODO Auto-generated method stub
+
 					isEmboss = isChecked;
 					if (isChecked) {
 						checkBlur.setChecked(false);
@@ -156,7 +156,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 			checkBlur.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					// TODO Auto-generated method stub
+
 					isBlur = isChecked;
 					if (isChecked) {
 						checkEmboss.setChecked(false);
@@ -167,7 +167,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					paint.setStrokeWidth(thicknessValue);
 					if (isEmboss) {
 						paint.setMaskFilter(new EmbossMaskFilter(new float[] { 1, 1, 1 }, 0.4f, 6, thicknessValue * 0.3f));
@@ -181,7 +181,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 			ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					thicknessValue = tempThicknessValue;
 					isEmboss = tempIsEmboss;
 					isBlur = tempIsBlur;
@@ -197,13 +197,13 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 			AmbilWarnaDialog.OnAmbilWarnaListener listener = new AmbilWarnaDialog.OnAmbilWarnaListener() {
 
 				public void onOk(AmbilWarnaDialog dialog, int color) {
-					// TODO Auto-generated method stub
+
 					backgroundColor = color;
 					paintView.onBackgroundColorChanged();
 				}
 
 				public void onCancel(AmbilWarnaDialog dialog) {
-					// TODO Auto-generated method stub
+
 
 				}
 			};
@@ -226,10 +226,10 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 				setResult(Activity.RESULT_OK);
 				PaintActivity.this.finish();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -250,7 +250,6 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 
 		public MyPaintView(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
 			path = new Path();
 			bitmapPaint = new Paint(Paint.DITHER_FLAG);
 		}

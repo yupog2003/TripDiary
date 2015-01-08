@@ -38,7 +38,7 @@ public class AllAudioFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		setHasOptionsMenu(true);
 		listView = new FloatingGroupExpandableListView(getActivity());
 		listView.setGroupIndicator(null);
@@ -49,7 +49,7 @@ public class AllAudioFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+
 		super.onResume();
 	}
 
@@ -76,13 +76,13 @@ public class AllAudioFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+
 		inflater.inflate(R.menu.fragment_all, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		switch (item.getItemId()) {
 		case R.id.expandall:
 			expandAll();
@@ -121,17 +121,17 @@ public class AllAudioFragment extends Fragment {
 		}
 
 		public Object getChild(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return audios.get(groupPosition)[childPosition];
 		}
 
 		public long getChildId(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition * 1000 + childPosition;
 		}
 
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			TextView textView = new TextView(getActivity());
 			textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Large);
 			textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
@@ -142,22 +142,22 @@ public class AllAudioFragment extends Fragment {
 		}
 
 		public int getChildrenCount(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return audios.get(groupPosition).length;
 		}
 
 		public Object getGroup(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return pois[groupPosition];
 		}
 
 		public int getGroupCount() {
-			// TODO Auto-generated method stub
+
 			return pois.length;
 		}
 
 		public long getGroupId(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition;
 		}
 
@@ -167,7 +167,7 @@ public class AllAudioFragment extends Fragment {
 		}
 
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			GroupViewHolder holder;
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.poi_group_item, parent, false);
@@ -184,17 +184,17 @@ public class AllAudioFragment extends Fragment {
 		}
 
 		public boolean hasStableIds() {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return true;
 		}
 
 		public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-			// TODO Auto-generated method stub
+
 			Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.fromFile((File) getChild(groupPosition, childPosition)), "audio/*");
 			getActivity().startActivity(intent);
@@ -203,7 +203,7 @@ public class AllAudioFragment extends Fragment {
 
 		@Override
 		public void onGroupExpanded(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
 				expand[groupPosition] = true;
 			}
@@ -212,7 +212,7 @@ public class AllAudioFragment extends Fragment {
 
 		@Override
 		public void onGroupCollapsed(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
 				expand[groupPosition] = false;
 			}

@@ -35,7 +35,7 @@ public class MyFileBody extends FileBody {
 
 	@Override
 	public void writeTo(OutputStream arg0) throws IOException {
-		// TODO Auto-generated method stub
+
 		super.writeTo(new MyOutputStream(arg0));
 	}
 
@@ -45,13 +45,13 @@ public class MyFileBody extends FileBody {
 
 		public MyOutputStream(OutputStream out) {
 			super(out);
-			// TODO Auto-generated constructor stub
+			 Auto-generated constructor stub
 			transferred = 0;
 		}
 
 		@Override
 		public void write(byte[] buffer, int offset, int length) throws IOException {
-			// TODO Auto-generated method stub
+
 			out.write(buffer, offset, length);
 			transferred += length;
 			if (listener != null)
@@ -60,7 +60,7 @@ public class MyFileBody extends FileBody {
 
 		@Override
 		public void write(int oneByte) throws IOException {
-			// TODO Auto-generated method stub
+
 			out.write(oneByte);
 			transferred++;
 			if (listener != null)

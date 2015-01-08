@@ -100,7 +100,7 @@ public class LocalTripsFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		listView = new FloatingGroupExpandableListView(getActivity());
 		listView.setGroupIndicator(null);
 		setHasOptionsMenu(true);
@@ -115,7 +115,7 @@ public class LocalTripsFragment extends Fragment {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
+
 		super.onSaveInstanceState(outState);
 		if (outState.isEmpty()) {
 			outState.putBoolean("bug:fix", true);
@@ -124,7 +124,7 @@ public class LocalTripsFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+
 		super.onResume();
 		this.path = MainActivity.rootPath;
 		loaddata();
@@ -164,7 +164,7 @@ public class LocalTripsFragment extends Fragment {
 			rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
-					// TODO Auto-generated method stub
+
 					String color = categorysp.getString(categories[checkedId], String.valueOf(Color.WHITE));
 					category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
 				}
@@ -176,7 +176,7 @@ public class LocalTripsFragment extends Fragment {
 			ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					String name = tripName.getText().toString();
 					String note = tripNote.getText().toString();
 					String category = "nocategory";
@@ -276,7 +276,7 @@ public class LocalTripsFragment extends Fragment {
 			Collections.sort(list, new Comparator<TripInformation>() {
 
 				public int compare(TripInformation lhs, TripInformation rhs) {
-					// TODO Auto-generated method stub
+
 					if (lhs.time == null || rhs.time == null)
 						return 0;
 					else if (lhs.time.after(rhs.time))
@@ -317,12 +317,12 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public Object getChild(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return trips.get(groupPosition).get(childPosition);
 		}
 
 		public long getChildId(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			if (!listView.isGroupExpanded(groupPosition))
 				return -1;
 			int count = 0;
@@ -343,7 +343,7 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
@@ -364,22 +364,22 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public int getChildrenCount(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return trips.get(groupPosition).size();
 		}
 
 		public Object getGroup(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return categories[groupPosition];
 		}
 
 		public int getGroupCount() {
-			// TODO Auto-generated method stub
+
 			return categories.length;
 		}
 
 		public long getGroupId(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			return groupPosition;
 		}
 
@@ -389,7 +389,7 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			GroupViewHolder holder;
 			if (convertView == null) {
 				holder = new GroupViewHolder();
@@ -407,17 +407,17 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public boolean hasStableIds() {
-			// TODO Auto-generated method stub
+
 			return true;
 		}
 
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
+
 			return true;
 		}
 
 		public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-			// TODO Auto-generated method stub
+
 			if (onActionMode) {
 				int position = (int) getChildId(groupPosition, childPosition);
 				listView.setItemChecked(position, !listView.isItemChecked(position));
@@ -433,7 +433,7 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			// TODO Auto-generated method stub
+
 			checksName = new ArrayList<String>();
 			for (int i = 0; i < checks.length; i++) {
 				if (checks[i]) {
@@ -451,7 +451,7 @@ public class LocalTripsFragment extends Fragment {
 				ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						for (int i = 0; i < checksName.size(); i++) {
 							FileHelper.deletedir(path + "/" + checksName.get(i));
 							tripeditor.remove(checksName.get(i));
@@ -471,7 +471,7 @@ public class LocalTripsFragment extends Fragment {
 				ab3.setPositiveButton(getString(R.string.enter), new OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						final String backupPath = editBackupPath.getText().toString();
 						File file = new File(backupPath);
 						if (file.exists() && file.isFile()) {
@@ -501,10 +501,10 @@ public class LocalTripsFragment extends Fragment {
 					}
 					br.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
@@ -529,7 +529,7 @@ public class LocalTripsFragment extends Fragment {
 				rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
-						// TODO Auto-generated method stub
+
 						String color = categorysp.getString(categories[checkedId], String.valueOf(Color.WHITE));
 						category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
 					}
@@ -543,7 +543,7 @@ public class LocalTripsFragment extends Fragment {
 				ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						String s = name.getText().toString();
 						if (!new File(path + "/" + s).exists() || s.equals(checksName.get(0))) {
 							Trip trip = new Trip(getActivity(), new File(path + "/" + checksName.get(0)));
@@ -576,7 +576,7 @@ public class LocalTripsFragment extends Fragment {
 					ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							uploadPublic = true;
 							new GetAccessTokenTask().execute();
 						}
@@ -584,7 +584,7 @@ public class LocalTripsFragment extends Fragment {
 					ab.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							uploadPublic = false;
 							new GetAccessTokenTask().execute();
 						}
@@ -597,7 +597,7 @@ public class LocalTripsFragment extends Fragment {
 				ab.setSingleChoiceItems(categories, -1, new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						for (int i = 0; i < checksName.size(); i++) {
 							tripeditor.putString(checksName.get(i), categories[which]);
 						}
@@ -625,7 +625,7 @@ public class LocalTripsFragment extends Fragment {
 		boolean checkAll;
 
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			mode.getMenuInflater().inflate(R.menu.local_trip_menu, menu);
 			onActionMode = true;
 			checks = new boolean[tripsArray.length];
@@ -636,18 +636,18 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public void onDestroyActionMode(ActionMode mode) {
-			// TODO Auto-generated method stub
+
 			mode = null;
 			onActionMode = false;
 		}
 
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
 		public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-			// TODO Auto-generated method stub
+
 			for (int i = 0; i < trips.size(); i++) {
 				for (int j = 0; j < trips.get(i).size(); j++) {
 					if (getChildId(i, j) == position) {
@@ -670,7 +670,7 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public boolean onQueryTextSubmit(String query) {
-			// TODO Auto-generated method stub
+
 			final String searchname = search.getQuery().toString().toLowerCase(Locale.US);
 			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
@@ -698,7 +698,7 @@ public class LocalTripsFragment extends Fragment {
 					choose.setSingleChoiceItems(founds.toArray(new String[founds.size()]), -1, new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							String name = founds.get(which);
 							Intent intent = new Intent(getActivity(), ViewTripActivity.class);
 							intent.putExtra("path", path);
@@ -714,18 +714,18 @@ public class LocalTripsFragment extends Fragment {
 		}
 
 		public boolean onQueryTextChange(String newText) {
-			// TODO Auto-generated method stub
+
 			return false;
 		}
 
 		public void onGroupExpand(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			categoryExpandEditor.putBoolean(categories[groupPosition], true);
 			categoryExpandEditor.commit();
 		}
 
 		public void onGroupCollapse(int groupPosition) {
-			// TODO Auto-generated method stub
+
 			categoryExpandEditor.putBoolean(categories[groupPosition], false);
 			categoryExpandEditor.commit();
 		}
@@ -758,7 +758,7 @@ public class LocalTripsFragment extends Fragment {
 
 		@Override
 		protected ArrayList<File> doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			if (froms != null && tos != null) {
 				for (int i = 0; i < froms.size(); i++) {
 					File from = froms.get(i);
@@ -811,7 +811,7 @@ public class LocalTripsFragment extends Fragment {
 					ab.setPositiveButton(getString(R.string.enter), new OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							FileHelper.deletedir(path + "/" + tripName);
 							FileHelper.unZip(zipPath, path + "/");
 							loaddata();
@@ -835,7 +835,7 @@ public class LocalTripsFragment extends Fragment {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			try {
 				token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
 				if (adapter.checksName != null && getActivity() != null) {
@@ -850,14 +850,14 @@ public class LocalTripsFragment extends Fragment {
 					}
 				}
 			} catch (UserRecoverableAuthException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				startActivityForResult(e.getIntent(), REQUEST_GET_TOKEN);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (GoogleAuthException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -881,7 +881,7 @@ public class LocalTripsFragment extends Fragment {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 			AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
 			ab.setTitle(getString(R.string.updating));
 			LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
@@ -892,7 +892,7 @@ public class LocalTripsFragment extends Fragment {
 			ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					cancel = true;
 				}
 			});
@@ -903,7 +903,7 @@ public class LocalTripsFragment extends Fragment {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			publishProgress("setMax", String.valueOf(trips.size()));
 			for (int i = 0; i < trips.size(); i++) {
 				if (cancel)
@@ -931,10 +931,10 @@ public class LocalTripsFragment extends Fragment {
 					}
 					br.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
@@ -943,7 +943,7 @@ public class LocalTripsFragment extends Fragment {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			// TODO Auto-generated method stub
+
 			if (values[0].equals("setMax")) {
 				progress.setMax(Integer.valueOf(values[1]));
 				progressMessage.setText("0/" + values[1]);
@@ -957,7 +957,7 @@ public class LocalTripsFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+
 			dialog.dismiss();
 			super.onPostExecute(result);
 		}

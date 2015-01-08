@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.yupog2003.tripdiary.data.ColorHelper;
-import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.data.Trip;
@@ -108,7 +106,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         try {
             nomedia.createNewFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
     }
@@ -146,7 +144,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
+
         super.onResume();
         checkPlayService();
     }
@@ -183,7 +181,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // TODO Auto-generated method stub
+
                 String color = categorysp.getString(categories[checkedId], "Gray");
                 category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);
             }
@@ -197,7 +195,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         tripName.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 if (!tripNameClicked) {
                     tripName.setText("");
                 }
@@ -207,7 +205,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
+
                 final String name = tripName.getText().toString();
                 final String note = tripNote.getText().toString();
                 int radioGroupIndex = rg.getCheckedRadioButtonId();
@@ -228,7 +226,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                         ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
+
                                 startTrip(name, note, category);
                             }
                         });
@@ -314,7 +312,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         Collections.sort(trips, new Comparator<TripInformation>() {
 
             public int compare(TripInformation lhs, TripInformation rhs) {
-                // TODO Auto-generated method stub
+
                 if (lhs.time == null || rhs.time == null)
                     return 0;
                 else if (lhs.time.after(rhs.time))
@@ -332,7 +330,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         ab.setSingleChoiceItems(strs, -1, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
+
                 dialog.dismiss();
                 Intent i = new Intent(MainActivity.this, RecordService.class);
                 i.putExtra("name", strs[which]);
@@ -346,10 +344,10 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                     }
                     br.close();
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
                 String result = sb.toString();
@@ -368,7 +366,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     }
 
     public void onClick(View v) {
-        // TODO Auto-generated method stub
+
         if (v.equals(startTrip)) {
             if (isGpsEnabled()) {
                 startTripDialog();
@@ -379,7 +377,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 ab.setPositiveButton(getString(R.string.start_with_gps), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
+
                         Toast.makeText(getBaseContext(), getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
                         startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
                     }
@@ -387,7 +385,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 ab.setNegativeButton(getString(R.string.start_without_gps), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
+
                         startTripDialog();
                     }
                 });

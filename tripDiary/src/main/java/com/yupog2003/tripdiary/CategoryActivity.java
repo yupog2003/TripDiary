@@ -73,22 +73,22 @@ public class CategoryActivity extends MyActivity {
 	class CategoryAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
 		
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return categories.length;
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return categories[position];
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			TextView textView=new TextView(CategoryActivity.this);
 			textView.setTextAppearance(CategoryActivity.this, android.R.style.TextAppearance_Large);
 			int color=Integer.parseInt(categorysp.getString(categories[position], String.valueOf(Color.WHITE)));
@@ -100,7 +100,7 @@ public class CategoryActivity extends MyActivity {
 		
 		public void onItemClick(AdapterView<?> adapterView, View view, final int position,
 				long id) {
-			// TODO Auto-generated method stub
+
 			AlertDialog.Builder ab=new AlertDialog.Builder(CategoryActivity.this);
 			ab.setTitle(getString(R.string.edit_category));
 			LinearLayout layout=(LinearLayout)getLayoutInflater().inflate(R.layout.add_category, null);
@@ -114,17 +114,17 @@ public class CategoryActivity extends MyActivity {
 			pickColor.setOnClickListener(new View.OnClickListener() {
 				
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
+
 					AmbilWarnaDialog dialog=new AmbilWarnaDialog(CategoryActivity.this, color, new OnAmbilWarnaListener() {
 						
 						public void onOk(AmbilWarnaDialog dialog, int color) {
-							// TODO Auto-generated method stub
+
 							colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
 							colorImage.setTag(color);
 						}
 						
 						public void onCancel(AmbilWarnaDialog dialog) {
-							// TODO Auto-generated method stub
+
 							
 						}
 					});
@@ -135,7 +135,7 @@ public class CategoryActivity extends MyActivity {
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					String nameStr=categoryName.getText().toString();
 					int color=(Integer)colorImage.getTag();
 					for (int i=0;i<trips.length;i++){
@@ -157,7 +157,7 @@ public class CategoryActivity extends MyActivity {
 
 		public boolean onItemLongClick(AdapterView<?> adapterView, View view,
 				final int position, long id) {
-			// TODO Auto-generated method stub
+
 			AlertDialog.Builder ab=new AlertDialog.Builder(CategoryActivity.this);
 			ab.setTitle(getString(R.string.delete));
 			ab.setMessage(getString(R.string.are_you_sure_to_delete));
@@ -165,7 +165,7 @@ public class CategoryActivity extends MyActivity {
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					if (categories[position].equals("nocategory")){
 						Toast.makeText(CategoryActivity.this, getString(R.string.cannot_delete_nocategory), Toast.LENGTH_SHORT).show();
 					}else{
@@ -196,7 +196,7 @@ public class CategoryActivity extends MyActivity {
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		switch(item.getItemId()){
 		case R.id.addcategory:
 			AlertDialog.Builder ab=new AlertDialog.Builder(CategoryActivity.this);
@@ -211,17 +211,17 @@ public class CategoryActivity extends MyActivity {
 			pickColor.setOnClickListener(new View.OnClickListener() {
 				
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
+
 					AmbilWarnaDialog dialog=new AmbilWarnaDialog(CategoryActivity.this, color, new OnAmbilWarnaListener() {
 						
 						public void onOk(AmbilWarnaDialog dialog, int color) {
-							// TODO Auto-generated method stub
+
 							colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
 							colorImage.setTag(color);
 						}
 						
 						public void onCancel(AmbilWarnaDialog dialog) {
-							// TODO Auto-generated method stub
+
 							
 						}
 					});
@@ -232,7 +232,7 @@ public class CategoryActivity extends MyActivity {
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					String nameStr=categoryName.getText().toString();
 					if (nameStr.equals("nocategory")){
 						Toast.makeText(CategoryActivity.this, getString(R.string.cannot_add_nocategory), Toast.LENGTH_SHORT).show();

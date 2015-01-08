@@ -26,7 +26,7 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
 
 	@Override
 	public View getInfoContents(Marker marker) {
-		// TODO Auto-generated method stub
+
 		try {
 			String poiName = marker.getTitle();
 			String snippet = marker.getSnippet();
@@ -63,7 +63,7 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
 
 	@Override
 	public View getInfoWindow(Marker marker) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

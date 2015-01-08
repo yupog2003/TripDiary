@@ -155,7 +155,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 	}
 
 	public boolean onPreferenceClick(Preference preference) {
-		// TODO Auto-generated method stub
+
 		if (preference.equals(musicpath)) {
 			Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
 			i3.setType("audio/*");
@@ -193,7 +193,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					String newPath = adapter.getRoot().getPath();
 					SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
 					editor.putString("rootpath", newPath);
@@ -212,7 +212,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					if (DeviceHelper.isMobileNetworkAvailable(getActivity())) {
 						new UpdateTripTimeZoneTask().execute();
 					} else {
@@ -233,7 +233,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 			ab2.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
 					editor.putString("account", names[which]);
 					editor.commit();
@@ -251,7 +251,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 	}
 
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		// TODO Auto-generated method stub
+
 		if (preference.equals(diaryfontsize)) {
 			diaryfontsize.setSummary(String.valueOf(newValue) + " pixels");
 		}
@@ -292,7 +292,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 			AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
 			ab.setTitle(getString(R.string.updating));
 			LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
@@ -303,7 +303,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 			ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					cancel = true;
 				}
 			});
@@ -314,11 +314,11 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			File[] trips = new File(MainActivity.rootPath).listFiles(new FileFilter() {
 
 				public boolean accept(File pathname) {
-					// TODO Auto-generated method stub
+
 					return pathname.isDirectory() && !pathname.getName().startsWith(".");
 				}
 			});
@@ -349,10 +349,10 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 					}
 					br.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
@@ -361,14 +361,14 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+
 			dialog.dismiss();
 			super.onPostExecute(result);
 		}
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			// TODO Auto-generated method stub
+
 			if (values[0].equals("setMax")) {
 				progress.setMax(Integer.valueOf(values[1]));
 				progressMessage.setText("0/" + values[1]);

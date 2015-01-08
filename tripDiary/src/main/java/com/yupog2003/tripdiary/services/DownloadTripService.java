@@ -37,7 +37,7 @@ public class DownloadTripService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        // TODO Auto-generated method stub
+
         String tripPath = intent.getStringExtra("path");
         if (tripPath == null)
             return;
@@ -65,13 +65,13 @@ public class DownloadTripService extends IntentService {
             new Thread(new Runnable() {
 
                 public void run() {
-                    // TODO Auto-generated method stub
+
                     while (totalread < fileSize) {
                         updateNotification(tripName, getString(R.string.downloading) + "...", (int) (100f * totalread / fileSize));
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
+
                             e.printStackTrace();
                         }
                     }
@@ -88,11 +88,11 @@ public class DownloadTripService extends IntentService {
             updateNotification(tripName, getString(R.string.unzipping) + "...", 100);
             FileHelper.unZip(zipFile.getPath(), MainActivity.rootPath + "/");
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
 
         }

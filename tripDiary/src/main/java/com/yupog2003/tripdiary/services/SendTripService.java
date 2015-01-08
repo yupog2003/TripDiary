@@ -46,13 +46,13 @@ public class SendTripService extends IntentService {
 
 	public SendTripService() {
 		super("SendTripService");
-		// TODO Auto-generated constructor stub
+		 Auto-generated constructor stub
 		nb = new NotificationCompat.Builder(this);
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		// TODO Auto-generated method stub
+
 		final String tripP = intent.getStringExtra(filePathTag);
 		final String account = intent.getStringExtra(accountTag);
 		final String token = intent.getStringExtra(tokenTag);
@@ -75,7 +75,7 @@ public class SendTripService extends IntentService {
 			fileBody.setListener(new MyFileBody.MyListener() {
 
 				public void progressChange(long progress) {
-					// TODO Auto-generated method stub
+
 					SendTripService.this.progress = (int) ((float) progress * 100 / fileSize);
 				}
 			});
@@ -87,12 +87,12 @@ public class SendTripService extends IntentService {
 			new Thread(new Runnable() {
 
 				public void run() {
-					// TODO Auto-generated method stub
+
 					while (progress < 100) {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
+
 							e.printStackTrace();
 						}
 						updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", progress);
@@ -120,10 +120,10 @@ public class SendTripService extends IntentService {
 						TripDiary.Client client2 = new TripDiary.Client(protocol, protocol);
 						client2.toggle_public(token, tripPath, "on");
 					} catch (TTransportException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					} catch (TException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
 					String publicURL = returnURL + "&public=true";
@@ -140,15 +140,15 @@ public class SendTripService extends IntentService {
 				Toast.makeText(SendTripService.this, resultStr, Toast.LENGTH_SHORT).show();
 			}
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			stopForeground(true);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			stopForeground(true);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			stopForeground(true);
 		}

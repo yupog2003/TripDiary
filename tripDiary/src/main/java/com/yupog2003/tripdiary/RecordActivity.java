@@ -165,7 +165,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
+
 					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.showSoftInput(poiName, 0);
 				}
@@ -175,7 +175,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+
 		if (isGPSEnabled && RecordService.instance == null) {
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
@@ -185,7 +185,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 				@Override
 				public void onMapReady(GoogleMap googleMap) {
-					// TODO Auto-generated method stub
+
 					gmap = googleMap;
 					gmap.setMyLocationEnabled(true);
 					gmap.setOnMarkerDragListener(RecordActivity.this);
@@ -275,7 +275,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
 		Time fileTime = new Time(Time.getCurrentTimezone());
 		fileTime.setToNow();
 		fileName = fileTime.format3339(false);
@@ -364,7 +364,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface arg0, int arg1) {
-					// TODO Auto-generated method stub
+
 					if (poi != null)
 						poi.updateDiary(getText.getText().toString());
 					updatePOIStatus();
@@ -384,7 +384,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 			ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					EditText costName = (EditText) layout.findViewById(R.id.costname);
 					RadioGroup costType = (RadioGroup) layout.findViewById(R.id.costtype);
 					EditText costDollar = (EditText) layout.findViewById(R.id.costdollar);
@@ -434,7 +434,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
+
 		if (addPOIMode) {
 			if (cancel.getVisibility() == View.VISIBLE) {
 				cancel.performClick();
@@ -474,7 +474,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+
 			while (RecordService.instance != null) {
 				final long totaltime = RecordService.instance.totalTime;
 				final double totaldistance = RecordService.instance.totaldistance;
@@ -487,7 +487,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
+
 						if (RecordService.instance != null && RecordService.instance.run) {
 							if (menu != null) {
 								menu.findItem(R.id.pause).setIcon(R.drawable.ic_pause);
@@ -509,7 +509,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 				try {
 					Thread.sleep(RecordService.instance.updateDuration);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 					break;
 				} catch (NullPointerException e) {
@@ -535,13 +535,13 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 			refreshProgress.setVisibility(View.VISIBLE);
 		}
 
 		@Override
 		protected String doInBackground(Boolean... params) {
-			// TODO Auto-generated method stub
+
 			if (refreshTrack) {
 				try {
 					ArrayList<LatLng> latArray = new ArrayList<LatLng>();
@@ -565,10 +565,10 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 					br.close();
 					lat = latArray.toArray(new LatLng[latArray.size()]);
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
@@ -584,13 +584,13 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			// TODO Auto-generated method stub
+
 
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+
 			if (refreshTrack && lat != null && lat.length > 0 && gmap != null) {
 				int trackColor = PreferenceManager.getDefaultSharedPreferences(RecordActivity.this).getInt("trackcolor", 0xff6699cc);
 				if (polyline != null) {
@@ -656,7 +656,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 			canPlay = false;
 			run = false;
 			mr = new MediaRecorder();
@@ -678,7 +678,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 				ab.setPositiveButton(getString(R.string.finish), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						run = false;
 						dialog.dismiss();
 					}
@@ -686,7 +686,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 				ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						run = false;
 						new File(filePath).delete();
 						dialog.dismiss();
@@ -699,11 +699,11 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 				canPlay = true;
 				run = true;
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				Toast.makeText(RecordActivity.this, getString(R.string.cannot_start_media_recorder_due_to_unknowm_error), Toast.LENGTH_SHORT).show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				Toast.makeText(RecordActivity.this, getString(R.string.cannot_start_media_recorder_due_to_unknowm_error), Toast.LENGTH_SHORT).show();
 			}
@@ -712,12 +712,12 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		protected Integer doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
+
 			while (run) {
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				publishProgress(mr.getMaxAmplitude());
@@ -727,7 +727,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
+
 			time.setText(convertSecondToTime(System.currentTimeMillis() - startTime));
 			pb.setProgress((int) (20 * Math.log10(values[0])) - base);
 		}
@@ -745,7 +745,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			// TODO Auto-generated method stub
+
 			if (canPlay) {
 				mr.stop();
 				mr.release();
@@ -756,20 +756,20 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		// TODO Auto-generated method stub
+
 		poiName.setText(marker.getTitle());
 		addPOI.performClick();
 	}
 
 	@Override
 	public void onMarkerDrag(Marker marker) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void onMarkerDragEnd(Marker marker) {
-		// TODO Auto-generated method stub
+
 		if (poi != null && marker != null && marker.getTitle() != null && marker.getTitle().equals(poi.title)) {
 			poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
 		}
@@ -777,7 +777,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
 	@Override
 	public void onMarkerDragStart(Marker marker) {
-		// TODO Auto-generated method stub
+
 
 	}
 }

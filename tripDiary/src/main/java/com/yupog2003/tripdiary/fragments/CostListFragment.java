@@ -157,10 +157,10 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 				}
 				data = new CostData(POI, costType, costName, costDollar, file);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			return data;
@@ -174,22 +174,22 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 		}
 
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return costDatas.size();
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return costDatas.get(position);
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			TextView column0 = new TextView(getActivity());
 			TextView column1 = new TextView(getActivity());
 			TextView column2 = new TextView(getActivity());
@@ -229,7 +229,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 	}
 
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
 		if (v.equals(poiColumn)) {
 			adapter.sort(ComparatorHelper.sort_by_cost_POI);
 		} else if (v.equals(typeColumn)) {
@@ -246,7 +246,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 		boolean checkAll;
 
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			// TODO Auto-generated method stub
+
 			final ArrayList<CostData> checkedItems = new ArrayList<CostData>();
 			for (int i = 0; i < checks.length; i++) {
 				if (checks[i]) {
@@ -262,7 +262,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 				ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						for (int i = 0; i < checkedItems.size(); i++) {
 							checkedItems.get(i).file.delete();
 						}
@@ -303,7 +303,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 				ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						String name = costName.getText().toString();
 						String dollar = costDollar.getText().toString();
 						if (!name.equals("") && !dollar.equals("")) {
@@ -328,7 +328,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 								bw.flush();
 								bw.close();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+
 								e.printStackTrace();
 							}
 							adapter = new CostAdapter(path, option);
@@ -348,7 +348,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 		}
 
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			mode.getMenuInflater().inflate(R.menu.cost_menu, menu);
 			checks = new boolean[adapter.getCount()];
 			for (int i = 0; i < checks.length; i++)
@@ -358,17 +358,17 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 		}
 
 		public void onDestroyActionMode(ActionMode mode) {
-			// TODO Auto-generated method stub
+
 			mode = null;
 		}
 
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			return true;
 		}
 
 		public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-			// TODO Auto-generated method stub
+
 			checks[position] = checked;
 			int selects = 0;
 			for (int i = 0; i < checks.length; i++) {

@@ -54,7 +54,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
+
 		super.onSaveInstanceState(outState);
 		if (outState.isEmpty()) {
 			outState.putBoolean("bug:fix", true);
@@ -62,7 +62,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 	}
 
 	public void setVideo() {
-		// TODO Auto-generated method stub
+
 		if (getView() == null)
 			return;
 		layout = (GridView) getView().findViewById(R.id.videogrid);
@@ -98,24 +98,24 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			if (videos == null)
 				return 0;
 			return videos.length;
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return videos[position];
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
+
 			ImageView image = new ImageView(getActivity());
 			try {
 				mmr.setDataSource(videos[position].getPath());
@@ -146,7 +146,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			// TODO Auto-generated method stub
+
 			final ArrayList<File> checksName = new ArrayList<File>();
 			for (int i = 0; i < checks.length; i++) {
 				if (checks[i]) {
@@ -161,7 +161,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 				ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						for (int i = 0; i < checksName.size(); i++) {
 							checksName.get(i).delete();
 						}
@@ -185,7 +185,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 					ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							String s = name.getText().toString();
                             checkFile.renameTo(new File(checkFile.getParent() + "/" + s));
 							setVideo();
@@ -219,7 +219,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
 					@Override
 					public boolean accept(File dir, String filename) {
-						// TODO Auto-generated method stub
+
 						if (filename.equals(ViewPointActivity.poi.dir.getName())) {
 							return false;
 						}
@@ -235,7 +235,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+
 						File[] fromFiles = checksName.toArray(new File[checksName.size()]);
 						File[] toFiles = new File[checksName.size()];
 						for (int i = 0; i < toFiles.length; i++) {
@@ -245,7 +245,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 							
 							@Override
 							public void onFinish() {
-								// TODO Auto-generated method stub
+
 								setVideo();
 								Intent data = new Intent();
 								data.putExtra("update", true);
@@ -263,7 +263,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public boolean onCreateActionMode(final ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
 			menu.findItem(R.id.print).setVisible(false);
 			checks = new boolean[adapter.getCount()];
@@ -275,17 +275,17 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public void onDestroyActionMode(ActionMode mode) {
-			// TODO Auto-generated method stub
+
 			mode = null;
 		}
 
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			// TODO Auto-generated method stub
+
 			return true;
 		}
 
 		public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-			// TODO Auto-generated method stub
+
 			checks[position] = checked;
 			int selects = 0;
 			for (int i = 0; i < checks.length; i++) {
@@ -299,7 +299,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 	}
 
 	public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-		// TODO Auto-generated method stub
+
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(Uri.fromFile((File) adapter.getItem(position)), "video/*");
 		getActivity().startActivity(intent);

@@ -177,7 +177,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
+
 		if (mode == Mode.map_mode) {
 			finish();
 		} else {
@@ -187,7 +187,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		if (drawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
@@ -195,7 +195,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 	}
 
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
 		if (v.equals(map)) {
 			setMode(Mode.map_mode);
 			drawerLayout.closeDrawers();
@@ -219,7 +219,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-		// TODO Auto-generated method stub
+
 		super.onConfigurationChanged(newConfig);
 		drawerToggle.onConfigurationChanged(newConfig);
 	}

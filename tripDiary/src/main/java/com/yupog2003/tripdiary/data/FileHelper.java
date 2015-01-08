@@ -51,7 +51,7 @@ public class FileHelper {
 		return new FilenameFilter() {
 
 			public boolean accept(File dir, String filename) {
-				// TODO Auto-generated method stub
+
 				return new File(dir, filename).isDirectory() && !filename.startsWith(".");
 			}
 
@@ -70,10 +70,10 @@ public class FileHelper {
 			fis.close();
 			fos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -110,7 +110,7 @@ public class FileHelper {
 			bw.close();
 			br.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -150,7 +150,7 @@ public class FileHelper {
 		return new FileFilter() {
 
 			public boolean accept(File pathname) {
-				// TODO Auto-generated method stub
+
 				return isPicture(pathname);
 			}
 		};
@@ -160,7 +160,7 @@ public class FileHelper {
 		return new FileFilter() {
 
 			public boolean accept(File pathname) {
-				// TODO Auto-generated method stub
+
 				return isVideo(pathname);
 			}
 		};
@@ -170,7 +170,7 @@ public class FileHelper {
 		return new FileFilter() {
 
 			public boolean accept(File pathname) {
-				// TODO Auto-generated method stub
+
 				return isAudio(pathname);
 			}
 		};
@@ -180,7 +180,7 @@ public class FileHelper {
 		return new FileFilter() {
 
 			public boolean accept(File pathname) {
-				// TODO Auto-generated method stub
+
 				return !pathname.getName().startsWith(".");
 			}
 		};
@@ -191,7 +191,7 @@ public class FileHelper {
 
 			@Override
 			public boolean accept(File pathname) {
-				// TODO Auto-generated method stub
+
 				return isMemory(pathname);
 			}
 		};
@@ -206,10 +206,10 @@ public class FileHelper {
 			oos.close();
 			fos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -225,14 +225,14 @@ public class FileHelper {
 				new Thread(new Runnable() {
 
 					public void run() {
-						// TODO Auto-generated method stub
+
 						long count;
 						while ((count = cis.getByteCount()) < fileSize) {
 							listener.onProgressChanged(count);
 							try {
 								Thread.sleep(100);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
+
 								e.printStackTrace();
 							}
 						}
@@ -242,13 +242,13 @@ public class FileHelper {
 			result = ois.readObject();
 			ois.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return result;
@@ -260,10 +260,10 @@ public class FileHelper {
 			dozip(source, zos, source.getName());
 			zos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -290,7 +290,7 @@ public class FileHelper {
 				zos.closeEntry();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -324,10 +324,10 @@ public class FileHelper {
 			}
 			zis.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -365,10 +365,10 @@ public class FileHelper {
 			bw.flush();
 			bw.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -413,7 +413,7 @@ public class FileHelper {
 			bw.flush();
 			bw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -436,10 +436,10 @@ public class FileHelper {
 			is.close();
 			return count == 0 && !empty ? 1 : count;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return 0;
@@ -481,7 +481,7 @@ public class FileHelper {
 			File[] dirss = root.listFiles(new FileFilter() {
 
 				public boolean accept(File pathname) {
-					// TODO Auto-generated method stub
+
 					if (!showHideDir && pathname.getName().startsWith("."))
 						return false;
 					return pathname.isDirectory();
@@ -492,7 +492,7 @@ public class FileHelper {
 			Arrays.sort(dirss, new Comparator<File>() {
 
 				public int compare(File lhs, File rhs) {
-					// TODO Auto-generated method stub
+
 					return lhs.getName().compareToIgnoreCase(rhs.getName());
 				}
 			});
@@ -509,22 +509,22 @@ public class FileHelper {
 		}
 
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return dirs.length;
 		}
 
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+
 			return dirs[position];
 		}
 
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+
 			return position;
 		}
 
 		public View getView(int position, View convertView, ViewGroup viewGroup) {
-			// TODO Auto-generated method stub
+
 			TextView textView = new TextView(context);
 			textView.setTextAppearance(context, android.R.style.TextAppearance_Large);
 			textView.setCompoundDrawablesWithIntrinsicBounds(position > 1 ? R.drawable.ic_folder : 0, 0, 0, 0);
@@ -539,7 +539,7 @@ public class FileHelper {
 		}
 
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-			// TODO Auto-generated method stub
+
 			if (position > 0) {
 				setDir(dirs[position]);
 				notifyDataSetChanged();
@@ -575,7 +575,7 @@ public class FileHelper {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 			AlertDialog.Builder ab = new AlertDialog.Builder(activity);
 			ab.setTitle(activity.getString(R.string.move_to));
 			LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
@@ -586,7 +586,7 @@ public class FileHelper {
 			ab.setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					cancel = true;
 				}
 			});
@@ -596,7 +596,7 @@ public class FileHelper {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			if (fromFiles != null && toFiles != null) {
 				publishProgress("setMax", String.valueOf(Math.min(fromFiles.length, toFiles.length)));
 				for (int i = 0; i < Math.min(fromFiles.length, toFiles.length); i++) {
@@ -614,7 +614,7 @@ public class FileHelper {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			// TODO Auto-generated method stub
+
 			if (values[0].equals("setMax")) {
 				progress.setMax(Integer.valueOf(values[1]));
 				progressMessage.setText("0/" + values[1]);
@@ -627,7 +627,7 @@ public class FileHelper {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+
 			dialog.dismiss();
 			if (listener != null) {
 				listener.onFinish();

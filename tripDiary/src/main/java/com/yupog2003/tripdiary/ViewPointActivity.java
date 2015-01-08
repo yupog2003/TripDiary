@@ -81,7 +81,7 @@ public class ViewPointActivity extends MyActivity {
 	}
 
 	private void initialtab(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
 		adapter = new MyPagerAdapter(getFragmentManager());
 		viewPager.setAdapter(adapter);
@@ -106,7 +106,7 @@ public class ViewPointActivity extends MyActivity {
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
-			// TODO Auto-generated constructor stub
+			 Auto-generated constructor stub
 			textFragment = new TextFragment();
 			pictureFragment = new PictureFragment();
 			videoFragment = new VideoFragment();
@@ -115,7 +115,7 @@ public class ViewPointActivity extends MyActivity {
 
 		@Override
 		public Fragment getItem(int arg0) {
-			// TODO Auto-generated method stub
+
 			switch (arg0) {
 			case 0:
 				return textFragment;
@@ -131,13 +131,13 @@ public class ViewPointActivity extends MyActivity {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+
 			return 4;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// TODO Auto-generated method stub
+
 			String title = "";
 			switch (position) {
 			case 0:
@@ -196,7 +196,7 @@ public class ViewPointActivity extends MyActivity {
 			ab.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					AlertDialog.Builder ab2 = new AlertDialog.Builder(ViewPointActivity.this);
 					ab2.setTitle(getString(R.string.edit));
 					View layout = getLayoutInflater().inflate(R.layout.edit_poi, null);
@@ -224,7 +224,7 @@ public class ViewPointActivity extends MyActivity {
 					ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+
 							String editAltitudeStr = editaltitude.getText().toString();
 							String editLatitudeStr = editlatitude.getText().toString();
 							String editLongitudeStr = editlongitude.getText().toString();
@@ -265,7 +265,7 @@ public class ViewPointActivity extends MyActivity {
 			ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+
 					poi.deleteSelf();
 					Intent data = new Intent();
 					data.putExtra("update", true);
@@ -352,7 +352,7 @@ public class ViewPointActivity extends MyActivity {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+
 			pd = new ProgressDialog(ViewPointActivity.this);
 			pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			if (files != null)
@@ -363,7 +363,7 @@ public class ViewPointActivity extends MyActivity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			if (files == null)
 				return null;
 			for (int i = 0; i < files.size(); i++) {
@@ -384,13 +384,13 @@ public class ViewPointActivity extends MyActivity {
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
+
 			pd.setProgress(values[0]);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+
 			pd.dismiss();
 			adapter.pictureFragment.onResume();
 			adapter.videoFragment.onResume();

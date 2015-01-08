@@ -12,7 +12,6 @@ import android.graphics.Rect;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.Layout;
@@ -22,7 +21,6 @@ import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
-import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
@@ -178,7 +176,7 @@ public class GenerateVideoService extends IntentService {
         try {
             for (int i = 0; i < poi.picFiles.length; i++) {
                 nb.setContentText(poi.title + "-" + getString(R.string.photo) + "-" + poi.picFiles[i].getName());
-                nm.notify(1, nb.build());
+                publishProgress(i, poi.picFiles.length);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeFile(poi.picFiles[i].getPath(), options);
@@ -212,6 +210,7 @@ public class GenerateVideoService extends IntentService {
                     FileHelper.copyFile(new File(tempDir, fileName), new File(tempDir, "image_" + String.valueOf(i + 2) + ".jpg"));
                 }
             }
+            num_processed_materials++;
             String cmdDescription = poi.title + "-" + getString(R.string.photo);
             runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, secondsPerPicture * (poi.picFiles.length + 2));
             runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mpg", "-shortest", "-c:v", "copy", "temp2.mpg"}, cmdDescription, null);
@@ -277,9 +276,9 @@ public class GenerateVideoService extends IntentService {
             for (int i = 0; i < poi.audioFiles.length; i++) {
                 metaRetriever.setDataSource(poi.audioFiles[i].getPath());
                 int length = Integer.valueOf(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000;
-                String cmdDescription = poi.title + "-" + getString(R.string.video) + "-" + poi.audioFiles[i].getName();
-                runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(length), "-i", "%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, null);
-                runCommand(new String[]{"ffmpeg", "-i", "temp.mpg", "-i", poi.audioFiles[i].getAbsolutePath(), "-c", "copy", "-strict", "-2", "-shortest", "temp2.mpg"}, cmdDescription, length);
+                String cmdDescription = poi.title + "-" + getString(R.string.sound) + "-" + poi.audioFiles[i].getName();
+                runCommand(new String[]{"ffmpeg", "-r", "1/" + String.valueOf(length/2), "-i", "%d.jpg", "-c:v", "mpeg2video", "temp.mpg"}, cmdDescription, null);
+                runCommand(new String[]{"ffmpeg", "-i", "temp.mpg", "-i", poi.audioFiles[i].getAbsolutePath(), "-c", "copy", "-strict", "-2", "temp2.mpg"}, cmdDescription, length);
                 concatFiles(new File(tempDir, "temp2.mpg"), new File(tempDir, videoName));
                 new File(tempDir, "temp.mpg").delete();
                 new File(tempDir, "temp2.mpg").delete();
@@ -297,8 +296,6 @@ public class GenerateVideoService extends IntentService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private String[] generateTrackVideos(Bitmap gmapBitmap, Point[] trackPoints) {
@@ -313,7 +310,7 @@ public class GenerateVideoService extends IntentService {
                 for (int j = 0; j < frames_per_track; j++) {
                     String fileName = "track_" + String.valueOf(i) + "_" + String.valueOf(j) + ".jpg";
                     nb.setContentText(fileName);
-                    nm.notify(1, nb.build());
+                    publishProgress(j, frames_per_track);
                     Point point = trackPoints[i * frames_per_track + j];
                     Bitmap bitmap = gmapBitmap.copy(Bitmap.Config.RGB_565, true);
                     Canvas canvas = new Canvas(bitmap);
@@ -329,6 +326,7 @@ public class GenerateVideoService extends IntentService {
                 }
                 bufferedWriter.flush();
                 bufferedWriter.close();
+                num_processed_materials++;
                 String trackVideoName = "track_" + String.valueOf(i) + ".mpg";
                 trackVideoNames[i] = trackVideoName;
                 runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", "temp.mpg"}, trackVideoName, secondsPerTrack);
@@ -352,9 +350,9 @@ public class GenerateVideoService extends IntentService {
         for (int i = 0; i < cmds.length; i++) {
             sb.append(cmds[i]).append(" ");
         }
-       String cmd = sb.toString();
+        String cmd = sb.toString();
         Log.i("trip", "cmd:" + cmd);
-        final String des=description==null?cmd:description;
+        final String des = description == null ? cmd : description;
         nb.setContentText(des);
         nm.notify(1, nb.build());
         try {
@@ -381,11 +379,9 @@ public class GenerateVideoService extends IntentService {
                                     if (toks[i].contains("time=")) {
                                         String timeStr = toks[i].substring(toks[i].indexOf("time=") + 5);
                                         String[] timeToks = timeStr.split(":");
+                                        nb.setContentText(des + " " + timeStr);
                                         float timeLength = Integer.valueOf(timeToks[0]) * 60 * 60 + Integer.valueOf(timeToks[1]) * 60 + Float.valueOf(timeToks[2]);
-                                        int progress = (int) (100 * (num_processed_materials + timeLength / predicetedTimeLength) / num_total_materials);
-                                        nb.setProgress(100, progress, false);
-                                        nb.setContentText(des+" "+timeStr);
-                                        nm.notify(1, nb.build());
+                                        publishProgress(timeLength, predicetedTimeLength);
                                         break;
                                     }
                                 }
@@ -399,11 +395,7 @@ public class GenerateVideoService extends IntentService {
             }).start();
             int exitVal = process.waitFor();
             Log.i("trip", "exit:" + String.valueOf(exitVal));
-            if (exitVal == 0) { //success
-                return true;
-            } else { //failure
-                return false;
-            }
+            return exitVal == 0;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -464,17 +456,24 @@ public class GenerateVideoService extends IntentService {
 
     private int getNum_total_materials() {
         int num = 0;
-        num += pois.length + 1; //num tracks
+        num += 2 * (pois.length + 1); //num tracks
         for (int i = 0; i < pois.length; i++) {
             POI poi = pois[i];
             num++;//diary
             if (poi.picFiles.length > 0) {
-                num++;
+                num += 2;
             }
             num += poi.videoFiles.length * 2;
             num += poi.audioFiles.length;
         }
         return num;
+    }
+
+    public void publishProgress(float materialProgress, float materialTotal) {
+        if (nm == null || nb == null) return;
+        int progress = (int) (2000 * (num_processed_materials + materialProgress / materialTotal) / num_total_materials);
+        nb.setProgress(2000, progress, false);
+        nm.notify(1, nb.build());
     }
 
     @Override

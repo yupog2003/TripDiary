@@ -119,10 +119,10 @@ public class GpxAnalyzerJava {
 			br.close();
 			return true;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -272,7 +272,7 @@ public class GpxAnalyzerJava {
 			bw.close();
 			return true;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -342,7 +342,7 @@ public class GpxAnalyzerJava {
 		handler.post(new Runnable() {
 
 			public void run() {
-				// TODO Auto-generated method stub
+
 				try {
 					View view = ChartFactory.getLineChartView(context, dataset, render);
 					view.setDrawingCacheEnabled(true);
@@ -364,10 +364,10 @@ public class GpxAnalyzerJava {
 						Toast.makeText(context, "bitmap is null", Toast.LENGTH_SHORT).show();
 					}
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (OutOfMemoryError e) {
 					e.printStackTrace();
