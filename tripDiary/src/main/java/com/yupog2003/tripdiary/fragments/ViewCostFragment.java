@@ -157,7 +157,7 @@ public class ViewCostFragment extends Fragment {
 
 		public TabsAdapter(FragmentManager fm) {
 			super(fm);
-			 Auto-generated constructor stub
+
 			costListFragment = new CostListFragment();
 			costPieChartFragment = new CostPieChartFragment();
 			costBarChartFragment = new CostBarChartFragment();

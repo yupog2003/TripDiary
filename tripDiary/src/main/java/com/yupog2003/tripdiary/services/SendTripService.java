@@ -46,7 +46,7 @@ public class SendTripService extends IntentService {
 
 	public SendTripService() {
 		super("SendTripService");
-		 Auto-generated constructor stub
+
 		nb = new NotificationCompat.Builder(this);
 	}
 

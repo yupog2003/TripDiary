@@ -318,5 +318,15 @@
     <string name="generate_video">生成影片(實驗性)</string>
     <string name="encoding">編碼中</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">請連線至網路以下載Google Map背景</string>
+    <string name="would_you_like_to_choose_background_music">你想要選一個背景音樂嗎? 注意 : 它將會覆蓋所有旅程內的聲音</string>
+    <string name="add_background_music">加入背景音樂</string>
+    <string name="videoname">影片名稱</string>
+    <string name="resolution">解析度</string>
+    <string name="fps">Fps</string>
+    <string name="background_music">背景音樂</string>
+    <string name="preset">Preset</string>
+    <string name="video_codec">影片編碼</string>
+    <string name="audio_codec">聲音編碼</string>
+    <string name="select">選擇</string>
 
 </resources>

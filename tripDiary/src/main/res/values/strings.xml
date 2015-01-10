@@ -80,6 +80,17 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="resolutions">
+        <item>1920x1080</item>
+        <item>1280x720</item>
+        <item>640x480</item>
+    </string-array>
+    <string-array name="fpss">
+        <item>60</item>
+        <item>30</item>
+        <item>25</item>
+        <item>15</item>
+    </string-array>
 
 
     <string name="title_activity_category">Categories</string>
@@ -315,5 +326,14 @@
     <string name="generate_video">Generate Video(experimental)</string>
     <string name="encoding">Encoding</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">Please connect to internet for downloading Google Map background</string>
-
+    <string name="would_you_like_to_choose_background_music">Would you like to choose a background music? Note : It will replace all the sound in your trip.</string>
+    <string name="add_background_music">Add background music</string>
+    <string name="videoname">Video Name</string>
+    <string name="resolution">Resolution</string>
+    <string name="fps">Fps</string>
+    <string name="background_music">Bg music</string>
+    <string name="preset">Preset</string>
+    <string name="video_codec">Video codec</string>
+    <string name="audio_codec">Audio codec</string>
+    <string name="select">Select</string>
 </resources>

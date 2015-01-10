@@ -45,7 +45,7 @@ public class MyFileBody extends FileBody {
 
 		public MyOutputStream(OutputStream out) {
 			super(out);
-			 Auto-generated constructor stub
+
 			transferred = 0;
 		}
 

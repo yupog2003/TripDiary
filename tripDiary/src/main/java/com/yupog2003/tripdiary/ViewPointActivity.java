@@ -106,7 +106,7 @@ public class ViewPointActivity extends MyActivity {
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
-			 Auto-generated constructor stub
+
 			textFragment = new TextFragment();
 			pictureFragment = new PictureFragment();
 			videoFragment = new VideoFragment();

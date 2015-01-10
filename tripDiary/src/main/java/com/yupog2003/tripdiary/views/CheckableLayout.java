@@ -11,7 +11,7 @@ public class CheckableLayout extends FrameLayout implements Checkable {
 
 	public CheckableLayout(Context context) {
 		super(context);
-		 Auto-generated constructor stub
+
 	}
 
 	public CheckableLayout(Context context, AttributeSet attrs) {

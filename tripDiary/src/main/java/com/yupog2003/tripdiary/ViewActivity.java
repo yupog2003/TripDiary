@@ -51,7 +51,6 @@ public class ViewActivity extends MyActivity{
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
-			 Auto-generated constructor stub
 			fragments = new Fragment[3];
 			fragments[0] = new RemoteTripsFragment();
 			Bundle personalTripFragmentBundle=new Bundle();

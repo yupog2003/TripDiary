@@ -7,16 +7,16 @@ import android.widget.ListView;
 public class UnScrollableListView extends ListView{
 	public UnScrollableListView(Context context) {
 		super(context);
-		 Auto-generated constructor stub
+
 	}
 	public UnScrollableListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		 Auto-generated constructor stub
+
 	}
 	public UnScrollableListView(Context context, AttributeSet attrs,
 			int defStyle) {
 		super(context, attrs, defStyle);
-		 Auto-generated constructor stub
+
 	}
 	
 	@Override

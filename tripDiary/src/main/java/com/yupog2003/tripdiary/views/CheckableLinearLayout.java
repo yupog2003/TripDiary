@@ -9,7 +9,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
 	public boolean checked;
 	public CheckableLinearLayout(Context context) {
 		super(context);
-		 Auto-generated constructor stub
+
 	}
 
 	public boolean isChecked() {

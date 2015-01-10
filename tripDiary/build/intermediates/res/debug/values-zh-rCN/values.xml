@@ -95,6 +95,7 @@
     <string name="account">帐户</string>
     <string name="accuracy">精确度</string>
     <string name="add">新增</string>
+    <string name="add_background_music">加入背景音乐</string>
     <string name="add_poi">新增兴趣点</string>
     <string name="altitude_unit">高度单位</string>
     <string name="analysis_gpx">解析.gpx档</string>
@@ -103,9 +104,11 @@
     <string name="are_you_sure_to_delete_this_poi">确定要删除这个兴趣点吗?</string>
     <string name="ask_for_replace_trip">有相同的旅程，请问要取代吗？</string>
     <string name="ask_import_gpx_file">你要汇入gpx档吗?(包含时间资讯)</string>
+    <string name="audio_codec">声音编码</string>
     <string name="average_speed">平均速度</string>
     <string name="back_up_setting">备份设定</string>
     <string name="backed_up_file">备份档</string>
+    <string name="background_music">背景音乐</string>
     <string name="backup">备份</string>
     <string name="backup_path">备份路径</string>
     <string name="backup_to">备份到</string>
@@ -195,6 +198,7 @@
     <string name="finish_import_memory">汇入回忆已完成，要删除来源资料夹吗？</string>
     <string name="first_analysis_gpx">解析.gpx档（第一次会花较久时间）</string>
     <string name="food">食</string>
+    <string name="fps">Fps</string>
     <string name="generate_video">生成影片(实验性)</string>
     <string name="gps_is_disabled">GPS未开启</string>
     <string name="gpx">Gpx</string>
@@ -276,6 +280,7 @@
     <string name="prepare_diary">准备日记</string>
     <string name="prepare_pictures">准备照片</string>
     <string name="prepare_video">准备影片</string>
+    <string name="preset">Preset</string>
     <string name="print">打印</string>
     <string name="record_audio">纪录声音</string>
     <string name="record_duration">纪录间隔</string>
@@ -284,6 +289,7 @@
     <string name="remote_personal_trips">远端个人旅程</string>
     <string name="remote_public_trips">远端公开旅程</string>
     <string name="rename">更名</string>
+    <string name="resolution">解析度</string>
     <string name="restore_setting">还原设定</string>
     <string name="restore_trip">还原旅程</string>
     <string name="resume">继续</string>
@@ -294,6 +300,7 @@
     <string name="search_poi">搜寻兴趣点</string>
     <string name="search_trip">搜寻旅程</string>
     <string name="searching_for_satellite">定位中</string>
+    <string name="select">选择</string>
     <string name="select_a_directory">选一个资料夹</string>
     <string name="select_all">全选</string>
     <string name="select_diary_font">选择日记字体</string>
@@ -360,6 +367,9 @@
     <string name="uploading">上传中</string>
     <string name="velocity">速率</string>
     <string name="video">影片</string>
+    <string name="video_codec">影片编码</string>
+    <string name="videoname">影片名称</string>
+    <string name="would_you_like_to_choose_background_music">你想要选一个背景音乐吗？注意：它将会覆盖所有旅程内的声音</string>
     <string name="write_text">写字</string>
     <string name="yes">是</string>
     <string name="zipping">压缩中</string>

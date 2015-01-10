@@ -28,7 +28,7 @@ public class POI {
 	public File[] costFiles;
 	public String title;
 	public Time time; // in UTC
-	public String timeStrInCurrentTimeZone;
+	//public String timeStrInCurrentTimeZone;
 	public double latitude;
 	public double longitude;
 	public double altitude;

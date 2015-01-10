@@ -42,6 +42,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -52,6 +53,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -105,9 +107,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
-//import com.yupog2003.tripdiary.PlayPointActivity;
-//import com.yupog2003.tripdiary.ViewPointActivity;
-
 public class ViewMapFragment extends Fragment implements OnInfoWindowClickListener, OnMapLongClickListener, OnMarkerDragListener, OnClickListener {
     MapFragment mapFragment;
     GoogleMap gmap;
@@ -148,6 +147,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     private static final int import_track = 0;
     private static final int update_request = 1;
     private static final int REQUEST_GET_TOKEN = 2;
+    private static final int REQUEST_BACKGROUND_MUSIC = 3;
     // private static final int playtriptype_normal=0;
     private static final int playtriptype_skyview = 1;
     private static final int request_write_location_to_POI = 1;
@@ -846,6 +846,15 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                         new GetAccessTokenTask().execute();
                     }
                     break;
+                case REQUEST_BACKGROUND_MUSIC:
+                    if (resultCode == Activity.RESULT_OK) {
+                        Uri uri1 = data.getData();
+                        if (uri1 != null) {
+                            this.videoBackgroundMusic = uri1.getPath();
+                            this.backgroundMusicButton.setText(new File(uri1.getPath()).getName());
+                        }
+                    }
+                    break;
             }
         }
     }
@@ -1328,7 +1337,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
             if (fromUser) {
                 index = progress;
                 setPosition(index);
@@ -1336,12 +1344,10 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
-
             pause();
         }
 
         public void onStopTrackingTouch(SeekBar seekBar) {
-
             resume();
         }
 
@@ -1399,14 +1405,11 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 getActivity().startService(intent);
                 EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "share_track_by_tripdiary", ViewTripActivity.trip.dir.getName(), null).build());
             } catch (UserRecoverableAuthException e) {
-
                 e.printStackTrace();
                 startActivityForResult(e.getIntent(), REQUEST_GET_TOKEN);
             } catch (IOException e) {
-
                 e.printStackTrace();
             } catch (GoogleAuthException e) {
-
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1417,83 +1420,122 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     public static Bitmap gmapBitmap;
     public static Point[] trackPoints;
+    public String videoBackgroundMusic;
+    public Button backgroundMusicButton;
 
     private void generateVideo() {
         EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "generate_video", ViewTripActivity.trip.dir.getName(), null).build());
-        final int videoWidth = GenerateVideoService.videoWidth;
-        final int videoHeight = GenerateVideoService.videoHeight;
-        final int secondsPerTrack = GenerateVideoService.secondsPerTrack;
-        final int fps = GenerateVideoService.fps;
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-        MapView mapView = new MapView(getActivity());
-        ab.setView(mapView);
-        final AlertDialog alertDialog = ab.create();
-        alertDialog.show();
-        int dp32 = (int) DeviceHelper.pxFromDp(getActivity(), 32);
-        alertDialog.getWindow().setLayout(videoWidth + dp32, videoHeight + dp32);
-        mapView.onCreate(new Bundle());
-        mapView.onResume();
-        mapView.getMapAsync(new OnMapReadyCallback() {
+        ab.setTitle(R.string.generate_video);
+        View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_generate_video, null);
+        ab.setView(layout);
+        final EditText videoName = (EditText) layout.findViewById(R.id.videoName);
+        videoName.setText(ViewTripActivity.trip.tripName);
+        final Spinner resolution = (Spinner) layout.findViewById(R.id.resolution);
+        resolution.setSelection(0);
+        final Spinner fps = (Spinner) layout.findViewById(R.id.fps);
+        fps.setSelection(2);
+        final Button backgroundMusic = (Button) layout.findViewById(R.id.backgroundMusic);
+        this.backgroundMusicButton=backgroundMusic;
+        backgroundMusic.setOnClickListener(new OnClickListener() {
             @Override
-            public void onMapReady(final GoogleMap googleMap) {
-                googleMap.addPolyline(new PolylineOptions().add(lat).color(trackColor).width(5));
-                for (int i = 0; i < ViewTripActivity.trip.pois.length; i++) {
-                    POI poi = ViewTripActivity.trip.pois[i];
-                    LatLng position = new LatLng(poi.latitude, poi.longitude);
-                    googleMap.addMarker(new MarkerOptions().position(position));
-                }
-                LatLngBounds.Builder latlngBoundesBuilder = new LatLngBounds.Builder();
-                for (int i = 0; i < lat.length; i++) {
-                    latlngBoundesBuilder.include(lat[i]);
-                }
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBoundesBuilder.build(), 0), new GoogleMap.CancelableCallback() {
+            public void onClick(View v) {
+                Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
+                i3.setType("audio/*");
+                startActivityForResult(Intent.createChooser(i3, getString(R.string.select_the_audio_by)), REQUEST_BACKGROUND_MUSIC);
+            }
+        });
+        ab.setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String resolutionStr = resolution.getSelectedItem().toString();
+                final int videoWidth = Integer.valueOf(resolutionStr.split("x")[0]);
+                final int videoHeight = Integer.valueOf(resolutionStr.split("x")[1]);
+                final int secondsPerTrack = GenerateVideoService.secondsPerTrack;
+                final int fpsValue = Integer.valueOf(fps.getSelectedItem().toString());
+                final String videoNameStr = videoName.getText().toString()+".mp4";
+                AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+                MapView mapView = new MapView(getActivity());
+                ab.setView(mapView);
+                final AlertDialog alertDialog = ab.create();
+                alertDialog.show();
+                int dp32 = (int) DeviceHelper.pxFromDp(getActivity(), 32);
+                alertDialog.getWindow().setLayout(videoWidth + dp32, videoHeight + dp32);
+                mapView.onCreate(new Bundle());
+                mapView.onResume();
+                mapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
-                    public void onFinish() {
-                        googleMap.animateCamera(CameraUpdateFactory.zoomOut(), new GoogleMap.CancelableCallback() {
+                    public void onMapReady(final GoogleMap googleMap) {
+                        googleMap.addPolyline(new PolylineOptions().add(lat).color(trackColor).width(5));
+                        for (int i = 0; i < ViewTripActivity.trip.pois.length; i++) {
+                            POI poi = ViewTripActivity.trip.pois[i];
+                            LatLng position = new LatLng(poi.latitude, poi.longitude);
+                            googleMap.addMarker(new MarkerOptions().position(position));
+                        }
+                        LatLngBounds.Builder latlngBoundesBuilder = new LatLngBounds.Builder();
+                        for (int i = 0; i < lat.length; i++) {
+                            latlngBoundesBuilder.include(lat[i]);
+                        }
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBoundesBuilder.build(), 0), new GoogleMap.CancelableCallback() {
                             @Override
                             public void onFinish() {
-                                googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                                googleMap.animateCamera(CameraUpdateFactory.zoomOut(), new GoogleMap.CancelableCallback() {
                                     @Override
-                                    public void onMapLoaded() {
-                                        googleMap.setOnMapLoadedCallback(null);
-                                        googleMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
+                                    public void onFinish() {
+                                        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                                             @Override
-                                            public void onSnapshotReady(Bitmap bitmap) {
-                                                SparseArray<String> markersMap = getMarkersMap();
-                                                Projection projection = googleMap.getProjection();
-                                                int[] markersIndexes = new int[markersMap.size()];
-                                                for (int i = 0; i < markersIndexes.length; i++) {
-                                                    markersIndexes[i] = markersMap.keyAt(i);
-                                                }
-                                                Arrays.sort(markersIndexes);
-                                                int num_tracks = markersMap.size() + 1;
-                                                int frames_per_track = secondsPerTrack * fps;
-                                                Point[] trackPoints = new Point[num_tracks * frames_per_track];
-                                                for (int i = 0; i < num_tracks; i++) {
-                                                    int start, end, length;
-                                                    if (i == 0) {
-                                                        start = 0;
-                                                    } else {
-                                                        start = markersIndexes[i - 1] + 1;
+                                            public void onMapLoaded() {
+                                                googleMap.setOnMapLoadedCallback(null);
+                                                googleMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
+                                                    @Override
+                                                    public void onSnapshotReady(Bitmap bitmap) {
+                                                        SparseArray<String> markersMap = getMarkersMap();
+                                                        Projection projection = googleMap.getProjection();
+                                                        int[] markersIndexes = new int[markersMap.size()];
+                                                        for (int i = 0; i < markersIndexes.length; i++) {
+                                                            markersIndexes[i] = markersMap.keyAt(i);
+                                                        }
+                                                        Arrays.sort(markersIndexes);
+                                                        int num_tracks = markersMap.size() + 1;
+                                                        int frames_per_track = secondsPerTrack * fpsValue;
+                                                        Point[] trackPoints = new Point[num_tracks * frames_per_track];
+                                                        for (int i = 0; i < num_tracks; i++) {
+                                                            int start, end, length;
+                                                            if (i == 0) {
+                                                                start = 0;
+                                                            } else {
+                                                                start = markersIndexes[i - 1] + 1;
+                                                            }
+                                                            if (i == num_tracks - 1) {
+                                                                end = lat.length - 1;
+                                                            } else {
+                                                                end = markersIndexes[i] - 1;
+                                                            }
+                                                            length = end - start;
+                                                            for (int j = 0; j < frames_per_track; j++) {
+                                                                int indexInLat = start + length * j / frames_per_track;
+                                                                trackPoints[i * frames_per_track + j] = projection.toScreenLocation(lat[indexInLat]);
+                                                            }
+                                                        }
+                                                        ViewMapFragment.this.gmapBitmap = bitmap;
+                                                        ViewMapFragment.this.trackPoints = trackPoints;
+                                                        alertDialog.cancel();
+                                                        Intent intent = new Intent(getActivity(), GenerateVideoService.class);
+                                                        intent.putExtra(GenerateVideoService.tag_background_music_path, videoBackgroundMusic);
+                                                        intent.putExtra(GenerateVideoService.tag_video_width, videoWidth);
+                                                        intent.putExtra(GenerateVideoService.tag_video_height, videoHeight);
+                                                        intent.putExtra(GenerateVideoService.tag_videoname, videoNameStr);
+                                                        intent.putExtra(GenerateVideoService.tag_fps, fpsValue);
+                                                        getActivity().startService(intent);
                                                     }
-                                                    if (i == num_tracks - 1) {
-                                                        end = lat.length - 1;
-                                                    } else {
-                                                        end = markersIndexes[i] - 1;
-                                                    }
-                                                    length = end - start;
-                                                    for (int j = 0; j < frames_per_track; j++) {
-                                                        int indexInLat = start + length * j / frames_per_track;
-                                                        trackPoints[i * frames_per_track + j] = projection.toScreenLocation(lat[indexInLat]);
-                                                    }
-                                                }
-                                                ViewMapFragment.this.gmapBitmap = bitmap;
-                                                ViewMapFragment.this.trackPoints = trackPoints;
-                                                Intent intent = new Intent(getActivity(), GenerateVideoService.class);
-                                                getActivity().startService(intent);
-                                                alertDialog.cancel();
+                                                });
                                             }
                                         });
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+
                                     }
                                 });
                             }
@@ -1504,14 +1546,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                             }
                         });
                     }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
                 });
             }
         });
+        ab.setNegativeButton(R.string.cancel, null);
+        ab.show();
+
     }
 
 

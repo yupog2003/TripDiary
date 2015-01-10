@@ -19,7 +19,7 @@ public class SpinnerActionProvider extends ActionProvider {
 		this.context = context;
 		this.spinner = new Spinner(context);
 		
-		 Auto-generated constructor stub
+
 	}
 
 	@Override
