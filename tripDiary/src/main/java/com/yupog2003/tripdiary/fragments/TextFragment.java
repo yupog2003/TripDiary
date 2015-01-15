@@ -90,7 +90,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
             return;
         text.setText("");
         editText.setText("");
-        File fontFile = new File(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
+        File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
         if (fontFile.exists() && fontFile.isFile()) {
             try {
                 text.setTypeface(Typeface.createFromFile(fontFile));

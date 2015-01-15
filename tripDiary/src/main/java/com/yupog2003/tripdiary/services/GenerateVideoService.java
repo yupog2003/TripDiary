@@ -20,6 +20,8 @@ import android.text.TextPaint;
 import android.text.format.Time;
 import android.util.Log;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.FileHelper;
@@ -69,6 +71,7 @@ public class GenerateVideoService extends IntentService {
     public static final String tag_video_height = "videoheight";
     public static final String tag_fps = "fps";
     public static final String tag_videoname = "video_name";
+    public static final String cacheDirName = "VideoCache";
 
     public GenerateVideoService() {
         super("GenerateVideoService");
@@ -78,9 +81,7 @@ public class GenerateVideoService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         tripName = ViewTripActivity.trip.tripName;
         timeZone = ViewTripActivity.trip.timezone;
-        tempDir = new File(getCacheDir(), "VideoCache");
-        FileHelper.deletedir(tempDir.getPath());
-        tempDir.mkdirs();
+        tempDir = new File(getCacheDir(), cacheDirName);
         ffmpegFile = new File(getFilesDir().getParent(), "ffmpeg");
         if (!ffmpegFile.exists()) {
             copyFFmpeg();
@@ -126,12 +127,20 @@ public class GenerateVideoService extends IntentService {
                 return null;
             }
             BufferedWriter tripWriter = new BufferedWriter(new FileWriter(new File(tempDir, "trip_input.txt")));
-            tripWriter.write("file '" + tripTitleVideoName + "'\n");
-            for (int i = 0; i < poiVideoNames.length; i++) {
-                tripWriter.write("file '" + trackVideoNames[i] + "'\n");
-                tripWriter.write("file '" + poiVideoNames[i] + "'\n");
+            if (tripTitleVideoName != null) {
+                tripWriter.write("file '" + tripTitleVideoName + "'\n");
             }
-            tripWriter.write("file '" + trackVideoNames[trackVideoNames.length - 1] + "'\n");
+            for (int i = 0; i < poiVideoNames.length; i++) {
+                if (trackVideoNames[i] != null) {
+                    tripWriter.write("file '" + trackVideoNames[i] + "'\n");
+                }
+                if (poiVideoNames[i] != null) {
+                    tripWriter.write("file '" + poiVideoNames[i] + "'\n");
+                }
+            }
+            if (trackVideoNames[trackVideoNames.length - 1] != null) {
+                tripWriter.write("file '" + trackVideoNames[trackVideoNames.length - 1] + "'\n");
+            }
             tripWriter.flush();
             tripWriter.close();
             new File(resultVideoPath).delete();
@@ -145,23 +154,24 @@ public class GenerateVideoService extends IntentService {
                 int loop_times = videoLength / musicLength + 1;
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(tempDir, "input.txt")));
                 for (int i = 0; i < loop_times; i++) {
-                    bufferedWriter.write("file '" + backgroundMusicPath + "'\n");
+                    bufferedWriter.write("file '"+backgroundMusicPath+"'\n");
                 }
                 bufferedWriter.flush();
                 bufferedWriter.close();
+                String audioExt=backgroundMusicPath.substring(backgroundMusicPath.lastIndexOf(".")+1);
                 //extend music
-                runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", "-c", "copy", "-strict", "-2", "temp.mp3"}, getString(R.string.add_background_music), null);
+                runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", "-c", "copy", "-strict", "-2", "atemp."+audioExt}, getString(R.string.add_background_music), null);
                 //cut music to video length
-                runCommand(new String[]{"ffmpeg", "-ss", "0", "-t", String.valueOf(videoLength), "-i", "temp.mp3", "-c", "copy", "-strict", "-2", "temp2.mp3"}, getString(R.string.add_background_music), null);
+                runCommand(new String[]{"ffmpeg", "-ss", "0", "-t", String.valueOf(videoLength), "-i", "atemp."+audioExt, "-c", "copy", "-strict", "-2", "atemp2."+audioExt}, getString(R.string.add_background_music), null);
                 //add audio fade out
                 String audioFadeOut = "afade=t=out:st=" + String.valueOf(videoLength - 2) + ":d=2";
-                runCommand(new String[]{"ffmpeg", "-i", "temp2.mp3", "-af", audioFadeOut, "-strict", "-2", "temp3.mp4"}, getString(R.string.add_background_music), videoLength);
+                runCommand(new String[]{"ffmpeg", "-i", "atemp2."+audioExt, "-af", audioFadeOut, "-c:a", acodec, "-strict", "-2", "atemp3.mp4"}, getString(R.string.add_background_music), videoLength);
                 //combine with video
-                success = runCommand(new String[]{"ffmpeg", "-i", "temp.mp4", "-i", "temp3.mp4", "-map", "0:v", "-map", "1:a", "-c", "copy", "-strict", "-2", resultVideoPath}, getString(R.string.add_background_music), null);
+                success = runCommand(new String[]{"ffmpeg", "-i", "temp.mp4", "-i", "atemp3.mp4", "-map", "0:v", "-map", "1:a", "-c", "copy", "-strict", "-2", resultVideoPath}, getString(R.string.add_background_music), null);
                 new File(tempDir, "temp.mp4").delete();
-                new File(tempDir, "temp.mp3").delete();
-                new File(tempDir, "temp2.mp3").delete();
-                new File(tempDir, "temp3.mp4").delete();
+                new File(tempDir, "atemp."+audioExt).delete();
+                new File(tempDir, "atemp2."+audioExt).delete();
+                new File(tempDir, "atemp3.mp4").delete();
                 new File(tempDir, "input.txt").delete();
             } else {
                 success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "trip_input.txt", "-c", "copy", resultVideoPath}, null, null);
@@ -210,8 +220,9 @@ public class GenerateVideoService extends IntentService {
         FileHelper.copyFile(new File(tempDir, "title_0.jpg"), new File(tempDir, "title_1.jpg"));
         FileHelper.copyFile(new File(tempDir, "title_0.jpg"), new File(tempDir, "title_2.jpg"));
         String cmdDescription = videoName;
-        runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerTitle), "-i", "title_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr + ",fade=in:0:" + String.valueOf(fps), "temp.mp4"}, cmdDescription, secondsPerTitle * 2);
-        runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
+        boolean success = runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerTitle), "-i", "title_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr + ",fade=in:0:" + String.valueOf(fps), "temp.mp4"}, cmdDescription, secondsPerTitle * 2);
+        boolean success2 = runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
+        videoName = success && success2 ? videoName : null;
         new File(tempDir, "temp.mp4").delete();
         new File(tempDir, "title_0.jpg").delete();
         new File(tempDir, "title_1.jpg").delete();
@@ -233,8 +244,8 @@ public class GenerateVideoService extends IntentService {
             generateAudioVideo(bufferedWriter, poi);
             bufferedWriter.flush();
             bufferedWriter.close();
-            runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "poi_input.txt", "-c", "copy", poiVideoName}, poiVideoName, null);
-            poiVideoNames[i] = poiVideoName;
+            boolean success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "poi_input.txt", "-c", "copy", poiVideoName}, poiVideoName, null);
+            poiVideoNames[i] = success ? poiVideoName : null;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(tempDir, "poi_input.txt")));
             String s;
             while ((s = bufferedReader.readLine()) != null) {
@@ -278,9 +289,11 @@ public class GenerateVideoService extends IntentService {
         FileHelper.copyFile(new File(tempDir, "title_0.jpg"), new File(tempDir, "title_1.jpg"));
         FileHelper.copyFile(new File(tempDir, "title_0.jpg"), new File(tempDir, "title_2.jpg"));
         String cmdDescription = videoName;
-        runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerTitle), "-i", "title_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr + ",fade=in:0:" + String.valueOf(fps), "temp.mp4"}, cmdDescription, secondsPerTitle * 2);
-        runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
-        poiWriter.write("file '" + videoName + "'\n");
+        boolean success = runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerTitle), "-i", "title_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr + ",fade=in:0:" + String.valueOf(fps), "temp.mp4"}, cmdDescription, secondsPerTitle * 2);
+        boolean success2 = runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
+        if (success && success2) {
+            poiWriter.write("file '" + videoName + "'\n");
+        }
         new File(tempDir, "temp.mp4").delete();
         new File(tempDir, "title_0.jpg").delete();
         new File(tempDir, "title_1.jpg").delete();
@@ -318,9 +331,11 @@ public class GenerateVideoService extends IntentService {
         }
         bitmap.recycle();
         String cmdDescription = videoName;
-        runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "temp.mp4"}, cmdDescription, (num_bitmaps + 2) * secondsPerDiary);
-        runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
-        poiWriter.write("file '" + videoName + "'\n");
+        boolean success = runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerDiary), "-i", "diary_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "temp.mp4"}, cmdDescription, (num_bitmaps + 2) * secondsPerDiary);
+        boolean success2 = runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
+        if (success && success2) {
+            poiWriter.write("file '" + videoName + "'\n");
+        }
         new File(tempDir, "temp.mp4").delete();
         for (int i = 0; i < num_bitmaps + 2; i++) {
             new File(tempDir, "diary_" + String.valueOf(i) + ".jpg").delete();
@@ -370,9 +385,11 @@ public class GenerateVideoService extends IntentService {
         }
         num_processed_materials++;
         String cmdDescription = videoName;
-        runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "temp.mp4"}, cmdDescription, secondsPerPicture * (poi.picFiles.length + 2));
-        runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
-        poiWriter.write("file '" + videoName + "'\n");
+        boolean success = runCommand(new String[]{"ffmpeg", "-framerate", "1/" + String.valueOf(secondsPerPicture), "-i", "image_%d.jpg", "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "temp.mp4"}, cmdDescription, secondsPerPicture * (poi.picFiles.length + 2));
+        boolean success2 = runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", videoName}, cmdDescription, null);
+        if (success && success2) {
+            poiWriter.write("file '" + videoName + "'\n");
+        }
         new File(tempDir, "temp.mp4").delete();
         for (int i = 0; i < poi.picFiles.length + 2; i++) {
             new File(tempDir, "image_" + String.valueOf(i) + ".jpg").delete();
@@ -396,9 +413,11 @@ public class GenerateVideoService extends IntentService {
             int destHeight = (int) (height * ratio);
             String scale = "scale=" + String.valueOf(destWidth) + ":" + String.valueOf(destHeight);
             String pad = "pad=" + String.valueOf(videoWidth) + ":" + String.valueOf(videoHeight) + ":(ow-iw)/2:(oh-ih)/2";
-            runCommand(new String[]{"ffmpeg", "-i", poi.videoFiles[i].getAbsolutePath(), "-vf", scale + "," + pad + "," + fpsStr, "-c:v", vcodec, "-preset", preset, "-c:a", acodec, "-strict", "-2", videoName}, cmdDescription, length);
+            boolean success = runCommand(new String[]{"ffmpeg", "-i", poi.videoFiles[i].getAbsolutePath(), "-vf", scale + "," + pad + "," + fpsStr, "-c:v", vcodec, "-preset", preset, "-c:a", acodec, "-strict", "-2", videoName}, cmdDescription, length);
+            if (success) {
+                poiWriter.write("file '" + videoName + "'\n");
+            }
             num_processed_materials++;
-            poiWriter.write("file '" + videoName + "'\n");
         }
     }
 
@@ -421,14 +440,13 @@ public class GenerateVideoService extends IntentService {
             metaRetriever.setDataSource(poi.audioFiles[i].getPath());
             int length = Integer.valueOf(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000;
             String cmdDescription = videoName;
-            runCommand(new String[]{"ffmpeg", "-loop", "1", "-i", "poster.jpg", "-i", poi.audioFiles[i].getAbsolutePath(), "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "-c:a", acodec, "-strict", "-2", "-shortest", videoName}, cmdDescription, length);
-            poiWriter.write("file '" + videoName + "'\n");
-            new File(tempDir, "temp.mp4").delete();
+            boolean success = runCommand(new String[]{"ffmpeg", "-loop", "1", "-i", "poster.jpg", "-i", poi.audioFiles[i].getAbsolutePath(), "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "-c:a", acodec, "-strict", "-2", "-shortest", videoName}, cmdDescription, length);
+            if (success) {
+                poiWriter.write("file '" + videoName + "'\n");
+            }
             num_processed_materials++;
         }
-        new File(tempDir, "0.jpg").delete();
-        new File(tempDir, "1.jpg").delete();
-        new File(tempDir, "2.jpg").delete();
+        new File(tempDir, "poster.jpg").delete();
     }
 
     private String[] generateTrackVideos(Bitmap gmapBitmap, Point[] trackPoints) throws IOException {
@@ -461,15 +479,16 @@ public class GenerateVideoService extends IntentService {
             }
             num_processed_materials++;
             String trackVideoName = "track_" + String.valueOf(i) + ".mp4";
-            trackVideoNames[i] = trackVideoName;
             String trackRepresentation = "track_" + String.valueOf(i) + "_%d.jpg";
+            boolean success;
             if (i == num_tracks - 1) { //fade out
                 String fadeout = "fade=out:" + String.valueOf(frames_per_track) + ":" + String.valueOf(1 * fps - 1);
-                runCommand(new String[]{"ffmpeg", "-framerate", String.valueOf(fps), "-i", trackRepresentation, "-c:v", vcodec, "-preset", preset, "-vf", fadeout + "," + fpsStr, "temp.mp4"}, trackVideoName, secondsPerTitle);
+                success = runCommand(new String[]{"ffmpeg", "-framerate", String.valueOf(fps), "-i", trackRepresentation, "-c:v", vcodec, "-preset", preset, "-vf", fadeout + "," + fpsStr, "temp.mp4"}, trackVideoName, secondsPerTitle + 1);
             } else {
-                runCommand(new String[]{"ffmpeg", "-framerate", String.valueOf(fps), "-i", trackRepresentation, "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "temp.mp4"}, trackVideoName, secondsPerTitle);
+                success = runCommand(new String[]{"ffmpeg", "-framerate", String.valueOf(fps), "-i", trackRepresentation, "-c:v", vcodec, "-preset", preset, "-vf", fpsStr, "temp.mp4"}, trackVideoName, secondsPerTitle);
             }
-            runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", trackVideoName}, trackVideoName, null);
+            boolean success2 = runCommand(new String[]{"ffmpeg", "-f", "lavfi", "-i", "aevalsrc=0", "-i", "temp.mp4", "-shortest", "-c:v", "copy", "-strict", "-2", trackVideoName}, trackVideoName, null);
+            trackVideoNames[i] = success && success2 ? trackVideoName : null;
             new File(tempDir, "input.txt").delete();
             new File(tempDir, "temp.mp4").delete();
             for (int j = 0; j < fileNames.length; j++) {
@@ -626,6 +645,7 @@ public class GenerateVideoService extends IntentService {
     @Override
     public void onDestroy() {
         if (resultVideoPath != null) {
+            EasyTracker.getInstance(this).send(MapBuilder.createEvent("Trip", "generate_video_sucess", tripName, null).build());
             nb.setContentTitle(getString(R.string.finish));
             nb.setContentText(resultVideoPath);
             nb.setOngoing(false);
@@ -635,10 +655,11 @@ public class GenerateVideoService extends IntentService {
             nb.setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
             Intent intent2 = new Intent(Intent.ACTION_SEND);
             intent2.setType("video/*");
-            intent2.putExtra(Intent.EXTRA_STREAM, Uri.parse(resultVideoPath));
+            intent2.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(resultVideoPath)));
             nb.addAction(android.R.drawable.ic_menu_share, getString(R.string.share), PendingIntent.getActivity(this, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT));
             nm.notify(1, nb.build());
         } else {
+            EasyTracker.getInstance(this).send(MapBuilder.createEvent("Trip", "generate_video_fail", tripName, null).build());
             nm.cancel(1);
         }
         super.onDestroy();

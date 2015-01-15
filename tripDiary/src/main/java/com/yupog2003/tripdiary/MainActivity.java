@@ -1,10 +1,9 @@
 package com.yupog2003.tripdiary;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +15,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +33,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.services.RecordService;
@@ -54,6 +55,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends MyActivity implements Button.OnClickListener {
+
     Button startTrip;
     Button resumeTrip;
     Button viewHistory;
@@ -79,8 +81,9 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         rootPath = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary");
         creatRootDir(rootPath);
         SharedPreferences.Editor editor = getSharedPreferences("category", MODE_PRIVATE).edit();
-        editor.putString("nocategory", String.valueOf(Color.WHITE));
+        editor.putString(getString(R.string.nocategory), String.valueOf(Color.WHITE));
         editor.commit();
+        maintainNoCategory();
         distance_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("distance_unit", "0"));
         altitude_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("altitude_unit", "0"));
         startTrip = (Button) findViewById(R.id.starttrip);
@@ -93,23 +96,35 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             resumeTrip.setOnClickListener(this);
             allRecord.setOnClickListener(this);
         }
-        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(MainActivity.this).build();
+        ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(MainActivity.this).imageDecoder(myImageDecoder).build();
         ImageLoader.getInstance().init(conf);
+
+    }
+
+    private void maintainNoCategory() {
+        File[] trips = new File(rootPath).listFiles(FileHelper.getDirFilter());
+        SharedPreferences tripsp = getSharedPreferences("trip", Context.MODE_PRIVATE);
+        for (int i = 0; i < trips.length; i++) {
+            if (tripsp.getString(trips[i].getName(), "nocategory").equals("nocategory")) {
+                tripsp.edit().putString(trips[i].getName(), getString(R.string.nocategory)).commit();
+            }
+        }
+        getSharedPreferences("category", Context.MODE_PRIVATE).edit().remove("nocategory").commit();
     }
 
     public static void creatRootDir(String rootPath) {
         File file = new File(rootPath);
         if (!file.exists()) {
-            file.mkdir();
+            file.mkdirs();
         } else if (file.isFile()) {
             file.delete();
-            file.mkdir();
+            file.mkdirs();
         }
         File nomedia = new File(rootPath + "/.nomedia");
         try {
             nomedia.createNewFile();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
@@ -175,7 +190,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             rb.setText(categories[i]);
             rb.setId(i);
             rg.addView(rb);
-            if (categories[i].equals("nocategory")) {
+            if (categories[i].equals(getString(R.string.nocategory))) {
                 rg.check(i);
                 String color = categorysp.getString(categories[i], String.valueOf(Color.WHITE));
                 category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);

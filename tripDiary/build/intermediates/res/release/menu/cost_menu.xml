@@ -5,14 +5,14 @@
         android:id="@+id/delete"
         android:title="@string/delete"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@android:drawable/ic_menu_delete"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/edit"
         android:title="@string/edit"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_rename"
+        android:icon="@android:drawable/ic_menu_edit"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/selectall"

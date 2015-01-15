@@ -353,6 +353,7 @@
     <eat-comment/>
     <string name="account">Account</string>
     <string name="accuracy">Accuracy</string>
+    <string name="action_settings">Settings</string>
     <string name="add">Add</string>
     <string name="add_background_music">Add background music</string>
     <string name="add_poi">Add POI</string>
@@ -377,8 +378,8 @@
     <string name="cache_has_been_cleared">Cache has been cleared</string>
     <string name="camera_is_not_available">Camera is not available</string>
     <string name="cancel">Cancel</string>
-    <string name="cannot_add_nocategory">Cannot add nocategory</string>
-    <string name="cannot_delete_nocategory">Cannot delete nocategory</string>
+    <string name="cannot_add_nocategory">Cannot add uncategorized</string>
+    <string name="cannot_delete_nocategory">Cannot delete uncategorized</string>
     <string name="cannot_find_gpx_data">Can not find gpx data</string>
     <string name="cannot_start_media_recorder_due_to_unknowm_error">Cannot start media recorder due to unknown error</string>
     <string name="choose_a_account">Choose a account</string>
@@ -467,7 +468,7 @@
     <string name="fps">Fps</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/analytics.xml -->
     <eat-comment/>
-    <string name="ga_trackingId">UA-44647804-2</string>
+    <string name="ga_trackingId" translatable="false">UA-44647804-2</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="generate_video">Generate Video(experimental)</string>
@@ -475,6 +476,7 @@
     <string name="gpx">Gpx</string>
     <string name="gpx_doesnt_contain_time_information">The .gpx file doesn\'t contain time information</string>
     <string name="has_not_been_installed">has not been installed</string>
+    <string name="hello_world">Hello world!</string>
     <string name="imagebutton_description">imagebutton</string>
     <string name="import_a_audio">Import a audio</string>
     <string name="import_a_picture">Import a picture</string>
@@ -493,6 +495,7 @@
     <string name="kilometer_or_mile">Kilometer or Mile</string>
     <string name="kml">Kml</string>
     <string name="lifetime_record">Lifetime Record</string>
+    <string name="local_storage">Local Storage</string>
     <string name="local_trips">Local Trips</string>
     <string name="location_not_found">Location not found</string>
     <string name="lodging">Lodging</string>
@@ -514,6 +517,7 @@
     <string name="no">No</string>
     <string name="no_data_can_be_displayed">No data can be displayed</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="nocategory">uncatagorized</string>
     <string name="not_a_audio">Not a audio</string>
     <string name="not_a_font_file">Not a font file</string>
     <string name="not_a_music">Not a music</string>
@@ -617,6 +621,7 @@
     <string name="there_is_no_data_to_display">There is no data to display</string>
     <string name="thickness">Thickness</string>
     <string name="title_activity_category">Categories</string>
+    <string name="title_activity_get_content">GetContentActivity</string>
     <string name="title_activity_main">TripDiary</string>
     <string name="title_activity_paint">Paint</string>
     <string name="title_activity_play_point">PlayPointActivity</string>

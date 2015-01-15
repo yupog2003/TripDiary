@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.text.format.Time;
 
+import com.yupog2003.tripdiary.R;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -81,7 +83,7 @@ public class Trip {
 		}
 		this.tripName = dir.getName();
 		SharedPreferences p = context.getSharedPreferences("trip", Context.MODE_PRIVATE);
-		category = p.getString(tripName, "nocategory");
+		category = p.getString(tripName, context.getString(R.string.nocategory));
 		timezone = TimeAnalyzer.getTripTimeZone(context, tripName);
 	}
 

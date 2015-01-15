@@ -10,21 +10,21 @@
         android:title="@string/download"/>
     <item
         android:id="@+id/edit"
-        android:icon="@drawable/ic_rename"
+        android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:title="@string/edit"/>
     <item
         android:id="@+id/togglepublic"
-        android:icon="@drawable/ic_rename"
+        android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="@string/toggle_public"/>
     <item
         android:id="@+id/delete"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="@string/delete"/>
     <item
         android:id="@+id/selectall"

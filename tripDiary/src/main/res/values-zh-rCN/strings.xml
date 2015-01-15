@@ -94,8 +94,8 @@
     <string name="edit_category">编辑类别</string>
 
 
-    <string name="cannot_add_nocategory">无法新增nocategory</string>
-    <string name="cannot_delete_nocategory">无法删除nocategory</string>
+    <string name="cannot_add_nocategory">无法新增未分类</string>
+    <string name="cannot_delete_nocategory">无法删除未分类</string>
     <string name="delete">删除</string>
     <string name="are_you_sure_to_delete">确定要删除吗?</string>
     <string name="gps_is_disabled">GPS未开启</string>
@@ -328,4 +328,7 @@
     <string name="video_codec">影片编码</string>
     <string name="audio_codec">声音编码</string>
     <string name="select">选择</string>
+    <string name="local_storage">装置上</string>
+    <string name="nocategory">未分类</string>
+
 </resources>

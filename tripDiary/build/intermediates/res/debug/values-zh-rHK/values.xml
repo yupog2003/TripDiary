@@ -118,8 +118,8 @@
     <string name="cache_has_been_cleared">快取已清除</string>
     <string name="camera_is_not_available">無相機服務</string>
     <string name="cancel">取消</string>
-    <string name="cannot_add_nocategory">無法新增nocategory</string>
-    <string name="cannot_delete_nocategory">無法刪除nocategory</string>
+    <string name="cannot_add_nocategory">無法新增未分類</string>
+    <string name="cannot_delete_nocategory">無法刪除未分類</string>
     <string name="cannot_find_gpx_data">找不到gpx資料</string>
     <string name="cannot_start_media_recorder_due_to_unknowm_error">不明原因無法啟動Media Recorder</string>
     <string name="choose_a_account">選擇一個帳戶</string>
@@ -222,6 +222,7 @@
     <string name="kilometer_or_mile">公里或英哩</string>
     <string name="kml">Kml</string>
     <string name="lifetime_record">生涯紀錄</string>
+    <string name="local_storage">裝置上</string>
     <string name="local_trips">本機旅程</string>
     <string name="location_not_found">位置未獲得</string>
     <string name="lodging">住</string>
@@ -243,6 +244,7 @@
     <string name="no">否</string>
     <string name="no_data_can_be_displayed">沒有資料可以顯示</string>
     <string name="no_internet_connection">沒有網路連線</string>
+    <string name="nocategory">未分类</string>
     <string name="not_a_audio">非聲音</string>
     <string name="not_a_font_file">非字型檔</string>
     <string name="not_a_music">非音樂</string>

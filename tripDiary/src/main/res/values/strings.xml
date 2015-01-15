@@ -92,7 +92,6 @@
         <item>15</item>
     </string-array>
 
-
     <string name="title_activity_category">Categories</string>
     <string name="input_the_poi_title">Input the POI title</string>
     <string name="record_audio">Record Audio</string>
@@ -103,8 +102,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="edit_category">Edit Category</string>
-    <string name="cannot_add_nocategory">Cannot add nocategory</string>
-    <string name="cannot_delete_nocategory">Cannot delete nocategory</string>
+    <string name="cannot_add_nocategory">Cannot add uncategorized</string>
+    <string name="cannot_delete_nocategory">Cannot delete uncategorized</string>
     <string name="delete">Delete</string>
     <string name="are_you_sure_to_delete">Are you sure to delete?</string>
     <string name="gps_is_disabled">GPS is disabled</string>
@@ -145,7 +144,6 @@
     <string name="distance">Distance</string>
     <string name="average_speed">Average Speed</string>
     <string name="poi">POI</string>
-
     <string name="not_a_picture">Not a picture</string>
     <string name="not_a_video">Not a video</string>
     <string name="not_a_audio">Not a audio</string>
@@ -336,4 +334,10 @@
     <string name="video_codec">Video codec</string>
     <string name="audio_codec">Audio codec</string>
     <string name="select">Select</string>
+    <string name="local_storage">Local Storage</string>
+    <string name="title_activity_get_content">GetContentActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="nocategory">uncatagorized</string>
+
 </resources>

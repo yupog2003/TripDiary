@@ -92,8 +92,8 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="edit_category">編輯類別</string>
-    <string name="cannot_add_nocategory">無法新增nocategory</string>
-    <string name="cannot_delete_nocategory">無法刪除nocategory</string>
+    <string name="cannot_add_nocategory">無法新增未分類</string>
+    <string name="cannot_delete_nocategory">無法刪除未分類</string>
     <string name="delete">刪除</string>
     <string name="are_you_sure_to_delete">確定要刪除嗎?</string>
     <string name="gps_is_disabled">GPS未開啟</string>
@@ -325,4 +325,7 @@
     <string name="video_codec">影片編碼</string>
     <string name="audio_codec">聲音編碼</string>
     <string name="select">選擇</string>
+    <string name="local_storage">裝置上</string>
+    <string name="nocategory">未分类</string>
+
 </resources>

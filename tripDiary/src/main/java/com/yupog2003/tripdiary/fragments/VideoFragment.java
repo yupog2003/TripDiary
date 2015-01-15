@@ -25,6 +25,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -89,12 +92,15 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		Canvas canvas;
 		int left, top;
 		final Bitmap playbitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_play);
+        DisplayImageOptions options;
 
 		public VideoAdapter() {
 			videos = ViewPointActivity.poi.videoFiles;
 			mmr = new MediaMetadataRetriever();
 			left = playbitmap.getWidth() / 2;
 			top = playbitmap.getHeight() / 2;
+
+            options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).build();
 		}
 
 		public int getCount() {
@@ -115,18 +121,10 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-
-			ImageView image = new ImageView(getActivity());
-			try {
-				mmr.setDataSource(videos[position].getPath());
-				Bitmap b = mmr.getFrameAtTime();
-				Bitmap bitmap = b == null ? Bitmap.createBitmap(width, width, Bitmap.Config.RGB_565) : Bitmap.createScaledBitmap(b, width, width, true);
-				canvas = new Canvas(bitmap);
-				canvas.drawBitmap(playbitmap, bitmap.getWidth() / 2 - left, bitmap.getHeight() / 2 - top, null);
-				image.setImageBitmap(bitmap);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+            ImageView image = new ImageView(getActivity());
+            image.setMaxWidth(width);
+            image.setMaxHeight(width);
+            ImageLoader.getInstance().displayImage("file://"+videos[position].getPath(), image, options);
 			CheckableLayout l = new CheckableLayout(getActivity());
 			l.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT));
 			l.setPadding(10, 10, 10, 10);
@@ -228,7 +226,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 						}
 						return true;
 					}
-				}); 
+				});
 				AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
 				ab.setTitle(R.string.move_to);
 				ab.setItems(pois, new OnClickListener() {
@@ -242,7 +240,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 							toFiles[i]=new File(tripFile.getPath()+"/"+pois[which]+"/videos/"+checksName.get(i).getName());
 						}
 						new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles,new OnFinishedListener() {
-							
+
 							@Override
 							public void onFinish() {
 
@@ -252,8 +250,8 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 								getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
 							}
 						}).execute();
-						
-						
+
+
 					}
 				});
 				ab.show();

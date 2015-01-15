@@ -100,7 +100,10 @@ import com.yupog2003.tripdiary.views.POIInfoWindowAdapter;
 import com.yupog2003.tripdiary.views.SpinnerActionProvider;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -836,9 +839,11 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 case import_track:
                     Uri uri = data.getData();
                     if (uri != null) {
-                        FileHelper.copyFile(new File(uri.getPath()), new File(path + "/" + name + "/" + name + ".gpx"));
-                        setLocusTask = new SetLocus();
-                        setLocusTask.execute(0);
+                        File file = FileHelper.copyFromUriToFile(getActivity(), uri, new File(path + "/" + name), name + ".gpx");
+                        if (file != null) {
+                            setLocusTask = new SetLocus();
+                            setLocusTask.execute(0);
+                        }
                     }
                     break;
                 case REQUEST_GET_TOKEN:
@@ -850,8 +855,11 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     if (resultCode == Activity.RESULT_OK) {
                         Uri uri1 = data.getData();
                         if (uri1 != null) {
-                            this.videoBackgroundMusic = uri1.getPath();
-                            this.backgroundMusicButton.setText(new File(uri1.getPath()).getName());
+                            File resultFile = FileHelper.copyFromUriToFile(getActivity(), uri1, getActivity().getCacheDir(), null);
+                            if (resultFile != null) {
+                                this.videoBackgroundMusic = resultFile.getPath();
+                                this.backgroundMusicButton.setText(resultFile.getName());
+                            }
                         }
                     }
                     break;
@@ -1185,7 +1193,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("playmusic", false)) {
                 String musicpath = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("musicpath", "");
                 if (!musicpath.equals("")) {
-                    File file = new File(musicpath);
+                    File file = new File(getActivity().getFilesDir(), musicpath);
                     if (file.exists() && file.isFile() && FileHelper.isAudio(file)) {
                         mp = MediaPlayer.create(getActivity(), Uri.fromFile(file));
                         mp.setLooping(true);
@@ -1425,6 +1433,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     private void generateVideo() {
         EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "generate_video", ViewTripActivity.trip.dir.getName(), null).build());
+        File tempDir = new File(getActivity().getCacheDir(), GenerateVideoService.cacheDirName);
+        FileHelper.deletedir(tempDir.getPath());
+        tempDir.mkdirs();
+        videoBackgroundMusic = null;
+        trackPoints = null;
+        gmapBitmap = null;
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
         ab.setTitle(R.string.generate_video);
         View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_generate_video, null);
@@ -1436,7 +1450,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         final Spinner fps = (Spinner) layout.findViewById(R.id.fps);
         fps.setSelection(2);
         final Button backgroundMusic = (Button) layout.findViewById(R.id.backgroundMusic);
-        this.backgroundMusicButton=backgroundMusic;
+        this.backgroundMusicButton = backgroundMusic;
         backgroundMusic.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1453,7 +1467,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 final int videoHeight = Integer.valueOf(resolutionStr.split("x")[1]);
                 final int secondsPerTrack = GenerateVideoService.secondsPerTrack;
                 final int fpsValue = Integer.valueOf(fps.getSelectedItem().toString());
-                final String videoNameStr = videoName.getText().toString()+".mp4";
+                final String videoNameStr = videoName.getText().toString() + ".mp4";
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 MapView mapView = new MapView(getActivity());
                 ab.setView(mapView);

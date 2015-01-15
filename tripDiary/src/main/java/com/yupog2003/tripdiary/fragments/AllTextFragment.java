@@ -108,6 +108,7 @@ public class AllTextFragment extends Fragment {
     class POIAdapter extends BaseExpandableListAdapter {
         POI[] pois;
         String[] diarys;
+        Typeface typeFace;
 
         public POIAdapter(POI[] pois) {
             this.pois = pois;
@@ -119,6 +120,15 @@ public class AllTextFragment extends Fragment {
                 }
                 if (diarys[i].length() > 0) {
                     diarys[i] = diarys[i].substring(0, diarys[i].length() - 1);
+                }
+            }
+            File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
+            if (fontFile.exists() && fontFile.isFile()) {
+                try {
+                    this.typeFace = Typeface.createFromFile(fontFile);
+                } catch (RuntimeException e) {
+                    this.typeFace = null;
+                    Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -138,13 +148,8 @@ public class AllTextFragment extends Fragment {
             TextView textView = new TextView(getActivity());
             textView.setText(diarys[groupPosition]);
             textView.setPadding(50, 0, 0, 0);
-            File fontFile = new File(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
-            if (fontFile.exists() && fontFile.isFile()) {
-                try {
-                    textView.setTypeface(Typeface.createFromFile(fontFile));
-                } catch (RuntimeException e) {
-                    Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
-                }
+            if (typeFace != null) {
+                textView.setTypeface(typeFace);
             }
             textView.setTextSize(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20));
             return textView;

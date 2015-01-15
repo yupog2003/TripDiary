@@ -21,6 +21,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -119,7 +122,7 @@ public class AllVideoFragment extends Fragment {
 	class VideoAdapter extends BaseAdapter implements OnItemClickListener {
 
 		File[] videos;
-
+        DisplayImageOptions options;
 		MediaMetadataRetriever mmr;
 		Canvas canvas;
 		int left, top;
@@ -130,7 +133,9 @@ public class AllVideoFragment extends Fragment {
 			mmr = new MediaMetadataRetriever();
 			left = playbitmap.getWidth() / 2;
 			top = playbitmap.getHeight() / 2;
-		}
+            options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).build();
+
+        }
 
 		public int getCount() {
 
@@ -150,20 +155,15 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public View getView(int position, View view, ViewGroup viewGroup) {
-
-			ImageView image = new ImageView(getActivity());
-			mmr.setDataSource(videos[position].getPath());
-			Bitmap b = mmr.getFrameAtTime();
-			Bitmap bitmap = b == null ? Bitmap.createBitmap(width, width, Bitmap.Config.RGB_565) : Bitmap.createScaledBitmap(b, width, width, true);
-			canvas = new Canvas(bitmap);
-			canvas.drawBitmap(playbitmap, bitmap.getWidth() / 2 - left, bitmap.getHeight() / 2 - top, null);
-			image.setImageBitmap(bitmap);
+            ImageView image = new ImageView(getActivity());
+            image.setMaxWidth(width);
+            image.setMaxHeight(width);
+            ImageLoader.getInstance().displayImage("file://" + videos[position].getPath(), image, options);
 			return image;
 		}
 
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-			Intent intent = new Intent(Intent.ACTION_VIEW);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.fromFile(videos[position]), "video/*");
 			getActivity().startActivity(intent);
 		}

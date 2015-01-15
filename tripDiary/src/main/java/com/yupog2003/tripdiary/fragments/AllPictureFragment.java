@@ -43,7 +43,7 @@ public class AllPictureFragment extends Fragment {
 	DisplayImageOptions options;
 
 	public AllPictureFragment() {
-		options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisc(false).bitmapConfig(Bitmap.Config.RGB_565).build();
+		options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	@Override

@@ -51,7 +51,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     MediaPlayer mp;
     VideoView videoView;
     int interval;
-    private static final int readTextSpeed=100; //milli seconds per character
+    private static final int readTextSpeed = 100; //milli seconds per character
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             int padding = (int) DeviceHelper.pxFromDp(PlayPointActivity.this, 10);
             textView.setPadding(padding, padding, padding, padding);
             textView.setText(poi.diary);
-            File fontFile = new File(PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("diaryfont", ""));
+            File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("diaryfont", ""));
             if (fontFile.exists() && fontFile.isFile()) {
                 try {
                     textView.setTypeface(Typeface.createFromFile(fontFile));
@@ -249,8 +249,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             }
                         } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView && currentIndex == 0) {
                             try {
-                                TextView textView=(TextView)viewFlipper.getChildAt(currentIndex);
-                                Thread.sleep(textView.getText().length()*readTextSpeed);
+                                TextView textView = (TextView) viewFlipper.getChildAt(currentIndex);
+                                Thread.sleep(textView.getText().length() * readTextSpeed);
                             } catch (InterruptedException e) {
 
                                 e.printStackTrace();
