@@ -74,6 +74,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         String intentAction = getIntent().getAction();
+        Log.i("trip", intentAction);
         if (intentAction.equals(Intent.ACTION_GET_CONTENT)) {
             action = Action.get_content;
         } else if (intentAction.equals(Intent.ACTION_SEND)) {
@@ -82,6 +83,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             action = Action.send_multiple;
         }
         String mimeType = getIntent().getType();
+        Log.i("trip", mimeType);
         if (mimeType.startsWith("image")) {
             type = Type.picture;
         } else if (mimeType.startsWith("video")) {
@@ -126,10 +128,13 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         SharedPreferences tripsp;
         DisplayImageOptions options;
         POI[] pois;
+        int lastPictureIndex;
+        int lastVideoIndex;
+        int lastAudioIndex;
 
         public MemoryAdapter(Type type) {
             this.type = type;
-            if (type == Type.picture || type == Type.video) {
+            if (type == Type.picture || type == Type.video || type == Type.other) {
                 ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
                 ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(GetContentActivity.this).imageDecoder(myImageDecoder).build();
                 ImageLoader.getInstance().init(conf);
@@ -139,11 +144,17 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             this.tripsp = getSharedPreferences("trip", MODE_PRIVATE);
             this.rootPath = PreferenceManager.getDefaultSharedPreferences(GetContentActivity.this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary");
             this.files = new ArrayList<>();
+            this.lastPictureIndex = -1;
+            this.lastVideoIndex = -1;
+            this.lastAudioIndex = -1;
             setDir("/");
         }
 
         public void setDir(String dir) {
             files.clear();
+            lastPictureIndex = -1;
+            lastVideoIndex = -1;
+            lastAudioIndex = -1;
             nowDir = dir;
             setTitle(dir);
             String[] levels = dir.split("/");
@@ -229,6 +240,13 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/audios").list()));
                         break;
                     case other:
+                        setGridView(false);
+                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/pictures").list()));
+                        lastPictureIndex = files.size();
+                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/videos").list()));
+                        lastVideoIndex = files.size();
+                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/audios").list()));
+                        lastAudioIndex = files.size();
                         break;
                 }
             }
@@ -280,6 +298,14 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/videos/" + memoryName); //video file
                     } else if (type == Type.audio) {
                         return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/audios/" + memoryName); //audio file
+                    } else if (type == Type.other) {
+                        if (position >= 0 && position < lastPictureIndex) { //is picture
+                            return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/pictures/" + memoryName);
+                        } else if (position >= lastPictureIndex && position < lastVideoIndex) { //is video
+                            return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/videos/" + memoryName);
+                        } else if (position >= lastVideoIndex && position < lastAudioIndex) { //is audio
+                            return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/audios/" + memoryName);
+                        }
                     }
             }
             return files.get(position);
@@ -304,6 +330,14 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 TextView textView = new TextView(GetContentActivity.this);
                 if (nowLevel == 3 && type == Type.audio) {
                     textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+                } else if (nowLevel == 3 && type == Type.other) {
+                    if (position >= 0 && position < lastPictureIndex) { //is picture
+                        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_picture, 0, 0, 0);
+                    } else if (position >= lastPictureIndex && position < lastVideoIndex) { //is video
+                        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_takevideo, 0, 0, 0);
+                    } else if (position >= lastVideoIndex && position < lastAudioIndex) { //is audio
+                        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+                    }
                 } else if (nowLevel == 2) {
                     textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.poi, 0, 0, 0);
                 } else if (nowLevel == 1) {
@@ -315,17 +349,22 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 textView.setGravity(Gravity.CENTER_VERTICAL);
                 textView.setSingleLine(true);
                 if (nowLevel == 2 && action == Action.get_content) {
+                    int num_files = 0;
                     switch (type) {
                         case picture:
-                            textView.setText(files.get(position) + "(" + String.valueOf(pois[position].picFiles.length) + ")");
+                            num_files = pois[position].picFiles.length;
                             break;
                         case video:
-                            textView.setText(files.get(position) + "(" + String.valueOf(pois[position].videoFiles.length) + ")");
+                            num_files = pois[position].videoFiles.length;
                             break;
                         case audio:
-                            textView.setText(files.get(position) + "(" + String.valueOf(pois[position].audioFiles.length) + ")");
+                            num_files = pois[position].audioFiles.length;
+                            break;
+                        case other:
+                            num_files = pois[position].picFiles.length + pois[position].videoFiles.length + pois[position].audioFiles.length;
                             break;
                     }
+                    textView.setText(files.get(position) + "(" + String.valueOf(num_files) + ")");
                 } else {
                     textView.setText(files.get(position));
                 }
@@ -465,7 +504,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         FileHelper.copyByStream(inputStream, fileOutputStream);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                    } catch (NullPointerException e){
+                    } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
 
