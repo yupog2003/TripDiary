@@ -535,7 +535,11 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 				} else {
 					AlertDialog.Builder choose = new AlertDialog.Builder(getActivity());
 					choose.setTitle(getString(R.string.choose_the_trip));
-					choose.setSingleChoiceItems(founds.toArray(new String[founds.size()]), -1, new DialogInterface.OnClickListener() {
+                    String[] names=new String[founds.size()];
+                    for (int i=0;i<names.length;i++){
+                        names[i]=founds.get(i).name;
+                    }
+					choose.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
 

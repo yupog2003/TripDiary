@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/display_setting" >
+    <PreferenceCategory android:title="@string/display_setting">
         <yuku.ambilwarna.widget.AmbilWarnaPreference
             android:defaultValue="0xff6699cc"
             android:icon="@drawable/ic_color"
@@ -40,7 +40,7 @@
             android:summary="@string/meter_or_ft"
             android:title="@string/altitude_unit" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/record_setting" >
+    <PreferenceCategory android:title="@string/record_setting">
         <ListPreference
             android:defaultValue="1000"
             android:entries="@array/record_durations"
@@ -50,6 +50,14 @@
             android:summary="@string/duration_between_record_each_location"
             android:title="@string/record_duration" />
         <ListPreference
+            android:defaultValue="20"
+            android:entries="@array/record_distance_Intervals"
+            android:entryValues="@array/record_distance_Intervals"
+            android:icon="@drawable/ic_frequency"
+            android:key="min_distance_record"
+            android:summary="@string/minimum_distance_between_record_localtions"
+            android:title="@string/record_distance_interval" />
+        <ListPreference
             android:defaultValue="1000"
             android:entries="@array/record_durations"
             android:entryValues="@array/record_durations"
@@ -58,6 +66,7 @@
             android:summary="@string/duration_between_update_the_notification"
             android:title="@string/update_duration" />
 
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:icon="@drawable/poi"
@@ -65,7 +74,7 @@
             android:summary="@string/shake_to_add_poi_during_recording_trip"
             android:title="@string/shake_to_add_poi" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/play_setting" >
+    <PreferenceCategory android:title="@string/play_setting">
         <CheckBoxPreference
             android:defaultValue="false"
             android:disableDependentsState="false"
@@ -112,7 +121,7 @@
             android:key="playingtripmode"
             android:title="@string/playing_trip_mode" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/trip_category" >
+    <PreferenceCategory android:title="@string/trip_category">
         <Preference
             android:enabled="true"
             android:icon="@drawable/ic_folder"
@@ -126,7 +135,7 @@
             android:summary="@string/update_all_trips_timezone_by_the_first_location_in_the_track"
             android:title="@string/update_trip_timezone" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/others" >
+    <PreferenceCategory android:title="@string/others">
         <Preference
             android:defaultValue="/sdcard/TripDiary"
             android:icon="@drawable/ic_path"

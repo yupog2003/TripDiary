@@ -64,6 +64,15 @@
         <item>2000</item>
         <item>5000</item>
     </string-array>
+    <string-array name="record_distance_Intervals">
+        <item>0</item>
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
     <string-array name="distance_units">
         <item>公里</item>
         <item>英哩</item>
@@ -225,9 +234,9 @@
     <string name="stop">停止</string>
     <string name="resume">繼續</string>
     <string name="record_setting">紀錄設定</string>
-    <string name="record_duration">紀錄間隔</string>
+    <string name="record_duration">紀錄時間間隔</string>
     <string name="duration_between_record_each_location">間隔多少時間紀錄一個位置(毫秒)</string>
-    <string name="update_duration">更新間隔</string>
+    <string name="update_duration">更新時間間隔</string>
     <string name="duration_between_update_the_notification">間隔多少時間更新一次通知(毫秒)</string>
     <string name="diary">日記</string>
     <string name="photo">相片</string>
@@ -327,5 +336,7 @@
     <string name="select">選擇</string>
     <string name="local_storage">裝置上</string>
     <string name="nocategory">未分类</string>
+    <string name="record_distance_interval">紀錄距離間隔</string>
+    <string name="minimum_distance_between_record_localtions">間隔多少距離紀錄一個位置(公尺)</string>
 
 </resources>

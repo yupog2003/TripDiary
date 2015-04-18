@@ -64,6 +64,15 @@
         <item>2000</item>
         <item>5000</item>
     </string-array>
+    <string-array name="record_distance_Intervals">
+        <item>0</item>
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
     <string-array name="distance_units">
         <item>公里</item>
         <item>英哩</item>
@@ -228,7 +237,7 @@
     <string name="stop">停止</string>
     <string name="resume">继续</string>
     <string name="record_setting">纪录设定</string>
-    <string name="record_duration">纪录间隔</string>
+    <string name="record_duration">纪录时间间隔</string>
     <string name="duration_between_record_each_location">间隔多少时间纪录一个位置（毫秒）</string>
     <string name="update_duration">更新间隔</string>
     <string name="duration_between_update_the_notification">间隔多少时间更新一次通知（毫秒）</string>
@@ -330,5 +339,7 @@
     <string name="select">选择</string>
     <string name="local_storage">装置上</string>
     <string name="nocategory">未分类</string>
+    <string name="record_distance_interval">纪录距离间隔</string>
+    <string name="minimum_distance_between_record_localtions">间隔多少距离纪录一个位置(公尺)</string>
 
 </resources>
