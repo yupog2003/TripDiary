@@ -32,6 +32,15 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="record_distance_Intervals">
+        <item>0</item>
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
     <string-array name="record_durations">
         <item>200</item>
         <item>500</item>
@@ -129,7 +138,7 @@
     <string name="clear_cache">清除快取</string>
     <string name="click_or_swipe_down_to_view_detail">点击或放大以了解细节</string>
     <string name="collapse_all">全部收起</string>
-    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values-zh-rCN/common_strings.xml -->
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/res/values-zh-rCN/common_strings.xml -->
     <eat-comment/>
     <string msgid="473679118463211576" name="common_android_wear_notification_needs_update_text">"某个应用需要更新Android Wear应用才能正常运行。"</string>
     <string msgid="3046420540094071256" name="common_android_wear_update_text">"只有更新Android Wear应用后，此应用才能正常运行。"</string>
@@ -150,6 +159,8 @@
     <string msgid="8120534356798772974" name="common_google_play_services_notification_needs_installation_title">"安装Google Play服务后才能运行应用。"</string>
     <string msgid="1388129345631079938" name="common_google_play_services_notification_needs_update_title">"更新Google Play服务后才能运行应用。"</string>
     <string msgid="1852570676146674985" name="common_google_play_services_notification_ticker">"Google Play服务出错"</string>
+    <string msgid="5194079840165204725" name="common_google_play_services_sign_in_failed_text">"登录该帐户时出错。请选择其他帐户。"</string>
+    <string msgid="8164948898147532159" name="common_google_play_services_sign_in_failed_title">"登录失败"</string>
     <string msgid="4762332809710093730" name="common_google_play_services_unknown_issue">"Google Play服务出现未知问题。"</string>
     <string msgid="3542578567569488671" name="common_google_play_services_unsupported_text">"您的设备不支持部分应用所依赖的Google Play服务。请与设备制造商联系，以寻求帮助。"</string>
     <string msgid="6334768798839376943" name="common_google_play_services_unsupported_title">"Google Play服务"</string>
@@ -159,6 +170,7 @@
     <string msgid="411506735369601515" name="common_open_on_phone">"在手机上打开"</string>
     <string msgid="9071884888741449141" name="common_signin_button_text">"登录"</string>
     <string msgid="2429381841831957106" name="common_signin_button_text_long">"使用Google帐户登录"</string>
+    <string msgid="5000919058582214855" name="commono_google_play_services_api_unavailable_text">"运行此应用所需的一项或多项 Google Play 服务目前无法使用。请与开发者联系以寻求帮助。"</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rCN/strings.xml -->
     <eat-comment/>
     <string name="compressing">压缩中</string>
@@ -238,6 +250,7 @@
     <string name="meter_or_ft">公尺或英呎</string>
     <string name="min_altitude">最低高度</string>
     <string name="min_latitude">最低纬度</string>
+    <string name="minimum_distance_between_record_localtions">间隔多少距离纪录一个位置(公尺)</string>
     <string name="move_to">移动至</string>
     <string name="move_to_category">移动至类别</string>
     <string name="music_path">音乐路径</string>
@@ -285,7 +298,8 @@
     <string name="preset">Preset</string>
     <string name="print">打印</string>
     <string name="record_audio">纪录声音</string>
-    <string name="record_duration">纪录间隔</string>
+    <string name="record_distance_interval">纪录距离间隔</string>
+    <string name="record_duration">纪录时间间隔</string>
     <string name="record_setting">纪录设定</string>
     <string name="recording">纪录中</string>
     <string name="remote_personal_trips">远端个人旅程</string>

@@ -6,282 +6,420 @@ ADDED from AndroidManifest.xml:2:1
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:versionName
-		ADDED from AndroidManifest.xml:6:5
-	android:versionCode
-		ADDED from AndroidManifest.xml:5:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	xmlns:android
 		ADDED from AndroidManifest.xml:2:11
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
 	android:installLocation
 		ADDED from AndroidManifest.xml:4:5
 permission#com.yupog2003.tripdiary.permission.MAPS_RECEIVE
-ADDED from AndroidManifest.xml:8:5
+ADDED from AndroidManifest.xml:6:5
 	android:protectionLevel
-		ADDED from AndroidManifest.xml:10:9
+		ADDED from AndroidManifest.xml:8:9
 	android:name
-		ADDED from AndroidManifest.xml:9:9
+		ADDED from AndroidManifest.xml:7:9
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:10:5
+	android:name
+		ADDED from AndroidManifest.xml:10:22
+uses-permission#android.permission.CAMERA
+ADDED from AndroidManifest.xml:11:5
+	android:name
+		ADDED from AndroidManifest.xml:11:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from AndroidManifest.xml:12:5
 	android:name
 		ADDED from AndroidManifest.xml:12:22
-uses-permission#android.permission.CAMERA
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from AndroidManifest.xml:13:5
 	android:name
 		ADDED from AndroidManifest.xml:13:22
-uses-permission#android.permission.ACCESS_FINE_LOCATION
+uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:14:5
 	android:name
 		ADDED from AndroidManifest.xml:14:22
-uses-permission#android.permission.ACCESS_COARSE_LOCATION
+uses-permission#android.permission.RECORD_AUDIO
 ADDED from AndroidManifest.xml:15:5
 	android:name
 		ADDED from AndroidManifest.xml:15:22
-uses-permission#android.permission.INTERNET
+uses-permission#com.yupog2003.tripdiary.permission.MAPS_RECEIVE
 ADDED from AndroidManifest.xml:16:5
 	android:name
 		ADDED from AndroidManifest.xml:16:22
-uses-permission#android.permission.RECORD_AUDIO
+uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
 ADDED from AndroidManifest.xml:17:5
 	android:name
 		ADDED from AndroidManifest.xml:17:22
-uses-permission#com.yupog2003.tripdiary.permission.MAPS_RECEIVE
+uses-permission#android.permission.CHANGE_CONFIGURATION
 ADDED from AndroidManifest.xml:18:5
 	android:name
 		ADDED from AndroidManifest.xml:18:22
-uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
+uses-permission#android.permission.GET_ACCOUNTS
 ADDED from AndroidManifest.xml:19:5
 	android:name
 		ADDED from AndroidManifest.xml:19:22
-uses-permission#android.permission.CHANGE_CONFIGURATION
-ADDED from AndroidManifest.xml:20:5
-	android:name
-		ADDED from AndroidManifest.xml:20:22
-uses-permission#android.permission.GET_ACCOUNTS
-ADDED from AndroidManifest.xml:21:5
-	android:name
-		ADDED from AndroidManifest.xml:21:22
 uses-feature#0x00020000
-ADDED from AndroidManifest.xml:23:5
+ADDED from AndroidManifest.xml:21:5
 	android:glEsVersion
-		ADDED from AndroidManifest.xml:24:9
+		ADDED from AndroidManifest.xml:22:9
 	android:required
-		ADDED from AndroidManifest.xml:25:9
+		ADDED from AndroidManifest.xml:23:9
 uses-feature#android.hardware.camera
-ADDED from AndroidManifest.xml:26:5
+ADDED from AndroidManifest.xml:24:5
 	android:required
-		ADDED from AndroidManifest.xml:28:9
+		ADDED from AndroidManifest.xml:26:9
 	android:name
-		ADDED from AndroidManifest.xml:27:9
+		ADDED from AndroidManifest.xml:25:9
 uses-permission#android.permission.VIBRATE
-ADDED from AndroidManifest.xml:30:5
+ADDED from AndroidManifest.xml:28:5
 	android:name
-		ADDED from AndroidManifest.xml:30:22
+		ADDED from AndroidManifest.xml:28:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from AndroidManifest.xml:31:5
+ADDED from AndroidManifest.xml:29:5
 	android:name
-		ADDED from AndroidManifest.xml:31:22
+		ADDED from AndroidManifest.xml:29:22
 application
-ADDED from AndroidManifest.xml:33:5
+ADDED from AndroidManifest.xml:31:5
 MERGED from TripDiary:ambilWarna:unspecified:11:5
-MERGED from com.google.android.gms:play-services:6.5.87:20:5
+MERGED from com.google.android.gms:play-services:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-ads:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-analytics:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-analytics:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-appindexing:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-appinvite:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-appstate:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-cast:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-drive:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-fitness:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-location:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-games:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-drive:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-gcm:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-identity:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-location:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-nearby:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-panorama:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-plus:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-safetynet:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-wallet:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-identity:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
+MERGED from com.google.android.gms:play-services-wearable:7.3.0:19:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:20:5
 MERGED from com.android.support:appcompat-v7:21.0.3:16:5
+MERGED from com.android.support:support-v4:21.0.3:16:5
+MERGED from com.android.support:support-v13:21.0.3:16:5
 	android:backupAgent
-		ADDED from AndroidManifest.xml:35:9
-	android:label
-		ADDED from AndroidManifest.xml:37:9
-	android:allowBackup
 		ADDED from AndroidManifest.xml:34:9
-	android:icon
+	android:label
 		ADDED from AndroidManifest.xml:36:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:33:9
+	android:icon
+		ADDED from AndroidManifest.xml:35:9
 	android:theme
-		ADDED from AndroidManifest.xml:38:9
+		ADDED from AndroidManifest.xml:37:9
+	android:name
+		ADDED from AndroidManifest.xml:32:9
 activity#com.yupog2003.tripdiary.MainActivity
-ADDED from AndroidManifest.xml:39:9
+ADDED from AndroidManifest.xml:38:9
 	android:label
-		ADDED from AndroidManifest.xml:41:13
-	android:name
 		ADDED from AndroidManifest.xml:40:13
+	android:name
+		ADDED from AndroidManifest.xml:39:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:42:13
+ADDED from AndroidManifest.xml:41:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:43:17
+ADDED from AndroidManifest.xml:42:17
 	android:name
-		ADDED from AndroidManifest.xml:43:25
+		ADDED from AndroidManifest.xml:42:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:45:17
+ADDED from AndroidManifest.xml:44:17
 	android:name
-		ADDED from AndroidManifest.xml:45:27
+		ADDED from AndroidManifest.xml:44:27
 activity#com.yupog2003.tripdiary.ViewActivity
-ADDED from AndroidManifest.xml:48:9
+ADDED from AndroidManifest.xml:47:9
 	android:label
-		ADDED from AndroidManifest.xml:50:13
-	android:name
 		ADDED from AndroidManifest.xml:49:13
+	android:name
+		ADDED from AndroidManifest.xml:48:13
 service#com.yupog2003.tripdiary.services.RecordService
-ADDED from AndroidManifest.xml:52:9
+ADDED from AndroidManifest.xml:51:9
 	android:exported
-		ADDED from AndroidManifest.xml:54:13
-	android:name
 		ADDED from AndroidManifest.xml:53:13
+	android:name
+		ADDED from AndroidManifest.xml:52:13
 activity#com.yupog2003.tripdiary.ViewPointActivity
-ADDED from AndroidManifest.xml:56:9
+ADDED from AndroidManifest.xml:55:9
 	android:label
-		ADDED from AndroidManifest.xml:60:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:58:13
-	android:icon
 		ADDED from AndroidManifest.xml:59:13
-	android:name
+	android:configChanges
 		ADDED from AndroidManifest.xml:57:13
+	android:icon
+		ADDED from AndroidManifest.xml:58:13
+	android:name
+		ADDED from AndroidManifest.xml:56:13
 activity#com.yupog2003.tripdiary.PlayPointActivity
-ADDED from AndroidManifest.xml:61:9
+ADDED from AndroidManifest.xml:60:9
 	android:label
-		ADDED from AndroidManifest.xml:65:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:63:13
-	android:icon
 		ADDED from AndroidManifest.xml:64:13
-	android:name
+	android:configChanges
 		ADDED from AndroidManifest.xml:62:13
+	android:icon
+		ADDED from AndroidManifest.xml:63:13
+	android:name
+		ADDED from AndroidManifest.xml:61:13
 activity#com.yupog2003.tripdiary.PreferActivity
-ADDED from AndroidManifest.xml:66:9
+ADDED from AndroidManifest.xml:65:9
 	android:label
-		ADDED from AndroidManifest.xml:69:13
-	android:icon
 		ADDED from AndroidManifest.xml:68:13
-	android:name
-		ADDED from AndroidManifest.xml:67:13
-activity#com.yupog2003.tripdiary.CategoryActivity
-ADDED from AndroidManifest.xml:70:9
-	android:label
-		ADDED from AndroidManifest.xml:72:13
-	android:name
-		ADDED from AndroidManifest.xml:71:13
-activity#com.yupog2003.tripdiary.PaintActivity
-ADDED from AndroidManifest.xml:73:9
-	android:label
-		ADDED from AndroidManifest.xml:75:13
-	android:name
-		ADDED from AndroidManifest.xml:74:13
-activity#com.yupog2003.tripdiary.ViewCostActivity
-ADDED from AndroidManifest.xml:76:9
 	android:icon
-		ADDED from AndroidManifest.xml:78:13
+		ADDED from AndroidManifest.xml:67:13
 	android:name
+		ADDED from AndroidManifest.xml:66:13
+activity#com.yupog2003.tripdiary.CategoryActivity
+ADDED from AndroidManifest.xml:69:9
+	android:label
+		ADDED from AndroidManifest.xml:71:13
+	android:name
+		ADDED from AndroidManifest.xml:70:13
+activity#com.yupog2003.tripdiary.PaintActivity
+ADDED from AndroidManifest.xml:72:9
+	android:label
+		ADDED from AndroidManifest.xml:74:13
+	android:name
+		ADDED from AndroidManifest.xml:73:13
+activity#com.yupog2003.tripdiary.ViewCostActivity
+ADDED from AndroidManifest.xml:75:9
+	android:icon
 		ADDED from AndroidManifest.xml:77:13
+	android:name
+		ADDED from AndroidManifest.xml:76:13
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:80:9
-MERGED from com.google.android.gms:play-services:6.5.87:21:9
+ADDED from AndroidManifest.xml:79:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 	android:value
-		ADDED from AndroidManifest.xml:82:13
-	android:name
 		ADDED from AndroidManifest.xml:81:13
+	android:name
+		ADDED from AndroidManifest.xml:80:13
 meta-data#com.google.android.backup.api_key
-ADDED from AndroidManifest.xml:83:9
+ADDED from AndroidManifest.xml:82:9
 	android:value
-		ADDED from AndroidManifest.xml:85:13
-	android:name
 		ADDED from AndroidManifest.xml:84:13
+	android:name
+		ADDED from AndroidManifest.xml:83:13
 meta-data#com.google.android.maps.v2.API_KEY
-ADDED from AndroidManifest.xml:86:9
+ADDED from AndroidManifest.xml:85:9
 	android:value
-		ADDED from AndroidManifest.xml:88:13
-	android:name
 		ADDED from AndroidManifest.xml:87:13
+	android:name
+		ADDED from AndroidManifest.xml:86:13
 service#com.yupog2003.tripdiary.services.SendTripService
-ADDED from AndroidManifest.xml:92:9
+ADDED from AndroidManifest.xml:91:9
 	android:exported
-		ADDED from AndroidManifest.xml:94:13
-	android:name
 		ADDED from AndroidManifest.xml:93:13
+	android:name
+		ADDED from AndroidManifest.xml:92:13
 service#com.yupog2003.tripdiary.services.DownloadTripService
-ADDED from AndroidManifest.xml:95:9
+ADDED from AndroidManifest.xml:94:9
 	android:exported
-		ADDED from AndroidManifest.xml:97:13
-	android:name
 		ADDED from AndroidManifest.xml:96:13
+	android:name
+		ADDED from AndroidManifest.xml:95:13
 activity#com.yupog2003.tripdiary.ViewTripActivity
-ADDED from AndroidManifest.xml:99:9
+ADDED from AndroidManifest.xml:98:9
 	android:label
-		ADDED from AndroidManifest.xml:102:13
-	android:configChanges
 		ADDED from AndroidManifest.xml:101:13
-	android:name
-		ADDED from AndroidManifest.xml:100:13
-activity#com.yupog2003.tripdiary.AllRecordActivity
-ADDED from AndroidManifest.xml:103:9
-	android:label
-		ADDED from AndroidManifest.xml:106:13
 	android:configChanges
+		ADDED from AndroidManifest.xml:100:13
+	android:name
+		ADDED from AndroidManifest.xml:99:13
+activity#com.yupog2003.tripdiary.AllRecordActivity
+ADDED from AndroidManifest.xml:102:9
+	android:label
 		ADDED from AndroidManifest.xml:105:13
-	android:name
+	android:configChanges
 		ADDED from AndroidManifest.xml:104:13
+	android:name
+		ADDED from AndroidManifest.xml:103:13
 activity#com.yupog2003.tripdiary.MyActivity
-ADDED from AndroidManifest.xml:107:9
+ADDED from AndroidManifest.xml:106:9
 	android:name
-		ADDED from AndroidManifest.xml:107:19
+		ADDED from AndroidManifest.xml:106:19
 activity#com.yupog2003.tripdiary.MultiFileChooseActivity
-ADDED from AndroidManifest.xml:108:9
+ADDED from AndroidManifest.xml:107:9
 	android:label
-		ADDED from AndroidManifest.xml:110:13
-	android:name
 		ADDED from AndroidManifest.xml:109:13
+	android:name
+		ADDED from AndroidManifest.xml:108:13
 activity#com.yupog2003.tripdiary.RecordActivity
-ADDED from AndroidManifest.xml:111:9
+ADDED from AndroidManifest.xml:110:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:113:13
-	android:name
 		ADDED from AndroidManifest.xml:112:13
+	android:name
+		ADDED from AndroidManifest.xml:111:13
 service#com.yupog2003.tripdiary.services.GenerateVideoService
-ADDED from AndroidManifest.xml:115:9
+ADDED from AndroidManifest.xml:114:9
 	android:exported
-		ADDED from AndroidManifest.xml:117:13
-	android:name
 		ADDED from AndroidManifest.xml:116:13
-activity#com.yupog2003.tripdiary.GetContentActivity
-ADDED from AndroidManifest.xml:119:9
-	android:label
-		ADDED from AndroidManifest.xml:121:13
-	android:exported
-		ADDED from AndroidManifest.xml:122:13
 	android:name
+		ADDED from AndroidManifest.xml:115:13
+activity#com.yupog2003.tripdiary.GetContentActivity
+ADDED from AndroidManifest.xml:118:9
+	android:label
 		ADDED from AndroidManifest.xml:120:13
+	android:exported
+		ADDED from AndroidManifest.xml:121:13
+	android:name
+		ADDED from AndroidManifest.xml:119:13
 intent-filter#android.intent.action.GET_CONTENT+android.intent.category.DEFAULT+android.intent.category.OPENABLE
-ADDED from AndroidManifest.xml:123:13
+ADDED from AndroidManifest.xml:122:13
 action#android.intent.action.GET_CONTENT
+ADDED from AndroidManifest.xml:123:17
+	android:name
+		ADDED from AndroidManifest.xml:123:25
+category#android.intent.category.DEFAULT
 ADDED from AndroidManifest.xml:124:17
 	android:name
-		ADDED from AndroidManifest.xml:124:25
-category#android.intent.category.DEFAULT
+		ADDED from AndroidManifest.xml:124:27
+category#android.intent.category.OPENABLE
 ADDED from AndroidManifest.xml:125:17
 	android:name
 		ADDED from AndroidManifest.xml:125:27
-category#android.intent.category.OPENABLE
-ADDED from AndroidManifest.xml:126:17
-	android:name
-		ADDED from AndroidManifest.xml:126:27
 data
-ADDED from AndroidManifest.xml:128:17
+ADDED from AndroidManifest.xml:127:17
 	android:mimeType
-		ADDED from AndroidManifest.xml:128:23
+		ADDED from AndroidManifest.xml:127:23
 intent-filter#android.intent.action.SEND+android.intent.category.DEFAULT
-ADDED from AndroidManifest.xml:133:13
+ADDED from AndroidManifest.xml:132:13
 action#android.intent.action.SEND
-ADDED from AndroidManifest.xml:134:17
+ADDED from AndroidManifest.xml:133:17
 	android:name
-		ADDED from AndroidManifest.xml:134:25
+		ADDED from AndroidManifest.xml:133:25
 intent-filter#android.intent.action.SEND_MULTIPLE+android.intent.category.DEFAULT
-ADDED from AndroidManifest.xml:141:13
+ADDED from AndroidManifest.xml:140:13
 action#android.intent.action.SEND_MULTIPLE
-ADDED from AndroidManifest.xml:142:17
+ADDED from AndroidManifest.xml:141:17
 	android:name
-		ADDED from AndroidManifest.xml:142:25
+		ADDED from AndroidManifest.xml:141:25
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from TripDiary:ambilWarna:unspecified:7:5
-MERGED from com.google.android.gms:play-services:6.5.87:18:5
+MERGED from com.google.android.gms:play-services:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-ads:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-analytics:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-analytics:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-appindexing:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-appinvite:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-appstate:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-cast:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-drive:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-fitness:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-location:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-games:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-drive:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-gcm:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-identity:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-location:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-nearby:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-panorama:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-plus:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-safetynet:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-wallet:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-identity:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-maps:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-wearable:7.3.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.3.0:18:5
 MERGED from com.android.support:appcompat-v7:21.0.3:15:5
+MERGED from com.android.support:support-v4:21.0.3:15:5
+MERGED from com.android.support:support-v13:21.0.3:15:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0

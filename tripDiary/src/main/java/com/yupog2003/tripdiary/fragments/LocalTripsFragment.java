@@ -45,8 +45,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -55,6 +53,7 @@ import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.ColorHelper;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.data.Trip;
@@ -431,7 +430,7 @@ public class LocalTripsFragment extends Fragment {
                 Intent i = new Intent(getActivity(), ViewTripActivity.class);
                 i.putExtra("path", path);
                 i.putExtra("name", name);
-                EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "view", name, null).build());
+                DeviceHelper.sendGATrack(getActivity(), "Trip", "view", name, null);
                 getActivity().startActivity(i);
             }
             return true;
@@ -865,7 +864,7 @@ public class LocalTripsFragment extends Fragment {
                         intent.putExtra(SendTripService.tokenTag, token);
                         intent.putExtra(SendTripService.publicTag, uploadPublic);
                         getActivity().startService(intent);
-                        EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent("Trip", "share_track_by_tripdiary", adapter.checksName.get(i), null).build());
+                        DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_tripdiary", adapter.checksName.get(i), null);
                     }
                 }
             } catch (UserRecoverableAuthException e) {

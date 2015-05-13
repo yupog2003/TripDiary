@@ -20,10 +20,9 @@ import android.text.TextPaint;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
@@ -72,6 +71,8 @@ public class GenerateVideoService extends IntentService {
     public static final String tag_fps = "fps";
     public static final String tag_videoname = "video_name";
     public static final String cacheDirName = "VideoCache";
+    public static final String tag_tripName="tag_tripName";
+    public static final String tag_timeZone="tag_timezone";
 
     public GenerateVideoService() {
         super("GenerateVideoService");
@@ -79,8 +80,8 @@ public class GenerateVideoService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        tripName = ViewTripActivity.trip.tripName;
-        timeZone = ViewTripActivity.trip.timezone;
+        tripName = intent.getStringExtra(tag_tripName);
+        timeZone = intent.getStringExtra(tag_timeZone);
         tempDir = new File(getCacheDir(), cacheDirName);
         ffmpegFile = new File(getFilesDir().getParent(), "ffmpeg");
         if (!ffmpegFile.exists()) {
@@ -645,7 +646,7 @@ public class GenerateVideoService extends IntentService {
     @Override
     public void onDestroy() {
         if (resultVideoPath != null) {
-            EasyTracker.getInstance(this).send(MapBuilder.createEvent("Trip", "generate_video_sucess", tripName, null).build());
+            DeviceHelper.sendGATrack(GenerateVideoService.this, "Trip", "generate_video_sucess", tripName, null);
             nb.setContentTitle(getString(R.string.finish));
             nb.setContentText(resultVideoPath);
             nb.setOngoing(false);
@@ -659,7 +660,7 @@ public class GenerateVideoService extends IntentService {
             nb.addAction(android.R.drawable.ic_menu_share, getString(R.string.share), PendingIntent.getActivity(this, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT));
             nm.notify(1, nb.build());
         } else {
-            EasyTracker.getInstance(this).send(MapBuilder.createEvent("Trip", "generate_video_fail", tripName, null).build());
+            DeviceHelper.sendGATrack(GenerateVideoService.this, "Trip", "generate_video_fail", tripName, null);
             nm.cancel(1);
         }
         super.onDestroy();

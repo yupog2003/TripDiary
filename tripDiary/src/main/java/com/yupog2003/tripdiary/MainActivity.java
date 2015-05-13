@@ -27,8 +27,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,6 +34,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.yupog2003.tripdiary.data.ColorHelper;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
@@ -68,7 +67,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     public static final int unit_m = 0;
     public static final int unit_ft = 1;
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String serverURL = "http://219.85.186.167/TripDiary";
+    public static final String serverURL = "http://219.85.61.62/TripDiary";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -297,7 +296,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             nb.setOngoing(true);
             nm.notify(0, nb.build());
         }
-        EasyTracker.getInstance(MainActivity.this).send(MapBuilder.createEvent("Trip", "start", name, null).build());
+        DeviceHelper.sendGATrack(MainActivity.this, "Trip", "start", name, null);
         MainActivity.this.finish();
     }
 
@@ -374,7 +373,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 }
                 i.putExtra("note", result);
                 startService(i);
-                EasyTracker.getInstance(MainActivity.this).send(MapBuilder.createEvent("Trip", "resume", strs[which], null).build());
+                DeviceHelper.sendGATrack(MainActivity.this,"Trip", "resume", strs[which], null);
                 MainActivity.this.finish();
             }
         });
@@ -419,7 +418,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
             }
         } else if (v.equals(allRecord)) {
-            EasyTracker.getInstance(MainActivity.this).send(MapBuilder.createEvent("Trip", "view", "all_record", null).build());
+            DeviceHelper.sendGATrack(MainActivity.this,"Trip", "view", "all_record", null);
             Intent i = new Intent(MainActivity.this, AllRecordActivity.class);
             String[] tripPaths = new File(rootPath).list(FileHelper.getDirFilter());
             i.putExtra(AllRecordActivity.tag_trip_paths, tripPaths);

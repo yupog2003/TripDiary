@@ -24,10 +24,9 @@ import android.support.v4.app.NotificationCompat;
 import android.text.format.Time;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.RecordActivity;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
@@ -230,7 +229,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             lm.removeUpdates(RecordService.this);
             Toast.makeText(getApplicationContext(), getString(R.string.trip_has_been_stopped), Toast.LENGTH_SHORT).show();
-            EasyTracker.getInstance(RecordService.this).send(MapBuilder.createEvent("Trip", "stop", name, null).build());
+            DeviceHelper.sendGATrack(RecordService.this, "Trip", "stop", name, null);
             instance = null;
             RecordService.this.stopSelf();
         }

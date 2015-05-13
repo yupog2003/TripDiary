@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
-    android:installLocation="auto"
-    android:versionCode="160"
-    android:versionName="1.1.9">
+    android:installLocation="auto">
 
     <permission
         android:name="com.yupog2003.tripdiary.permission.MAPS_RECEIVE"
@@ -31,6 +29,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".TripDiaryApplication"
         android:allowBackup="true"
         android:backupAgent=".data.MyBackupAgent"
         android:icon="@drawable/ic_launcher"
@@ -85,7 +84,7 @@
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
+            android:value="AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk" />
         <!-- publish key=   AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->
 

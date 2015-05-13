@@ -18,7 +18,10 @@ import android.widget.Button;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.fragments.AllAudioFragment;
 import com.yupog2003.tripdiary.fragments.AllPictureFragment;
@@ -112,8 +115,9 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 		money = (Button) findViewById(R.id.money);
 		money.setOnClickListener(this);
 		setMode(Mode.map_mode);
-		ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(ViewTripActivity.this).build();
-		ImageLoader.getInstance().init(conf);
+        ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(ViewTripActivity.this).imageDecoder(myImageDecoder).build();
+        ImageLoader.getInstance().init(conf);
 	}
 
 	private void setMode(Mode mode) {

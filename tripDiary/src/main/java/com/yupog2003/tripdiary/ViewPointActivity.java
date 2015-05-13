@@ -25,8 +25,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
+import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.fragments.AudioFragment;
@@ -70,6 +75,9 @@ public class ViewPointActivity extends MyActivity {
         timezone = TimeAnalyzer.getPOITimeZone(ViewPointActivity.this, path);
         poi = new POI(new File(path));
         setTitle(name);
+        ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(ViewPointActivity.this).imageDecoder(myImageDecoder).build();
+        ImageLoader.getInstance().init(conf);
         initialtab(savedInstanceState);
     }
 

@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="158"
-    android:versionName="1.1.8" >
+    android:versionCode="162"
+    android:versionName="1.2.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="22" />
 
     <permission
         android:name="com.yupog2003.tripdiary.permission.MAPS_RECEIVE"
@@ -35,6 +35,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.yupog2003.tripdiary.TripDiaryApplication"
         android:allowBackup="true"
         android:backupAgent="com.yupog2003.tripdiary.data.MyBackupAgent"
         android:icon="@drawable/ic_launcher"
