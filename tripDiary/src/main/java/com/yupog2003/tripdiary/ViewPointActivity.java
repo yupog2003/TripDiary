@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.os.Environment;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,13 +25,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.decode.ImageDecoder;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
-import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.fragments.AudioFragment;
@@ -39,14 +35,13 @@ import com.yupog2003.tripdiary.fragments.PictureFragment;
 import com.yupog2003.tripdiary.fragments.TextFragment;
 import com.yupog2003.tripdiary.fragments.VideoFragment;
 import com.yupog2003.tripdiary.fragments.ViewCostFragment;
-import com.yupog2003.tripdiary.views.PagerSlidingTabStrip;
+import com.yupog2003.tripdiary.views.SlidingTabLayout;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class ViewPointActivity extends MyActivity {
     String path;
@@ -54,7 +49,7 @@ public class ViewPointActivity extends MyActivity {
     public static POI poi;
     public static final DecimalFormat latlngFormat = new DecimalFormat("#.######");
     MyPagerAdapter adapter;
-    PagerSlidingTabStrip pagerTab;
+    SlidingTabLayout pagerTab;
     static final int pick_multi_file = 0;
     static final int import_picture = 1;
     static final int import_video = 2;
@@ -75,9 +70,7 @@ public class ViewPointActivity extends MyActivity {
         timezone = TimeAnalyzer.getPOITimeZone(ViewPointActivity.this, path);
         poi = new POI(new File(path));
         setTitle(name);
-        ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
-        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(ViewPointActivity.this).imageDecoder(myImageDecoder).build();
-        ImageLoader.getInstance().init(conf);
+        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTrip.getName() + "-" + poi.title, null);
         initialtab(savedInstanceState);
     }
 
@@ -91,9 +84,9 @@ public class ViewPointActivity extends MyActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         adapter = new MyPagerAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);
-        pagerTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pagerTab.setIndicatorColorResource(android.R.color.holo_blue_light);
-        pagerTab.setShouldExpand(true);
+        pagerTab = (SlidingTabLayout) findViewById(R.id.tabs);
+        pagerTab.setSelectedIndicatorColors(Color.WHITE);
+        pagerTab.setDistributeEvenly(true);
         pagerTab.setViewPager(viewPager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -197,7 +190,8 @@ public class ViewPointActivity extends MyActivity {
             TextView altitude = (TextView) layout.findViewById(R.id.altitude);
             altitude.setText(GpxAnalyzer2.getAltitudeString((float) poi.altitude, "m"));
             TextView time = (TextView) layout.findViewById(R.id.time);
-            time.setText(TimeAnalyzer.formatInTimezone(poi.time, timezone));
+            String timeStr=TimeAnalyzer.formatInTimezone(poi.time, timezone);
+            time.setText(timeStr);
             ab.setView(layout);
             ab.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
 
@@ -220,12 +214,12 @@ public class ViewPointActivity extends MyActivity {
                     editaltitude.setText(String.valueOf(altitude));
                     final DatePicker editdate = (DatePicker) layout.findViewById(R.id.edit_poi_date);
                     final TimePicker edittime = (TimePicker) layout.findViewById(R.id.edit_poi_time);
-                    Time time = poi.time;
-                    time.switchTimezone(timezone);
-                    editdate.updateDate(time.year, time.month, time.monthDay);
+                    Calendar time = poi.time;
+                    time=TimeAnalyzer.changeTimeZone(time, timezone);
+                    editdate.updateDate(time.get(Calendar.YEAR), time.get(Calendar.MONTH), time.get(Calendar.DAY_OF_MONTH));
                     edittime.setIs24HourView(true);
-                    edittime.setCurrentHour(time.hour);
-                    edittime.setCurrentMinute(time.minute);
+                    edittime.setCurrentHour(time.get(Calendar.HOUR_OF_DAY));
+                    edittime.setCurrentMinute(time.get(Calendar.MINUTE));
                     ab2.setView(layout);
                     ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
@@ -238,9 +232,10 @@ public class ViewPointActivity extends MyActivity {
                                 Toast.makeText(ViewPointActivity.this, R.string.some_fields_are_not_filled, Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            Time time = new Time(timezone);
-                            time.set(0, edittime.getCurrentMinute(), edittime.getCurrentHour(), editdate.getDayOfMonth(), editdate.getMonth(), editdate.getYear());
-                            time.switchTimezone(Time.TIMEZONE_UTC);
+                            Calendar time=Calendar.getInstance(TimeZone.getTimeZone(timezone));
+                            time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), 0);
+                            TimeAnalyzer.format3339(time);
+                            time=TimeAnalyzer.changeTimeZone(time, "UTC");
                             double altitude = Double.parseDouble(editAltitudeStr);
                             if (MainActivity.altitude_unit == MainActivity.unit_ft) {
                                 altitude *= 0.3048;
@@ -248,9 +243,7 @@ public class ViewPointActivity extends MyActivity {
                             poi.renamePOI(edittitle.getText().toString());
                             poi.updateBasicInformation(edittitle.getText().toString(), time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude);
                             setTitle(edittitle.getText().toString());
-                            Intent data = new Intent();
-                            data.putExtra("update", true);
-                            setResult(getIntent().getIntExtra("request_code", 1), data);
+                            requestUpdatePOI();
                         }
                     });
                     ab2.setNegativeButton(getString(R.string.cancel), null);
@@ -271,11 +264,8 @@ public class ViewPointActivity extends MyActivity {
             ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-
                     poi.deleteSelf();
-                    Intent data = new Intent();
-                    data.putExtra("update", true);
-                    setResult(getIntent().getIntExtra("request_code", 2), data);
+                    requestUpdatePOI();
                     ViewPointActivity.this.finish();
                 }
 
@@ -287,10 +277,11 @@ public class ViewPointActivity extends MyActivity {
         }
         return false;
     }
-
+    public static void requestUpdatePOI(){
+        ViewTripActivity.updatePOI=true;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        boolean updateRequest = false;
         if (data != null) {
             if (requestCode == pick_multi_file) {
                 if (resultCode == Activity.RESULT_OK) {
@@ -301,22 +292,17 @@ public class ViewPointActivity extends MyActivity {
                     Uri uri = data.getData();
                     if (requestCode == import_picture) {
                         FileHelper.copyFromUriToFile(this, uri, new File(path + "/pictures"), null);
-                        updateRequest = true;
+                        requestUpdatePOI();
                     } else if (requestCode == import_video) {
                         FileHelper.copyFromUriToFile(this, uri, new File(path + "/videos"), null);
-                        updateRequest = true;
+                        requestUpdatePOI();
                     } else if (requestCode == import_audio) {
                         FileHelper.copyFromUriToFile(this, uri, new File(path + "/audios"), null);
-                        updateRequest = true;
+                        requestUpdatePOI();
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-            }
-            if (updateRequest) {
-                Intent data1 = new Intent();
-                data1.putExtra("update", true);
-                setResult(getIntent().getIntExtra("request_code", 1), data1);
             }
         }
     }
@@ -375,6 +361,7 @@ public class ViewPointActivity extends MyActivity {
             adapter.pictureFragment.onResume();
             adapter.videoFragment.onResume();
             adapter.audioFragment.onResume();
+            requestUpdatePOI();
         }
     }
 

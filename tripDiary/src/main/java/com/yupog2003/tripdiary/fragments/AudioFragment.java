@@ -95,9 +95,7 @@ public class AudioFragment extends Fragment {
                             checksName.get(i).delete();
                         }
                         setAudio();
-                        Intent data = new Intent();
-                        data.putExtra("update", true);
-                        getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+                        ViewPointActivity.requestUpdatePOI();
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -118,9 +116,7 @@ public class AudioFragment extends Fragment {
                             String s = name.getText().toString();
                             checkFile.renameTo(new File(checkFile.getParent() + "/" + s));
                             setAudio();
-                            Intent data = new Intent();
-                            data.putExtra("update", true);
-                            getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+                            ViewPointActivity.requestUpdatePOI();
                         }
                     });
                     ab2.show();
@@ -176,9 +172,7 @@ public class AudioFragment extends Fragment {
                             public void onFinish() {
 
                                 setAudio();
-                                Intent data = new Intent();
-                                data.putExtra("update", true);
-                                getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+                                ViewPointActivity.requestUpdatePOI();
                             }
                         }).execute();
 

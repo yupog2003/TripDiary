@@ -85,13 +85,12 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
-
-                    gmap = googleMap;
-                    gmap.setInfoWindowAdapter(new POIInfoWindowAdapter(AllRecordActivity.this, rootPath));
-                    gmap.setOnInfoWindowClickListener(AllRecordActivity.this);
-                    gmap.getUiSettings().setZoomControlsEnabled(true);
-                    analysisTask = new AnalysisTask();
-                    analysisTask.execute();
+                gmap = googleMap;
+                gmap.setInfoWindowAdapter(new POIInfoWindowAdapter(AllRecordActivity.this, rootPath));
+                gmap.setOnInfoWindowClickListener(AllRecordActivity.this);
+                gmap.getUiSettings().setZoomControlsEnabled(true);
+                analysisTask = new AnalysisTask();
+                analysisTask.execute();
                 }
             });
         }

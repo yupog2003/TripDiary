@@ -2,57 +2,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayPointActivity" 
-    android:orientation="horizontal"
-    android:baselineAligned="false">
-	<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" 
-        android:orientation="vertical">
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".PlayPointActivity">
 
-        <ImageButton
-            android:id="@+id/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_pause"
-            android:contentDescription="@string/imagebutton_description"
-            style="?android:attr/borderlessButtonStyle"
-             />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <ImageButton
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_next" 
-            android:contentDescription="@string/imagebutton_description"
-            style="?android:attr/borderlessButtonStyle"/>
-
-        <ImageButton
-            android:id="@+id/skip"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_skip"
-            android:contentDescription="@string/imagebutton_description"
-            style="?android:attr/borderlessButtonStyle"
-             />
-
-    </LinearLayout>
     <LinearLayout
-        android:layout_width="0dip"
-        android:layout_height="match_parent" 
-        android:layout_weight="1.0">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <ViewFlipper
-            android:id="@+id/pointviewflipper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-					</ViewFlipper>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/pause"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:contentDescription="@string/imagebutton_description"
+                android:src="@drawable/ic_pause" />
+
+            <ImageButton
+                android:id="@+id/next"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:contentDescription="@string/imagebutton_description"
+                android:src="@drawable/ic_next" />
+
+            <ImageButton
+                android:id="@+id/skip"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:contentDescription="@string/imagebutton_description"
+                android:src="@drawable/ic_skip" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <ViewFlipper
+                android:id="@+id/pointviewflipper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ViewFlipper>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    
 
 </LinearLayout><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout-land/activity_play_point.xml -->

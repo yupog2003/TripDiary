@@ -153,10 +153,6 @@
     <string name="distance">Distance</string>
     <string name="average_speed">Average Speed</string>
     <string name="poi">POI</string>
-    <string name="not_a_picture">Not a picture</string>
-    <string name="not_a_video">Not a video</string>
-    <string name="not_a_audio">Not a audio</string>
-    <string name="not_a_music">Not a music</string>
     <string name="filename">Filename</string>
     <string name="share_diary">Share Diary</string>
     <string name="statistics">Statistics</string>
@@ -181,7 +177,6 @@
     <string name="manage_category_summary">Manage trip category</string>
     <string name="others">Others</string>
     <string name="diary_font">Diary Font</string>
-    <string name="not_a_font_file">Not a font file</string>
     <string name="invalid_font">Invalid font</string>
     <string name="diary_font_size">Diary Font Size</string>
     <string name="select_diary_font_size">Select diary font size</string>
@@ -259,8 +254,6 @@
     <string name="street_view_is_not_available">Street View is not available</string>
     <string name="camera_is_not_available">Camera is not available</string>
     <string name="resume_trip">Resume Trip</string>
-    <string name="expand_all">Expand all</string>
-    <string name="collapse_all">Collapse all</string>
     <string name="import_memory">Import memory</string>
     <string name="import_memory_explanation">TripDiary can import memory(pictures,videos,sounds) by selecting a folder that contains memory.And it will copy those files to the appropriate POI\'s folder according to their build time(for JPEG,by EXIF time) automatically.But you should be aware of the memory timezone is the same as the timezone now.</string>
     <string name="importing">Importing</string>
@@ -333,7 +326,6 @@
     <string name="generate_video">Generate Video(experimental)</string>
     <string name="encoding">Encoding</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">Please connect to internet for downloading Google Map background</string>
-    <string name="would_you_like_to_choose_background_music">Would you like to choose a background music? Note : It will replace all the sound in your trip.</string>
     <string name="add_background_music">Add background music</string>
     <string name="videoname">Video Name</string>
     <string name="resolution">Resolution</string>
@@ -343,12 +335,9 @@
     <string name="video_codec">Video codec</string>
     <string name="audio_codec">Audio codec</string>
     <string name="select">Select</string>
-    <string name="local_storage">Local Storage</string>
-    <string name="title_activity_get_content">GetContentActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="nocategory">uncatagorized</string>
     <string name="record_distance_interval">Record Distance Interval</string>
     <string name="minimum_distance_between_record_localtions">Minimum distance between record locations (in meters)</string>
+    <string name="title_activity_view_trip_online">ViewTripOnlineActivity</string>
 
 </resources>

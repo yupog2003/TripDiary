@@ -14,7 +14,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,14 +28,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.services.RecordService;
@@ -95,10 +89,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             resumeTrip.setOnClickListener(this);
             allRecord.setOnClickListener(this);
         }
-        ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
-        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(MainActivity.this).imageDecoder(myImageDecoder).build();
-        ImageLoader.getInstance().init(conf);
-
     }
 
     private void maintainNoCategory() {
@@ -429,7 +419,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     class TripInformation {
         File file;
         String name;
-        Time time;
+        Calendar time;
     }
 
 }

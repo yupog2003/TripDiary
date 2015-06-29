@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/selectall"
-        android:icon="@drawable/ic_check"
+        android:icon="@drawable/ic_select_all"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:title="@string/select_all"/>

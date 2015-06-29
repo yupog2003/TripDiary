@@ -1,10 +1,16 @@
 package com.yupog2003.tripdiary;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.yupog2003.tripdiary.data.MyImageDecoder;
 
 
-public class MyActivity extends ActionBarActivity {
+public class MyActivity extends AppCompatActivity {
 
 	@Override
 	public void onStart() {
@@ -20,7 +26,15 @@ public class MyActivity extends ActionBarActivity {
 		//EasyTracker.getInstance(this).activityStop(this);
 	}
 
-    public Activity getActivity(){
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		MyImageDecoder imageDecoder=new MyImageDecoder(this,new BaseImageDecoder(false));
+		ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDecoder(imageDecoder).build();
+		ImageLoader.getInstance().init(conf);
+	}
+
+	public Activity getActivity(){
         return this;
     }
 }

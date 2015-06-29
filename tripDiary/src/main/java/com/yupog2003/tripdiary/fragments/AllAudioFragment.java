@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,67 +14,56 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
-import com.yupog2003.tripdiary.views.FloatingGroupExpandableListView;
-import com.yupog2003.tripdiary.views.WrapperExpandableListAdapter;
+import com.yupog2003.tripdiary.views.UnScrollableListView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AllAudioFragment extends Fragment {
 	POI[] pois;
-	boolean[] expand;
-	FloatingGroupExpandableListView listView;
-
+	RecyclerView recyclerView;
+	int width;
+	int numColums;
 	public AllAudioFragment() {
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+		int screenWidth = DeviceHelper.getScreenWidth(getActivity());
+		int screenHeight = DeviceHelper.getScreenHeight(getActivity());
+		if (screenWidth > screenHeight) {
+			width = screenWidth / 5;
+			numColums = 5;
+		} else {
+			width = screenWidth / 3;
+			numColums = 3;
+		}
 		setHasOptionsMenu(true);
-		listView = new FloatingGroupExpandableListView(getActivity());
-		listView.setGroupIndicator(null);
-		// listView.setBackgroundColor(getResources().getColor(R.color.item_background));
+		recyclerView = new RecyclerView(getActivity());
+		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		refresh();
-		return listView;
+		return recyclerView;
 	}
 
 	@Override
 	public void onResume() {
-
+		//refresh();
 		super.onResume();
 	}
 
 	public void refresh() {
 		this.pois = ViewTripActivity.trip.pois;
-		if (expand == null) {
-			expand = new boolean[pois.length];
-			Arrays.fill(expand, false);
-		}
-		POIAdapter adapter = new POIAdapter(pois);
-		WrapperExpandableListAdapter adapter2 = new WrapperExpandableListAdapter(adapter);
-		listView.setAdapter(adapter2);
-		listView.setOnChildClickListener(adapter);
-		for (int i = 0; i < adapter.getGroupCount(); i++) {
-			if (i >= expand.length)
-				continue;
-			if (expand[i]) {
-				listView.expandGroup(i);
-			} else {
-				listView.collapseGroup(i);
-			}
-		}
+		recyclerView.setAdapter(new POIAdapter(pois));
 	}
 
 	@Override
@@ -82,141 +74,105 @@ public class AllAudioFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-		case R.id.expandall:
-			expandAll();
-			break;
-		case R.id.collapseall:
-			collapseAll();
-			break;
-		}
 		return true;
 	}
+	class AudioAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+		File[] audios;
 
-	public void expandAll() {
-		int groupCount = listView.getExpandableListAdapter().getGroupCount();
-		for (int i = 0; i < groupCount; i++) {
-			listView.expandGroup(i);
-		}
-	}
-
-	public void collapseAll() {
-		int groupCount = listView.getExpandableListAdapter().getGroupCount();
-		for (int i = 0; i < groupCount; i++) {
-			listView.collapseGroup(i);
-		}
-	}
-
-	class POIAdapter extends BaseExpandableListAdapter implements OnChildClickListener {
-		POI[] pois;
-		ArrayList<File[]> audios;
-
-		public POIAdapter(POI[] pois) {
-			this.pois = pois;
-			audios = new ArrayList<File[]>();
-			for (int i = 0; i < pois.length; i++) {
-				audios.add(pois[i].audioFiles);
-			}
+		public AudioAdapter(File[] audios) {
+			this.audios = audios;
 		}
 
-		public Object getChild(int groupPosition, int childPosition) {
+		public int getCount() {
 
-			return audios.get(groupPosition)[childPosition];
+			if (audios == null)
+				return 0;
+			return audios.length;
 		}
 
-		public long getChildId(int groupPosition, int childPosition) {
+		public Object getItem(int position) {
 
-			return groupPosition * 1000 + childPosition;
+			return audios[position];
 		}
 
-		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+		public long getItemId(int position) {
 
-			TextView textView = new TextView(getActivity());
-			textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Large);
+			return position;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			TextView textView=new TextView(getActivity());
+			textView.setText(audios[position].getName());
+			textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_DeviceDefault_Medium);
 			textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
-			textView.setText(((File) getChild(groupPosition, childPosition)).getName());
 			textView.setGravity(Gravity.CENTER_VERTICAL);
-			textView.setPadding(50, 0, 0, 0);
 			return textView;
 		}
 
-		public int getChildrenCount(int groupPosition) {
-
-			return audios.get(groupPosition).length;
+		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.fromFile(audios[position]), "audio/*");
+			getActivity().startActivity(intent);
 		}
 
-		public Object getGroup(int groupPosition) {
+	}
+	class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder>{
+		POI[] pois;
+		AudioAdapter[] audioAdapters;
+		public class ViewHolder extends RecyclerView.ViewHolder {
+			// each data item is just a string in this case
+			public CardView cardView;
+			public TextView poiName;
+			public TextView poiTime;
+			public UnScrollableListView gridView;
+			public View.OnClickListener onClickListener;
+			public int index;
 
-			return pois[groupPosition];
+			public ViewHolder(CardView v) {
+				super(v);
+				this.cardView = v;
+				this.poiName = (TextView) cardView.findViewById(R.id.poiName);
+				this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
+				this.gridView = (UnScrollableListView) cardView.findViewById(R.id.audios);
+				this.onClickListener = new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(), ViewPointActivity.class);
+						intent.putExtra("path", pois[index].dir.getPath());
+						startActivity(intent);
+					}
+				};
+				this.cardView.setOnClickListener(onClickListener);
+			}
+		}
+		public POIAdapter(POI[] pois) {
+			this.pois = pois;
+			this.audioAdapters = new AudioAdapter[pois.length];
+			for (int i = 0; i < audioAdapters.length; i++) {
+				audioAdapters[i] = new AudioAdapter(pois[i].audioFiles);
+			}
+		}
+		@Override
+		public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+			CardView v = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.card_audios, parent, false);
+			ViewHolder viewHolder = new ViewHolder(v);
+			return viewHolder;
 		}
 
-		public int getGroupCount() {
+		@Override
+		public void onBindViewHolder(ViewHolder holder, int position) {
+			holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].audioFiles.length) + ")");
+			holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+			holder.gridView.setVisibility(audioAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
+			holder.gridView.setAdapter(audioAdapters[position]);
+			holder.gridView.setOnItemClickListener(audioAdapters[position]);
+			holder.index = position;
+		}
 
+		@Override
+		public int getItemCount() {
 			return pois.length;
 		}
 
-		public long getGroupId(int groupPosition) {
-
-			return groupPosition;
-		}
-
-		class GroupViewHolder {
-			TextView poiName;
-			TextView poiExtra;
-		}
-
-		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-			GroupViewHolder holder;
-			if (convertView == null) {
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.poi_group_item, parent, false);
-				holder = new GroupViewHolder();
-				holder.poiName = (TextView) convertView.findViewById(R.id.poiName);
-				holder.poiExtra = (TextView) convertView.findViewById(R.id.poiExtra);
-				convertView.setTag(holder);
-			}
-			holder = (GroupViewHolder) convertView.getTag();
-			holder.poiName.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? R.drawable.indicator_expand2 : R.drawable.indicator_collapse2, 0, 0, 0);
-			holder.poiName.setText(pois[groupPosition].title + "(" + String.valueOf(audios.get(groupPosition).length) + ")");
-			holder.poiExtra.setText("-" + TimeAnalyzer.formatInTimezone(pois[groupPosition].time, ViewTripActivity.trip.timezone));
-			return convertView;
-		}
-
-		public boolean hasStableIds() {
-
-			return false;
-		}
-
-		public boolean isChildSelectable(int groupPosition, int childPosition) {
-
-			return true;
-		}
-
-		public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile((File) getChild(groupPosition, childPosition)), "audio/*");
-			getActivity().startActivity(intent);
-			return true;
-		}
-
-		@Override
-		public void onGroupExpanded(int groupPosition) {
-
-			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
-				expand[groupPosition] = true;
-			}
-			super.onGroupExpanded(groupPosition);
-		}
-
-		@Override
-		public void onGroupCollapsed(int groupPosition) {
-
-			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
-				expand[groupPosition] = false;
-			}
-			super.onGroupCollapsed(groupPosition);
-		}
 	}
 }

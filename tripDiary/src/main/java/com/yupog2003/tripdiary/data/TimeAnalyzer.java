@@ -2,184 +2,187 @@ package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.format.Time;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class TimeAnalyzer {
-	public static final int type_gpx = 0;
-	public static final int type_time_format3399 = 1;
-	public static final int type_self = 2;
+    public static final int type_gpx = 0;
+    public static final int type_time_format3399 = 1;
+    public static final int type_self = 2;
 
-	public static Time getminusTime(Time starttime, Time stoptime) {
-		Time totaltime = new Time();
-		long seconds = getMinusTimeInSecond(starttime, stoptime);
-		totaltime.set((int) (seconds % 60), (int) (seconds % 3600 / 60), (int) (seconds % 86400 / 3600), (int) (seconds % 2592000 / 86400), (int) (seconds % 31536000 / 2592000), (int) (seconds / 31536000));
-		return totaltime;
-	}
+    public static long getMinusTimeInSecond(Calendar starttime, Calendar stoptime) {
+        return (stoptime.getTimeInMillis() - starttime.getTimeInMillis()) / 1000;
+    }
 
-	public static long getMinusTimeInSecond(Time starttime, Time stoptime) {
-		return (stoptime.toMillis(true) - starttime.toMillis(true)) / 1000;
-	}
+    public static String format3339(Calendar c) {
+        if (c == null)
+            return "";
+        return String.valueOf(c.get(Calendar.YEAR))
+                +"-"+String.valueOf(c.get(Calendar.MONTH)+1)
+                +"-"+String.valueOf(c.get(Calendar.DAY_OF_MONTH))
+                +"T"+String.valueOf(c.get(Calendar.HOUR_OF_DAY))
+                +":"+String.valueOf(c.get(Calendar.MINUTE))
+                +":"+String.valueOf(c.get(Calendar.SECOND))
+                +".000";
+    }
 
-	public static Time getTime(String timezone, String s, int type) {
-		Time time = new Time(timezone);
-		String date = "", t = "";
-		String[] datetoks, timetoks;
-		switch (type) {
-		case type_gpx:
-			if (s.contains(">") && s.contains("T") && s.contains("Z")) {
-				date = s.substring(s.indexOf(">") + 1, s.indexOf("T"));
-				t = s.substring(s.indexOf("T") + 1, s.indexOf("Z"));
-			}
-			break;
-		case type_time_format3399:
-			if (s.contains("=") && s.contains("T") && s.contains(".")) {
-				date = s.substring(s.indexOf("=") + 1, s.lastIndexOf("T"));
-				t = s.substring(s.lastIndexOf("T") + 1, s.lastIndexOf("."));
-			}
-			break;
-		case type_self:
-			if (s.contains("T")) {
-				date = s.substring(0, s.indexOf("T"));
-				t = s.substring(s.indexOf("T") + 1, s.length());
-			}
-			break;
-		}
-		if (date.contains("-") && t.contains(":")) {
-			datetoks = date.split("-");
-			timetoks = t.split(":");
-			time.set((int) (Double.parseDouble(timetoks[2])), Integer.parseInt(timetoks[1]), Integer.parseInt(timetoks[0]), Integer.parseInt(datetoks[2]), Integer.parseInt(datetoks[1]) - 1, Integer.parseInt(datetoks[0]));
-		} else {
-			time.setToNow();
-		}
-		return time;
-	}
+    public static Calendar getTime(String timezone, String s, int type) {
+        Calendar c=Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        String date = "", t = "";
+        String[] datetoks, timetoks;
+        switch (type) {
+            case type_gpx:
+                if (s.contains(">") && s.contains("T") && s.contains("Z")) {
+                    date = s.substring(s.indexOf(">") + 1, s.indexOf("T"));
+                    t = s.substring(s.indexOf("T") + 1, s.indexOf("Z"));
+                }
+                break;
+            case type_time_format3399:
+                if (s.contains("=") && s.contains("T") && s.contains(".")) {
+                    date = s.substring(s.indexOf("=") + 1, s.lastIndexOf("T"));
+                    t = s.substring(s.lastIndexOf("T") + 1, s.lastIndexOf("."));
+                }
+                break;
+            case type_self:
+                if (s.contains("T")) {
+                    date = s.substring(0, s.indexOf("T"));
+                    t = s.substring(s.indexOf("T") + 1, s.length());
+                }
+                break;
+        }
+        if (date.contains("-") && t.contains(":")) {
+            datetoks = date.split("-");
+            timetoks = t.split(":");
+            int year = (int) Double.parseDouble(datetoks[0]);
+            int month = (int) Double.parseDouble(datetoks[1]) - 1;
+            int day = (int) Double.parseDouble(datetoks[2]);
+            int hour = (int) Double.parseDouble(timetoks[0]);
+            int min = (int) Double.parseDouble(timetoks[1]);
+            int second = (int) Double.parseDouble(timetoks[2]);
+            c.set(year, month, day, hour, min, second);
+            format3339(c);
+        }
+        return c;
+    }
 
-	public static Time getTime(String s, int type) {
-		return getTime(Time.TIMEZONE_UTC, s, type);
-	}
+    public static Calendar getTime(String s, int type) {
+        return getTime("UTC", s, type);
+    }
 
-	public static boolean isTimeMatched(Time time1, Time time2, Time time3) {
-		return (Time.compare(time1, time2) <= 0 && Time.compare(time2, time3) <= 0);
-	}
+    public static boolean isTimeMatched(Calendar time1, Calendar time2, Calendar time3) {
+        return time1.compareTo(time2) <= 0 && time2.compareTo(time3) <= 0;
+    }
 
-	public static String formatTotalTime(Time time) {
-		StringBuffer sb = new StringBuffer();
-		if (time.year != 0)
-			sb.append(time.year + "-");
-		if (time.month != 0)
-			sb.append(time.month + 1 + "-");
-		if (time.monthDay != 0)
-			sb.append(time.monthDay + "T");
-		sb.append(time.hour + ":");
-		sb.append(time.minute + ":");
-		sb.append(time.second);
-		return sb.toString();
-	}
+    public static String formatInCurrentTimezone(Calendar time) {
+        return formatInTimezone(time, TimeZone.getDefault().getID());
+    }
 
-	public static String formatInCurrentTimezone(Time time) {
-		return formatInTimezone(time, Time.getCurrentTimezone());
-	}
+    public static String formatInTimezone(Calendar time, String timezone) {
+        if (time == null)
+            time = Calendar.getInstance();
+        if (timezone != null) {
+            time = changeTimeZone(time, timezone);
+        }
+        String format3339=format3339(time);
+        return format3339.substring(0,format3339.lastIndexOf("."));
+    }
 
-	public static String formatInTimezone(Time time, String timezone) {
-		if (time == null)
-			time=new Time();
-		if (timezone != null)
-			time.switchTimezone(timezone);
-		return String.valueOf(time.year) + "-" + String.valueOf(time.month + 1) + "-" + String.valueOf(time.monthDay) + "T" + String.valueOf(time.hour) + ":" + String.valueOf(time.minute) + ":" + String.valueOf(time.second);
-	}
+    public static Calendar getTripTime(String path, String tripName) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path + "/" + tripName + "/" + tripName + ".gpx"));
+            String s;
+            while ((s = br.readLine()) != null) {
+                if (s.contains("<time>")) {
+                    br.close();
+                    return TimeAnalyzer.getTime(s, TimeAnalyzer.type_gpx);
+                }
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
 
-	public static Time getTripTime(String path, String tripName) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(path + "/" + tripName + "/" + tripName + ".gpx"));
-			String s;
-			while ((s = br.readLine()) != null) {
-				if (s.contains("<time>")) {
-					br.close();
-					return TimeAnalyzer.getTime(s, TimeAnalyzer.type_gpx);
-				}
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
 
-			e.printStackTrace();
-		} catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Calendar.getInstance();
+    }
 
-			e.printStackTrace();
-		}
-		Time time = new Time();
-		time.setToNow();
-		time.switchTimezone(Time.TIMEZONE_UTC);
-		return time;
-	}
+    public static String getTimezoneFromLatlng(double lat, double lng) {
+        String result = TimeZone.getDefault().getID();
+        try {
+            URL url = new URL("https://maps.googleapis.com/maps/api/timezone/xml?location=" + String.valueOf(lat) + "," + String.valueOf(lng) + "&timestamp=0&sensor=true");
+            HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+            InputStream is=connection.getInputStream();
+            String s= IOUtils.toString(is);
+            if (s.contains("OVER_QUERY_LIMIT")) {
+                Thread.sleep(5000);
+                return getTimezoneFromLatlng(lat, lng);
+            }
+            if (s.contains("OK")) {
+                result = s.substring(s.indexOf("<time_zone_id>") + 14, s.indexOf("</time_zone_id>"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
-	public static String getTimezoneFromLatlng(double lat, double lng) {
-		String result = Time.getCurrentTimezone();
-		HttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet("https://maps.googleapis.com/maps/api/timezone/xml?location=" + String.valueOf(lat) + "," + String.valueOf(lng) + "&timestamp=0&sensor=true");
-		try {
-			HttpResponse response = client.execute(get);
-			String s = EntityUtils.toString(response.getEntity());
-			if (s.contains("OVER_QUERY_LIMIT")) {
-				Thread.sleep(5000);
-				return getTimezoneFromLatlng(lat, lng);
-			}
-			if (s.contains("OK")) {
-				result = s.substring(s.indexOf("<time_zone_id>") + 14, s.indexOf("</time_zone_id>"));
-			}
-		} catch (ClientProtocolException e) {
+    public static String getTripTimeZone(Context context, String tripName) {
+        if (context == null)
+            return TimeZone.getDefault().getID();
+        SharedPreferences preference = context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE);
+        if (preference == null)
+            return TimeZone.getDefault().getID();
+        return preference.getString(tripName, TimeZone.getDefault().getID());
+    }
 
-			e.printStackTrace();
-		} catch (IOException e) {
+    public static String getPOITimeZone(Context context, String poiPath) {
+        if (poiPath == null || !poiPath.contains("/")) {
+            return TimeZone.getDefault().getID();
+        }
+        String[] toks = poiPath.split("/");
+        if (toks.length < 2) {
+            return TimeZone.getDefault().getID();
+        }
+        String tripName = toks[toks.length - 2];
+        return TimeAnalyzer.getTripTimeZone(context, tripName);
+    }
 
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+    public static void updateTripTimeZoneFromLatLng(Context context, String tripName, double lat, double lng) {
+        updateTripTimeZone(context, tripName, getTimezoneFromLatlng(lat, lng));
+    }
 
-			e.printStackTrace();
-		}
-		return result;
-	}
+    public static void updateTripTimeZone(Context context, String tripName, String timezone) {
+        if (context == null)
+            return;
+        SharedPreferences preference = context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preference.edit();
+        editor.putString(tripName, timezone);
+        editor.commit();
+    }
 
-	public static String getTripTimeZone(Context context, String tripName) {
-		if (context == null)
-			return Time.getCurrentTimezone();
-		SharedPreferences preference = context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE);
-		if (preference == null)
-			return Time.getCurrentTimezone();
-		return preference.getString(tripName, Time.getCurrentTimezone());
-	}
-	public static String getPOITimeZone(Context context,String poiPath){
-		if (poiPath == null || !poiPath.contains("/")){
-			return Time.getCurrentTimezone();
-		}
-		String[] toks=poiPath.split("/");
-		if (toks.length < 2){
-			return Time.getCurrentTimezone();
-		}
-		String tripName=toks[toks.length-2];
-		return TimeAnalyzer.getTripTimeZone(context, tripName);
-	}
-	public static void updateTripTimeZoneFromLatLng(Context context, String tripName, double lat, double lng) {
-		updateTripTimeZone(context, tripName, getTimezoneFromLatlng(lat, lng));
-	}
-
-	public static void updateTripTimeZone(Context context, String tripName, String timezone) {
-		if (context == null)
-			return;
-		SharedPreferences preference = context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = preference.edit();
-		editor.putString(tripName, timezone);
-		editor.commit();
-	}
+    public static Calendar changeTimeZone(Calendar c, String timezone) {
+        if (c == null) {
+            return Calendar.getInstance();
+        }
+        if (timezone == null) {
+            return c;
+        }
+        c.setTimeZone(TimeZone.getTimeZone(timezone));
+        format3339(c);
+        return c;
+    }
 }

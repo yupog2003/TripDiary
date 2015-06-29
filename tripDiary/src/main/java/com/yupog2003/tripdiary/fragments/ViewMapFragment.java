@@ -98,15 +98,14 @@ import com.yupog2003.tripdiary.views.POIInfoWindowAdapter;
 import com.yupog2003.tripdiary.views.SpinnerActionProvider;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class ViewMapFragment extends Fragment implements OnInfoWindowClickListener, OnMapLongClickListener, OnMarkerDragListener, OnClickListener {
     MapFragment mapFragment;
@@ -452,9 +451,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 return null;
             HashMap<Long, POI> pois = new HashMap<Long, POI>();
             for (int i = 0; i < ViewTripActivity.trip.pois.length; i++) {
-                Time time = ViewTripActivity.trip.pois[i].time;
-                time.switchTimezone(ViewTripActivity.trip.timezone);
-                pois.put(time.toMillis(true), ViewTripActivity.trip.pois[i]);
+                Calendar time = ViewTripActivity.trip.pois[i].time;
+                time=TimeAnalyzer.changeTimeZone(time, ViewTripActivity.trip.timezone);
+                pois.put(time.getTimeInMillis(), ViewTripActivity.trip.pois[i]);
             }
             Set<Long> set = pois.keySet();
             Long[] poiTimes = set.toArray(new Long[set.size()]);
@@ -465,8 +464,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             long start = 0;
             long end = Long.MAX_VALUE;
             if (cache.times.length > 0) {
-                start = TimeAnalyzer.getTime(ViewTripActivity.trip.timezone, cache.times[0], TimeAnalyzer.type_self).toMillis(false);
-                end = TimeAnalyzer.getTime(ViewTripActivity.trip.timezone, cache.times[cache.times.length - 1], TimeAnalyzer.type_self).toMillis(false);
+                start = TimeAnalyzer.getTime(ViewTripActivity.trip.timezone, cache.times[0], TimeAnalyzer.type_self).getTimeInMillis();
+                end = TimeAnalyzer.getTime(ViewTripActivity.trip.timezone, cache.times[cache.times.length - 1], TimeAnalyzer.type_self).getTimeInMillis();
             }
             HashMap<Long, File> mems = new HashMap<Long, File>();
             for (int i = 0; i < memories.length; i++) {
@@ -547,7 +546,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         @Override
         protected void onProgressUpdate(String... values) {
-
             if (values[0].equals("setMax")) {
                 progress.setMax(Integer.valueOf(values[1]));
                 progressMessage.setText("0/" + values[1]);
@@ -617,7 +615,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
     }
 
-    private void setPOIs() {
+    public void setPOIs() {
         if (markers == null || gmap == null || ViewTripActivity.trip == null || ViewTripActivity.trip.pois == null || !isAdded())
             return;
         for (int i = 0; i < markers.size(); i++) {
@@ -662,17 +660,17 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     private void writeLocationToPoint(TrackCache cache) {
-        Time[] times = new Time[cache.times.length];
+        Calendar[] times = new Calendar[cache.times.length];
         for (int i = 0; i < times.length; i++) {
-            Time time = TimeAnalyzer.getTime(ViewTripActivity.trip.timezone, cache.times[i], TimeAnalyzer.type_self);
+            Calendar time = TimeAnalyzer.getTime(ViewTripActivity.trip.timezone, cache.times[i], TimeAnalyzer.type_self);
             times[i] = time;
         }
         for (int i = 0; i < ViewTripActivity.trip.pois.length; i++) {
-            Time nowTime = new Time(Time.TIMEZONE_UTC);
-            nowTime.set(ViewTripActivity.trip.pois[i].time);
-            nowTime.switchTimezone(ViewTripActivity.trip.timezone);
-            Time previousTime = times[0];
-            Time nextTime = times[times.length - 1];
+            Calendar nowTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            nowTime.setTimeInMillis(ViewTripActivity.trip.pois[i].time.getTimeInMillis());
+            nowTime=TimeAnalyzer.changeTimeZone(nowTime, ViewTripActivity.trip.timezone);
+            Calendar previousTime = times[0];
+            Calendar nextTime = times[times.length - 1];
             if (TimeAnalyzer.isTimeMatched(previousTime, nowTime, nextTime)) {
                 for (int j = 0; j < times.length; j++) {
                     nextTime = times[j];
@@ -808,7 +806,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     private void viewPOI(String poiName) {
         if (new File(path + "/" + name + "/" + poiName).exists()) {
-            DeviceHelper.sendGATrack(getActivity(),"Trip", "view_poi", ViewTripActivity.trip.dir.getName() + "-" + poiName, null);
             Intent intent = new Intent(getActivity(), ViewPointActivity.class);
             intent.putExtra("path", path + "/" + name + "/" + poiName);
             intent.putExtra("request_code", update_request);
@@ -880,12 +877,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         final EditText editaltitude = (EditText) layout.findViewById(R.id.edit_poi_altitude);
         editaltitude.setText(String.valueOf(position.altitude));
         final DatePicker editdate = (DatePicker) layout.findViewById(R.id.edit_poi_date);
-        Time time = TimeAnalyzer.getTime(position.time, TimeAnalyzer.type_self);
-        editdate.updateDate(time.year, time.month, time.monthDay);
+        Calendar time = TimeAnalyzer.getTime(position.time, TimeAnalyzer.type_self);
+        editdate.updateDate(time.get(Calendar.YEAR), time.get(Calendar.MONTH), time.get(Calendar.DAY_OF_MONTH));
         final TimePicker edittime = (TimePicker) layout.findViewById(R.id.edit_poi_time);
         edittime.setIs24HourView(true);
-        edittime.setCurrentHour(time.hour);
-        edittime.setCurrentMinute(time.minute);
+        edittime.setCurrentHour(time.get(Calendar.HOUR_OF_DAY));
+        edittime.setCurrentMinute(time.get(Calendar.MINUTE));
         ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
@@ -898,9 +895,10 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 double lng = lngStr.equals("") ? position.longitude : Double.parseDouble(lngStr);
                 double altitude = altStr.equals("") ? position.altitude : Double.parseDouble(altStr);
                 LatLng location = new LatLng(lat, lng);
-                Time time = new Time(Time.getCurrentTimezone());
-                time.set(0, edittime.getCurrentMinute(), edittime.getCurrentHour(), editdate.getDayOfMonth(), editdate.getMonth(), editdate.getYear());
-                time.switchTimezone(Time.TIMEZONE_UTC);
+                Calendar time = Calendar.getInstance(TimeZone.getTimeZone(ViewTripActivity.trip.timezone));
+                time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), 0);
+                TimeAnalyzer.format3339(time);
+                time=TimeAnalyzer.changeTimeZone(time, "UTC");
                 if (title.equals("")) {
                     Toast.makeText(getActivity(), getString(R.string.input_the_poi_title), Toast.LENGTH_LONG).show();
                 } else {
@@ -918,14 +916,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         ab.show();
     }
 
-    private void addPoint(String newPointPath, LatLng latlng, double altitude, Time time) {
+    private void addPoint(String newPointPath, LatLng latlng, double altitude, Calendar time) {
         POI poi = new POI(new File(newPointPath));
         poi.updateBasicInformation(null, time, latlng.latitude, latlng.longitude, altitude);
         updateAll();
     }
 
     private MyLatLng2 getLatLngInTrack(LatLng latlng) {
-        MyLatLng2 result = new MyLatLng2(latlng.latitude, latlng.longitude, 0, TimeAnalyzer.formatInCurrentTimezone(new Time()));
+        MyLatLng2 result = new MyLatLng2(latlng.latitude, latlng.longitude, 0, TimeAnalyzer.formatInCurrentTimezone(Calendar.getInstance()));
         if (ViewTripActivity.trip == null)
             return result;
         if (ViewTripActivity.trip.cache == null || lat == null)
@@ -1326,7 +1324,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             if (end >= latlength)
                 end = latlength - 1;
             float distance = GpxAnalyzerJava.distFrom(lat[start].latitude, lat[start].longitude, lat[end].latitude, lat[end].longitude);
-            float seconds = (TimeAnalyzer.getTime(cache.times[end], TimeAnalyzer.type_self).toMillis(false) - TimeAnalyzer.getTime(cache.times[start], TimeAnalyzer.type_self).toMillis(false)) / 1000;
+            float seconds = (TimeAnalyzer.getTime(cache.times[end], TimeAnalyzer.type_self).getTimeInMillis() - TimeAnalyzer.getTime(cache.times[start], TimeAnalyzer.type_self).getTimeInMillis()) / 1000;
             float speedVal = distance / seconds * 18 / 5;
             String speedStr = GpxAnalyzer2.getDistanceString(speedVal, "km/hr");
             speed.setText(getString(R.string.velocity) + ":" + speedStr);
@@ -1377,14 +1375,13 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             return markersMap;
         for (int i = 0; i < pois.length; i++) {
             int start = 0, end = cache.times.length - 1, middle;
-            Time poiTime = pois[i].time;
+            Calendar poiTime = pois[i].time;
             if (poiTime == null)
                 continue;
-            poiTime.switchTimezone(timezone);
+            poiTime=TimeAnalyzer.changeTimeZone(poiTime,timezone);
             while (Math.abs(start - end) > 1) {
                 middle = (start + end) / 2;
-                Time time = TimeAnalyzer.getTime(cache.times[middle], TimeAnalyzer.type_self);
-                time.timezone = timezone;
+                Calendar time = TimeAnalyzer.getTime(timezone, cache.times[middle], TimeAnalyzer.type_self);
                 if (poiTime.after(time)) {
                     start = middle;
                 } else {

@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Handler;
-import android.text.format.Time;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,6 +30,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class GpxAnalyzerJava {
 	TrackCache cache;
@@ -38,7 +39,7 @@ public class GpxAnalyzerJava {
 	Context context;
 	Handler contextHandler;
 	ProgressChangedListener listener;
-	private static final double earthRadius = 6378.1 * 1000;
+	public static final double earthRadius = 6378.1 * 1000;
 	public static final int altitudeDifferThreshold = 20;
 
 	public GpxAnalyzerJava(String gpxPath, Context context, Handler contextHandler) {
@@ -64,9 +65,7 @@ public class GpxAnalyzerJava {
 			cache.times = new String[size];
 		} else {
 			String timezone = TimeAnalyzer.getTripTimeZone(context, tripName);
-			Time tempTime = TimeAnalyzer.getTripTime(rootPath, tripName);
-			tempTime.switchTimezone(timezone);
-			timeZoneOffset = (int) tempTime.gmtoff;
+			timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset()/1000;
 		}
 		ArrayList<Float> speeds = cacheExsit ? null : new ArrayList<Float>();
 		boolean success = cacheExsit ? getCache(gpxPath + ".cache", cache) : parse(gpxPath, cache, speeds, timeZoneOffset);
@@ -175,7 +174,7 @@ public class GpxAnalyzerJava {
 					if (altitude < minAltitude)
 						minAltitude = altitude;
 				} else if (s.contains("<time>")) {
-					Time time = new Time(Time.TIMEZONE_UTC);
+					Calendar time=Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 					s=s.substring(s.indexOf(">")+1, s.lastIndexOf("<"));
 					String year = s.substring(0, s.indexOf("-"));
 					String month = s.substring(s.indexOf("-") + 1, s.lastIndexOf("-"));
@@ -183,10 +182,10 @@ public class GpxAnalyzerJava {
 					String hour = s.substring(s.indexOf("T") + 1, s.indexOf(":"));
 					String minute = s.substring(s.indexOf(":") + 1, s.lastIndexOf(":"));
 					String second = s.substring(s.lastIndexOf(":") + 1, s.indexOf("Z"));
-					time.set((int) (Double.parseDouble(second)), Integer.parseInt(minute), Integer.parseInt(hour), Integer.parseInt(day), Integer.parseInt(month) - 1, Integer.parseInt(year));
-					time.set(time.toMillis(false) + timeZoneOffset * 1000);
-					latlng.time = time.format("%Y-%m-%dT%H:%M:%S");
-					times.add(time.toMillis(false));
+					time.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute), (int)Double.parseDouble(second));
+					time.setTimeInMillis(time.getTimeInMillis() + timeZoneOffset * 1000);
+					latlng.time = TimeAnalyzer.formatInTimezone(time, "UTC");
+					times.add(time.getTimeInMillis()/1000);
 				} else if (s.contains("</trkpt>")) {
 					if (!first) {
 						float altitudeDiffer = latlng.altitude - preAltitude;

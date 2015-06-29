@@ -49,7 +49,8 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/ok"
@@ -57,7 +58,8 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/enter" />
+            android:text="@string/enter"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/up"
@@ -65,7 +67,8 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/up_dir" />
+            android:text="@string/up_dir"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/selectall"
@@ -73,7 +76,8 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/select_all" />
+            android:text="@string/select_all"
+            android:textColor="@android:color/black"/>
     </LinearLayout>
 
 </RelativeLayout><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/activity_multi_file_choose.xml -->

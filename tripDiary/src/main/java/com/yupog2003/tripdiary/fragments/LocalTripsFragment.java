@@ -21,7 +21,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
-import android.text.format.Time;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -66,11 +65,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -308,7 +306,7 @@ public class LocalTripsFragment extends Fragment {
 
         class TripInformation {
             public File file;
-            public Time time;
+            public Calendar time;
             public String category;
             public Drawable drawable;
 
@@ -932,7 +930,7 @@ public class LocalTripsFragment extends Fragment {
                     BufferedReader br = new BufferedReader(new FileReader(new File(path + "/" + tripName + "/" + tripName + ".gpx")));
                     String s;
                     while ((s = br.readLine()) != null) {
-                        if (s.startsWith("<trkpt ")) {
+                        if (s.contains("<trkpt ")) {
                             String[] toks = s.split("\"");
                             double lat, lng;
                             if (s.indexOf("lat") > s.indexOf("lon")) {
@@ -949,10 +947,8 @@ public class LocalTripsFragment extends Fragment {
                     }
                     br.close();
                 } catch (FileNotFoundException e) {
-
                     e.printStackTrace();
                 } catch (IOException e) {
-
                     e.printStackTrace();
                 }
             }

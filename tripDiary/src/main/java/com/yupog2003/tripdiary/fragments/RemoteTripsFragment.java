@@ -80,6 +80,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     SearchView searchView;
     TripDiary.Client client;
 
+
     public RemoteTripsFragment() {
 
     }
@@ -323,7 +324,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             }
         }
     }
-
+    public static String gpxStr;
     class TripAdapter extends BaseAdapter implements OnItemClickListener, OnQueryTextListener, MultiChoiceModeListener, OnScrollListener {
 
         ArrayList<Trip> trips;
@@ -366,7 +367,12 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             return layout;
         }
 
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
+            /*Intent intent=new Intent(getActivity(), ViewTripOnlineActivity.class);
+            intent.putExtra(ViewTripOnlineActivity.tag_totken, token);
+            intent.putExtra(ViewTripOnlineActivity.tag_trippath, trips.get(position).path);
+            startActivity(intent);*/
+
             String tripPath = trips.get(position).path;
             String tripName = trips.get(position).name;
             String tripPublic = trip_option == option_public ? "yes" : "no";

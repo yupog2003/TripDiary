@@ -1,33 +1,33 @@
 package com.yupog2003.tripdiary.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
-import com.yupog2003.tripdiary.views.FloatingGroupExpandableListView;
-import com.yupog2003.tripdiary.views.WrapperExpandableListAdapter;
 
 import java.io.File;
-import java.util.Arrays;
 
 public class AllTextFragment extends Fragment {
     POI[] pois;
-    boolean[] expand;
-    FloatingGroupExpandableListView listView;
+    RecyclerView recyclerView;
 
     public AllTextFragment() {
 
@@ -36,79 +36,69 @@ public class AllTextFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        listView = new FloatingGroupExpandableListView(getActivity());
-        listView.setGroupIndicator(null);
-        // listView.setBackgroundColor(getResources().getColor(R.color.item_background));
+        recyclerView = new RecyclerView(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         setHasOptionsMenu(true);
         refresh();
-        return listView;
+        return recyclerView;
     }
 
     @Override
     public void onResume() {
-
+        //refresh();
         super.onResume();
 
     }
 
     public void refresh() {
         this.pois = ViewTripActivity.trip.pois;
-        if (expand == null) {
-            expand = new boolean[pois.length];
-            Arrays.fill(expand, false);
-        }
-        POIAdapter adapter = new POIAdapter(pois);
-        WrapperExpandableListAdapter adapter2 = new WrapperExpandableListAdapter(adapter);
-        listView.setAdapter(adapter2);
-        for (int i = 0; i < adapter.getGroupCount(); i++) {
-            if (i >= expand.length)
-                continue;
-            if (expand[i]) {
-                listView.expandGroup(i);
-            } else {
-                listView.collapseGroup(i);
-            }
-        }
+        recyclerView.setAdapter(new POIAdapter(pois));
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.fragment_all, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.expandall:
-                expandAll();
-                break;
-            case R.id.collapseall:
-                collapseAll();
-                break;
-        }
         return true;
     }
 
-    public void expandAll() {
-        int groupCount = listView.getExpandableListAdapter().getGroupCount();
-        for (int i = 0; i < groupCount; i++) {
-            listView.expandGroup(i);
-        }
-    }
-
-    public void collapseAll() {
-        int groupCount = listView.getExpandableListAdapter().getGroupCount();
-        for (int i = 0; i < groupCount; i++) {
-            listView.collapseGroup(i);
-        }
-    }
-
-    class POIAdapter extends BaseExpandableListAdapter {
+    class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
         POI[] pois;
         String[] diarys;
         Typeface typeFace;
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cardView;
+            public TextView poiName;
+            public TextView poiTime;
+            public TextView text;
+            public View.OnClickListener onClickListener;
+            public int index;
+
+            public ViewHolder(CardView v) {
+                super(v);
+                this.cardView = v;
+                this.poiName = (TextView) cardView.findViewById(R.id.poiName);
+                this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
+                this.text = (TextView) cardView.findViewById(R.id.text);
+                if (typeFace != null) {
+                    text.setTypeface(typeFace);
+                }
+                this.text.setTextSize(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20));
+                this.onClickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), ViewPointActivity.class);
+                        intent.putExtra("path", pois[index].dir.getPath());
+                        startActivity(intent);
+                    }
+                };
+                this.cardView.setOnClickListener(onClickListener);
+            }
+        }
 
         public POIAdapter(POI[] pois) {
             this.pois = pois;
@@ -133,99 +123,28 @@ public class AllTextFragment extends Fragment {
             }
         }
 
-        public Object getChild(int groupPosition, int childPosition) {
-
-            return diarys[groupPosition];
+        @Override
+        public POIAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            CardView v = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.card_texts, parent, false);
+            ViewHolder viewHolder = new ViewHolder(v);
+            return viewHolder;
         }
 
-        public long getChildId(int groupPosition, int childPosition) {
-
-            return groupPosition;
+        @Override
+        public void onBindViewHolder(POIAdapter.ViewHolder holder, int position) {
+            holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].diary.length()) + ")");
+            holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+            holder.index = position;
+            holder.text.setVisibility(diarys[position].length() == 0 ? View.GONE : View.VISIBLE);
+            holder.text.setText(diarys[position]);
         }
 
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-            TextView textView = new TextView(getActivity());
-            textView.setText(diarys[groupPosition]);
-            textView.setPadding(50, 0, 0, 0);
-            if (typeFace != null) {
-                textView.setTypeface(typeFace);
-            }
-            textView.setTextSize(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20));
-            return textView;
-        }
-
-        public int getChildrenCount(int groupPosition) {
-
-            return 1;
-        }
-
-        public Object getGroup(int groupPosition) {
-
-            return pois[groupPosition];
-        }
-
-        public int getGroupCount() {
-
-            if (pois == null)
-                return 0;
+        @Override
+        public int getItemCount() {
             return pois.length;
         }
 
-        public long getGroupId(int groupPosition) {
 
-            return groupPosition;
-        }
-
-        class GroupViewHolder {
-            TextView poiName;
-            TextView poiExtra;
-        }
-
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-            GroupViewHolder holder;
-            if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.poi_group_item, parent, false);
-                holder = new GroupViewHolder();
-                holder.poiName = (TextView) convertView.findViewById(R.id.poiName);
-                holder.poiExtra = (TextView) convertView.findViewById(R.id.poiExtra);
-                convertView.setTag(holder);
-            }
-            holder = (GroupViewHolder) convertView.getTag();
-            holder.poiName.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? R.drawable.indicator_expand2 : R.drawable.indicator_collapse2, 0, 0, 0);
-            holder.poiName.setText(pois[groupPosition].title + "(" + String.valueOf(pois[groupPosition].diary.length()) + ")");
-            holder.poiExtra.setText("-" + TimeAnalyzer.formatInTimezone(pois[groupPosition].time, ViewTripActivity.trip.timezone));
-            return convertView;
-        }
-
-        public boolean hasStableIds() {
-
-            return false;
-        }
-
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-
-            return false;
-        }
-
-        @Override
-        public void onGroupExpanded(int groupPosition) {
-
-            if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
-                expand[groupPosition] = true;
-            }
-            super.onGroupExpanded(groupPosition);
-        }
-
-        @Override
-        public void onGroupCollapsed(int groupPosition) {
-
-            if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
-                expand[groupPosition] = false;
-            }
-            super.onGroupCollapsed(groupPosition);
-        }
     }
 
 }

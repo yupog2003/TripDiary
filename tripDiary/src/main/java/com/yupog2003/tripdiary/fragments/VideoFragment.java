@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -89,18 +87,20 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 	class VideoAdapter extends BaseAdapter {
 		File[] videos;
 		MediaMetadataRetriever mmr;
-		Canvas canvas;
-		int left, top;
-		final Bitmap playbitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_play);
-        DisplayImageOptions options;
+		DisplayImageOptions options;
+		int dp2;
 
 		public VideoAdapter() {
 			videos = ViewPointActivity.poi.videoFiles;
 			mmr = new MediaMetadataRetriever();
-			left = playbitmap.getWidth() / 2;
-			top = playbitmap.getHeight() / 2;
-
-            options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).build();
+			options = new DisplayImageOptions.Builder()
+					.displayer(new FadeInBitmapDisplayer(500))
+					.showImageOnFail(R.drawable.ic_play)
+					.cacheInMemory(true)
+					.cacheOnDisk(false)
+					.bitmapConfig(Bitmap.Config.RGB_565)
+					.build();
+			dp2=(int)DeviceHelper.pxFromDp(getActivity(), 2);
 		}
 
 		public int getCount() {
@@ -124,10 +124,11 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
             ImageView image = new ImageView(getActivity());
             image.setMaxWidth(width);
             image.setMaxHeight(width);
+			image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             ImageLoader.getInstance().displayImage("file://"+videos[position].getPath(), image, options);
 			CheckableLayout l = new CheckableLayout(getActivity());
-			l.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT));
-			l.setPadding(10, 10, 10, 10);
+			l.setLayoutParams(new ListView.LayoutParams(width, width));
+			l.setPadding(dp2, dp2, dp2, dp2);
 			l.addView(image);
 			convertView = l;
 			return convertView;
@@ -164,9 +165,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 							checksName.get(i).delete();
 						}
 						setVideo();
-						Intent data = new Intent();
-						data.putExtra("update", true);
-						getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+						ViewPointActivity.requestUpdatePOI();
 					}
 				});
 				ab.setNegativeButton(getString(R.string.cancel), null);
@@ -187,9 +186,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 							String s = name.getText().toString();
                             checkFile.renameTo(new File(checkFile.getParent() + "/" + s));
 							setVideo();
-							Intent data = new Intent();
-							data.putExtra("update", true);
-							getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+							ViewPointActivity.requestUpdatePOI();
 						}
 					});
 					ab2.show();
@@ -245,9 +242,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 							public void onFinish() {
 
 								setVideo();
-								Intent data = new Intent();
-								data.putExtra("update", true);
-								getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+								ViewPointActivity.requestUpdatePOI();
 							}
 						}).execute();
 

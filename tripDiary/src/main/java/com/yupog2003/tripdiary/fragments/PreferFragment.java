@@ -9,7 +9,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,7 +21,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -39,16 +37,13 @@ import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.MyBackupAgent;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.preferences.SeekBarPreference;
-import com.yupog2003.tripdiary.services.GenerateVideoService;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class PreferFragment extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
     Preference musicpath;
@@ -375,7 +370,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                     BufferedReader br = new BufferedReader(new FileReader(new File(trips[i].getPath() + "/" + tripName + ".gpx")));
                     String s;
                     while ((s = br.readLine()) != null) {
-                        if (s.startsWith("<trkpt ")) {
+                        if (s.contains("<trkpt ")) {
                             String[] toks = s.split("\"");
                             double lat, lng;
                             if (s.indexOf("lat") > s.indexOf("lon")) {

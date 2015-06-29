@@ -146,11 +146,6 @@
     <string name="distance">距離</string>
     <string name="average_speed">平均速度</string>
     <string name="poi">興趣點</string>
-
-    <string name="not_a_picture">非照片</string>
-    <string name="not_a_video">非影片</string>
-    <string name="not_a_audio">非聲音</string>
-    <string name="not_a_music">非音樂</string>
     <string name="filename">文件名稱</string>
     <string name="share_diary">分享日記</string>
     <string name="statistics">統計資料</string>
@@ -175,7 +170,6 @@
     <string name="manage_category_summary">管理旅程類別</string>
     <string name="others">其他</string>
     <string name="diary_font">日記字體</string>
-    <string name="not_a_font_file">非字型檔</string>
     <string name="invalid_font">無效的字型</string>
     <string name="diary_font_size">日記字體大小</string>
     <string name="select_diary_font_size">選擇日記字體大小</string>
@@ -253,8 +247,6 @@
     <string name="street_view_is_not_available">無街景服務</string>
     <string name="camera_is_not_available">無相機服務</string>
     <string name="resume_trip">接續旅程</string>
-    <string name="expand_all">全部展開</string>
-    <string name="collapse_all">全部收起</string>
     <string name="import_memory">匯入回憶</string>
     <string name="import_memory_explanation">旅遊日記可以匯入回憶(圖片、影片、聲音)，只需要選擇一個含有回憶的資料夾，然後它就會根據建立時間(JPEG則根據EXIF時間)自動複製這些檔案到適當的POI資料夾，但你應該注意回憶的時區必須與現在時區相同。</string>
     <string name="importing">匯入中</string>
@@ -327,7 +319,6 @@
     <string name="generate_video">生成影片(實驗性)</string>
     <string name="encoding">編碼中</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">請連線至網路以下載Google Map背景</string>
-    <string name="would_you_like_to_choose_background_music">你想要選一個背景音樂嗎? 注意 : 它將會覆蓋所有旅程內的聲音</string>
     <string name="add_background_music">加入背景音樂</string>
     <string name="videoname">影片名稱</string>
     <string name="resolution">解析度</string>
@@ -337,7 +328,6 @@
     <string name="video_codec">影片編碼</string>
     <string name="audio_codec">聲音編碼</string>
     <string name="select">選擇</string>
-    <string name="local_storage">裝置上</string>
     <string name="nocategory">未分類</string>
     <string name="record_distance_interval">紀錄距離間隔</string>
     <string name="minimum_distance_between_record_localtions">間隔多少距離紀錄一個位置(公尺)</string>

@@ -38,7 +38,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class RecordService extends Service implements LocationListener, GpsStatus.Listener, Runnable, SensorEventListener {
     public double latitude;
@@ -414,8 +416,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                     String[] pois = new File(path + "/" + name).list(FileHelper.getDirFilter());
                     int num_POIs = pois == null ? new Random().nextInt() : pois.length;
                     POI poi = new POI(new File(path + "/" + name + "/" + String.valueOf(num_POIs)));
-                    Time time = new Time(Time.TIMEZONE_UTC);
-                    time.setToNow();
+                    Calendar time=Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                     poi.updateBasicInformation(null, time, latitude, longitude, elevation);
                     lastAddPOI = lastUpadateSensor;
                     ((Vibrator) getSystemService(Service.VIBRATOR_SERVICE)).vibrate(200);

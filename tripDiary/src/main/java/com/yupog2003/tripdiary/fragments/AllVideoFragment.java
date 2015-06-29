@@ -3,11 +3,12 @@ package com.yupog2003.tripdiary.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,64 +25,54 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
-import com.yupog2003.tripdiary.views.FloatingGroupExpandableListView;
+import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
-import com.yupog2003.tripdiary.views.WrapperExpandableListAdapter;
 
 import java.io.File;
-import java.util.Arrays;
 
 public class AllVideoFragment extends Fragment {
 	POIAdapter adapter;
 	POI[] pois;
-	boolean[] expand;
-	FloatingGroupExpandableListView listView;
+	RecyclerView recyclerView;
 	int width;
-
+	int numColums;
 	public AllVideoFragment() {
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		listView = new FloatingGroupExpandableListView(getActivity());
-		listView.setGroupIndicator(null);
-		// listView.setBackgroundColor(getResources().getColor(R.color.item_background));
+		recyclerView = new RecyclerView(getActivity());
+		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		int screenWidth = DeviceHelper.getScreenWidth(getActivity());
+		int screenHeight = DeviceHelper.getScreenHeight(getActivity());
+		if (screenWidth > screenHeight) {
+			width = screenWidth / 5;
+			numColums = 5;
+		} else {
+			width = screenWidth / 3;
+			numColums = 3;
+		}
 		setHasOptionsMenu(true);
 		refresh();
-		return listView;
+		return recyclerView;
 	}
 
 	@Override
 	public void onResume() {
-
+		//refresh();
 		super.onResume();
 
 	}
 
 	public void refresh() {
 		this.pois = ViewTripActivity.trip.pois;
-		if (expand == null) {
-			expand = new boolean[pois.length];
-			Arrays.fill(expand, false);
-		}
-		adapter = new POIAdapter(pois);
-		WrapperExpandableListAdapter adapter2 = new WrapperExpandableListAdapter(adapter);
-		listView.setAdapter(adapter2);
-		for (int i = 0; i < adapter.getGroupCount(); i++) {
-			if (i >= expand.length)
-				continue;
-			if (expand[i]) {
-				listView.expandGroup(i);
-			} else {
-				listView.collapseGroup(i);
-			}
-		}
+		recyclerView.setAdapter(new POIAdapter(pois));
 	}
 
 	@Override
@@ -93,30 +83,7 @@ public class AllVideoFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-		case R.id.expandall:
-			expandAll();
-			break;
-		case R.id.collapseall:
-			collapseAll();
-			break;
-		}
 		return true;
-	}
-
-	public void expandAll() {
-		int groupCount = listView.getExpandableListAdapter().getGroupCount();
-		for (int i = 0; i < groupCount; i++) {
-			listView.expandGroup(i);
-		}
-	}
-
-	public void collapseAll() {
-		int groupCount = listView.getExpandableListAdapter().getGroupCount();
-		for (int i = 0; i < groupCount; i++) {
-			listView.collapseGroup(i);
-		}
 	}
 
 	class VideoAdapter extends BaseAdapter implements OnItemClickListener {
@@ -124,18 +91,18 @@ public class AllVideoFragment extends Fragment {
 		File[] videos;
         DisplayImageOptions options;
 		MediaMetadataRetriever mmr;
-		Canvas canvas;
-		int left, top;
-		final Bitmap playbitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_play);
 
 		public VideoAdapter(File[] videos) {
 			this.videos = videos;
 			mmr = new MediaMetadataRetriever();
-			left = playbitmap.getWidth() / 2;
-			top = playbitmap.getHeight() / 2;
-            options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).build();
-
-        }
+			options = new DisplayImageOptions.Builder()
+					.displayer(new FadeInBitmapDisplayer(500))
+					.showImageOnFail(R.drawable.ic_play)
+					.cacheInMemory(true)
+					.cacheOnDisk(false)
+					.bitmapConfig(Bitmap.Config.RGB_565)
+					.build();
+		}
 
 		public int getCount() {
 
@@ -155,9 +122,10 @@ public class AllVideoFragment extends Fragment {
 		}
 
 		public View getView(int position, View view, ViewGroup viewGroup) {
-            ImageView image = new ImageView(getActivity());
+			SquareImageView image = new SquareImageView(getActivity());
             image.setMaxWidth(width);
             image.setMaxHeight(width);
+			image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             ImageLoader.getInstance().displayImage("file://" + videos[position].getPath(), image, options);
 			return image;
 		}
@@ -170,119 +138,69 @@ public class AllVideoFragment extends Fragment {
 
 	}
 
-	class POIAdapter extends BaseExpandableListAdapter {
+	class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
 
 		POI[] pois;
-		UnScrollableGridView[] videos;
-		int numColums;
+		VideoAdapter[] videoAdapters;
 
+		public class ViewHolder extends RecyclerView.ViewHolder {
+			// each data item is just a string in this case
+			public CardView cardView;
+			public TextView poiName;
+			public TextView poiTime;
+			public UnScrollableGridView gridView;
+			public View.OnClickListener onClickListener;
+			public int index;
+
+			public ViewHolder(CardView v) {
+				super(v);
+				this.cardView = v;
+				this.poiName = (TextView) cardView.findViewById(R.id.poiName);
+				this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
+				this.gridView = (UnScrollableGridView) cardView.findViewById(R.id.videos);
+				this.gridView.setNumColumns(numColums);
+				this.onClickListener = new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(), ViewPointActivity.class);
+						intent.putExtra("path", pois[index].dir.getPath());
+						startActivity(intent);
+					}
+				};
+				this.cardView.setOnClickListener(onClickListener);
+			}
+		}
 		public POIAdapter(POI[] pois) {
 			this.pois = pois;
-			videos = new UnScrollableGridView[pois.length];
-			int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-			int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-			if (screenWidth > screenHeight) {
-				width = screenWidth / 5;
-				numColums = 5;
-			} else {
-				width = screenWidth / 3;
-				numColums = 3;
-			}
-			for (int i = 0; i < videos.length; i++) {
-				videos[i] = new UnScrollableGridView(getActivity());
-				VideoAdapter adapter = new VideoAdapter(pois[i].videoFiles);
-				videos[i].setAdapter(adapter);
-				videos[i].setOnItemClickListener(adapter);
-				videos[i].setNumColumns(numColums);
+			videoAdapters=new VideoAdapter[pois.length];
+			for (int i = 0; i < videoAdapters.length; i++) {
+				videoAdapters[i]=new VideoAdapter(pois[i].videoFiles);
 			}
 
 		}
 
-		public Object getChild(int groupPosition, int childPosition) {
-
-			return videos[groupPosition];
+		@Override
+		public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+			CardView v = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.card_videos, parent, false);
+			ViewHolder viewHolder = new ViewHolder(v);
+			return viewHolder;
 		}
 
-		public long getChildId(int groupPosition, int childPosition) {
-
-			return groupPosition * 1000 + childPosition;
+		@Override
+		public void onBindViewHolder(ViewHolder holder, int position) {
+			holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].videoFiles.length) + ")");
+			holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+			holder.index = position;
+			holder.gridView.setVisibility(videoAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
+			holder.gridView.setAdapter(videoAdapters[position]);
+			holder.gridView.setOnItemClickListener(videoAdapters[position]);
 		}
 
-		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-			return (UnScrollableGridView) getChild(groupPosition, childPosition);
-		}
-
-		public int getChildrenCount(int groupPosition) {
-
-			return 1;
-		}
-
-		public Object getGroup(int groupPosition) {
-
-			return pois[groupPosition];
-		}
-
-		public int getGroupCount() {
-
-			if (pois == null)
-				return 0;
+		@Override
+		public int getItemCount() {
 			return pois.length;
 		}
 
-		public long getGroupId(int groupPosition) {
 
-			return groupPosition;
-		}
-
-		class GroupViewHolder {
-			TextView poiName;
-			TextView poiExtra;
-		}
-
-		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-			GroupViewHolder holder;
-			if (convertView == null) {
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.poi_group_item, parent, false);
-				holder = new GroupViewHolder();
-				holder.poiName = (TextView) convertView.findViewById(R.id.poiName);
-				holder.poiExtra = (TextView) convertView.findViewById(R.id.poiExtra);
-				convertView.setTag(holder);
-			}
-			holder = (GroupViewHolder) convertView.getTag();
-			holder.poiName.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? R.drawable.indicator_expand2 : R.drawable.indicator_collapse2, 0, 0, 0);
-			holder.poiName.setText(pois[groupPosition].title + "(" + String.valueOf(pois[groupPosition].videoFiles.length) + ")");
-			holder.poiExtra.setText("-" + TimeAnalyzer.formatInTimezone(pois[groupPosition].time, ViewTripActivity.trip.timezone));
-			return convertView;
-		}
-
-		public boolean hasStableIds() {
-
-			return false;
-		}
-
-		public boolean isChildSelectable(int groupPosition, int childPosition) {
-
-			return false;
-		}
-
-		@Override
-		public void onGroupExpanded(int groupPosition) {
-
-			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
-				expand[groupPosition] = true;
-			}
-			super.onGroupExpanded(groupPosition);
-		}
-
-		@Override
-		public void onGroupCollapsed(int groupPosition) {
-
-			if (expand != null && groupPosition > -1 && groupPosition < expand.length) {
-				expand[groupPosition] = false;
-			}
-			super.onGroupCollapsed(groupPosition);
-		}
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
-    android:installLocation="auto">
+    android:installLocation="auto" >
 
     <permission
         android:name="com.yupog2003.tripdiary.permission.MAPS_RECEIVE"
@@ -34,10 +34,10 @@
         android:backupAgent=".data.MyBackupAgent"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -84,7 +84,7 @@
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk" />
+            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
         <!-- publish key=   AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->
 
@@ -117,33 +117,35 @@
 
         <activity
             android:name=".GetContentActivity"
-            android:label="@string/app_name"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT"></action>
+                <action android:name="android.intent.action.GET_CONTENT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.OPENABLE"/>
+                <category android:name="android.intent.category.OPENABLE" />
 
-                <data android:mimeType="image/*"></data>
-                <data android:mimeType="video/*"></data>
-                <data android:mimeType="audio/*"></data>
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"></action>
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="image/*"></data>
-                <data android:mimeType="video/*"></data>
-                <data android:mimeType="audio/*"></data>
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE"></action>
+                <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="image/*"></data>
-                <data android:mimeType="video/*"></data>
-                <data android:mimeType="audio/*"></data>
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
             </intent-filter>
         </activity>
     </application>

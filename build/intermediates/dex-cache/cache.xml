@@ -2,242 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.3.0/classes.jar"
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.5.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-99cc34ce84b37a638a9f931e9c7a1b565864bab1.jar" />
+        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-a0add53154cc30cb2e5e22c5a0a617453ee6698c.jar" />
     </item>
     <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.3.0/classes.jar"
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.5.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-f18d3b13b5f5997c46d99ff12dc34511464e46ac.jar" />
+        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-788b2ff6efe3f37aba829f899322fbee849f7984.jar" />
     </item>
     <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpclient-4.3.1.jar"
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.5.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0171c67fa04952e76bc9ee1e578fe629db35d769">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpclient-4.3.1-b0279fc0845f78dd696ca5c7785d8bee6c7fbb11.jar" />
+        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-ab336a399772b9b27cc7a9810582699c2ed1686a.jar" />
     </item>
     <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.3.0/classes.jar"
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.5.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-fffa97567d9dc9e8c80f63c0a0d18676cc0d5857.jar" />
+        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-386171483e63d80335fc9c9cd2be490e7dc3902b.jar" />
     </item>
     <item
-        jar="/opt/android-sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/support-annotations-21.0.3-1cd1039154f1bb9cc0d4a9da3e8b7ec509fd8b06.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-cb24b654123184007193363ddd52ebfc6d325376.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-5a9a378e4eac1985e3b25b8cbe403d4b10788109.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-93b377b67c540b9169bb13d732033252eb52d76c.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpclient-cache-4.3.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="546eee25fa025a455040bbf1708b0c0490c2311b">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpclient-cache-4.3.1-456bb1a392f9f03dc4993221da21a6375bc744f4.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-b39ca394002225d39dd98af23f7ef171fc6ff1b0.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpmime-4.3.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f49e2348b768a7199e021a97e951df25cd5fb714">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpmime-4.3.1-7cbe7540630db074858b0e433ab449a6653c696e.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e5b9f5b0aa8dee788beb63d23832cb29ce771343">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-1e83d6e7e394cd7b8fcd0a79375f3825e251d0cd.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/internal_impl-21.0.3-052ce46e6b4fb19e874d5fc24b0557f2786c705d.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9c9dea9e85aceb09d95df5e6f7bc8a43fc286068">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-41a06e744f34fc515074904c067faa688be3451f.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v13/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2c2071dcaf7a008c3b01a6381a33be55396bab09">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-621c96519abbf476399b960149295ffab5f449a9.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-f94a2f0562329b3187de3dcc57a596ef9767d4ae.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-d4e4c68e81e345a342185de3a60a05541fa3658f.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/achartengine-1.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b2bb0af9f390c0edd4d7d95f613f38da3abe0144">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/achartengine-1.0.0-26ba6f07b3ee513ed3b5678f6497e0a73e03fc0e.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-51147c704ffbed2e79cb31c40298a9fd92893c71.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-8fd40ce6aab23e83e344094d335e75744e538cd3.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-86d46f208193c24974c1db72ec6a9978cf6f208a.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/slf4j-api-1.7.6.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4614fcda4104175f78563541710a047eb26dc452">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/slf4j-api-1.7.6-08d19557b0963cb5f7ea5d25492e5608a1d98cf7.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-72755816ba1f7dd4e8843355dffc5b476be23ab1.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-4d4ce5b7617309b9f7e1a4518d0cfae061dfb653.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v13/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0dcc55e70f7ebf7238fe2ec53f662eb378ab2668">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/internal_impl-21.0.3-fddfd270212e3b237c7d4763a7816028e0539bad.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/libthrift-0.9.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="16c9cccf08caa385b5fc93934cb3216fe6ac6a72">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/libthrift-0.9.1-0fbb52ffe256dbfcb85adf4f663d516005a850ec.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-3ff7fb3451025b750d7b8b2bb192aacb125d514a.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/TripDiary/ambilWarna/unspecified/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5e4bdb01d7f420642fb473810d7830f8fa6b0e2b">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-e4dc48d441ef100f9ed7ce7d6aefed6861aa5744.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="565a01f90f1529f73362707c4c185d0623a68782">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-2b2154414ba4516b42d503aab639e189a229cce4.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/commons-io-2.4.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/commons-io-2.4-877f7810d7504b9b7553e51f369a960fc146f760.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-e107d3a022bd6f61f376eb419b0f145e20d15fa0.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-4bcc2b7e4d6b7d582f4e40fad444684c7222ca1c.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-b82bd1d2b307e245be6fff4a87019c6c0ca5ddb3.jar" />
-    </item>
-    <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-227a77966593f7d833db44a93293888e898afa17.jar" />
+        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-aae79781cfd4797f56af3f3e2445604c37f27d0c.jar" />
     </item>
     <item
         jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpcore-4.3.jar"
@@ -247,11 +44,242 @@
         <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpcore-4.3-d905ba6a4a4de3bcdeb0fbedd7e8912b05a61b21.jar" />
     </item>
     <item
-        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/universal-image-loader-1.9.3-with-sources.jar"
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="03e3948d42b8d78961a092a184af66bd86da42e6">
-        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/universal-image-loader-1.9.3-with-sources-63cfe5d4e71e130be0168af758fdf352a683820b.jar" />
+        sha1="97f7e239e86ef994de894818fdd8a71d2e89d6aa">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-5a1cda505a531ae4b5b4afb93d496f868e963bd0.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/libthrift-0.9.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="16c9cccf08caa385b5fc93934cb3216fe6ac6a72">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/libthrift-0.9.1-0fbb52ffe256dbfcb85adf4f663d516005a850ec.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-8e0fb3ddcb0287243c1701c3ef7011d120982d32.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-b649229e470a819dbbf46c93f4495ac3200a0eba.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v13/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9aa93835393824b436f366120c9ba8a0260ce75d">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-ef6d81b888fdc4a69c92baf9e3716f7334dc087f.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/internal_impl-22.0.0-dc42496e39bf9a5a1a44c5a10ab113adf44bf1eb.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-db7cc924ffaff9f15c19e724b5598fcc535458d4.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-62a2247b607b07271e11b967806cff4caeb1e8a4.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-bfddd19c40233384b74fb5d911a77fd770d1b630.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpmime-4.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f49e2348b768a7199e021a97e951df25cd5fb714">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpmime-4.3.1-7cbe7540630db074858b0e433ab449a6653c696e.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/achartengine-1.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b2bb0af9f390c0edd4d7d95f613f38da3abe0144">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/achartengine-1.0.0-26ba6f07b3ee513ed3b5678f6497e0a73e03fc0e.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-d02ec18682923f2f6fc677edd764440b43e6eb72.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpclient-cache-4.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="546eee25fa025a455040bbf1708b0c0490c2311b">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpclient-cache-4.3.1-456bb1a392f9f03dc4993221da21a6375bc744f4.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-bd2cef6a75b29f5876ea5016914223245b22d90e.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v13/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="79a5b6d9fbab3b5fb4c6f86a1ed7a17722fd937b">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/internal_impl-22.2.0-489317577d3c84950c44a93943099960d44e15b4.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/TripDiary/ambilWarna/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b4faed3c356496bfd6b3fec0bee77b0cb1a6f358">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-388932ac1eb58c3dae749292af6b95b9e03f72cd.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-e6a361c8bc0d03f927d621cfe9f05b27369cc0ee.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/universal-image-loader-1.9.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="dd9eeb557650c4ad7394df23f0f5cf27a7cfc697">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/universal-image-loader-1.9.4-99b651db9429e0ff1b47b998f399990e79467126.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpclient-4.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0171c67fa04952e76bc9ee1e578fe629db35d769">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/httpclient-4.3.1-b0279fc0845f78dd696ca5c7785d8bee6c7fbb11.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-23c6af08b4c4a8f74108a45d01faa79ecaca01ff.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-b27eb3379613331f47785cca17fa90f588ee1c1b.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/internal_impl-22.2.0-499848d439b1d23289004b4d3bef94a3fc3121ff.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-cc1beb43d011d25a6627674e250990cd6653d45f.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/commons-io-2.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/commons-io-2.4-877f7810d7504b9b7553e51f369a960fc146f760.jar" />
+    </item>
+    <item
+        jar="/home/yupog2003/Android/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/support-annotations-22.2.0-d75620d9fb6b37fa6f8cd4392063c2c1678c115c.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-19db71d66aadea2917bc1e80c08b810f369cc213.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-5391669916e00f16b8dd6db8b6b460b1409f2184.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-2e8db5671849cec76ce62ed180064c804f3e02aa.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-c00adbaa7505af221f06c662ca4ea8acce9639d4.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-91226c8cc7458ffbd18b461c876c207e7d41d826.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d405025c600055237c171a0bbabaa49d69696573">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-c705ca90bf3322e9364326266212703117ab3f6b.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-b0cc8ff8f67435764127bd4dcb2915b274e5ebdd.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/classes-f81ad9034d8d68b802b9cce1bec29e09e8d09e69.jar" />
+    </item>
+    <item
+        jar="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/slf4j-api-1.7.6.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4614fcda4104175f78563541710a047eb26dc452">
+        <dex dex="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/pre-dexed/release/slf4j-api-1.7.6-08d19557b0963cb5f7ea5d25492e5608a1d98cf7.jar" />
     </item>
 
 </items>

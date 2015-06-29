@@ -2,6 +2,7 @@ package com.yupog2003.tripdiary;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,14 +12,13 @@ import android.view.MenuItem;
 
 import com.yupog2003.tripdiary.fragments.LocalTripsFragment;
 import com.yupog2003.tripdiary.fragments.RemoteTripsFragment;
-import com.yupog2003.tripdiary.views.PagerSlidingTabStrip;
+import com.yupog2003.tripdiary.views.SlidingTabLayout;
 
 public class ViewActivity extends MyActivity{
 
-	LocalTripsFragment localTripsFragment;
 	MyPagerAdapter pagerAdaper;
 	ViewPager viewPager;
-	PagerSlidingTabStrip tabs;
+	SlidingTabLayout tabs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +30,11 @@ public class ViewActivity extends MyActivity{
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
-		tabs=(PagerSlidingTabStrip)findViewById(R.id.tabs);
+		tabs=(SlidingTabLayout)findViewById(R.id.tabs);
 		pagerAdaper = new MyPagerAdapter(getFragmentManager());
 		viewPager.setAdapter(pagerAdaper);
-		tabs.setIndicatorColorResource(android.R.color.holo_blue_light);
-		tabs.setShouldExpand(true);
+		tabs.setSelectedIndicatorColors(Color.WHITE);
+		tabs.setDistributeEvenly(true);
 		tabs.setViewPager(viewPager);
 		viewPager.setCurrentItem(1);
 	}

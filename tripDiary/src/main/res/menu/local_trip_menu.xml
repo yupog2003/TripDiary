@@ -35,7 +35,7 @@
         android:title="@string/update_trip_timezone"/>
     <item
         android:id="@+id/selectall"
-        android:icon="@drawable/ic_check"
+        android:icon="@drawable/ic_select_all"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/select_all"/>

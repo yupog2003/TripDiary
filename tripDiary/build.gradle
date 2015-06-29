@@ -7,8 +7,8 @@ android {
         applicationId "com.yupog2003.tripdiary"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 162
-        versionName "1.2.0"
+        versionCode 163
+        versionName "1.2.1"
 
         ndk {
             moduleName "TripDiary"
@@ -42,8 +42,10 @@ dependencies {
     compile('com.google.android.gms:play-services:+') {
         exclude module: 'support-v4'
     }
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile('com.android.support:support-v13:21.0.3') {
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:cardview-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile('com.android.support:support-v13:22.2.0') {
         exclude module: 'support-v4'
     }
     compile files('libs/achartengine-1.0.0.jar')
@@ -54,5 +56,5 @@ dependencies {
     compile files('libs/httpmime-4.3.1.jar')
     compile files('libs/libthrift-0.9.1.jar')
     compile files('libs/slf4j-api-1.7.6.jar')
-    compile files('libs/universal-image-loader-1.9.3-with-sources.jar')
+    compile files('libs/universal-image-loader-1.9.4.jar')
 }

@@ -5,17 +5,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.provider.OpenableColumns;
 import android.support.v7.widget.Toolbar;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,14 +30,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TimeAnalyzer;
+import com.yupog2003.tripdiary.views.SquareImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,6 +43,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
@@ -74,7 +69,6 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         String intentAction = getIntent().getAction();
-        Log.i("trip", intentAction);
         if (intentAction.equals(Intent.ACTION_GET_CONTENT)) {
             action = Action.get_content;
         } else if (intentAction.equals(Intent.ACTION_SEND)) {
@@ -83,7 +77,6 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             action = Action.send_multiple;
         }
         String mimeType = getIntent().getType();
-        Log.i("trip", mimeType);
         if (mimeType.startsWith("image")) {
             type = Type.picture;
         } else if (mimeType.startsWith("video")) {
@@ -135,8 +128,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         public MemoryAdapter(Type type) {
             this.type = type;
             if (type == Type.picture || type == Type.video || type == Type.other) {
-                ImageDecoder myImageDecoder = new MyImageDecoder(getApplicationContext(), new BaseImageDecoder(false));
-                ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(GetContentActivity.this).imageDecoder(myImageDecoder).build();
+                ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(GetContentActivity.this).build();
                 ImageLoader.getInstance().init(conf);
                 options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.EXACTLY_STRETCHED).build();
             }
@@ -184,8 +176,8 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 Collections.sort(files, new Comparator<String>() {
                     @Override
                     public int compare(String lhs, String rhs) {
-                        Time time1 = TimeAnalyzer.getTripTime(rootPath, lhs);
-                        Time time2 = TimeAnalyzer.getTripTime(rootPath, rhs);
+                        Calendar time1 = TimeAnalyzer.getTripTime(rootPath, lhs);
+                        Calendar time2 = TimeAnalyzer.getTripTime(rootPath, rhs);
                         if (time1 == null || time2 == null)
                             return 0;
                         else if (time1.after(time2))
@@ -319,10 +311,10 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (nowLevel == 3 && (type == Type.picture || type == Type.video)) {
-                ImageView imageView = new ImageView(GetContentActivity.this);
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(gridWidth, gridWidth));
+                SquareImageView imageView = new SquareImageView(GetContentActivity.this);
                 imageView.setMaxWidth(gridWidth);
                 imageView.setMaxHeight(gridWidth);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 convertView = imageView;
                 String memoryPath = ((File) getItem(position)).getPath();
                 ImageLoader.getInstance().displayImage("file://" + memoryPath, (ImageView) convertView, options);

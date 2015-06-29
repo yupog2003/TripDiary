@@ -1,8 +1,7 @@
 package com.yupog2003.tripdiary.data;
 
-import android.text.format.Time;
-
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class MyLatLng2 implements Serializable{
 
@@ -26,9 +25,8 @@ public class MyLatLng2 implements Serializable{
 		this.latitude=0;
 		this.longitude=0;
 		this.altitude=0;
-		Time t=new Time();
-		t.setToNow();
-		this.time=TimeAnalyzer.formatTotalTime(t);
+		Calendar t=Calendar.getInstance();
+		this.time=TimeAnalyzer.formatInCurrentTimezone(t);
 	}
 	public void setLatitude(double latitude){
 		this.latitude=latitude;

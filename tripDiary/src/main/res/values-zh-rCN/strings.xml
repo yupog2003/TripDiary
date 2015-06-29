@@ -147,10 +147,6 @@
     <string name="average_speed">平均速度</string>
     <string name="poi">兴趣点</string>
 
-    <string name="not_a_picture">非照片</string>
-    <string name="not_a_video">非影片</string>
-    <string name="not_a_audio">非声音</string>
-    <string name="not_a_music">非音乐</string>
     <string name="filename">文件名称</string>
     <string name="share_diary">分享日记</string>
     <string name="statistics">统计资料</string>
@@ -175,7 +171,6 @@
     <string name="manage_category_summary">管理旅程类别</string>
     <string name="others">其他</string>
     <string name="diary_font">日记字体</string>
-    <string name="not_a_font_file">非字型档</string>
     <string name="invalid_font">无效的字型</string>
     <string name="diary_font_size">日记字体大小</string>
     <string name="select_diary_font_size">选择日记字体大小</string>
@@ -253,8 +248,6 @@
     <string name="street_view_is_not_available">无街景服务</string>
     <string name="camera_is_not_available">无相机服务</string>
     <string name="resume_trip">接续旅程</string>
-    <string name="expand_all">全部展开</string>
-    <string name="collapse_all">全部收起</string>
     <string name="import_memory">汇入回忆</string>
     <string name="import_memory_explanation">旅游日记可以汇入回忆(图片、影片、声音)，只需要选择一个含有回忆的资料夹，然后它就会根据建立时间(JPEG则根据EXIF时间)自动复制这些档案到适当的POI资料夹，但你应该注意回忆的时区必须与现在时区相同。</string>
     <string name="importing">汇入中</string>
@@ -327,7 +320,6 @@
     <string name="generate_video">生成影片(实验性)</string>
     <string name="encoding">编码中</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">请连线至网路以下载Google Map背景</string>
-    <string name="would_you_like_to_choose_background_music">你想要选一个背景音乐吗？注意：它将会覆盖所有旅程内的声音</string>
     <string name="add_background_music">加入背景音乐</string>
     <string name="videoname">影片名称</string>
     <string name="resolution">解析度</string>
@@ -337,7 +329,6 @@
     <string name="video_codec">影片编码</string>
     <string name="audio_codec">声音编码</string>
     <string name="select">选择</string>
-    <string name="local_storage">装置上</string>
     <string name="nocategory">未分类</string>
     <string name="record_distance_interval">纪录距离间隔</string>
     <string name="minimum_distance_between_record_localtions">间隔多少距离纪录一个位置(公尺)</string>

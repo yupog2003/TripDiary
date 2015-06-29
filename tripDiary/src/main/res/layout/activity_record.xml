@@ -5,14 +5,11 @@
     android:animateLayoutChanges="true"
     tools:context="com.yupog2003.tripdiary.RecordActivity">
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    <include
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        layout="@layout/toolbar"/>
 
     <LinearLayout
         android:id="@+id/informationLayout"
@@ -21,7 +18,8 @@
         android:layout_below="@+id/toolbar"
         android:background="?attr/colorPrimary"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:elevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -160,7 +158,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/addPOILayout"
-        android:layout_below="@+id/informationLayout"></RelativeLayout>
+        android:layout_below="@+id/informationLayout"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dip"
+        android:layout_above="@+id/addPOILayout"
+        android:background="@drawable/actionbar_shadow"
+        android:rotation="0"></View>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -188,19 +193,6 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dip"
-        android:layout_below="@+id/informationLayout"
-        android:background="@drawable/actionbar_shadow"
-        android:rotation="180"></View>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dip"
-        android:layout_above="@+id/addPOILayout"
-        android:background="@drawable/actionbar_shadow"
-        android:rotation="0"></View>
 
     <LinearLayout
         android:id="@+id/addPOILayout"
@@ -209,7 +201,8 @@
         android:layout_alignParentBottom="true"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:elevation="2dp">
 
         <TextView
             style="@style/TextAppearance.AppCompat.Large"
@@ -270,7 +263,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_takepicture"
-                    android:text="@string/take_a_picture" />
+                    android:text="@string/take_a_picture"
+                    android:textColor="@android:color/black"/>
 
                 <Button
                     android:id="@+id/takevideo"
@@ -279,7 +273,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_takevideo"
-                    android:text="@string/take_a_video" />
+                    android:text="@string/take_a_video"
+                    android:textColor="@android:color/black"/>
 
                 <Button
                     android:id="@+id/takeaudio"
@@ -288,7 +283,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_takeaudio"
-                    android:text="@string/take_a_audio" />
+                    android:text="@string/take_a_audio"
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -305,7 +301,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_taketext"
-                    android:text="@string/write_text" />
+                    android:text="@string/write_text"
+                    android:textColor="@android:color/black"/>
 
                 <Button
                     android:id="@+id/takepaint"
@@ -314,7 +311,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_takepaint"
-                    android:text="@string/paint" />
+                    android:text="@string/paint"
+                    android:textColor="@android:color/black"/>
 
                 <Button
                     android:id="@+id/takemoney"
@@ -323,7 +321,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_money"
-                    android:text="@string/spend" />
+                    android:text="@string/spend"
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

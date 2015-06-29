@@ -3,28 +3,31 @@ package com.yupog2003.tripdiary.data;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
+import android.graphics.Canvas;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
 
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
-import com.yupog2003.tripdiary.R;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MyImageDecoder implements ImageDecoder {
     private final BaseImageDecoder m_imageUriDecoder;
-    private final Context context;
+    Bitmap playBitmap;
 
     public MyImageDecoder(Context context, BaseImageDecoder imageUriDecoder) {
         if (imageUriDecoder == null) {
             throw new NullPointerException("Image decoder can't be null");
         }
-        this.context = context;
-        this.m_imageUriDecoder = imageUriDecoder;
+        BitmapFactory.Options o=new BitmapFactory.Options();
+        o.inSampleSize=2;
+        playBitmap = BitmapFactory.decodeResource(context.getResources(), android.R.drawable.ic_media_play, o);
+        m_imageUriDecoder = imageUriDecoder;
     }
 
     @Override
@@ -33,9 +36,8 @@ public class MyImageDecoder implements ImageDecoder {
             return null;
         }
         String cleanedUriString = cleanUriString(info.getImageKey());
-        Uri uri = Uri.parse(cleanedUriString);
-        if (isVideoUri(uri)) {
-            return makeVideoThumbnail(info.getTargetSize().getWidth(), info.getTargetSize().getHeight(), getVideoFilePath(uri));
+        if (isVideoUri(cleanedUriString)) {
+            return makeVideoThumbnail(info.getTargetSize().getWidth(), info.getTargetSize().getHeight(), getVideoFilePath(cleanedUriString));
         } else {
             return m_imageUriDecoder.decode(info);
         }
@@ -45,23 +47,20 @@ public class MyImageDecoder implements ImageDecoder {
         if (filePath == null) {
             return null;
         }
-        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(filePath);
-        Bitmap b = mmr.getFrameAtTime();
-        if (b == null) {
-            return BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_play);
-        } else {
-            return scaleBitmap(b, width, height);
-        }
-
+        Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(filePath, MediaStore.Video.Thumbnails.MINI_KIND);
+        Bitmap scaledThumb = scaleBitmap(thumbnail, width, height);
+        thumbnail.recycle();
+        return scaledThumb;
     }
 
-    private boolean isVideoUri(Uri uri) {
-        return uri.getPath() != null && FileHelper.isVideo(new File(uri.getPath()));
+    private boolean isVideoUri(String path) {
+        String ext = path.substring(path.lastIndexOf(".") + 1);
+        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.toLowerCase());
+        return mimeType.startsWith("video/");
     }
 
-    private String getVideoFilePath(Uri uri) {
-        return uri.getPath();
+    private String getVideoFilePath(String path) {
+        return Uri.parse(path).getPath();
     }
 
     private Bitmap scaleBitmap(Bitmap origBitmap, int width, int height) {
@@ -69,11 +68,20 @@ public class MyImageDecoder implements ImageDecoder {
                 ((float) width) / ((float) origBitmap.getWidth()),
                 ((float) height) / ((float) origBitmap.getHeight())
         );
-        return Bitmap.createScaledBitmap(origBitmap,
+        Bitmap result = Bitmap.createScaledBitmap(origBitmap,
                 (int) (((float) origBitmap.getWidth()) * scale),
                 (int) (((float) origBitmap.getHeight()) * scale),
                 false
         );
+        int resultWidth = result.getWidth();
+        int resultHeight = result.getHeight();
+        int playBitmapWidth = playBitmap.getWidth();
+        int playBitmapHeight = playBitmap.getHeight();
+        if (resultWidth >= playBitmapWidth && resultHeight >= playBitmapHeight) {
+            Canvas canvas = new Canvas(result);
+            canvas.drawBitmap(playBitmap, (resultWidth - playBitmapWidth) / 2, (resultHeight - playBitmapHeight) / 2, null);
+        }
+        return result;
     }
 
     private String cleanUriString(String contentUriWithAppendedSize) {

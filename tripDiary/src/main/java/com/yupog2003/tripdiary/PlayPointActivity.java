@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -58,6 +59,10 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play_point);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolBar != null) {
+            setSupportActionBar(toolBar);
+        }
         this.pointPath = getIntent().getStringExtra("path");
         poi = new POI(new File(pointPath));
         this.name = poi.title;

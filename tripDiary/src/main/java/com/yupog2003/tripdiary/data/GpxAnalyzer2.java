@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Handler;
-import android.text.format.Time;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class GpxAnalyzer2 {
 
@@ -58,9 +58,7 @@ public class GpxAnalyzer2 {
 			cache.times = new String[size];
 		} else {
 			String timezone = TimeAnalyzer.getTripTimeZone(context, tripName);
-			Time tempTime = TimeAnalyzer.getTripTime(rootPath, tripName);
-			tempTime.switchTimezone(timezone);
-			timeZoneOffset = (int) tempTime.gmtoff;
+			timeZoneOffset= TimeZone.getTimeZone(timezone).getRawOffset()/1000;
 		}
 		ArrayList<Float> speeds = cacheExist ? null : new ArrayList<Float>();
 		boolean success = cacheExist ? getCache(gpxPath + ".cache", cache) : parse(gpxPath, cache, speeds, timeZoneOffset);

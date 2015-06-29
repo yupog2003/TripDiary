@@ -5,19 +5,19 @@
     tools:context="com.yupog2003.tripdiary.GetContentActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <include
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        layout="@layout/toolbar"/>
 
     <GridView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:padding="2dp"
         android:id="@+id/gridView" />
 
 

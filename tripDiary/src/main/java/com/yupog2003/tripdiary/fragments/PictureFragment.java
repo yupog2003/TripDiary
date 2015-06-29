@@ -86,6 +86,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         int width;
         DisplayImageOptions options;
         Bitmap[] bitmaps;
+        int dp2;
 
         public PictureAdapter() {
             int screenWidth = DeviceHelper.getScreenWidth(getActivity());
@@ -97,6 +98,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 width = screenWidth / 3;
                 layout.setNumColumns(3);
             }
+            dp2=(int)DeviceHelper.pxFromDp(getActivity(), 2);
             options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).imageScaleType(ImageScaleType.EXACTLY_STRETCHED).bitmapConfig(Bitmap.Config.RGB_565).build();
             files = ViewPointActivity.poi.picFiles;
             if (files == null) {
@@ -134,9 +136,10 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 ImageView i = new ImageView(getActivity());
                 i.setMaxWidth(width);
                 i.setMaxHeight(width);
+                i.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 CheckableLayout l = new CheckableLayout(getActivity());
                 l.setLayoutParams(new AbsListView.LayoutParams(width, width));
-                l.setPadding(10, 10, 10, 10);
+                l.setPadding(dp2, dp2, dp2, dp2);
                 l.addView(i);
                 convertView = l;
                 convertView.setTag(i);
@@ -187,9 +190,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             checksName.get(i).delete();
                         }
                         adapter.reFresh();
-                        Intent data = new Intent();
-                        data.putExtra("update", true);
-                        getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+                        ViewPointActivity.requestUpdatePOI();
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -210,9 +211,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             String s = name.getText().toString();
                             checkFile.renameTo(new File(checkFile.getParent() + "/" + s));
                             adapter.reFresh();
-                            Intent data = new Intent();
-                            data.putExtra("update", true);
-                            getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+                            ViewPointActivity.requestUpdatePOI();
                         }
                     });
                     ab2.show();
@@ -288,9 +287,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             @Override
                             public void onFinish() {
                                 adapter.reFresh();
-                                Intent data = new Intent();
-                                data.putExtra("update", true);
-                                getActivity().setResult(getActivity().getIntent().getIntExtra("request_code", 1), data);
+                                ViewPointActivity.requestUpdatePOI();
                             }
                         }).execute();
 

@@ -59,7 +59,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/enter"
@@ -67,7 +68,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/enter" />
+            android:text="@string/enter"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/share"
@@ -75,7 +77,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/share" />
+            android:text="@string/share"
+            android:textColor="@android:color/black"/>
     </LinearLayout>
 
     <ImageButton

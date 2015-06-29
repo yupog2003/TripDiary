@@ -17,7 +17,6 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.text.format.Time;
 import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
@@ -25,6 +24,7 @@ import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
 import java.io.BufferedReader;
@@ -38,6 +38,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
 
 public class GenerateVideoService extends IntentService {
 
@@ -275,9 +276,8 @@ public class GenerateVideoService extends IntentService {
         canvas.translate(0, (videoHeight - staticLayout.getHeight()) / 2);
         staticLayout.draw(canvas);
         canvas.restore();
-        Time time = poi.time;
-        time.switchTimezone(timeZone);
-        String timeStr = time.format("%F %T");
+        Calendar time = poi.time;
+        String timeStr = TimeAnalyzer.formatInTimezone(time, timeZone).replace("T", " ");
         textPaint.setTextSize(diaryTextSize);
         int x = (videoWidth - (int) textPaint.measureText(timeStr)) / 2;
         int y = videoHeight / 2 + staticLayout.getHeight() + 1;
