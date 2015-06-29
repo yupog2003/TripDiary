@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/display_setting">
+        <yuku.ambilwarna.widget.AmbilWarnaPreference
+            android:defaultValue="0xff6699cc"
+            android:icon="@drawable/ic_color"
+            android:key="trackcolor"
+            android:title="@string/track_color" />
+
+        <Preference
+            android:icon="@drawable/ic_font"
+            android:key="diaryfont"
+            android:title="@string/diary_font" />
+
+        <com.yupog2003.tripdiary.preferences.SeekBarPreference
+            android:defaultValue="20"
+            android:dialogMessage="@string/diary_font_size"
+            android:icon="@drawable/ic_fontsize"
+            android:key="diaryfontsize"
+            android:max="70"
+            android:summary="@string/select_diary_font_size"
+            android:text=" pixels"
+            android:title="@string/diary_font_size" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/distance_units"
+            android:entryValues="@array/distance_units_value"
+            android:icon="@drawable/ic_number"
+            android:key="distance_unit"
+            android:summary="@string/kilometer_or_mile"
+            android:title="@string/distance_unit" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/altitude_units"
+            android:entryValues="@array/altitude_units_value"
+            android:icon="@drawable/ic_number"
+            android:key="altitude_unit"
+            android:summary="@string/meter_or_ft"
+            android:title="@string/altitude_unit" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/record_setting">
+        <ListPreference
+            android:defaultValue="1000"
+            android:entries="@array/record_durations"
+            android:entryValues="@array/record_durations"
+            android:icon="@drawable/ic_frequency"
+            android:key="record_duration"
+            android:summary="@string/duration_between_record_each_location"
+            android:title="@string/record_duration" />
+        <ListPreference
+            android:defaultValue="20"
+            android:entries="@array/record_distance_Intervals"
+            android:entryValues="@array/record_distance_Intervals"
+            android:icon="@drawable/ic_frequency"
+            android:key="min_distance_record"
+            android:summary="@string/minimum_distance_between_record_localtions"
+            android:title="@string/record_distance_interval" />
+        <ListPreference
+            android:defaultValue="1000"
+            android:entries="@array/record_durations"
+            android:entryValues="@array/record_durations"
+            android:icon="@drawable/ic_frequency"
+            android:key="update_duration"
+            android:summary="@string/duration_between_update_the_notification"
+            android:title="@string/update_duration" />
+
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:icon="@drawable/poi"
+            android:key="shaketoaddpoi"
+            android:summary="@string/shake_to_add_poi_during_recording_trip"
+            android:title="@string/shake_to_add_poi" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/play_setting">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:disableDependentsState="false"
+            android:icon="@drawable/ic_music"
+            android:key="playmusic"
+            android:summaryOff="@string/dont_play_background_music"
+            android:summaryOn="@string/play_background_music"
+            android:title="@string/play_music" />
+
+        <Preference
+            android:dependency="playmusic"
+            android:icon="@drawable/ic_musicfile"
+            android:key="musicpath"
+            android:layout="?android:attr/preferenceLayoutChild"
+            android:summary="@string/select_music_path"
+            android:title="@string/music_path" />
+
+        <ListPreference
+            android:defaultValue="10"
+            android:dialogTitle="@string/select_speed"
+            android:enabled="true"
+            android:entries="@array/speed"
+            android:entryValues="@array/speed_play_trip_values"
+            android:icon="@drawable/ic_dashboard"
+            android:key="playtripspeed"
+            android:summary="@string/play_trip_speed_summary"
+            android:title="@string/playing_trip_speed" />
+        <ListPreference
+            android:defaultValue="1000"
+            android:dialogTitle="@string/select_speed"
+            android:enabled="true"
+            android:entries="@array/speed"
+            android:entryValues="@array/speed_play_poi_values"
+            android:icon="@drawable/ic_dashboard"
+            android:key="playpoispeed"
+            android:summary="@string/play_poi_speed_summary"
+            android:title="@string/playing_poi_speed" />
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/playing_trip_mode"
+            android:entries="@array/play_view_type"
+            android:entryValues="@array/play_view_type_value"
+            android:icon="@drawable/ic_gmap"
+            android:key="playingtripmode"
+            android:title="@string/playing_trip_mode" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/trip_category">
+        <Preference
+            android:enabled="true"
+            android:icon="@drawable/ic_folder"
+            android:key="tripcategory"
+            android:summary="@string/manage_category_summary"
+            android:title="@string/manage_category" />
+        <Preference
+            android:enabled="true"
+            android:icon="@drawable/ic_timezone"
+            android:key="triptimezone"
+            android:summary="@string/update_all_trips_timezone_by_the_first_location_in_the_track"
+            android:title="@string/update_trip_timezone" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/others">
+        <Preference
+            android:defaultValue="/sdcard/TripDiary"
+            android:icon="@drawable/ic_path"
+            android:key="rootpath"
+            android:title="@string/root_path" />
+        <Preference
+            android:icon="@drawable/ic_backup_category"
+            android:key="backupsetting"
+            android:title="@string/back_up_setting" />
+        <Preference
+            android:icon="@drawable/ic_restore_category"
+            android:key="restoresetting"
+            android:title="@string/restore_setting" />
+        <Preference
+            android:icon="@drawable/ic_google"
+            android:key="account"
+            android:title="@string/account" />
+        <!-- <Preference
+            android:icon="@drawable/ic_translate"
+            android:key="translate"
+            android:summary="@string/translate_using_transcommu"
+            android:title="@string/translate" /> -->
+    </PreferenceCategory>
+
+</PreferenceScreen><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/preference.xml -->
