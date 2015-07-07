@@ -23,8 +23,8 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
 import java.io.BufferedReader;
@@ -276,8 +276,8 @@ public class GenerateVideoService extends IntentService {
         canvas.translate(0, (videoHeight - staticLayout.getHeight()) / 2);
         staticLayout.draw(canvas);
         canvas.restore();
-        Calendar time = poi.time;
-        String timeStr = TimeAnalyzer.formatInTimezone(time, timeZone).replace("T", " ");
+        MyCalendar time = poi.time;
+        String timeStr = time.formatInTimezone(timeZone).replace("T", " ");
         textPaint.setTextSize(diaryTextSize);
         int x = (videoWidth - (int) textPaint.measureText(timeStr)) / 2;
         int y = videoHeight / 2 + staticLayout.getHeight() + 1;
@@ -476,7 +476,6 @@ public class GenerateVideoService extends IntentService {
                         FileHelper.copyFile(new File(tempDir, fileName), new File(tempDir, "track_" + String.valueOf(i) + "_" + String.valueOf(j + k + 1) + ".jpg"));
                     }
                 }
-                Log.i("trip", fileName);
             }
             num_processed_materials++;
             String trackVideoName = "track_" + String.valueOf(i) + ".mp4";

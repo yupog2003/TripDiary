@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.TimeZone;
 
 public class Trip {
 	public Context context;
@@ -37,7 +38,7 @@ public class Trip {
 		this.dir = dir;
 		if (!dir.exists()) {
 			dir.mkdirs();
-			TimeAnalyzer.updateTripTimeZone(context, dir.getName(), Time.getCurrentTimezone());
+			MyCalendar.updateTripTimeZone(context, dir.getName(), TimeZone.getDefault().getID());
 		}
 		this.context = context;
 		refreshAllFields();
@@ -84,7 +85,7 @@ public class Trip {
 		this.tripName = dir.getName();
 		SharedPreferences p = context.getSharedPreferences("trip", Context.MODE_PRIVATE);
 		category = p.getString(tripName, context.getString(R.string.nocategory));
-		timezone = TimeAnalyzer.getTripTimeZone(context, tripName);
+		timezone = MyCalendar.getTripTimeZone(context, tripName);
 	}
 
 	public void getCacheJava(Context context, Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {

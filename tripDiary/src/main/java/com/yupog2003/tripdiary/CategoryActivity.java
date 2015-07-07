@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -31,7 +32,7 @@ import java.util.Set;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
-public class CategoryActivity extends MyActivity {
+public class CategoryActivity extends MyActivity implements View.OnClickListener{
 
     SharedPreferences categorysp;
     SharedPreferences tripsp;
@@ -41,6 +42,7 @@ public class CategoryActivity extends MyActivity {
     String[] trips;
     ListView listView;
     CategoryAdapter adapter;
+    FloatingActionButton add;
     Toolbar toolBar;
 
     @Override
@@ -49,6 +51,8 @@ public class CategoryActivity extends MyActivity {
         setContentView(R.layout.activity_category);
         listView = (ListView) findViewById(R.id.listView);
         toolBar = (Toolbar) findViewById(R.id.toolbar);
+        add=(FloatingActionButton)findViewById(R.id.add);
+        add.setOnClickListener(this);
         setSupportActionBar(toolBar);
         setTitle(R.string.manage_category);
         loaddata();
@@ -71,6 +75,59 @@ public class CategoryActivity extends MyActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter);
         listView.setOnItemLongClickListener(adapter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.equals(add)){
+            AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
+            ab.setTitle(getString(R.string.edit_category));
+            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, null);
+            final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
+            final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
+            final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
+            final int color = Color.WHITE;
+            colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
+            colorImage.setTag(color);
+            pickColor.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View v) {
+
+                    AmbilWarnaDialog dialog = new AmbilWarnaDialog(CategoryActivity.this, color, new OnAmbilWarnaListener() {
+
+                        public void onOk(AmbilWarnaDialog dialog, int color) {
+
+                            colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
+                            colorImage.setTag(color);
+                        }
+
+                        public void onCancel(AmbilWarnaDialog dialog) {
+
+
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+            ab.setView(layout);
+            ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+
+                    String nameStr = categoryName.getText().toString();
+                    if (nameStr.equals(getString(R.string.nocategory))) {
+                        Toast.makeText(CategoryActivity.this, getString(R.string.cannot_add_nocategory), Toast.LENGTH_SHORT).show();
+                    } else {
+                        int color = (Integer) colorImage.getTag();
+                        categoryeditor.putString(nameStr, String.valueOf(color));
+                        categoryeditor.commit();
+                        loaddata();
+                    }
+                }
+            });
+            ab.setNegativeButton(getString(R.string.cancel), null);
+            ab.show();
+        }
     }
 
     class CategoryAdapter extends BaseAdapter implements OnItemClickListener, OnItemLongClickListener {
@@ -201,58 +258,6 @@ public class CategoryActivity extends MyActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.addcategory:
-                AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
-                ab.setTitle(getString(R.string.edit_category));
-                LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, null);
-                final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
-                final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
-                final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
-                final int color = Color.WHITE;
-                colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
-                colorImage.setTag(color);
-                pickColor.setOnClickListener(new View.OnClickListener() {
-
-                    public void onClick(View v) {
-
-                        AmbilWarnaDialog dialog = new AmbilWarnaDialog(CategoryActivity.this, color, new OnAmbilWarnaListener() {
-
-                            public void onOk(AmbilWarnaDialog dialog, int color) {
-
-                                colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
-                                colorImage.setTag(color);
-                            }
-
-                            public void onCancel(AmbilWarnaDialog dialog) {
-
-
-                            }
-                        });
-                        dialog.show();
-                    }
-                });
-                ab.setView(layout);
-                ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        String nameStr = categoryName.getText().toString();
-                        if (nameStr.equals(getString(R.string.nocategory))) {
-                            Toast.makeText(CategoryActivity.this, getString(R.string.cannot_add_nocategory), Toast.LENGTH_SHORT).show();
-                        } else {
-                            int color = (Integer) colorImage.getTag();
-                            categoryeditor.putString(nameStr, String.valueOf(color));
-                            categoryeditor.commit();
-                            loaddata();
-                        }
-                    }
-                });
-                ab.setNegativeButton(getString(R.string.cancel), null);
-                ab.show();
-                break;
-        }
         return true;
     }
 

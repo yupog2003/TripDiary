@@ -1,43 +1,72 @@
 package com.yupog2003.tripdiary.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.Checkable;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-public class CheckableLayout extends FrameLayout implements Checkable {
-	public boolean checked;
+import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 
-	public CheckableLayout(Context context) {
-		super(context);
+public class CheckableLayout extends RelativeLayout implements Checkable {
+    public boolean checked;
+    ImageView checkImage;
 
-	}
+    public CheckableLayout(Context context) {
+        super(context);
+        initialCheckImage(context);
+    }
 
-	public CheckableLayout(Context context, AttributeSet attrs) {
+    public CheckableLayout(Context context, AttributeSet attrs) {
 
-		super(context, attrs);
-	}
+        super(context, attrs);
+        initialCheckImage(context);
+    }
 
-	public CheckableLayout(Context context, AttributeSet attrs, int defStyle) {
+    public CheckableLayout(Context context, AttributeSet attrs, int defStyle) {
 
-		super(context, attrs, defStyle);
-	}
+        super(context, attrs, defStyle);
+        initialCheckImage(context);
+    }
 
-	public boolean isChecked() {
+    private void initialCheckImage(Context context) {
+        checkImage = new ImageView(context);
+        checkImage.setImageResource(R.drawable.ic_unchecked);
+        checkImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        int dp30 = (int) DeviceHelper.pxFromDp(context, 30);
+        int dp5 = (int) DeviceHelper.pxFromDp(context, 5);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(dp30, dp30);
+        params.addRule(ALIGN_PARENT_TOP);
+        params.addRule(ALIGN_PARENT_RIGHT);
+        params.setMargins(0, dp5, dp5, 0);
+        checkImage.setLayoutParams(params);
+    }
 
-		return checked;
-	}
+    public boolean isChecked() {
+        return checked;
+    }
 
-	public void setChecked(boolean checked) {
+    boolean onMultiChoiceMode = false;
 
-		this.checked = checked;
-		setBackgroundColor(checked ? Color.parseColor("#FFEC70") :Color.TRANSPARENT);
-	}
+    public void setOnMultiChoiceMode(boolean onMultiChoiceMode) {
+        this.onMultiChoiceMode = onMultiChoiceMode;
+        if (onMultiChoiceMode) {
+            if (checkImage.getParent() == null) {
+                this.addView(checkImage);
+            }
+        } else {
+            this.removeView(checkImage);
+        }
+    }
 
-	public void toggle() {
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+        checkImage.setImageResource(checked ? R.drawable.ic_checked : R.drawable.ic_unchecked);
+    }
 
-		setChecked(!checked);
-	}
+    public void toggle() {
+        setChecked(!checked);
+    }
 
 }

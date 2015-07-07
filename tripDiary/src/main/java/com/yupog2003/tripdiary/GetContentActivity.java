@@ -33,8 +33,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.views.SquareImageView;
 
 import java.io.File;
@@ -176,8 +176,8 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 Collections.sort(files, new Comparator<String>() {
                     @Override
                     public int compare(String lhs, String rhs) {
-                        Calendar time1 = TimeAnalyzer.getTripTime(rootPath, lhs);
-                        Calendar time2 = TimeAnalyzer.getTripTime(rootPath, rhs);
+                        MyCalendar time1 = MyCalendar.getTripTime(rootPath, lhs);
+                        MyCalendar time2 = MyCalendar.getTripTime(rootPath, rhs);
                         if (time1 == null || time2 == null)
                             return 0;
                         else if (time1.after(time2))

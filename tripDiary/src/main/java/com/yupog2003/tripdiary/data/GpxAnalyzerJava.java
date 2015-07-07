@@ -1,36 +1,18 @@
 package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Toast;
 
-import com.yupog2003.tripdiary.MainActivity;
-import com.yupog2003.tripdiary.R;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.TimeZone;
 
 public class GpxAnalyzerJava {
@@ -64,13 +46,13 @@ public class GpxAnalyzerJava {
 			cache.altitudes = new float[size];
 			cache.times = new String[size];
 		} else {
-			String timezone = TimeAnalyzer.getTripTimeZone(context, tripName);
+			String timezone = MyCalendar.getTripTimeZone(context, tripName);
 			timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset()/1000;
 		}
-		ArrayList<Float> speeds = cacheExsit ? null : new ArrayList<Float>();
-		boolean success = cacheExsit ? getCache(gpxPath + ".cache", cache) : parse(gpxPath, cache, speeds, timeZoneOffset);
+		//ArrayList<Float> speeds = cacheExsit ? null : new ArrayList<Float>();
+		boolean success = cacheExsit ? getCache(gpxPath + ".cache", cache) : parse(gpxPath, cache, timeZoneOffset);
 		if (!cacheExsit && success) {
-			saveGraph(context, gpxPath + ".graph", cache.altitudes, speeds, contextHandler);
+			//saveGraph(context, gpxPath + ".graph", cache.altitudes, speeds, contextHandler);
 		}
 		return success;
 	}
@@ -129,7 +111,7 @@ public class GpxAnalyzerJava {
 		return false;
 	}
 
-	public boolean parse(String gpxPath, TrackCache cache, ArrayList<Float> speeds, int timeZoneOffset) {
+	public boolean parse(String gpxPath, TrackCache cache, int timeZoneOffset) {
 		try {
 			String cachePath = gpxPath + ".cache";
 			BufferedReader br = new BufferedReader(new FileReader(new File(gpxPath)));
@@ -174,7 +156,7 @@ public class GpxAnalyzerJava {
 					if (altitude < minAltitude)
 						minAltitude = altitude;
 				} else if (s.contains("<time>")) {
-					Calendar time=Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+					MyCalendar time=MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
 					s=s.substring(s.indexOf(">")+1, s.lastIndexOf("<"));
 					String year = s.substring(0, s.indexOf("-"));
 					String month = s.substring(s.indexOf("-") + 1, s.lastIndexOf("-"));
@@ -184,7 +166,7 @@ public class GpxAnalyzerJava {
 					String second = s.substring(s.lastIndexOf(":") + 1, s.indexOf("Z"));
 					time.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute), (int)Double.parseDouble(second));
 					time.setTimeInMillis(time.getTimeInMillis() + timeZoneOffset * 1000);
-					latlng.time = TimeAnalyzer.formatInTimezone(time, "UTC");
+					latlng.time = time.formatInTimezone("UTC");
 					times.add(time.getTimeInMillis()/1000);
 				} else if (s.contains("</trkpt>")) {
 					if (!first) {
@@ -213,9 +195,9 @@ public class GpxAnalyzerJava {
 				float dist = distFrom(track.get(i).latitude, track.get(i).longitude, track.get(i + 20).latitude, track.get(i + 20).longitude);
 				float seconds = times.get(i + 20) - times.get(i);
 				float speed = dist / seconds * 18 / 5;
-				if (speeds != null) {
+				/*if (speeds != null) {
 					speeds.add(speed);
-				}
+				}*/
 				if (maxSpeed < speed)
 					maxSpeed = speed;
 			}
@@ -288,7 +270,7 @@ public class GpxAnalyzerJava {
 		return (float) dist;
 	}
 
-	private void saveGraph(final Context context, final String path, final float[] altitudes, final ArrayList<Float> speeds, Handler handler) {
+	/*private void saveGraph(final Context context, final String path, final float[] altitudes, final ArrayList<Float> speeds, Handler handler) {
 		if (context == null)
 			return;
 		final XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -374,7 +356,7 @@ public class GpxAnalyzerJava {
 
 			}
 		});
-	}
+	}*/
 
 	boolean stop;
 

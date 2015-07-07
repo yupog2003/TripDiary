@@ -87,6 +87,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         DisplayImageOptions options;
         Bitmap[] bitmaps;
         int dp2;
+        boolean onMultiChoiceMode;
 
         public PictureAdapter() {
             int screenWidth = DeviceHelper.getScreenWidth(getActivity());
@@ -105,6 +106,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 files = new File[0];
             }
             bitmaps = new Bitmap[files.length];
+            onMultiChoiceMode=false;
         }
 
         public void reFresh() {
@@ -154,6 +156,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
             } else {
                 ((ImageView) convertView.getTag()).setImageBitmap(bitmaps[position]);
             }
+            ((CheckableLayout)convertView).setOnMultiChoiceMode(onMultiChoiceMode);
             return convertView;
         }
 
@@ -300,19 +303,18 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         }
 
         public boolean onCreateActionMode(final ActionMode mode, Menu menu) {
-
             mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
             checks = new boolean[adapter.getCount()];
             for (int i = 0; i < checks.length; i++) {
                 checks[i] = false;
             }
             checkAll = false;
+            adapter.onMultiChoiceMode=true;
             return true;
         }
 
         public void onDestroyActionMode(ActionMode mode) {
-
-            mode = null;
+            adapter.onMultiChoiceMode=false;
         }
 
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {

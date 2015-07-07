@@ -339,5 +339,13 @@
     <string name="record_distance_interval">Record Distance Interval</string>
     <string name="minimum_distance_between_record_localtions">Minimum distance between record locations (in meters)</string>
     <string name="title_activity_view_trip_online">ViewTripOnlineActivity</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="sort_by_time">Sort by time</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="title_activity_view_graph_acivity">ViewGraphAcivity</string>
+    <string name="list">List</string>
+    <string name="piechart">Pie Chart</string>
+    <string name="barchart">Bar Chart</string>
 
 </resources>

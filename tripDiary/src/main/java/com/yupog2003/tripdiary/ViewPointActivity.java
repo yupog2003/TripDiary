@@ -28,8 +28,8 @@ import android.widget.Toast;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.fragments.AudioFragment;
 import com.yupog2003.tripdiary.fragments.PictureFragment;
 import com.yupog2003.tripdiary.fragments.TextFragment;
@@ -67,7 +67,7 @@ public class ViewPointActivity extends MyActivity {
         }
         path = getIntent().getStringExtra("path");
         name = path.substring(path.lastIndexOf("/") + 1);
-        timezone = TimeAnalyzer.getPOITimeZone(ViewPointActivity.this, path);
+        timezone = MyCalendar.getPOITimeZone(ViewPointActivity.this, path);
         poi = new POI(new File(path));
         setTitle(name);
         DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTrip.getName() + "-" + poi.title, null);
@@ -190,7 +190,7 @@ public class ViewPointActivity extends MyActivity {
             TextView altitude = (TextView) layout.findViewById(R.id.altitude);
             altitude.setText(GpxAnalyzer2.getAltitudeString((float) poi.altitude, "m"));
             TextView time = (TextView) layout.findViewById(R.id.time);
-            String timeStr=TimeAnalyzer.formatInTimezone(poi.time, timezone);
+            String timeStr=poi.time.formatInTimezone(timezone);
             time.setText(timeStr);
             ab.setView(layout);
             ab.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
@@ -214,8 +214,8 @@ public class ViewPointActivity extends MyActivity {
                     editaltitude.setText(String.valueOf(altitude));
                     final DatePicker editdate = (DatePicker) layout.findViewById(R.id.edit_poi_date);
                     final TimePicker edittime = (TimePicker) layout.findViewById(R.id.edit_poi_time);
-                    Calendar time = poi.time;
-                    time=TimeAnalyzer.changeTimeZone(time, timezone);
+                    MyCalendar time = poi.time;
+                    time.setTimeZone(timezone);
                     editdate.updateDate(time.get(Calendar.YEAR), time.get(Calendar.MONTH), time.get(Calendar.DAY_OF_MONTH));
                     edittime.setIs24HourView(true);
                     edittime.setCurrentHour(time.get(Calendar.HOUR_OF_DAY));
@@ -232,10 +232,10 @@ public class ViewPointActivity extends MyActivity {
                                 Toast.makeText(ViewPointActivity.this, R.string.some_fields_are_not_filled, Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            Calendar time=Calendar.getInstance(TimeZone.getTimeZone(timezone));
+                            MyCalendar time=MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
                             time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), 0);
-                            TimeAnalyzer.format3339(time);
-                            time=TimeAnalyzer.changeTimeZone(time, "UTC");
+                            time.format3339();
+                            time.setTimeZone("UTC");
                             double altitude = Double.parseDouble(editAltitudeStr);
                             if (MainActivity.altitude_unit == MainActivity.unit_ft) {
                                 altitude *= 0.3048;

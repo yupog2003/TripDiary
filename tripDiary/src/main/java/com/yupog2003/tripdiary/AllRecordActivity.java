@@ -27,10 +27,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.MyLatLng2;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Record;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.views.POIInfoWindowAdapter;
 
@@ -214,7 +214,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                     record.num_Audios += pois[j].audioFiles.length;
                     if (markers == null || gmap == null)
                         continue;
-                    markers.add(gmap.addMarker(new MarkerOptions().position(new LatLng(pois[j].latitude, pois[j].longitude)).title(trips[value].tripName + "/" + pois[j].title).snippet(" " + TimeAnalyzer.formatInTimezone(pois[j].time, trips[value].timezone) + "\n " + pois[j].diary).draggable(false)));
+                    markers.add(gmap.addMarker(new MarkerOptions().position(new LatLng(pois[j].latitude, pois[j].longitude)).title(trips[value].tripName + "/" + pois[j].title).snippet(" " + pois[j].time.formatInTimezone(trips[value].timezone) + "\n " + pois[j].diary).draggable(false)));
                 }
             } else if (values[0] instanceof double[]) {
                 if (gmap != null) {
@@ -230,9 +230,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                         count++;
                         if (count == colors.length)
                             count = 0;
-                        latitudes = null;
-                        longitudes = null;
-                        lats = null;
                         System.gc();
                     } catch (OutOfMemoryError e) {
                         e.printStackTrace();
@@ -364,7 +361,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                 br.close();
                 int trackSize = track.size();
                 if (timeStrs.size() > 0)
-                    totalSeconds += TimeAnalyzer.getMinusTimeInSecond(TimeAnalyzer.getTime(timeStrs.get(0), TimeAnalyzer.type_gpx), TimeAnalyzer.getTime(timeStrs.get(timeStrs.size() - 1), TimeAnalyzer.type_gpx));
+                    totalSeconds += MyCalendar.getMinusTimeInSecond(MyCalendar.getTime(timeStrs.get(0), MyCalendar.type_gpx), MyCalendar.getTime(timeStrs.get(timeStrs.size() - 1), MyCalendar.type_gpx));
                 double[] latitudes = new double[trackSize];
                 double[] longitudes = new double[trackSize];
                 for (int j = 0; j < trackSize; j++) {

@@ -18,8 +18,8 @@ public class ViewCostActivity extends MyActivity {
 		Toolbar toolBar=(Toolbar)findViewById(R.id.toolbar);
 		if (toolBar!=null){
 			setSupportActionBar(toolBar);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		int option = getIntent().getIntExtra("option", 0);
 		String path = getIntent().getStringExtra("path");
 		String title = getIntent().getStringExtra("title");

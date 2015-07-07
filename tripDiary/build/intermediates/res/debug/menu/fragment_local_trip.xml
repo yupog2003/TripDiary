@@ -12,6 +12,11 @@
         app:showAsAction="never"
         android:title="@string/restore_trip"/>
     <item
+        android:id="@+id/timeSort"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/sort_by_time"/>
+    <item
         android:id="@+id/searchview"
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="100"

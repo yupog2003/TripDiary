@@ -1,29 +1,12 @@
 package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Toast;
 
 import com.yupog2003.tripdiary.MainActivity;
-import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava.ProgressChangedListener;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.TimeZone;
@@ -57,18 +40,18 @@ public class GpxAnalyzer2 {
 			cache.altitudes = new float[size];
 			cache.times = new String[size];
 		} else {
-			String timezone = TimeAnalyzer.getTripTimeZone(context, tripName);
+			String timezone = MyCalendar.getTripTimeZone(context, tripName);
 			timeZoneOffset= TimeZone.getTimeZone(timezone).getRawOffset()/1000;
 		}
 		ArrayList<Float> speeds = cacheExist ? null : new ArrayList<Float>();
 		boolean success = cacheExist ? getCache(gpxPath + ".cache", cache) : parse(gpxPath, cache, speeds, timeZoneOffset);
 		if (!cacheExist && success) {
-			saveGraph(context, gpxPath + ".graph", cache.altitudes, speeds, contextHandler);
+			//saveGraph(context, gpxPath + ".graph", cache.altitudes, speeds, contextHandler);
 		}
 		return success;
 	}
 
-	private void saveGraph(final Context context, final String path, final float[] altitudes, final ArrayList<Float> speeds, Handler handler) {
+	/*private void saveGraph(final Context context, final String path, final float[] altitudes, final ArrayList<Float> speeds, Handler handler) {
 		if (context == null)
 			return;
 		final XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -154,7 +137,7 @@ public class GpxAnalyzer2 {
 
 			}
 		});
-	}
+	}*/
 
 	public void onProgressChanged(long progress) {
 		if (listener != null) {

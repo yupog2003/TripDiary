@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
@@ -65,9 +65,9 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
         int sWidth = DeviceHelper.getScreenWidth(this);
         int sHeight = DeviceHelper.getScreenHeight(this);
         rotation = sWidth > sHeight ? Surface.ROTATION_90 : Surface.ROTATION_0;
@@ -95,7 +95,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         ft.add(R.id.fragment, viewCostFragment);
         ft.commit();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
         map = (Button) findViewById(R.id.map);
@@ -136,7 +136,6 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
                 this.setTitle(trip.tripName);
                 ft.show(viewMapFragment);
                 map.setSelected(true);
-                // getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
                 break;
             case text_mode:
                 this.setTitle(trip.tripName + "-" + getString(R.string.diary));
@@ -186,10 +185,8 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return false;
+        return drawerToggle.onOptionsItemSelected(item);
+
     }
 
     @Override

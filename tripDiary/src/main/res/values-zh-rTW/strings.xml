@@ -331,5 +331,12 @@
     <string name="nocategory">未分類</string>
     <string name="record_distance_interval">紀錄距離間隔</string>
     <string name="minimum_distance_between_record_localtions">間隔多少距離紀錄一個位置(公尺)</string>
+    <string name="unknown_error">不明錯誤</string>
+    <string name="sort_by_time">依時間排序</string>
+    <string name="ascending">升冪</string>
+    <string name="descending">降冪</string>
+    <string name="barchart">直方圖</string>
+    <string name="list">列表</string>
+    <string name="piechart">圓餅圖</string>
 
 </resources>

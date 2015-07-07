@@ -25,8 +25,7 @@ public class MyLatLng2 implements Serializable{
 		this.latitude=0;
 		this.longitude=0;
 		this.altitude=0;
-		Calendar t=Calendar.getInstance();
-		this.time=TimeAnalyzer.formatInCurrentTimezone(t);
+		this.time=MyCalendar.getInstance().formatInCurrentTimezone();
 	}
 	public void setLatitude(double latitude){
 		this.latitude=latitude;

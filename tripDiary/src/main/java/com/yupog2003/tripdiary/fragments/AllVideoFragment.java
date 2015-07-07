@@ -29,7 +29,6 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
 
@@ -189,7 +188,7 @@ public class AllVideoFragment extends Fragment {
 		@Override
 		public void onBindViewHolder(ViewHolder holder, int position) {
 			holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].videoFiles.length) + ")");
-			holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+			holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
 			holder.index = position;
 			holder.gridView.setVisibility(videoAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
 			holder.gridView.setAdapter(videoAdapters[position]);

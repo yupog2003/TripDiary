@@ -18,13 +18,11 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
 	}
 
 	public void setChecked(boolean checked) {
-
 		this.checked=checked;
 		setBackgroundColor(checked?Color.parseColor("#FFEC70"):Color.TRANSPARENT);
 	}
 
 	public void toggle() {
-
 		setChecked(!checked);
 	}
 

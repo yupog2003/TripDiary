@@ -6,21 +6,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.data.FileHelper;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CostPieChartFragment extends Fragment {
     String path;
@@ -29,13 +29,15 @@ public class CostPieChartFragment extends Fragment {
     int[] colors;
     float[] totals;
     boolean hasData = false;
+    PieChart pieChart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.option = getArguments().getInt("option");
         this.path = getArguments().getString("path");
         this.title = getArguments().getString("title");
-        return inflater.inflate(R.layout.fragment_cost_piechart, container, false);
+        this.pieChart = new PieChart(getActivity());
+        return pieChart;
     }
 
     @Override
@@ -79,19 +81,17 @@ public class CostPieChartFragment extends Fragment {
                 }
                 break;
         }
-        DefaultRenderer render = new DefaultRenderer();
-        render.setLabelsTextSize(30);
-        render.setLegendTextSize(30);
+        ArrayList<Entry> values = new ArrayList<>();
         String[] titles = getActivity().getResources().getStringArray(R.array.cost_types);
-        CategorySeries series = new CategorySeries(title);
         for (int i = 0; i < totals.length; i++) {
-            series.add(titles[i], totals[i]);
-            SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-            r.setColor(colors[i]);
-            render.addSeriesRenderer(r);
+            values.add(new Entry(totals[i], i));
         }
-        FrameLayout layout = (FrameLayout) getView();
-        layout.addView(ChartFactory.getPieChartView(getActivity(), series, render));
+        PieDataSet pieDataSet = new PieDataSet(values, "");
+        pieDataSet.setColors(colors);
+        PieData pieData = new PieData(titles, pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.setDescription("");
+        pieChart.invalidate();
     }
 
     private void readData(File file) {

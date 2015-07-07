@@ -54,7 +54,7 @@ import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.services.SendTripService;
 import com.yupog2003.tripdiary.views.CheckableLayout;
@@ -94,6 +94,7 @@ public class LocalTripsFragment extends Fragment {
     SharedPreferences.Editor categoryExpandEditor;
     private static final int REQUEST_GET_TOKEN = 0;
     public static final String tag_path = "tagPath";
+    public static final String pref_timesort="timesort";
     boolean uploadPublic;
 
     public LocalTripsFragment() {
@@ -102,7 +103,6 @@ public class LocalTripsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         listView = new FloatingGroupExpandableListView(getActivity());
         listView.setGroupIndicator(null);
         setHasOptionsMenu(true);
@@ -211,6 +211,19 @@ public class LocalTripsFragment extends Fragment {
             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
             i.setType("application/zip");
             startActivityForResult(Intent.createChooser(i, getString(R.string.select_the_file_to_restore)), R.id.restoretrip);
+        } else if (item.getItemId() == R.id.timeSort){
+            AlertDialog.Builder ab=new AlertDialog.Builder(getActivity());
+            int nowSelection=PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0);
+            ab.setSingleChoiceItems(new String[]{getString(R.string.ascending), getString(R.string.descending)}, nowSelection, new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putInt(pref_timesort, which).commit();
+                    loaddata();
+                    dialog.dismiss();
+                }
+            });
+            ab.show();
         }
         return false;
     }
@@ -242,6 +255,20 @@ public class LocalTripsFragment extends Fragment {
         }
     }
 
+    enum TimeSort {
+        ascending,
+        descending;
+        public static TimeSort fromInteger(int i){
+            if (i==0){
+                return ascending;
+            }else{
+                return descending;
+            }
+        }
+    }
+
+    ;
+
     class TripAdapter extends BaseExpandableListAdapter implements OnChildClickListener, ExpandableListView.MultiChoiceModeListener, OnQueryTextListener, OnGroupCollapseListener, OnGroupExpandListener {
 
         String[] categories;
@@ -249,7 +276,6 @@ public class LocalTripsFragment extends Fragment {
         TripInformation[] tripsArray;
         HashMap<String, Drawable> categoryDrawables;
         boolean onActionMode = false;
-        int count = 0;
         public ArrayList<String> checksName;
 
         public TripAdapter(String path) {
@@ -275,18 +301,31 @@ public class LocalTripsFragment extends Fragment {
             for (int i = 0; i < files.length; i++) {
                 list.add(new TripInformation(files[i]));
             }
+            final TimeSort timeSort=TimeSort.fromInteger(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0));
             Collections.sort(list, new Comparator<TripInformation>() {
 
                 public int compare(TripInformation lhs, TripInformation rhs) {
 
                     if (lhs.time == null || rhs.time == null)
                         return 0;
-                    else if (lhs.time.after(rhs.time))
-                        return 1;
-                    else if (rhs.time.after(lhs.time))
-                        return -1;
-                    else
-                        return 0;
+                    if (timeSort == TimeSort.ascending) {
+                        if (lhs.time.after(rhs.time)) {
+                            return 1;
+                        } else if (rhs.time.after(lhs.time)) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    } else if (timeSort == TimeSort.descending) {
+                        if (lhs.time.after(rhs.time)) {
+                            return -1;
+                        } else if (rhs.time.after(lhs.time)) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                    return 0;
                 }
             });
             tripsArray = list.toArray(new TripInformation[list.size()]);
@@ -306,13 +345,13 @@ public class LocalTripsFragment extends Fragment {
 
         class TripInformation {
             public File file;
-            public Calendar time;
+            public MyCalendar time;
             public String category;
             public Drawable drawable;
 
             public TripInformation(File file) {
                 this.file = file;
-                this.time = TimeAnalyzer.getTripTime(path, file.getName());
+                this.time = MyCalendar.getTripTime(path, file.getName());
                 this.category = tripsp.getString(file.getName(), getString(R.string.nocategory));
                 this.drawable = categoryDrawables.get(category);
             }
@@ -361,7 +400,8 @@ public class LocalTripsFragment extends Fragment {
             String tripname = trip.file.getName();
             holder.item.setText(tripname);
             holder.item.setCompoundDrawablesWithIntrinsicBounds(trip.drawable, null, null, null);
-            holder.itemextra.setText("-" + TimeAnalyzer.formatInTimezone(trip.time, TimeAnalyzer.getTripTimeZone(getActivity(), tripname)));
+            holder.itemextra.setText("-" + trip.time.formatInTimezone(MyCalendar.getTripTimeZone(getActivity(), tripname)));
+            ((CheckableLayout) convertView).setOnMultiChoiceMode(onActionMode);
             return convertView;
         }
 
@@ -940,7 +980,7 @@ public class LocalTripsFragment extends Fragment {
                                 lat = Double.parseDouble(toks[1]);
                                 lng = Double.parseDouble(toks[3]);
                             }
-                            TimeAnalyzer.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
+                            MyCalendar.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
                             new File(path + "/" + tripName + "/" + tripName + ".gpx.cache").delete();
                             break;
                         }

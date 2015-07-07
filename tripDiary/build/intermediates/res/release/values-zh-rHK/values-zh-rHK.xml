@@ -109,6 +109,7 @@
     <string name="app_name">旅遊日記</string>
     <string name="are_you_sure_to_delete">確定要刪除嗎?</string>
     <string name="are_you_sure_to_delete_this_poi">確定要刪除這個興趣點嗎?</string>
+    <string name="ascending">升冪</string>
     <string name="ask_for_replace_trip">有相同的旅程，請問要取代嗎？</string>
     <string name="ask_import_gpx_file">你要匯入gpx檔嗎?(包含時間資訊)</string>
     <string name="audio_codec">聲音編碼</string>
@@ -119,6 +120,7 @@
     <string name="backup">備份</string>
     <string name="backup_path">備份路徑</string>
     <string name="backup_to">備份到</string>
+    <string name="barchart">直方圖</string>
     <string name="be_careful">小心</string>
     <string name="blur">模糊</string>
     <string name="brush_mode">畫筆模式</string>
@@ -176,6 +178,7 @@
     <string name="cost_type">花費種類</string>
     <string name="delete">刪除</string>
     <string name="delete_poi">刪除興趣點</string>
+    <string name="descending">降冪</string>
     <string name="diary">日記</string>
     <string name="diary_font">日記字體</string>
     <string name="diary_font_size">日記字體大小</string>
@@ -231,6 +234,7 @@
     <string name="kilometer_or_mile">公里或英哩</string>
     <string name="kml">Kml</string>
     <string name="lifetime_record">生涯紀錄</string>
+    <string name="list">列表</string>
     <string name="local_trips">本機旅程</string>
     <string name="location_not_found">位置未獲得</string>
     <string name="lodging">住</string>
@@ -279,6 +283,7 @@
     <string name="pause">暫停</string>
     <string name="pausing">暫停中</string>
     <string name="photo">相片</string>
+    <string name="piechart">圓餅圖</string>
     <string name="play">播放</string>
     <string name="play_background_music">播放旅程時播放背景音樂</string>
     <string name="play_music">播放音樂</string>
@@ -344,6 +349,7 @@
     <string name="share_track_by...">分享軌跡…</string>
     <string name="share_track_kml">分享軌跡(kml)</string>
     <string name="some_fields_are_not_filled">有些欄位未填寫</string>
+    <string name="sort_by_time">依時間排序</string>
     <string name="sound">聲音</string>
     <string name="spend">花費</string>
     <string name="start_time">起始時間</string>
@@ -378,6 +384,7 @@
     <string name="trip_category">旅程類別</string>
     <string name="trip_has_been_stopped">旅程已結束</string>
     <string name="trip_not_found">未找到旅程</string>
+    <string name="unknown_error">不明錯誤</string>
     <string name="unzipping">解壓縮中</string>
     <string name="up_dir">回上層</string>
     <string name="update_all_trips_timezone_by_the_first_location_in_the_track">根據軌跡的第一個位置更新旅程時區</string>

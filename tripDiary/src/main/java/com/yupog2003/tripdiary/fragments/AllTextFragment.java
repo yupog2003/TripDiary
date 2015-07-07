@@ -21,7 +21,6 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 
 import java.io.File;
 
@@ -133,7 +132,7 @@ public class AllTextFragment extends Fragment {
         @Override
         public void onBindViewHolder(POIAdapter.ViewHolder holder, int position) {
             holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].diary.length()) + ")");
-            holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+            holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
             holder.index = position;
             holder.text.setVisibility(diarys[position].length() == 0 ? View.GONE : View.VISIBLE);
             holder.text.setText(diarys[position]);

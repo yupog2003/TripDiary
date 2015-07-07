@@ -8,18 +8,8 @@ import android.widget.Toast;
 import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.MyFileBody;
 import com.yupog2003.tripdiary.thrift.TripDiary;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -28,141 +18,253 @@ import org.apache.thrift.transport.TTransportException;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SendTripService extends IntentService {
 
-	static final String url = MainActivity.serverURL + "/uploadTrip.php";
-	public static final String filePathTag = "filePath";
-	public static final String accountTag = "account";
-	public static final String tokenTag = "token";
-	public static final String publicTag = "public";
-	NotificationCompat.Builder nb;
-	int progress = 0;
-	File tripFile;
+    static final String url = MainActivity.serverURL + "/uploadTrip.php";
+    public static final String filePathTag = "filePath";
+    public static final String accountTag = "account";
+    public static final String tokenTag = "token";
+    public static final String publicTag = "public";
 
-	public SendTripService() {
-		super("SendTripService");
+    NotificationCompat.Builder nb;
+    long totalBytes = 0;
+    long totalUploaded = 0;
+    File tripFile;
 
-		nb = new NotificationCompat.Builder(this);
-	}
+    public SendTripService() {
+        super("SendTripService");
 
-	@Override
-	protected void onHandleIntent(Intent intent) {
+        nb = new NotificationCompat.Builder(this);
+    }
 
-		final String tripP = intent.getStringExtra(filePathTag);
-		final String account = intent.getStringExtra(accountTag);
-		final String token = intent.getStringExtra(tokenTag);
-		final boolean uploadPublic = intent.getBooleanExtra(publicTag, false);
-		if (tripP == null || account == null || token == null)
-			return;
-		tripFile = new File(tripP);
-		try {
-			progress = 0;
-			updateNotification(tripFile.getName(), getString(R.string.zipping) + "...", progress);
-			File zipFile = new File(tripFile.getParentFile().getPath() + "/" + tripFile.getName() + ".zip");
-			FileHelper.zip(tripFile, zipFile);
-			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(url);
-			MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-			builder.setCharset(Charset.forName("UTF-8"));
-			builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-			MyFileBody fileBody = new MyFileBody(zipFile);
-			final long fileSize = fileBody.getContentLength();
-			fileBody.setListener(new MyFileBody.MyListener() {
+    @Override
+    protected void onHandleIntent(Intent intent) {
 
-				public void progressChange(long progress) {
+        final String tripP = intent.getStringExtra(filePathTag);
+        final String account = intent.getStringExtra(accountTag);
+        final String token = intent.getStringExtra(tokenTag);
+        final boolean uploadPublic = intent.getBooleanExtra(publicTag, false);
+        if (tripP == null || account == null || token == null)
+            return;
+        tripFile = new File(tripP);
+        try {
+            updateNotification(tripFile.getName(), getString(R.string.zipping) + "...", 0);
+            File zipFile = new File(tripFile.getParentFile().getPath() + "/" + tripFile.getName() + ".zip");
+            FileHelper.zip(tripFile, zipFile);
+            totalBytes=zipFile.length();
+            updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", 0);
+            final MultipartUtility multipart = new MultipartUtility(url, "UTF-8");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (totalUploaded < totalBytes) {
+                        updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", (int) (totalUploaded * 100f / totalBytes));
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+            multipart.addFormField("account", account);
+            multipart.addFormField("token", token);
+            multipart.addFilePart("uploaded_file", zipFile);
 
-					SendTripService.this.progress = (int) ((float) progress * 100 / fileSize);
-				}
-			});
-			builder.addPart("uploaded_file", fileBody);
-			builder.addPart("account", new StringBody(account, ContentType.TEXT_PLAIN));
-			builder.addPart("token", new StringBody(token, ContentType.TEXT_PLAIN));
-			post.setEntity(builder.build());
-			updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", progress);
-			new Thread(new Runnable() {
+            List<String> response = multipart.finish();
+            if (response.size() > 0) {
+                String resultStr = response.get(0);
+                if (resultStr.contains("\n") && resultStr.contains("tripname=") && resultStr.contains("trippath=")) {
+                    final String returnURL = resultStr.substring(0, resultStr.lastIndexOf("\n"));
+                    final String tripPath = returnURL.substring(returnURL.indexOf("trippath=") + 9);
+                    if (uploadPublic) {
+                        THttpClient transport = new THttpClient(MainActivity.serverURL + "/TripDiaryService_binary.php");
+                        transport.open();
+                        TProtocol protocol = new TBinaryProtocol(transport);
+                        TripDiary.Client client2 = new TripDiary.Client(protocol, protocol);
+                        client2.toggle_public(token, tripPath, "on");
+                        String publicURL = returnURL + "&public=true";
+                        Toast.makeText(getApplicationContext(), publicURL, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent1 = new Intent(Intent.ACTION_SEND);
+                        intent1.setType("text/plain");
+                        intent1.putExtra(Intent.EXTRA_TEXT, returnURL);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        SendTripService.this.startActivity(intent1);
+                        Toast.makeText(getApplicationContext(), returnURL, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SendTripService.this, resultStr, Toast.LENGTH_SHORT).show();
+                }
+            }
+            stopForeground(true);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            stopForeground(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            stopForeground(true);
+        } catch (TTransportException e) {
+            e.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
+        }
 
-				public void run() {
+    }
 
-					while (progress < 100) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
+    private void updateNotification(String contentTitle, String contentText, int progress) {
+        if (contentTitle != null)
+            nb.setContentTitle(contentTitle);
+        if (contentText != null)
+            nb.setContentText(contentText);
+        nb.setTicker("Upload Trip");
+        nb.setSmallIcon(R.drawable.ic_launcher);
+        nb.setProgress(100, progress, false);
+        startForeground(1, nb.build());
+    }
 
-							e.printStackTrace();
-						}
-						updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", progress);
-					}
-				}
-			}).start();
-			HttpResponse response = client.execute(post);
-			BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			String s;
-			StringBuffer result = new StringBuffer();
-			while ((s = br.readLine()) != null) {
-				result.append(s + "\n");
-			}
-			br.close();
-			stopForeground(true);
-			String resultStr = result.toString();
-			if (resultStr.contains("\n") && resultStr.contains("tripname=") && resultStr.contains("trippath=")) {
-				final String returnURL = result.substring(0, result.lastIndexOf("\n"));
-				final String tripPath = returnURL.substring(returnURL.indexOf("trippath=") + 9);
-				if (uploadPublic) {
-					try {
-						THttpClient transport = new THttpClient(MainActivity.serverURL + "/TripDiaryService_binary.php");
-						transport.open();
-						TProtocol protocol = new TBinaryProtocol(transport);
-						TripDiary.Client client2 = new TripDiary.Client(protocol, protocol);
-						client2.toggle_public(token, tripPath, "on");
-					} catch (TTransportException e) {
+    public class MultipartUtility {
+        private final String boundary;
+        private static final String LINE_FEED = "\r\n";
+        private HttpURLConnection httpConn;
+        private String charset;
+        private OutputStream outputStream;
+        private PrintWriter writer;
 
-						e.printStackTrace();
-					} catch (TException e) {
+        /**
+         * This constructor initializes a new HTTP POST request with content type
+         * is set to multipart/form-data
+         *
+         * @param requestURL
+         * @param charset
+         * @throws IOException
+         */
+        public MultipartUtility(String requestURL, String charset)
+                throws IOException {
+            this.charset = charset;
 
-						e.printStackTrace();
-					}
-					String publicURL = returnURL + "&public=true";
-					Toast.makeText(getApplicationContext(), publicURL, Toast.LENGTH_SHORT).show();
-				} else {
-					Intent intent1 = new Intent(Intent.ACTION_SEND);
-					intent1.setType("text/plain");
-					intent1.putExtra(Intent.EXTRA_TEXT, returnURL);
-					intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					SendTripService.this.startActivity(intent1);
-					Toast.makeText(getApplicationContext(), returnURL, Toast.LENGTH_SHORT).show();
-				}
-			} else {
-				Toast.makeText(SendTripService.this, resultStr, Toast.LENGTH_SHORT).show();
-			}
-		} catch (UnsupportedEncodingException e) {
+            // creates a unique boundary based on time stamp
+            boundary = "===" + System.currentTimeMillis() + "===";
 
-			e.printStackTrace();
-			stopForeground(true);
-		} catch (ClientProtocolException e) {
+            URL url = new URL(requestURL);
+            httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setUseCaches(false);
+            httpConn.setDoOutput(true); // indicates POST method
+            httpConn.setDoInput(true);
+            httpConn.setChunkedStreamingMode(1024);
+            httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+            outputStream = httpConn.getOutputStream();
+            writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true);
+        }
 
-			e.printStackTrace();
-			stopForeground(true);
-		} catch (IOException e) {
+        /**
+         * Adds a form field to the request
+         *
+         * @param name  field name
+         * @param value field value
+         */
+        public void addFormField(String name, String value) {
+            writer.append("--" + boundary).append(LINE_FEED);
+            writer.append("Content-Disposition: form-data; name=\"" + name + "\"")
+                    .append(LINE_FEED);
+            writer.append("Content-Type: text/plain; charset=" + charset).append(
+                    LINE_FEED);
+            writer.append(LINE_FEED);
+            writer.append(value).append(LINE_FEED);
+            writer.flush();
+        }
 
-			e.printStackTrace();
-			stopForeground(true);
-		}
+        /**
+         * Adds a upload file section to the request
+         *
+         * @param fieldName  name attribute in <input type="file" name="..." />
+         * @param uploadFile a File to be uploaded
+         * @throws IOException
+         */
+        public void addFilePart(String fieldName, File uploadFile)
+                throws IOException {
+            String fileName = uploadFile.getName();
+            writer.append("--" + boundary).append(LINE_FEED);
+            writer.append(
+                    "Content-Disposition: form-data; name=\"" + fieldName
+                            + "\"; filename=\"" + fileName + "\"")
+                    .append(LINE_FEED);
+            writer.append(
+                    "Content-Type: "
+                            + URLConnection.guessContentTypeFromName(fileName))
+                    .append(LINE_FEED);
+            writer.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
+            writer.append(LINE_FEED);
+            writer.flush();
 
-	}
+            FileInputStream inputStream = new FileInputStream(uploadFile);
+            byte[] buffer = new byte[4096];
+            int bytesRead = -1;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+                totalUploaded += bytesRead;
+            }
+            outputStream.flush();
+            inputStream.close();
 
-	private void updateNotification(String contentTitle, String contentText, int progress) {
-		if (contentTitle != null)
-			nb.setContentTitle(contentTitle);
-		if (contentText != null)
-			nb.setContentText(contentText);
-		nb.setTicker("Upload Trip");
-		nb.setSmallIcon(R.drawable.ic_launcher);
-		nb.setProgress(100, progress, false);
-		startForeground(1, nb.build());
-	}
+            writer.append(LINE_FEED);
+            writer.flush();
+        }
+
+        /**
+         * Adds a header field to the request.
+         *
+         * @param name  - name of the header field
+         * @param value - value of the header field
+         */
+        public void addHeaderField(String name, String value) {
+            writer.append(name + ": " + value).append(LINE_FEED);
+            writer.flush();
+        }
+
+        /**
+         * Completes the request and receives response from the server.
+         *
+         * @return a list of Strings as response in case the server returned
+         * status OK, otherwise an exception is thrown.
+         * @throws IOException
+         */
+        public List<String> finish() throws IOException {
+            List<String> response = new ArrayList<String>();
+
+            writer.append(LINE_FEED).flush();
+            writer.append("--" + boundary + "--").append(LINE_FEED);
+            writer.close();
+
+            // checks server's status code first
+            int status = httpConn.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        httpConn.getInputStream()));
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    response.add(line);
+                }
+                reader.close();
+                httpConn.disconnect();
+            } else {
+                throw new IOException("Server returned non-OK status: " + status);
+            }
+
+            return response;
+        }
+    }
 }

@@ -29,7 +29,6 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
 
@@ -202,7 +201,7 @@ public class AllPictureFragment extends Fragment {
         @Override
         public void onBindViewHolder(POIAdapter.ViewHolder holder, int position) {
             holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].picFiles.length) + ")");
-            holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+            holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
             holder.gridView.setVisibility(pictureAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
             holder.gridView.setAdapter(pictureAdapters[position]);
             holder.gridView.setOnItemClickListener(pictureAdapters[position]);

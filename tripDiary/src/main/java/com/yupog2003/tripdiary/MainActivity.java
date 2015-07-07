@@ -31,7 +31,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.services.RecordService;
 
@@ -313,7 +313,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             TripInformation trip = new TripInformation();
             trip.file = files[i];
             trip.name = files[i].getName();
-            trip.time = TimeAnalyzer.getTripTime(rootPath, trip.name);
+            trip.time = MyCalendar.getTripTime(rootPath, trip.name);
             trips.add(trip);
         }
         Collections.sort(trips, new Comparator<TripInformation>() {

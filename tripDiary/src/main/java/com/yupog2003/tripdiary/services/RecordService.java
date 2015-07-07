@@ -28,6 +28,7 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.RecordActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
 
@@ -47,7 +48,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     public double longitude;
     public double elevation;
     BufferedWriter bw;
-    Time time;
+    MyCalendar time;
     NotificationCompat.Builder nb;
     public static RecordService instance;
     public final long startTime = System.currentTimeMillis() / 1000;
@@ -124,7 +125,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             lm.addGpsStatusListener(this);
             new Thread(RecordService.this).start();
         }
-        time = new Time(Time.TIMEZONE_UTC);
+        time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
         stopTripReceiver = new StopTripReceiver();
         pauseReceiver = new PauseReceiver();
         screenOnOffReceiver = new ScreenOnOffReceiver();
@@ -327,12 +328,12 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         elevation = location.getAltitude();
         nowSpeed = location.getSpeed();
         accuracy = location.getAccuracy();
-        time.setToNow();
+        time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
         try {
             if (run) {
                 bw.write("		<trkpt lat=\"" + String.valueOf(latitude) + "\" lon=\"" + String.valueOf(longitude) + "\">\n");
                 bw.write("			<ele>" + String.valueOf(elevation) + "</ele>\n");
-                bw.write("			<time>" + String.valueOf(time.year) + "-" + String.valueOf(time.month + 1) + "-" + String.valueOf(time.monthDay) + "T" + String.valueOf(time.hour) + ":" + String.valueOf(time.minute) + ":" + String.valueOf(time.second) + "Z</time>\n");
+                bw.write("			<time>" + String.valueOf(time.get(Calendar.YEAR)) + "-" + String.valueOf(time.get(Calendar.MONTH) + 1) + "-" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "T" + String.valueOf(time.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(time.get(Calendar.MINUTE)) + ":" + String.valueOf(time.get(Calendar.SECOND)) + "Z</time>\n");
                 bw.write("		</trkpt>\n");
                 bw.flush();
             }
@@ -416,7 +417,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                     String[] pois = new File(path + "/" + name).list(FileHelper.getDirFilter());
                     int num_POIs = pois == null ? new Random().nextInt() : pois.length;
                     POI poi = new POI(new File(path + "/" + name + "/" + String.valueOf(num_POIs)));
-                    Calendar time=Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
                     poi.updateBasicInformation(null, time, latitude, longitude, elevation);
                     lastAddPOI = lastUpadateSensor;
                     ((Vibrator) getSystemService(Service.VIBRATOR_SERVICE)).vibrate(200);

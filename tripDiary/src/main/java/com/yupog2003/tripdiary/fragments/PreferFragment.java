@@ -35,7 +35,7 @@ import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.MyBackupAgent;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.preferences.SeekBarPreference;
 
 import java.io.BufferedReader;
@@ -380,7 +380,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                                 lat = Double.parseDouble(toks[1]);
                                 lng = Double.parseDouble(toks[3]);
                             }
-                            TimeAnalyzer.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
+                            MyCalendar.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
                             new File(trips[i].getPath() + "/" + tripName + ".gpx.cache").delete();
                             break;
                         }

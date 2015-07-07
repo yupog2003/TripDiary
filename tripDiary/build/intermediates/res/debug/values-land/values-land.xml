@@ -13,4 +13,10 @@
     <eat-comment/>
     <dimen name="ambilwarna_hsvHeight">120dp</dimen>
     <dimen name="ambilwarna_hsvWidth">240dp</dimen>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/design/22.2.0/res/values-land/values-land.xml -->
+    <eat-comment/>
+    <style name="Widget.Design.TabLayout" parent="Base.Widget.Design.TabLayout">
+        <item name="tabGravity">center</item>
+        <item name="tabMode">fixed</item>
+    </style>
 </resources>

@@ -274,11 +274,11 @@ JNIEXPORT jboolean Java_com_yupog2003_tripdiary_data_GpxAnalyzer2_parse(JNIEnv* 
 		float dist = distFrom(track[i].lat, track[i].lng, track[i + 20].lat, track[i + 20].lng);
 		float seconds = times[i + 20] - times[i];
 		float speed = dist / seconds * 18 / 5;
-		if (speeds != NULL) {
+		/*if (speeds != NULL) {
 			jobject speedFloat = env->NewObject(floatClass, struct_Float, (jfloat) speed);
 			env->CallBooleanMethod(speeds, arrayList_add, speedFloat);
 			env->DeleteLocalRef(speedFloat);
-		}
+		}*/
 		if (maxSpeed < speed)
 			maxSpeed = speed;
 	}

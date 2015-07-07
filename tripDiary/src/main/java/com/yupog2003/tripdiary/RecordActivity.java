@@ -47,8 +47,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.services.RecordService;
 
 import java.io.BufferedReader;
@@ -280,8 +280,8 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     @Override
     public void onClick(View v) {
 
-        Calendar fileTime = Calendar.getInstance();
-        fileName = TimeAnalyzer.format3339(fileTime);
+        MyCalendar fileTime = MyCalendar.getInstance();
+        fileName = fileTime.format3339();
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
         fileName = fileName.replace("-", "");
         fileName = fileName.replace("T", "");
@@ -299,7 +299,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                     String poiNameStr = poiName.getText().toString();
                     String newPointPath = rootPath + "/" + tripName + "/" + poiNameStr;
                     poi = new POI(new File(newPointPath));
-                    Calendar time=Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    MyCalendar time=MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
                     if (isGPSEnabled) {
                         if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
                             POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));

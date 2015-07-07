@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +29,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
     Button enter;
     Button cancel;
     Button share;
-    ImageButton edit;
+    FloatingActionButton edit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
         cancel.setOnClickListener(this);
         share = (Button) view.findViewById(R.id.share);
         share.setOnClickListener(this);
-        edit = (ImageButton) view.findViewById(R.id.edit);
+        edit = (FloatingActionButton) view.findViewById(R.id.edit);
         edit.setOnClickListener(this);
         setEditMode(false);
         return view;

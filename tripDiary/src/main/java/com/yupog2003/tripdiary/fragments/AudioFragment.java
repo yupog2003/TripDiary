@@ -193,12 +193,12 @@ public class AudioFragment extends Fragment {
                 checks[i] = false;
             }
             checkAll = false;
+            adapter.onMultiChoiceMode=true;
             return true;
         }
 
         public void onDestroyActionMode(ActionMode mode) {
-
-            mode = null;
+            adapter.onMultiChoiceMode=false;
         }
 
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -223,9 +223,11 @@ public class AudioFragment extends Fragment {
 
     class AudioAdapter extends BaseAdapter implements OnItemClickListener {
         File[] audios;
+        boolean onMultiChoiceMode;
 
         public AudioAdapter() {
             audios = ViewPointActivity.poi.audioFiles;
+            onMultiChoiceMode=false;
         }
 
         public int getCount() {
@@ -246,23 +248,18 @@ public class AudioFragment extends Fragment {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
-            if (convertView == null) {
-                TextView textView = new TextView(getActivity());
-                textView.setTextSize(30);
-                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
-                textView.setText(audios[position].getName());
-                CheckableLayout l = new CheckableLayout(getActivity());
-                l.addView(textView);
-                convertView = l;
-            } else {
-                convertView.setTag(convertView.getTag());
-            }
+            TextView textView = new TextView(getActivity());
+            textView.setTextSize(30);
+            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+            textView.setText(audios[position].getName());
+            CheckableLayout l = new CheckableLayout(getActivity());
+            l.addView(textView);
+            l.setOnMultiChoiceMode(onMultiChoiceMode);
+            convertView = l;
             return convertView;
         }
 
         public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.fromFile(audios[position]), "audio/*");
             getActivity().startActivity(intent);

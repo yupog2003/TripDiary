@@ -23,7 +23,6 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 import com.yupog2003.tripdiary.views.UnScrollableListView;
 
 import java.io.File;
@@ -162,7 +161,7 @@ public class AllAudioFragment extends Fragment {
 		@Override
 		public void onBindViewHolder(ViewHolder holder, int position) {
 			holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].audioFiles.length) + ")");
-			holder.poiTime.setText(TimeAnalyzer.formatInTimezone(pois[position].time, ViewTripActivity.trip.timezone));
+			holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
 			holder.gridView.setVisibility(audioAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
 			holder.gridView.setAdapter(audioAdapters[position]);
 			holder.gridView.setOnItemClickListener(audioAdapters[position]);

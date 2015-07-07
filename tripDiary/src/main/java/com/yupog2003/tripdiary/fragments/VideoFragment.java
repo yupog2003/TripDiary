@@ -32,6 +32,7 @@ import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
 import com.yupog2003.tripdiary.views.CheckableLayout;
+import com.yupog2003.tripdiary.views.SquareImageView;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -89,6 +90,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		MediaMetadataRetriever mmr;
 		DisplayImageOptions options;
 		int dp2;
+		boolean onMultiChoiceMode;
 
 		public VideoAdapter() {
 			videos = ViewPointActivity.poi.videoFiles;
@@ -101,6 +103,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 					.bitmapConfig(Bitmap.Config.RGB_565)
 					.build();
 			dp2=(int)DeviceHelper.pxFromDp(getActivity(), 2);
+			onMultiChoiceMode=false;
 		}
 
 		public int getCount() {
@@ -121,7 +124,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView image = new ImageView(getActivity());
+            SquareImageView image = new SquareImageView(getActivity());
             image.setMaxWidth(width);
             image.setMaxHeight(width);
 			image.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -130,6 +133,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 			l.setLayoutParams(new ListView.LayoutParams(width, width));
 			l.setPadding(dp2, dp2, dp2, dp2);
 			l.addView(image);
+			l.setOnMultiChoiceMode(onMultiChoiceMode);
 			convertView = l;
 			return convertView;
 		}
@@ -264,12 +268,12 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 				checks[i] = false;
 			}
 			checkAll = false;
+			adapter.onMultiChoiceMode=true;
 			return true;
 		}
 
 		public void onDestroyActionMode(ActionMode mode) {
-
-			mode = null;
+			adapter.onMultiChoiceMode=false;
 		}
 
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {

@@ -364,6 +364,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             textView.setPadding(dip10, dip10, dip10, dip10);
             CheckableLayout layout = new CheckableLayout(getActivity());
             layout.addView(textView);
+            layout.setOnMultiChoiceMode(onActionMode);
             return layout;
         }
 

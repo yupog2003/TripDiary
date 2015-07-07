@@ -8,6 +8,7 @@ import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.data.FileHelper;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -45,16 +46,13 @@ public class DownloadTripService extends IntentService {
         updateNotification(tripName, getString(R.string.zipping) + "...", 0);
         String url = phpURL + "?tripPath=" + tripPath;
         url = url.replace(" ", "%20");
-        HttpClient client = new DefaultHttpClient();
-        HttpGet get = new HttpGet(url);
         try {
-            HttpResponse response = client.execute(get);
-            HttpEntity entity = response.getEntity();
-            String tripLink = EntityUtils.toString(entity, "UTF-8");
+            HttpURLConnection connection=(HttpURLConnection)new URL(url).openConnection();
+            String tripLink= IOUtils.toString(connection.getInputStream());
             tripLink = MainActivity.serverURL + "/" + tripLink;
             tripLink = tripLink.replace(" ", "%20");
             URL tripURL = new URL(tripLink);
-            HttpURLConnection connection = (HttpURLConnection) tripURL.openConnection();
+            connection = (HttpURLConnection) tripURL.openConnection();
             fileSize = connection.getContentLength();
             InputStream is = connection.getInputStream();
             File zipFile = new File(MainActivity.rootPath + "/" + tripName + ".zip");
@@ -87,10 +85,6 @@ public class DownloadTripService extends IntentService {
             fileSize = 0;
             updateNotification(tripName, getString(R.string.unzipping) + "...", 100);
             FileHelper.unZip(zipFile.getPath(), MainActivity.rootPath + "/");
-        } catch (ClientProtocolException e) {
-
-            e.printStackTrace();
-
         } catch (IOException e) {
 
             e.printStackTrace();

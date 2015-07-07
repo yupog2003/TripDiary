@@ -26,7 +26,7 @@ public class POI {
     public File[] videoFiles;
     public File[] costFiles;
     public String title;
-    public Calendar time; // in UTC
+    public MyCalendar time; // in UTC
     //public String timeStrInCurrentTimeZone;
     public double latitude;
     public double longitude;
@@ -82,7 +82,7 @@ public class POI {
         try {
             BufferedReader br = new BufferedReader(new FileReader(basicInformationFile));
             String s;
-            this.time = Calendar.getInstance();
+            this.time = MyCalendar.getInstance();
             this.latitude = 0;
             this.longitude = 0;
             this.altitude = 0;
@@ -91,7 +91,7 @@ public class POI {
                 if (s.startsWith("Title")) {
                     this.title = s.substring(s.indexOf("=") + 1);
                 } else if (s.startsWith("Time")) {
-                    this.time = TimeAnalyzer.getTime(s, TimeAnalyzer.type_time_format3399);
+                    this.time = MyCalendar.getTime(s, MyCalendar.type_time_format3399);
                 } else if (s.startsWith("Latitude")) {
                     this.latitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
                 } else if (s.startsWith("Longitude")) {
@@ -117,7 +117,7 @@ public class POI {
         }
     }
 
-    public void updateBasicInformation(String title, Calendar time, Double latitude, Double longitude, Double altitude) {
+    public void updateBasicInformation(String title, MyCalendar time, Double latitude, Double longitude, Double altitude) {
         if (title != null)
             this.title = title;
         if (time != null)
@@ -131,7 +131,7 @@ public class POI {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(basicInformationFile, false));
             bw.write("Title=" + this.title + "\n");
-            bw.write("Time=" + TimeAnalyzer.format3339(this.time) + "\n");
+            bw.write("Time=" + this.time.format3339() + "\n");
             bw.write("Latitude=" + String.valueOf(this.latitude) + "\n");
             bw.write("Longitude=" + String.valueOf(this.longitude) + "\n");
             bw.write("Altitude=" + String.valueOf(this.altitude) + "\n");

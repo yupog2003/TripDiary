@@ -24,8 +24,8 @@ import android.widget.VideoView;
 import android.widget.ViewFlipper;
 
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
-import com.yupog2003.tripdiary.data.TimeAnalyzer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         next = (ImageButton) findViewById(R.id.next);
         next.setOnClickListener(this);
         handler = new Handler();
-        setTitle(name + TimeAnalyzer.formatInTimezone(poi.time, TimeAnalyzer.getPOITimeZone(PlayPointActivity.this, pointPath)));
+        setTitle(name + poi.time.formatInTimezone(MyCalendar.getPOITimeZone(PlayPointActivity.this, pointPath)));
         new PrepareViewsTask().execute("");
     }
 
