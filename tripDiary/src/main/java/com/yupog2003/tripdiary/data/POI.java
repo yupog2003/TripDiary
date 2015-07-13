@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Calendar;
 
 public class POI {
 
@@ -26,8 +25,7 @@ public class POI {
     public File[] videoFiles;
     public File[] costFiles;
     public String title;
-    public MyCalendar time; // in UTC
-    //public String timeStrInCurrentTimeZone;
+    public MyCalendar time; //in UTC
     public double latitude;
     public double longitude;
     public double altitude;
@@ -55,7 +53,6 @@ public class POI {
             try {
                 diaryFile.createNewFile();
             } catch (IOException e1) {
-
                 e1.printStackTrace();
             }
         this.picFiles = picDir.listFiles(FileHelper.getPictureFileFilter());

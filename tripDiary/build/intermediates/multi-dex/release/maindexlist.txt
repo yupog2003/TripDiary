@@ -29,7 +29,6 @@ android/support/v4/app/NotificationCompatBase$UnreadConversation.class
 android/support/v4/app/LoaderManager.class
 com/google/android/gms/internal/zzfd.class
 org/apache/http/protocol/HttpRequestHandlerRegistry.class
-org/apache/http/impl/client/cache/CacheValidityPolicy.class
 org/apache/http/params/AbstractHttpParams.class
 com/google/android/gms/analytics/HitBuilders$ItemBuilder.class
 org/apache/commons/io/filefilter/FileFilterUtils.class
@@ -174,7 +173,6 @@ com/google/android/gms/common/GooglePlayServicesUtil.class
 android/support/v7/widget/LinearLayoutCompat$DividerMode.class
 com/google/android/gms/internal/zzid.class
 android/support/v4/app/FragmentManagerImpl$2.class
-org/apache/http/entity/mime/content/AbstractContentBody.class
 com/yupog2003/tripdiary/data/Trip.class
 android/support/design/widget/CoordinatorLayoutInsetsHelper.class
 com/google/android/gms/internal/zzha$zza.class
@@ -200,7 +198,6 @@ com/google/ads/mediation/MediationAdRequest.class
 org/apache/http/params/SyncBasicHttpParams.class
 org/apache/commons/io/IOUtils.class
 org/apache/http/protocol/HttpService.class
-org/apache/http/impl/client/cache/CachingHttpClient.class
 com/google/android/gms/ads/internal/util/client/zzb.class
 com/google/android/gms/nearby/sharing/internal/ProvideContentRequest.class
 com/google/android/gms/ads/internal/purchase/zzg.class
@@ -232,7 +229,6 @@ com/google/android/gms/internal/zzet.class
 org/apache/http/entity/StringEntity.class
 android/support/annotation/FloatRange.class
 android/support/annotation/StringDef.class
-org/apache/http/entity/mime/content/InputStreamBody.class
 android/support/v4/app/NotificationCompat.class
 com/google/android/gms/maps/model/BitmapDescriptorFactory.class
 com/github/mikephil/charting/charts/LineChart.class
@@ -332,10 +328,10 @@ com/yupog2003/tripdiary/TripDiaryApplication.class
 android/support/v7/app/ActionBar$NavigationMode.class
 org/apache/http/impl/cookie/DateUtils.class
 org/apache/http/impl/conn/tsccm/RouteSpecificPool.class
+org/apache/thrift/protocol/TCompactProtocol.class
 com/google/android/gms/ads/internal/zzm.class
 com/google/android/gms/maps/CameraUpdateFactory.class
 android/support/annotation/RequiresPermission.class
-org/apache/http/impl/client/cache/memcached/MemcachedHttpCacheStorage.class
 com/yupog2003/tripdiary/RecordActivity$RecordAudioTask.class
 com/yupog2003/tripdiary/PaintActivity.class
 com/google/android/gms/ads/internal/client/zzx$zza.class
@@ -440,7 +436,6 @@ com/google/ads/mediation/MediationInterstitialListener.class
 org/apache/http/auth/params/AuthParams.class
 com/github/mikephil/charting/charts/Chart.class
 android/support/multidex/MultiDex$V14.class
-org/apache/http/entity/mime/content/ByteArrayBody.class
 org/apache/http/protocol/HttpService$HttpRequestHandlerResolverAdapter.class
 com/google/android/gms/internal/zzgy.class
 com/yupog2003/tripdiary/PreferActivity.class
@@ -475,7 +470,6 @@ com/yupog2003/tripdiary/PaintActivity$4.class
 com/yupog2003/tripdiary/R$id.class
 com/google/android/gms/ads/mediation/customevent/CustomEventExtras.class
 android/support/v4/app/NotificationCompat$NotificationCompatImplJellybean.class
-org/apache/http/entity/mime/content/FileBody.class
 com/google/android/gms/ads/internal/reward/mediation/client/zzb.class
 android/support/design/widget/TabLayout$1.class
 org/apache/http/impl/entity/EntitySerializer.class
@@ -593,7 +587,6 @@ com/google/android/gms/internal/zzem.class
 android/support/v4/view/animation/FastOutSlowInInterpolator.class
 com/google/ads/mediation/customevent/CustomEventBannerListener.class
 com/google/android/gms/ads/internal/zzn.class
-org/apache/http/entity/mime/HttpMultipart.class
 org/apache/http/impl/AbstractHttpServerConnection.class
 android/support/design/widget/AppBarLayout$Behavior$FlingRunnable.class
 android/support/design/widget/CoordinatorLayoutInsetsHelperLollipop.class
@@ -601,7 +594,6 @@ android/support/design/widget/Snackbar$7.class
 com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter.class
 com/google/android/gms/plus/PlusShare.class
 org/apache/http/conn/scheme/HostNameResolver.class
-com/yupog2003/tripdiary/MainActivity$TripInformation.class
 org/apache/http/impl/conn/PoolingClientConnectionManager.class
 com/google/android/gms/games/multiplayer/turnbased/LoadMatchesResponse.class
 android/support/v4/app/RemoteInputCompatBase$RemoteInput.class
@@ -611,7 +603,6 @@ com/google/android/gms/location/places/internal/PlaceImpl.class
 org/apache/http/HttpEntity.class
 com/yupog2003/tripdiary/fragments/AllVideoFragment.class
 android/support/design/widget/CoordinatorLayout.class
-org/apache/http/entity/mime/MultipartEntity.class
 com/google/android/gms/internal/zzfl.class
 org/apache/http/conn/params/ConnManagerParams.class
 com/yupog2003/tripdiary/services/DownloadTripService$1.class
@@ -762,7 +753,6 @@ com/google/android/gms/ads/internal/client/SearchAdRequestParcel.class
 android/support/design/widget/AppBarLayout.class
 com/yupog2003/tripdiary/services/RecordService.class
 com/google/android/gms/location/GeofencingApi.class
-org/apache/http/impl/client/cache/CacheConfig.class
 com/google/android/gms/games/Player.class
 org/apache/thrift/protocol/TProtocol.class
 com/google/android/gms/internal/zzeq.class
@@ -814,7 +804,6 @@ android/support/design/widget/Snackbar$6.class
 com/google/android/gms/fitness/data/DataType.class
 com/google/android/gms/maps/GoogleMap.class
 com/google/android/gms/wallet/WalletConstants$CardNetwork.class
-org/apache/http/entity/mime/content/StringBody.class
 android/support/v4/util/SimpleArrayMap.class
 org/apache/http/conn/scheme/LayeredSocketFactoryAdaptor.class
 android/support/v7/widget/LinearLayoutCompat$LayoutParams.class

@@ -21,7 +21,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.yupog2003.tripdiary.R;
-import com.yupog2003.tripdiary.ViewCostActivity;
 import com.yupog2003.tripdiary.data.ComparatorHelper;
 import com.yupog2003.tripdiary.data.CostData;
 import com.yupog2003.tripdiary.data.FileHelper;

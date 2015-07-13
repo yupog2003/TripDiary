@@ -33,7 +33,6 @@ public class GpxAnalyzerJava {
 
 	public boolean analyze() {
 		String tripPath = gpxPath.substring(0, gpxPath.lastIndexOf("/"));
-		String rootPath = tripPath.substring(0, tripPath.lastIndexOf("/"));
 		String tripName = gpxPath.substring(gpxPath.lastIndexOf("/") + 1, gpxPath.lastIndexOf("."));
 		int timeZoneOffset = 0;
 		cache = new TrackCache();

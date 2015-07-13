@@ -24,10 +24,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
-import android.text.format.Time;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -523,26 +522,24 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         private long getFileTime(File file) {
             String mime = FileHelper.getMimeFromFile(file);
-            long timeMills = 0;
+            long timeMills;
             if (mime.equals("image/jpeg")) {
                 try {
                     ExifInterface exif = new ExifInterface(file.getPath());
                     String datetime = exif.getAttribute(ExifInterface.TAG_DATETIME);
                     if (datetime != null) {
-                        String date = datetime.split(" ")[0];
-                        String time = datetime.split(" ")[1];
-                        String[] dates = date.split(":");
-                        String[] times = time.split(":");
-                        MyCalendar time1 = MyCalendar.getInstance(TimeZone.getTimeZone(ViewTripActivity.trip.timezone));
-                        time1.set(Integer.parseInt(dates[0]), Integer.parseInt(dates[1])-1, Integer.parseInt(dates[0]), Integer.parseInt(times[0]), Integer.parseInt(times[1]), Integer.parseInt(times[2]));
-                        timeMills = time1.getTimeInMillis();
+                        MyCalendar time1 = MyCalendar.getTime(ViewTripActivity.trip.timezone, datetime, MyCalendar.type_exif);
+                        return time1.getTimeInMillis();
+                    }else{
+                        timeMills = file.lastModified();
                     }
                 } catch (IOException e) {
-
+                    timeMills = file.lastModified();
                     e.printStackTrace();
                 }
             } else {
                 timeMills = file.lastModified();
+                Log.i("trip", "MTIME:"+String.valueOf(timeMills));
             }
             return timeMills;
         }
@@ -810,7 +807,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     private void viewPOI(String poiName) {
         if (new File(path + "/" + name + "/" + poiName).exists()) {
             Intent intent = new Intent(getActivity(), ViewPointActivity.class);
-            intent.putExtra("path", path + "/" + name + "/" + poiName);
+            intent.putExtra(ViewPointActivity.tag_tripname, name);
+            intent.putExtra(ViewPointActivity.tag_poiname, poiName);
             intent.putExtra("request_code", update_request);
             startActivityForResult(intent, update_request);
         }
@@ -956,7 +954,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     public void onMarkerDragEnd(Marker marker) {
 
-        POI poi = new POI(new File(path + "/" + name + "/" + marker.getTitle()));
+        POI poi = new POI(new File(ViewTripActivity.trip.dir, marker.getTitle()));
         poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
         updateAll();
     }
@@ -1297,7 +1295,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     if (activity != null) {
                         pause();
                         Intent intent = new Intent(activity, PlayPointActivity.class);
-                        intent.putExtra("path", path + "/" + name + "/" + markersMap.get(i));
+                        intent.putExtra(PlayPointActivity.tag_trip, name);
+                        intent.putExtra(PlayPointActivity.tag_poi, markersMap.get(i));
                         activity.startActivity(intent);
                     }
                     break;

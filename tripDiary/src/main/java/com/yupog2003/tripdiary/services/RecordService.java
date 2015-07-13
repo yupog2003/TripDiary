@@ -21,7 +21,6 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.text.format.Time;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
@@ -80,7 +79,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         name = intent.getStringExtra("name");
         path = intent.getStringExtra("path");
         note = intent.getStringExtra("note");
-        trip = new Trip(RecordService.this, new File(path + "/" + name));
+        trip = new Trip(RecordService.this, new File(path + "/" + name), false);
         trip.deleteCache();
         run = true;
         screenOn = true;

@@ -21,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -60,7 +61,6 @@ public class FileHelper {
 
                 return new File(dir, filename).isDirectory() && !filename.startsWith(".");
             }
-
         };
     }
 
@@ -526,7 +526,23 @@ public class FileHelper {
         }
         dir = new File(dir.getPath());
     }
-
+    public static boolean checkHasWritePermission(Activity a, String path){
+        File dir=new File(path);
+        dir.mkdirs();
+        File testFile=new File(path+"/"+String.valueOf(System.currentTimeMillis())+".txt");
+        try {
+            testFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (testFile.exists()){
+            testFile.delete();
+            return true;
+        }else{
+            Toast.makeText(a, "TripDiary has no write permission to this directory", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
     public static class DirAdapter extends BaseAdapter implements OnItemClickListener {
 
         File root;

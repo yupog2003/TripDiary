@@ -37,14 +37,15 @@ public class ViewGraphAcivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_graph_acivity);
         lineChart = (LineChart) findViewById(R.id.linechart);
+        int trackLength = 0;
         if (ViewTripActivity.trip != null && ViewTripActivity.trip.cache != null) {
             trackCache = ViewTripActivity.trip.cache;
-            tripName=ViewTripActivity.trip.tripName;
+            tripName = ViewTripActivity.trip.tripName;
+            trackLength = trackCache.altitudes.length;
         } else {
             Toast.makeText(getActivity(), "Can not get track", Toast.LENGTH_SHORT).show();
             finish();
         }
-        int trackLength = trackCache.altitudes.length;
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
         altitudeEntries = new ArrayList<>();
         speedEntries = new ArrayList<>();
@@ -138,12 +139,12 @@ public class ViewGraphAcivity extends MyActivity {
 
         @Override
         public void refreshContent(Entry entry, int i) {
-            int index=entry.getXIndex();
-            altitude.setText(getString(R.string.Altitude)+":"+GpxAnalyzer2.getAltitudeString(altitudeEntries.get(index).getVal(), "m"));
-            speed.setText(getString(R.string.velocity)+":"+GpxAnalyzer2.getDistanceString(speedEntries.get(index).getVal(), "km/hr"));
-            distance.setText(getString(R.string.distance)+":"+GpxAnalyzer2.getDistanceString(distances.get(index) / 1000, "km"));
-            String timeStr=xVals.get(index);
-            time.setText(timeStr.substring(timeStr.indexOf("-")+1));
+            int index = entry.getXIndex();
+            altitude.setText(getString(R.string.Altitude) + ":" + GpxAnalyzer2.getAltitudeString(altitudeEntries.get(index).getVal(), "m"));
+            speed.setText(getString(R.string.velocity) + ":" + GpxAnalyzer2.getDistanceString(speedEntries.get(index).getVal(), "km/hr"));
+            distance.setText(getString(R.string.distance) + ":" + GpxAnalyzer2.getDistanceString(distances.get(index) / 1000, "km"));
+            String timeStr = xVals.get(index);
+            time.setText(timeStr.substring(timeStr.indexOf("-") + 1));
         }
 
         @Override

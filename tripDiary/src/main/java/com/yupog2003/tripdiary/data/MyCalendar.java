@@ -2,6 +2,7 @@ package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.apache.commons.io.IOUtils;
 
@@ -21,10 +22,12 @@ public class MyCalendar extends GregorianCalendar {
     public static final int type_gpx = 0;
     public static final int type_time_format3399 = 1;
     public static final int type_self = 2;
+    public static final int type_exif = 3;
 
     public static long getMinusTimeInSecond(Calendar starttime, Calendar stoptime) {
         return (stoptime.getTimeInMillis() - starttime.getTimeInMillis()) / 1000;
     }
+
     public static synchronized MyCalendar getInstance() {
         return new MyCalendar();
     }
@@ -81,42 +84,63 @@ public class MyCalendar extends GregorianCalendar {
     }
 
     public String format3339() {
-        return String.valueOf(get(Calendar.YEAR))
-                +"-"+String.valueOf(get(Calendar.MONTH)+1)
-                +"-"+String.valueOf(get(Calendar.DAY_OF_MONTH))
-                +"T"+String.valueOf(get(Calendar.HOUR_OF_DAY))
-                +":"+String.valueOf(get(Calendar.MINUTE))
-                +":"+String.valueOf(get(Calendar.SECOND))
-                +".000";
+        String result = "";
+        try {
+            result = String.valueOf(get(Calendar.YEAR))
+                    + "-" + String.valueOf(get(Calendar.MONTH) + 1)
+                    + "-" + String.valueOf(get(Calendar.DAY_OF_MONTH))
+                    + "T" + String.valueOf(get(Calendar.HOUR_OF_DAY))
+                    + ":" + String.valueOf(get(Calendar.MINUTE))
+                    + ":" + String.valueOf(get(Calendar.SECOND))
+                    + ".000";
+            if (getTimeZone().getID().equals("UTC")) {
+                result += "Z";
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static MyCalendar getTime(String timezone, String s, int type) {
-        MyCalendar c=MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
+        MyCalendar c = MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
         String date = "", t = "";
-        String[] datetoks, timetoks;
+        String[] datetoks = new String[3], timetoks = new String[3];
         switch (type) {
             case type_gpx:
                 if (s.contains(">") && s.contains("T") && s.contains("Z")) {
                     date = s.substring(s.indexOf(">") + 1, s.indexOf("T"));
                     t = s.substring(s.indexOf("T") + 1, s.indexOf("Z"));
+                    datetoks = date.split("-");
+                    timetoks = t.split(":");
                 }
                 break;
             case type_time_format3399:
                 if (s.contains("=") && s.contains("T") && s.contains(".")) {
                     date = s.substring(s.indexOf("=") + 1, s.lastIndexOf("T"));
                     t = s.substring(s.lastIndexOf("T") + 1, s.lastIndexOf("."));
+                    datetoks = date.split("-");
+                    timetoks = t.split(":");
                 }
                 break;
             case type_self:
                 if (s.contains("T")) {
                     date = s.substring(0, s.indexOf("T"));
                     t = s.substring(s.indexOf("T") + 1, s.length());
+                    datetoks = date.split("-");
+                    timetoks = t.split(":");
+                }
+                break;
+            case type_exif:
+                if (s.contains(":") && s.contains(" ")) {
+                    date = s.split("\\s+")[0];
+                    t = s.split("\\s+")[1];
+                    datetoks = date.split(":");
+                    timetoks = t.split(":");
                 }
                 break;
         }
-        if (date.contains("-") && t.contains(":")) {
-            datetoks = date.split("-");
-            timetoks = t.split(":");
+        if (datetoks != null && datetoks.length > 2 && timetoks != null && timetoks.length > 2) {
             int year = (int) Double.parseDouble(datetoks[0]);
             int month = (int) Double.parseDouble(datetoks[1]) - 1;
             int day = (int) Double.parseDouble(datetoks[2]);
@@ -145,7 +169,7 @@ public class MyCalendar extends GregorianCalendar {
         if (timezone != null) {
             setTimeZone(timezone);
         }
-        String format3339=format3339();
+        String format3339 = format3339();
         return format3339.substring(0, format3339.lastIndexOf("."));
     }
 
@@ -161,10 +185,8 @@ public class MyCalendar extends GregorianCalendar {
             }
             br.close();
         } catch (FileNotFoundException e) {
-
             e.printStackTrace();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
         return MyCalendar.getInstance();
@@ -174,9 +196,9 @@ public class MyCalendar extends GregorianCalendar {
         String result = TimeZone.getDefault().getID();
         try {
             URL url = new URL("https://maps.googleapis.com/maps/api/timezone/xml?location=" + String.valueOf(lat) + "," + String.valueOf(lng) + "&timestamp=0&sensor=true");
-            HttpURLConnection connection=(HttpURLConnection)url.openConnection();
-            InputStream is=connection.getInputStream();
-            String s= IOUtils.toString(is);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            InputStream is = connection.getInputStream();
+            String s = IOUtils.toString(is, "UTF-8");
             if (s.contains("OVER_QUERY_LIMIT")) {
                 Thread.sleep(5000);
                 return getTimezoneFromLatlng(lat, lng);
@@ -232,7 +254,7 @@ public class MyCalendar extends GregorianCalendar {
         format3339();
     }
 
-    public void setTimeZone(String timeZoneID){
+    public void setTimeZone(String timeZoneID) {
         setTimeZone(TimeZone.getTimeZone(timeZoneID));
     }
 }

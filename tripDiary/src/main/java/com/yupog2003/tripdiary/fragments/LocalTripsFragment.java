@@ -50,6 +50,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.AllRecordActivity;
 import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -68,7 +69,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -128,7 +128,7 @@ public class LocalTripsFragment extends Fragment {
     public void onResume() {
 
         super.onResume();
-        this.path = MainActivity.rootPath;
+        this.path = TripDiaryApplication.rootPath;
         loaddata();
     }
 
@@ -190,7 +190,7 @@ public class LocalTripsFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
                         } else {
                             newTripName = name;
-                            Trip trip = new Trip(getActivity(), new File(path + "/" + name));
+                            Trip trip = new Trip(getActivity(), new File(path + "/" + name), false);
                             trip.setCategory(getActivity(), category);
                             trip.updateNote(note);
                             loaddata();
@@ -272,8 +272,8 @@ public class LocalTripsFragment extends Fragment {
     class TripAdapter extends BaseExpandableListAdapter implements OnChildClickListener, ExpandableListView.MultiChoiceModeListener, OnQueryTextListener, OnGroupCollapseListener, OnGroupExpandListener {
 
         String[] categories;
-        ArrayList<ArrayList<TripInformation>> trips;
-        TripInformation[] tripsArray;
+        ArrayList<ArrayList<Trip>> trips;
+        Trip[] tripsArray;
         HashMap<String, Drawable> categoryDrawables;
         boolean onActionMode = false;
         public ArrayList<String> checksName;
@@ -292,19 +292,21 @@ public class LocalTripsFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-            trips = new ArrayList<ArrayList<TripInformation>>();
+            trips = new ArrayList<ArrayList<Trip>>();
             File file = new File(path);
             File[] files = file.listFiles(FileHelper.getDirFilter());
             if (files == null)
                 files = new File[0];
-            ArrayList<TripInformation> list = new ArrayList<TripInformation>();
+            ArrayList<Trip> list = new ArrayList<Trip>();
             for (int i = 0; i < files.length; i++) {
-                list.add(new TripInformation(files[i]));
+                Trip trip=new Trip(getActivity(), files[i], true);
+                trip.setDrawable(categoryDrawables.get(trip.category));
+                list.add(trip);
             }
             final TimeSort timeSort=TimeSort.fromInteger(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0));
-            Collections.sort(list, new Comparator<TripInformation>() {
+            Collections.sort(list, new Comparator<Trip>() {
 
-                public int compare(TripInformation lhs, TripInformation rhs) {
+                public int compare(Trip lhs, Trip rhs) {
 
                     if (lhs.time == null || rhs.time == null)
                         return 0;
@@ -328,10 +330,10 @@ public class LocalTripsFragment extends Fragment {
                     return 0;
                 }
             });
-            tripsArray = list.toArray(new TripInformation[list.size()]);
-            list = new ArrayList<TripInformation>();
+            tripsArray = list.toArray(new Trip[list.size()]);
+            list = new ArrayList<Trip>();
             for (int i = 0; i < categories.length; i++) {
-                ArrayList<TripInformation> category = new ArrayList<TripInformation>();
+                ArrayList<Trip> category = new ArrayList<Trip>();
                 for (int j = 0; j < tripsArray.length; j++) {
                     if (tripsArray[j].category.equals(categories[i])) {
                         category.add(tripsArray[j]);
@@ -340,21 +342,7 @@ public class LocalTripsFragment extends Fragment {
                 }
                 trips.add(category);
             }
-            tripsArray = list.toArray(new TripInformation[list.size()]);
-        }
-
-        class TripInformation {
-            public File file;
-            public MyCalendar time;
-            public String category;
-            public Drawable drawable;
-
-            public TripInformation(File file) {
-                this.file = file;
-                this.time = MyCalendar.getTripTime(path, file.getName());
-                this.category = tripsp.getString(file.getName(), getString(R.string.nocategory));
-                this.drawable = categoryDrawables.get(category);
-            }
+            tripsArray = list.toArray(new Trip[list.size()]);
         }
 
         public Object getChild(int groupPosition, int childPosition) {
@@ -396,8 +384,8 @@ public class LocalTripsFragment extends Fragment {
                 convertView.setTag(holder);
             }
             holder = (ViewHolder) convertView.getTag();
-            TripInformation trip = trips.get(groupPosition).get(childPosition);
-            String tripname = trip.file.getName();
+            Trip trip = trips.get(groupPosition).get(childPosition);
+            String tripname = trip.tripName;
             holder.item.setText(tripname);
             holder.item.setCompoundDrawablesWithIntrinsicBounds(trip.drawable, null, null, null);
             holder.itemextra.setText("-" + trip.time.formatInTimezone(MyCalendar.getTripTimeZone(getActivity(), tripname)));
@@ -464,7 +452,7 @@ public class LocalTripsFragment extends Fragment {
                 int position = (int) getChildId(groupPosition, childPosition);
                 listView.setItemChecked(position, !listView.isItemChecked(position));
             } else {
-                String name = trips.get(groupPosition).get(childPosition).file.getName();
+                String name = trips.get(groupPosition).get(childPosition).tripName;
                 Intent i = new Intent(getActivity(), ViewTripActivity.class);
                 i.putExtra("path", path);
                 i.putExtra("name", name);
@@ -479,7 +467,7 @@ public class LocalTripsFragment extends Fragment {
             checksName = new ArrayList<String>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
-                    checksName.add(tripsArray[i].file.getName());
+                    checksName.add(tripsArray[i].tripName);
                 }
             }
             mode.finish();
@@ -588,7 +576,7 @@ public class LocalTripsFragment extends Fragment {
 
                         String s = name.getText().toString();
                         if (!new File(path + "/" + s).exists() || s.equals(checksName.get(0))) {
-                            Trip trip = new Trip(getActivity(), new File(path + "/" + checksName.get(0)));
+                            Trip trip = new Trip(getActivity(), new File(path + "/" + checksName.get(0)), false);
                             trip.renameTrip(getActivity(), s);
                             trip.updateNote(note.getText().toString());
                             trip.setCategory(getActivity(), categories[rg.getCheckedRadioButtonId()]);
@@ -653,11 +641,8 @@ public class LocalTripsFragment extends Fragment {
                 new UpdateTripTimeZoneTask(checksName).execute();
             } else if (item.getItemId() == R.id.viewtogether) {
                 Intent intent = new Intent(getActivity(), AllRecordActivity.class);
-                String[] tripPaths = new String[checksName.size()];
-                for (int i = 0; i < tripPaths.length; i++) {
-                    tripPaths[i] = checksName.get(i);
-                }
-                intent.putExtra(AllRecordActivity.tag_trip_paths, tripPaths);
+                String[] tripNames = checksName.toArray(new String[checksName.size()]);
+                intent.putExtra(AllRecordActivity.tag_trip_names, tripNames);
                 getActivity().startActivity(intent);
             }
             return true;
@@ -721,7 +706,7 @@ public class LocalTripsFragment extends Fragment {
                 final ArrayList<String> founds = new ArrayList<String>();
                 int adaptercount = tripsArray.length;
                 for (int i = 0; i < adaptercount; i++) {
-                    String itemname = tripsArray[i].file.getName();
+                    String itemname = tripsArray[i].tripName;
                     if (itemname.toLowerCase(Locale.US).contains(searchname)) {
                         founds.add(itemname);
                     }

@@ -391,19 +391,19 @@ public final class R {
 		public static final int ic_pause_light = 0x7f020098;
 		public static final int ic_play_dark = 0x7f02009c;
 		public static final int ic_play_light = 0x7f02009d;
-		public static final int ic_setting_dark = 0x7f0200a8;
-		public static final int ic_setting_light = 0x7f0200a9;
-		public static final int mr_ic_audio_vol = 0x7f0200bd;
-		public static final int mr_ic_media_route_connecting_mono_dark = 0x7f0200be;
-		public static final int mr_ic_media_route_connecting_mono_light = 0x7f0200bf;
-		public static final int mr_ic_media_route_mono_dark = 0x7f0200c0;
-		public static final int mr_ic_media_route_mono_light = 0x7f0200c1;
-		public static final int mr_ic_pause_dark = 0x7f0200c2;
-		public static final int mr_ic_pause_light = 0x7f0200c3;
-		public static final int mr_ic_play_dark = 0x7f0200c4;
-		public static final int mr_ic_play_light = 0x7f0200c5;
-		public static final int mr_ic_settings_dark = 0x7f0200c6;
-		public static final int mr_ic_settings_light = 0x7f0200c7;
+		public static final int ic_setting_dark = 0x7f0200a9;
+		public static final int ic_setting_light = 0x7f0200aa;
+		public static final int mr_ic_audio_vol = 0x7f0200be;
+		public static final int mr_ic_media_route_connecting_mono_dark = 0x7f0200bf;
+		public static final int mr_ic_media_route_connecting_mono_light = 0x7f0200c0;
+		public static final int mr_ic_media_route_mono_dark = 0x7f0200c1;
+		public static final int mr_ic_media_route_mono_light = 0x7f0200c2;
+		public static final int mr_ic_pause_dark = 0x7f0200c3;
+		public static final int mr_ic_pause_light = 0x7f0200c4;
+		public static final int mr_ic_play_dark = 0x7f0200c5;
+		public static final int mr_ic_play_light = 0x7f0200c6;
+		public static final int mr_ic_settings_dark = 0x7f0200c7;
+		public static final int mr_ic_settings_light = 0x7f0200c8;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f0e0070;

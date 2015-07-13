@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +57,8 @@ public class ViewPointActivity extends MyActivity {
     static final int import_audio = 3;
     String timezone;
     ViewPager viewPager;
+    public static final String tag_tripname="tag_tripname";
+    public static final String tag_poiname="tag_poiname";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,8 +68,11 @@ public class ViewPointActivity extends MyActivity {
         if (toolBar != null) {
             setSupportActionBar(toolBar);
         }
-        path = getIntent().getStringExtra("path");
-        name = path.substring(path.lastIndexOf("/") + 1);
+        String tripName=getIntent().getStringExtra(tag_tripname);
+        String poiName=getIntent().getStringExtra(tag_poiname);
+        String rootPath= TripDiaryApplication.rootPath;
+        path = rootPath+"/"+tripName+"/"+poiName;
+        name = poiName;
         timezone = MyCalendar.getPOITimeZone(ViewPointActivity.this, path);
         poi = new POI(new File(path));
         setTitle(name);
@@ -176,7 +182,8 @@ public class ViewPointActivity extends MyActivity {
             startActivityForResult(intent, pick_multi_file);
         } else if (item.getItemId() == R.id.playpoint) {
             Intent intent = new Intent(ViewPointActivity.this, PlayPointActivity.class);
-            intent.putExtra("path", path);
+            intent.putExtra(PlayPointActivity.tag_trip, poi.dir.getParentFile().getName());
+            intent.putExtra(PlayPointActivity.tag_poi, poi.dir.getName());
             ViewPointActivity.this.startActivity(intent);
         } else if (item.getItemId() == android.R.id.home) {
             ViewPointActivity.this.finish();

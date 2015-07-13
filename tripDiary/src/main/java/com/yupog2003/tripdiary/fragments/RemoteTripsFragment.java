@@ -41,6 +41,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.services.DownloadTripService;
 import com.yupog2003.tripdiary.thrift.TripDiary;
@@ -80,14 +81,12 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     SearchView searchView;
     TripDiary.Client client;
 
-
     public RemoteTripsFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_remotetrips, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
         // listView.setBackgroundColor(getResources().getColor(R.color.item_background));
@@ -100,11 +99,9 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     @Override
     public void onResume() {
-
         super.onResume();
         this.trip_option = getArguments().getInt(tag_option, 0);
         setHasOptionsMenu(true);
-        loaddata();
     }
 
     @Override
@@ -147,7 +144,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
         @Override
         protected void onPreExecute() {
-
 
         }
 
@@ -245,10 +241,9 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
         @Override
         protected void onPostExecute(String result) {
-
             super.onPostExecute(result);
             adapter = null;
-            RemoteTripsFragment.this.onResume();
+            loaddata();
         }
 
     }
@@ -324,7 +319,9 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             }
         }
     }
+
     public static String gpxStr;
+
     class TripAdapter extends BaseAdapter implements OnItemClickListener, OnQueryTextListener, MultiChoiceModeListener, OnScrollListener {
 
         ArrayList<Trip> trips;
@@ -398,7 +395,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     for (int i = 0; i < checksName.size(); i++) {
                         String tripPath = checksName.get(i).path;
                         String tripName = checksName.get(i).name;
-                        if (new File(MainActivity.rootPath + "/" + tripName).exists()) {
+                        if (new File(TripDiaryApplication.rootPath + "/" + tripName).exists()) {
                             Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
                         } else {
                             Activity activity = getActivity();
@@ -627,7 +624,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     @Override
     public void onRefresh() {
-
         loaddata();
     }
 

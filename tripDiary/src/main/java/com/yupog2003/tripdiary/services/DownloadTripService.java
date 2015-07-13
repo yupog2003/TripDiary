@@ -6,16 +6,10 @@ import android.support.v4.app.NotificationCompat;
 
 import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.FileHelper;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,17 +42,17 @@ public class DownloadTripService extends IntentService {
         url = url.replace(" ", "%20");
         try {
             HttpURLConnection connection=(HttpURLConnection)new URL(url).openConnection();
-            String tripLink= IOUtils.toString(connection.getInputStream());
+            String tripLink= IOUtils.toString(connection.getInputStream(), "UTF-8");
             tripLink = MainActivity.serverURL + "/" + tripLink;
             tripLink = tripLink.replace(" ", "%20");
             URL tripURL = new URL(tripLink);
             connection = (HttpURLConnection) tripURL.openConnection();
             fileSize = connection.getContentLength();
             InputStream is = connection.getInputStream();
-            File zipFile = new File(MainActivity.rootPath + "/" + tripName + ".zip");
+            File zipFile = new File(TripDiaryApplication.rootPath + "/" + tripName + ".zip");
             FileOutputStream fos = new FileOutputStream(zipFile);
             byte[] buffer = new byte[4096];
-            int read = -1;
+            int read;
             totalread = 0;
             new Thread(new Runnable() {
 
@@ -84,7 +78,7 @@ public class DownloadTripService extends IntentService {
             is.close();
             fileSize = 0;
             updateNotification(tripName, getString(R.string.unzipping) + "...", 100);
-            FileHelper.unZip(zipFile.getPath(), MainActivity.rootPath + "/");
+            FileHelper.unZip(zipFile.getPath(), TripDiaryApplication.rootPath + "/");
         } catch (IOException e) {
 
             e.printStackTrace();

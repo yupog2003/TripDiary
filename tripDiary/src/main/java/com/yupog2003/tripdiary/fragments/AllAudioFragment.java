@@ -136,8 +136,11 @@ public class AllAudioFragment extends Fragment {
 				this.onClickListener = new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						String tripName=pois[index].dir.getParentFile().getName();
+						String poiName=pois[index].dir.getName();
 						Intent intent = new Intent(getActivity(), ViewPointActivity.class);
-						intent.putExtra("path", pois[index].dir.getPath());
+						intent.putExtra(ViewPointActivity.tag_tripname, tripName);
+						intent.putExtra(ViewPointActivity.tag_poiname, poiName);
 						startActivity(intent);
 					}
 				};

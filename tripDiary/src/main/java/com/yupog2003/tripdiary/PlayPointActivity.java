@@ -9,6 +9,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
@@ -53,6 +54,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     VideoView videoView;
     int interval;
     private static final int readTextSpeed = 100; //milli seconds per character
+    public static final String tag_trip="tag_trip";
+    public static final String tag_poi="tag_poi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,10 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         if (toolBar != null) {
             setSupportActionBar(toolBar);
         }
-        this.pointPath = getIntent().getStringExtra("path");
+        String tripName=getIntent().getStringExtra(tag_trip);
+        String poiName=getIntent().getStringExtra(tag_poi);
+        String rootPath=TripDiaryApplication.rootPath;
+        this.pointPath = rootPath+"/"+tripName+"/"+poiName;
         poi = new POI(new File(pointPath));
         this.name = poi.title;
         this.picturePath = poi.picDir.getPath();

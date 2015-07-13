@@ -46,12 +46,12 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
     GoogleMap gmap;
     Record record;
     String rootPath;
-    String[] tripPaths;
+    String[] tripNames;
     Trip[] trips;
     AnalysisTask analysisTask;
     ArrayList<Marker> markers;
     public static final int[] colors = new int[]{Color.parseColor("#FF0000"), Color.parseColor("#FF8000"), Color.parseColor("#FFFF00"), Color.parseColor("#00FF00"), Color.parseColor("#00FFFF"), Color.parseColor("#0000FF"), Color.parseColor("#FF00FF")};
-    public static final String tag_trip_paths = "tripPaths";
+    public static final String tag_trip_names = "tripNames";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +65,15 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.maplayout, mapFragment, "mapFragment");
         ft.commit();
-        rootPath = MainActivity.rootPath;
+        rootPath = TripDiaryApplication.rootPath;
         markers = new ArrayList<Marker>();
         record = new Record();
-        tripPaths = getIntent().getStringArrayExtra(tag_trip_paths);
-        if (tripPaths == null) {
-            tripPaths = new String[0];
+        tripNames = getIntent().getStringArrayExtra(tag_trip_names);
+        if (tripNames == null) {
+            tripNames = new String[0];
         }
-        trips = new Trip[tripPaths.length];
-        record.num_Trips = tripPaths.length;
+        trips = new Trip[tripNames.length];
+        record.num_Trips = tripNames.length;
     }
 
     @Override
@@ -158,7 +158,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             View rootView = getLayoutInflater().inflate(R.layout.classical_progress_dialog, null);
             message = (TextView) rootView.findViewById(R.id.message);
             progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
-            progressBar.setMax(tripPaths.length);
+            progressBar.setMax(tripNames.length);
             smallMessage = (TextView) rootView.findViewById(R.id.smallmessage);
             ab.setView(rootView);
             ad = ab.create();
@@ -179,17 +179,17 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         @Override
         protected Boolean doInBackground(String... params) {
 
-            if (tripPaths == null)
+            if (tripNames == null)
                 return false;
-            for (int i = 0; i < tripPaths.length; i++) {
-                tripPaths[i] = rootPath + "/" + tripPaths[i];
-                trips[i] = new Trip(AllRecordActivity.this, new File(tripPaths[i]));
+            for (int i = 0; i < tripNames.length; i++) {
+                tripNames[i] = rootPath + "/" + tripNames[i];
+                trips[i] = new Trip(AllRecordActivity.this, new File(tripNames[i]), false);
             }
             boolean success;
             if (libraryLoadSuccess) {
-                success = parse(rootPath, tripPaths, new int[0], record);
+                success = parse(rootPath, tripNames, new int[0], record);
             } else {
-                success = parseJava(rootPath, tripPaths, new int[0], record);
+                success = parseJava(rootPath, tripNames, new int[0], record);
             }
             return success;
         }
@@ -275,8 +275,11 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
         String pointtitle = marker.getTitle();
         if (new File(rootPath + "/" + pointtitle).exists()) {
+            String tripName=pointtitle.split("/")[0];
+            String poiName=pointtitle.split("/")[1];
             Intent intent = new Intent(AllRecordActivity.this, ViewPointActivity.class);
-            intent.putExtra("path", rootPath + "/" + pointtitle);
+            intent.putExtra(ViewPointActivity.tag_tripname, tripName);
+            intent.putExtra(ViewPointActivity.tag_poiname, poiName);
             startActivity(intent);
         }
     }

@@ -1,7 +1,6 @@
 package com.yupog2003.tripdiary.data;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 public class MyLatLng2 implements Serializable{
 

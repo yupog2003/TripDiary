@@ -14,6 +14,8 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,6 +55,9 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 	int thicknessValue = 10;
 	boolean clearMode;
 	String path;
+	public static final String tag_trip="tag_trip";
+	public static final String tag_poi="tag_poi";
+	public static final String tag_filename="tag_filename";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +87,11 @@ public class PaintActivity extends MyActivity implements OnClickListener {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.paintview);
 		layout.addView(paintView);
 		clearMode = false;
-		path = getIntent().getStringExtra("path");
+		String tripName=getIntent().getStringExtra(tag_trip);
+		String poiName=getIntent().getStringExtra(tag_poi);
+		String fileName=getIntent().getStringExtra(tag_filename);
+		String rootpath=TripDiaryApplication.rootPath;
+		path = rootpath+"/"+tripName+"/"+poiName+"/"+fileName;
 		if (path == null) {
 			PaintActivity.this.finish();
 		}

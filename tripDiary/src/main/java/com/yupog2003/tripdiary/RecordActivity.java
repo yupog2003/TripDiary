@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
@@ -57,7 +58,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.TimeZone;
 
 public class RecordActivity extends MyActivity implements OnClickListener, OnInfoWindowClickListener, OnMarkerDragListener {
@@ -86,7 +86,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     Button takePaint;
     Button takeMoney;
     Button save;
-    ImageButton refresh;
+    FloatingActionButton refresh;
     ProgressBar refreshProgress;
     Handler handler;
     RelativeLayout maplayout;
@@ -134,7 +134,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         altitude = (TextView) findViewById(R.id.altitude);
         poiName = (EditText) findViewById(R.id.poiName);
         addPOI = (Button) findViewById(R.id.addpoi);
-        refresh = (ImageButton) findViewById(R.id.refresh);
+        refresh = (FloatingActionButton) findViewById(R.id.refresh);
         cancel = (Button) findViewById(R.id.cancel);
         cancel.setOnClickListener(this);
         addPOI.setOnClickListener(this);
@@ -299,7 +299,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                     String poiNameStr = poiName.getText().toString();
                     String newPointPath = rootPath + "/" + tripName + "/" + poiNameStr;
                     poi = new POI(new File(newPointPath));
-                    MyCalendar time=MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
                     if (isGPSEnabled) {
                         if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
                             POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
@@ -375,7 +375,9 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             ab.show();
         } else if (v.equals(takePaint)) {
             Intent intent = new Intent(this, PaintActivity.class);
-            intent.putExtra("path", poi.picDir.getPath() + "/" + fileName + ".png");
+            intent.putExtra(PaintActivity.tag_trip, poi.dir.getParentFile().getName());
+            intent.putExtra(PaintActivity.tag_poi, poi.dir.getName());
+            intent.putExtra(PaintActivity.tag_filename, fileName + ".png");
             startActivityForResult(intent, REQUEST_PICTURE);
         } else if (v.equals(takeMoney)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);

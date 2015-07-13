@@ -2,8 +2,8 @@ package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.text.format.Time;
 
 import com.yupog2003.tripdiary.R;
 
@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.TimeZone;
 
@@ -33,24 +34,37 @@ public class Trip {
 	public String timezone;
 	public GpxAnalyzerJava analyzer;
 	public GpxAnalyzer2 analyzer2;
+	public MyCalendar time;
+	public Drawable drawable;
 
-	public Trip(Context context, File dir) {
+	public Trip(Context context, File dir, boolean onlyBasic) {
 		this.dir = dir;
 		if (!dir.exists()) {
 			dir.mkdirs();
 			MyCalendar.updateTripTimeZone(context, dir.getName(), TimeZone.getDefault().getID());
 		}
 		this.context = context;
-		refreshAllFields();
+		if (onlyBasic){
+			refreshBasic();
+		}else{
+			refreshAllFields();
+		}
+	}
+	public void refreshBasic(){
+		this.tripName=dir.getName();
+		this.time=MyCalendar.getTripTime(dir.getParent(), tripName);
+		this.category = context.getSharedPreferences("trip", Context.MODE_PRIVATE).getString(tripName, context.getString(R.string.nocategory));
 	}
 
+	public void setDrawable(Drawable d){
+		this.drawable=d;
+	}
 	public void refreshAllFields() {
 		this.gpxFile = new File(dir.getPath() + "/" + dir.getName() + ".gpx");
 		if (!gpxFile.exists()) {
 			try {
 				gpxFile.createNewFile();
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 		}
@@ -61,7 +75,6 @@ public class Trip {
 			try {
 				noteFile.createNewFile();
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 		}

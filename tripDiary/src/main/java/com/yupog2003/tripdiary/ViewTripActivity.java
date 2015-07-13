@@ -73,7 +73,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         rotation = sWidth > sHeight ? Surface.ROTATION_90 : Surface.ROTATION_0;
         path = getIntent().getStringExtra("path");
         name = getIntent().getStringExtra("name");
-        trip = new Trip(ViewTripActivity.this, new File(path + "/" + name));
+        trip = new Trip(ViewTripActivity.this, new File(path + "/" + name), false);
         updatePOI = false;
         allAudioFragment = new AllAudioFragment();
         allVideoFragment = new AllVideoFragment();

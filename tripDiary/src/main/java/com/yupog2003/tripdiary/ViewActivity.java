@@ -27,25 +27,20 @@ public class ViewActivity extends MyActivity{
 		Toolbar toolBar=(Toolbar)findViewById(R.id.toolbar);
 		if (toolBar!=null){
 			setSupportActionBar(toolBar);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 		tabs=(SlidingTabLayout)findViewById(R.id.tabs);
 		pagerAdaper = new MyPagerAdapter(getFragmentManager());
 		viewPager.setAdapter(pagerAdaper);
+		viewPager.addOnPageChangeListener(pagerAdaper);
 		tabs.setSelectedIndicatorColors(Color.WHITE);
 		tabs.setDistributeEvenly(true);
 		tabs.setViewPager(viewPager);
 		viewPager.setCurrentItem(1);
 	}
-	public void refreshData(){
-		if (pagerAdaper!=null){
-			for (int i=0;i<pagerAdaper.fragments.length;i++){
-				pagerAdaper.fragments[i].onResume();
-			}
-		}
-	}
-	class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+	class MyPagerAdapter extends FragmentStatePagerAdapter implements ViewPager.OnPageChangeListener{
 
 		public Fragment[] fragments;
 
@@ -58,7 +53,7 @@ public class ViewActivity extends MyActivity{
 			fragments[0].setArguments(personalTripFragmentBundle);
 			fragments[1] = new LocalTripsFragment();
 			Bundle localTripFragmentBundle=new Bundle();
-			localTripFragmentBundle.putString(LocalTripsFragment.tag_path, MainActivity.rootPath);
+			localTripFragmentBundle.putString(LocalTripsFragment.tag_path, TripDiaryApplication.rootPath);
 			fragments[1].setArguments(localTripFragmentBundle);
 			fragments[2] = new RemoteTripsFragment();
 			Bundle publicTripFragmentBundle=new Bundle();
@@ -82,14 +77,32 @@ public class ViewActivity extends MyActivity{
 
 		@Override
 		public Fragment getItem(int position) {
-
 			return fragments[position];
 		}
 
 		@Override
 		public int getCount() {
-
 			return fragments.length;
+		}
+
+		@Override
+		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+		}
+
+		@Override
+		public void onPageSelected(int position) {
+			Fragment f=getItem(position);
+			if (f instanceof RemoteTripsFragment){
+				((RemoteTripsFragment)f).loaddata();
+			}else if (f instanceof LocalTripsFragment){
+				((LocalTripsFragment)f).loaddata();
+			}
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int state) {
+
 		}
 	}
 

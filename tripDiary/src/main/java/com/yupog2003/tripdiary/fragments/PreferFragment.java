@@ -21,6 +21,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
+import android.support.v4.provider.DocumentFile;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -31,6 +33,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.yupog2003.tripdiary.CategoryActivity;
 import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
@@ -64,9 +67,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     private static final int selectmusicpath = 0;
     private static final int selectdiaryfont = 1;
     private static final int selectrootpath = 2;
-    public static final String backgroundMusicName = "backgroundmusic.mp3";
-    public static final String diaryFontName = "font.ttc";
-    private static String backedupPreferencePath = MainActivity.rootPath + "/.settings";
+    private static String backedupPreferencePath = TripDiaryApplication.rootPath + "/.settings";
     private static final String categorySettingName = "category";
     private static final String tripSettingName = "trip";
     private static final String tripExpandSettingName = "categoryExpand";
@@ -133,7 +134,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                         Uri uri1 = data.getData();
                         if (uri1 != null) {
                             File resultFile = FileHelper.copyFromUriToFile(getActivity(), uri1, getActivity().getFilesDir(), null);
-                            if (resultFile!=null){
+                            if (resultFile != null) {
                                 editor.putString("musicpath", resultFile.getName());
                                 editor.commit();
                                 musicpath.setSummary(resultFile.getName());
@@ -146,7 +147,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                         Uri uri1 = data.getData();
                         if (uri1 != null) {
                             File resultFile = FileHelper.copyFromUriToFile(getActivity(), uri1, getActivity().getFilesDir(), null);
-                            if (resultFile!=null){
+                            if (resultFile != null) {
                                 editor.putString("diaryfont", resultFile.getName());
                                 editor.commit();
                                 diaryfont.setSummary(resultFile.getName());
@@ -159,7 +160,8 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                         Uri uri = data.getData();
                         String authority = uri.getAuthority();
                         if (authority.equals("com.android.externalstorage.documents")) {
-                            getActivity().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            final int flags = (Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            getActivity().getContentResolver().takePersistableUriPermission(uri, flags);
                             String id = DocumentsContract.getTreeDocumentId(uri);
                             String[] toks = id.split(":");
                             String type = toks[0];
@@ -179,7 +181,9 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                                     }
                                 }
                             }
-                            setNewRootPath(newRootPath);
+                            if (FileHelper.checkHasWritePermission(getActivity(), newRootPath)){
+                                setNewRootPath(newRootPath);
+                            }
                         } else {
                             Toast.makeText(getActivity(), "Please select another path. Either internal or external storage.", Toast.LENGTH_SHORT).show();
                         }
@@ -231,7 +235,10 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 ab.setView(listView);
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        setNewRootPath(adapter.getRoot().getPath());
+                        String newRootPath=adapter.getRoot().getPath();
+                        if (FileHelper.checkHasWritePermission(getActivity(), newRootPath)) {
+                            setNewRootPath(newRootPath);
+                        }
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -295,8 +302,8 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                 editor.putString("rootpath", newPath);
                 editor.commit();
-                MainActivity.rootPath = newPath;
-                MainActivity.creatRootDir(newPath);
+                TripDiaryApplication.rootPath = newPath;
+                TripDiaryApplication.creatRootDir(newPath);
             } else {
                 Toast.makeText(getActivity(), newPath + " " + getString(R.string.is_not_a_valid_directory), Toast.LENGTH_SHORT).show();
             }
@@ -317,8 +324,8 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         editor.putString("rootpath", newRootPath);
         editor.commit();
         rootpath.setSummary(newRootPath);
-        MainActivity.rootPath = newRootPath;
-        backedupPreferencePath = MainActivity.rootPath + "/.settings";
+        TripDiaryApplication.rootPath = newRootPath;
+        backedupPreferencePath = TripDiaryApplication.rootPath + "/.settings";
     }
 
     class UpdateTripTimeZoneTask extends AsyncTask<String, String, String> {
@@ -353,7 +360,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         @Override
         protected String doInBackground(String... params) {
 
-            File[] trips = new File(MainActivity.rootPath).listFiles(new FileFilter() {
+            File[] trips = new File(TripDiaryApplication.rootPath).listFiles(new FileFilter() {
 
                 public boolean accept(File pathname) {
 

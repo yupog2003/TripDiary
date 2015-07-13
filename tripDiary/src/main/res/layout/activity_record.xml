@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -177,13 +178,14 @@
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp">
 
-        <ImageButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/imagebutton_circle_background"
-            android:contentDescription="@string/imagebutton_description"
-            android:src="@drawable/ic_switch" />
+            android:src="@drawable/ic_refresh"
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="2dp"
+            app:borderWidth="0dp"/>
 
         <ProgressBar
             android:id="@+id/refreshProgress"
