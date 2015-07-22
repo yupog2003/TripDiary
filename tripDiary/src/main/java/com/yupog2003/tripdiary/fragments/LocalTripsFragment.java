@@ -293,13 +293,12 @@ public class LocalTripsFragment extends Fragment {
                 list.add(trip);
             }
             final TimeSort timeSort = TimeSort.fromInteger(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0));
-            Collections.sort(list, new Comparator<Trip>() {
-
-                public int compare(Trip lhs, Trip rhs) {
-
-                    if (lhs.time == null || rhs.time == null)
-                        return 0;
-                    if (timeSort == TimeSort.ascending) {
+            if (timeSort == TimeSort.ascending){
+                Collections.sort(list, new Comparator<Trip>() {
+                    @Override
+                    public int compare(Trip lhs, Trip rhs) {
+                        if (lhs.time == null || rhs.time == null)
+                            return 0;
                         if (lhs.time.after(rhs.time)) {
                             return 1;
                         } else if (rhs.time.after(lhs.time)) {
@@ -307,7 +306,14 @@ public class LocalTripsFragment extends Fragment {
                         } else {
                             return 0;
                         }
-                    } else if (timeSort == TimeSort.descending) {
+                    }
+                });
+            }else if (timeSort == TimeSort.descending){
+                Collections.sort(list, new Comparator<Trip>() {
+                    @Override
+                    public int compare(Trip lhs, Trip rhs) {
+                        if (lhs.time == null || rhs.time == null)
+                            return 0;
                         if (lhs.time.after(rhs.time)) {
                             return -1;
                         } else if (rhs.time.after(lhs.time)) {
@@ -316,9 +322,8 @@ public class LocalTripsFragment extends Fragment {
                             return 0;
                         }
                     }
-                    return 0;
-                }
-            });
+                });
+            }
             tripsArray = list.toArray(new Trip[list.size()]);
             list = new ArrayList<>();
             for (String categorySyr : categories) {

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="167"
+    android:versionCode="168"
     android:versionName="1.2.5" >
 
     <uses-sdk
@@ -162,8 +162,7 @@
         </activity>
         <activity
             android:name="com.yupog2003.tripdiary.ViewGraphAcivity"
-            android:label="@string/title_activity_view_graph_acivity" >
-        </activity>
+            android:label="@string/title_activity_view_graph_acivity" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

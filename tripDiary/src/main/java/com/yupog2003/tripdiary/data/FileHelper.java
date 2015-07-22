@@ -170,54 +170,42 @@ public class FileHelper {
         return getMIMEtype(file.getName());
     }
 
-    public static String getRealPathFromURI(Context context, Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            e.printStackTrace();
+    public static String getRealNameFromURI(Context context, Uri contentUri) {
+        String name;
+        if ((name = queryForString(context, contentUri, MediaStore.MediaColumns.DISPLAY_NAME, null)) != null) {
+            Log.i("trip", "from Media Store");
+            return name;
         }
-        return null;
+        if ((name = queryForString(context, contentUri, OpenableColumns.DISPLAY_NAME, null)) != null) {
+            Log.i("trip", "from Openable");
+            return name;
+        }
+        Log.i("trip", "from Media Store");
+        return new File(contentUri.getPath()).getName();
     }
 
-    public static String getRealNameFromURI(Context context, Uri contentUri) {
+    private static String queryForString(Context context, Uri self, String column, String defaultValue) {
+        final ContentResolver resolver = context.getContentResolver();
+        Cursor c = null;
         try {
-            String[] proj = {MediaStore.MediaColumns.DATA};
-            Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-            if (cursor != null) {
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-                if (column_index != -1) {
-                    cursor.moveToFirst();
-                    String path = cursor.getString(column_index);
-                    Log.i("trip", "fromMediaStore");
-                    cursor.close();
-                    return new File(path).getName();
+            c = resolver.query(self, new String[]{column}, null, null, null);
+            if (c.moveToFirst() && !c.isNull(0)) {
+                return c.getString(0);
+            } else {
+                return defaultValue;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return defaultValue;
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (IllegalArgumentException | NullPointerException e) {
-            e.printStackTrace();
         }
-        try {
-            Cursor cursor = context.getContentResolver().query(contentUri, null, null, null, null);
-            if (cursor != null) {
-                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                if (nameIndex != -1) {
-                    cursor.moveToFirst();
-                    String name = cursor.getString(nameIndex);
-                    cursor.close();
-                    Log.i("trip", "fromOpenable");
-                    return name;
-                }
-            }
-        } catch (IllegalArgumentException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        Log.i("trip", "fromGetPath");
-        return new File(contentUri.getPath()).getName();
     }
 
     public static boolean isMemory(File file) {
@@ -328,6 +316,7 @@ public class FileHelper {
     public static final int list_dirs = 3;
     public static final int list_withoutdots = 4;
     public static final int list_memory = 5;
+
     public static DocumentFile[] listFiles(DocumentFile dir, int list_type) {
         try {
             DocumentFile[] result = dir.listFiles();
@@ -381,7 +370,7 @@ public class FileHelper {
                     break;
                 case list_memory:
                     for (int i = 0; i < size; i++) {
-                        if (!(isPicture(temp.get(i)) && isVideo(temp.get(i)) && isAudio(temp.get(i)))) {
+                        if (!isMemory(temp.get(i))) {
                             temp.remove(i);
                             size--;
                             i--;
@@ -408,6 +397,7 @@ public class FileHelper {
     }
 
     public static String getFileName(DocumentFile file) {
+        if (file == null) return "";
         String path = Uri.decode(file.getUri().toString());
         return path.substring(path.lastIndexOf("/") + 1);
     }
@@ -416,13 +406,13 @@ public class FileHelper {
         return findfile(dir.listFiles(), name);
     }
 
-    public static DocumentFile findfile(DocumentFile[] files, String... name) {
-        for (int i = 0; i < name.length; i++) {
-            int filesLength=files.length;
+    public static DocumentFile findfile(DocumentFile[] files, String... names) {
+        for (int i = 0; i < names.length; i++) {
+            int filesLength = files.length;
             for (int j = 0; j < filesLength; j++) {
                 String path = Uri.decode(files[j].getUri().toString());
-                if (path.endsWith("/" + name[i])) {
-                    if (i == name.length - 1) {
+                if (path.endsWith("/" + names[i])) {
+                    if (i == names.length - 1) {
                         return files[j];
                     } else {
                         files = files[j].listFiles();
@@ -825,8 +815,8 @@ public class FileHelper {
         boolean cancel = false;
         OnFinishedListener listener;
 
-        public static interface OnFinishedListener {
-            public void onFinish();
+        public interface OnFinishedListener {
+            void onFinish();
         }
 
         public MoveFilesTask(Activity activity, DocumentFile[] fromFiles, DocumentFile[] toFiles, OnFinishedListener listener) {

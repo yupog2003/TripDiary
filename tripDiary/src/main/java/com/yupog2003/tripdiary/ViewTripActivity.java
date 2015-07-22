@@ -255,7 +255,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         @Override
         protected LatLng[] doInBackground(Integer... params) {
             trip = new Trip(ViewTripActivity.this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name), false, this);
-            fileSize = ViewTripActivity.trip.cacheFile.length() > 0 ? ViewTripActivity.trip.cacheFile.length() : ViewTripActivity.trip.gpxFile.length();
+            fileSize = trip.cacheFile.length() > 0 ? trip.cacheFile.length() : trip.gpxFile.length();
             if (libraryLoadSuccess) {
                 trip.getCacheJNI(getActivity(), handler, this);
             } else {

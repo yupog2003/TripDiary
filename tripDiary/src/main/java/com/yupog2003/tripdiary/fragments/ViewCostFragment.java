@@ -101,7 +101,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
     }
 
     public void refresh() {
-        adapter = new TabsAdapter(getFragmentManager());
+        adapter = new TabsAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -176,7 +176,6 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
         public TabsAdapter(FragmentManager fm) {
             super(fm);
-
             costListFragment = new CostListFragment();
             costPieChartFragment = new CostPieChartFragment();
             costBarChartFragment = new CostBarChartFragment();
