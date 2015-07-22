@@ -217,7 +217,7 @@
     <string name="max_altitude">Max Altitude</string>
     <string name="min_altitude">Min Altitude</string>
     <string name="velocity">Velocity</string>
-    <string name="share_track_kml">Share track(kml)</string>
+    <string name="share_track_kml">Share track(KML)</string>
     <string name="has_not_been_installed">has not been installed</string>
     <string name="do_you_want_to_install">Do you want to install?</string>
     <string name="street_view">StreetView Service</string>
@@ -248,7 +248,7 @@
     <string name="sound">Sound</string>
     <string name="share_track_by...">Share track by…</string>
     <string name="gpx">Gpx</string>
-    <string name="kml">Kml</string>
+    <string name="kml">KML</string>
     <string name="root_path">Root Path</string>
     <string name="is_not_a_valid_directory">is not a valid directory</string>
     <string name="street_view_is_not_available">Street View is not available</string>
@@ -268,8 +268,8 @@
     <string name="zipping">Zipping</string>
     <string name="uploading">Uploading</string>
     <string name="local_trips">Local Trips</string>
-    <string name="remote_public_trips">Remote Public Trips</string>
-    <string name="remote_personal_trips">Remote personal Trips</string>
+    <string name="remote_public_trips">Cloud Public Trips</string>
+    <string name="remote_personal_trips">Cloud Personal Trips</string>
     <string name="downloading">Downloading</string>
     <string name="unzipping">Unzipping</string>
     <string name="download">Download</string>
@@ -347,5 +347,12 @@
     <string name="list">List</string>
     <string name="piechart">Pie Chart</string>
     <string name="barchart">Bar Chart</string>
+    <string name="marker_color">Marker Color</string>
+    <string name="use_storage_access_framework">Use Storage Access Framework</string>
+    <string name="storage_access_framework_explanation">Enable SD Card write permission for Lollipop. It reduces some performance. Please reset root path after changing this.</string>
+    <string name="kmz_with_explanation">KMZ (Google Earth, including compressed image)</string>
+    <string name="share_track_kmz">Share track(KMZ)</string>
+    <string name="share_track_gpx">Share track(GPX)</string>
+    <string name="please_stop_previous_trip_first">Please stop previous trip first</string>
 
 </resources>

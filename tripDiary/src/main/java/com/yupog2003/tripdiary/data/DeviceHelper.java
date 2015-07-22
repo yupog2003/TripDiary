@@ -50,24 +50,27 @@ public class DeviceHelper {
         NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         return (wifiInfo != null && wifiInfo.isConnected()) || (mobileInfo != null && mobileInfo.isConnected());
     }
-    public static void sendGATrack(Application app, String category,String action,String label, Long value){
-        Tracker t=((TripDiaryApplication)app).getTracker();
-        HitBuilders.EventBuilder builders=new HitBuilders.EventBuilder();
-        if (category!=null)
+
+    public static void sendGATrack(Application app, String category, String action, String label, Long value) {
+        Tracker t = ((TripDiaryApplication) app).getTracker();
+        HitBuilders.EventBuilder builders = new HitBuilders.EventBuilder();
+        if (category != null)
             builders.setCategory(category);
-        if (action!=null)
+        if (action != null)
             builders.setAction(action);
-        if (label!=null)
+        if (label != null)
             builders.setLabel(label);
-        if (value!=null)
+        if (value != null)
             builders.setValue(value);
         t.send(builders.build());
 
     }
-    public static void sendGATrack(Activity activity, String category,String action,String label, Long value){
+
+    public static void sendGATrack(Activity activity, String category, String action, String label, Long value) {
         sendGATrack(activity.getApplication(), category, action, label, value);
     }
-    public static void sendGATrack(Service service, String category,String action,String label, Long value){
+
+    public static void sendGATrack(Service service, String category, String action, String label, Long value) {
         sendGATrack(service.getApplication(), category, action, label, value);
     }
 }

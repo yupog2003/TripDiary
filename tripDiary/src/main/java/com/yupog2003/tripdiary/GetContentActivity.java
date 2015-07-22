@@ -9,8 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
+import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -34,13 +33,13 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
+import com.yupog2003.tripdiary.data.MyImageDownloader;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.SquareImageView;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,7 +55,6 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
     private Type type;
     private Action action;
     private GridView gridView;
-    private Toolbar toolBar;
     private Button save;
     private int gridWidth;
     private MemoryAdapter adapter;
@@ -65,15 +63,19 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_content);
-        toolBar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         String intentAction = getIntent().getAction();
-        if (intentAction.equals(Intent.ACTION_GET_CONTENT)) {
-            action = Action.get_content;
-        } else if (intentAction.equals(Intent.ACTION_SEND)) {
-            action = Action.send;
-        } else if (intentAction.equals(Intent.ACTION_SEND_MULTIPLE)) {
-            action = Action.send_multiple;
+        switch (intentAction) {
+            case Intent.ACTION_GET_CONTENT:
+                action = Action.get_content;
+                break;
+            case Intent.ACTION_SEND:
+                action = Action.send;
+                break;
+            case Intent.ACTION_SEND_MULTIPLE:
+                action = Action.send_multiple;
+                break;
         }
         String mimeType = getIntent().getType();
         if (mimeType.startsWith("image")) {
@@ -112,13 +114,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
     class MemoryAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
         Type type;
-        String rootPath;
         String nowDir; // /category/trip/poi
         int nowLevel;
         ArrayList<String> files;
         SharedPreferences categorysp;
         SharedPreferences tripsp;
-        DisplayImageOptions options;
         POI[] pois;
         int lastPictureIndex;
         int lastVideoIndex;
@@ -127,13 +127,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         public MemoryAdapter(Type type) {
             this.type = type;
             if (type == Type.picture || type == Type.video || type == Type.other) {
-                ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(GetContentActivity.this).build();
+                ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(GetContentActivity.this).imageDownloader(new MyImageDownloader(getActivity())).build();
                 ImageLoader.getInstance().init(conf);
-                options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.EXACTLY_STRETCHED).build();
             }
             this.categorysp = getSharedPreferences("category", MODE_PRIVATE);
             this.tripsp = getSharedPreferences("trip", MODE_PRIVATE);
-            this.rootPath = PreferenceManager.getDefaultSharedPreferences(GetContentActivity.this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary");
             this.files = new ArrayList<>();
             this.lastPictureIndex = -1;
             this.lastVideoIndex = -1;
@@ -165,7 +163,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 }
             } else if (levelLength == 1) { //category
                 save.setEnabled(false);
-                String[] tripNames = new File(rootPath).list(FileHelper.getDirFilter());
+                String[] tripNames = FileHelper.listFileNames(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
                 String category = levels[1];
                 for (String tripName : tripNames) {
                     if (tripsp.getString(tripName, getString(R.string.nocategory)).equals(category)) {
@@ -175,8 +173,8 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 Collections.sort(files, new Comparator<String>() {
                     @Override
                     public int compare(String lhs, String rhs) {
-                        MyCalendar time1 = MyCalendar.getTripTime(rootPath, lhs);
-                        MyCalendar time2 = MyCalendar.getTripTime(rootPath, rhs);
+                        MyCalendar time1 = MyCalendar.getTripTime(lhs);
+                        MyCalendar time2 = MyCalendar.getTripTime(rhs);
                         if (time1 == null || time2 == null)
                             return 0;
                         else if (time1.after(time2))
@@ -191,10 +189,10 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 save.setEnabled(false);
                 setGridView(false);
                 String tripName = levels[2];
-                File[] poiFiles = new File(rootPath + "/" + tripName).listFiles(FileHelper.getDirFilter());
+                DocumentFile[] poiFiles = FileHelper.listFiles(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName), FileHelper.list_dirs);
                 pois = new POI[poiFiles.length];
                 for (int i = 0; i < pois.length; i++) {
-                    pois[i] = new POI(poiFiles[i]);
+                    pois[i] = new POI(GetContentActivity.this, poiFiles[i]);
                 }
                 Arrays.sort(pois, new Comparator<POI>() {
                     @Override
@@ -220,23 +218,29 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 switch (type) {
                     case picture:
                         setGridView(true);
-                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/pictures").list()));
+                        String[] pictureNames = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures"), FileHelper.list_pics);
+                        files.addAll(Arrays.asList(pictureNames));
                         break;
                     case video:
                         setGridView(true);
-                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/videos").list()));
+                        String[] videoNames = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos"), FileHelper.list_videos);
+                        files.addAll(Arrays.asList(videoNames));
                         break;
                     case audio:
                         setGridView(false);
-                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/audios").list()));
+                        String[] audioNames = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios"), FileHelper.list_audios);
+                        files.addAll(Arrays.asList(audioNames));
                         break;
                     case other:
                         setGridView(false);
-                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/pictures").list()));
+                        String[] pictureNames2 = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures"), FileHelper.list_pics);
+                        files.addAll(Arrays.asList(pictureNames2));
                         lastPictureIndex = files.size();
-                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/videos").list()));
+                        String[] videoNames2 = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos"), FileHelper.list_videos);
+                        files.addAll(Arrays.asList(videoNames2));
                         lastVideoIndex = files.size();
-                        files.addAll(Arrays.asList(new File(rootPath + "/" + tripName + "/" + poiName + "/audios").list()));
+                        String[] audioNames2 = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios"), FileHelper.list_audios);
+                        files.addAll(Arrays.asList(audioNames2));
                         lastAudioIndex = files.size();
                         break;
                 }
@@ -274,28 +278,28 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                     return files.get(position);//category name
                 case 1:
                     String tripName = files.get(position);
-                    return new File(rootPath + "/" + tripName);// trip file
+                    return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName); // trip file
                 case 2:
                     String poiName = files.get(position);
                     String tripName2 = nowDir.split("/")[2];
-                    return new File(rootPath + "/" + tripName2 + "/" + poiName);//poi file
+                    return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName2, poiName);//poi file
                 case 3:
                     String poiName2 = nowDir.split("/")[3];
                     String tripName3 = nowDir.split("/")[2];
                     String memoryName = files.get(position);
                     if (type == Type.picture) {
-                        return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/pictures/" + memoryName); //picture file
+                        return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "pictures", memoryName); //picture file
                     } else if (type == Type.video) {
-                        return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/videos/" + memoryName); //video file
+                        return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "videos", memoryName); //video file
                     } else if (type == Type.audio) {
-                        return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/audios/" + memoryName); //audio file
+                        return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "audios", memoryName); //audio file
                     } else if (type == Type.other) {
                         if (position >= 0 && position < lastPictureIndex) { //is picture
-                            return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/pictures/" + memoryName);
+                            return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "pictures", memoryName);
                         } else if (position >= lastPictureIndex && position < lastVideoIndex) { //is video
-                            return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/videos/" + memoryName);
+                            return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "videos", memoryName);
                         } else if (position >= lastVideoIndex && position < lastAudioIndex) { //is audio
-                            return new File(rootPath + "/" + tripName3 + "/" + poiName2 + "/audios/" + memoryName);
+                            return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "audios", memoryName);
                         }
                     }
             }
@@ -315,8 +319,16 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 imageView.setMaxHeight(gridWidth);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 convertView = imageView;
-                String memoryPath = ((File) getItem(position)).getPath();
-                ImageLoader.getInstance().displayImage("file://" + memoryPath, (ImageView) convertView, options);
+                DocumentFile picFile = (DocumentFile) getItem(position);
+                DisplayImageOptions options = new DisplayImageOptions.Builder()
+                        .displayer(new FadeInBitmapDisplayer(500))
+                        .cacheInMemory(true)
+                        .cacheOnDisk(false)
+                        .bitmapConfig(Bitmap.Config.RGB_565)
+                        .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                        .extraForDownloader(picFile.getParentFile())
+                        .build();
+                ImageLoader.getInstance().displayImage(FileHelper.getFileName(picFile), (ImageView) convertView, options);
             } else {
                 TextView textView = new TextView(GetContentActivity.this);
                 if (nowLevel == 3 && type == Type.audio) {
@@ -369,7 +381,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             if (nowLevel == 3) {
                 if (action == Action.get_content) {
                     Intent intent = new Intent();
-                    intent.setData(Uri.fromFile((File) getItem(position)));
+                    intent.setData(((DocumentFile) getItem(position)).getUri());
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
@@ -401,12 +413,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         if (v.equals(save)) {
             if (action == Action.send) {
                 Uri uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
-                new MoveFilesTask(GetContentActivity.this, new Uri[]{uri}, new File[]{getToFile(uri)}).execute();
+                new MoveFilesTask(GetContentActivity.this, new Uri[]{uri}, new DocumentFile[]{getToFile(uri)}).execute();
             } else if (action == Action.send_multiple) {
                 ArrayList<Uri> uris = getIntent().getParcelableArrayListExtra(Intent.EXTRA_STREAM);
                 if (uris != null) {
                     Uri[] uriArray = new Uri[uris.size()];
-                    File[] toFiles = new File[uris.size()];
+                    DocumentFile[] toFiles = new DocumentFile[uris.size()];
                     for (int i = 0; i < uris.size(); i++) {
                         uriArray[i] = uris.get(i);
                         toFiles[i] = getToFile(uris.get(i));
@@ -418,20 +430,19 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         }
     }
 
-    private File getToFile(Uri uri) {
+    private DocumentFile getToFile(Uri uri) {
         if (uri != null) {
-            File toFile = null;
-            String rootPath = adapter.rootPath;
+            DocumentFile toFile = null;
             String nowDir = adapter.nowDir;
             String poiName = nowDir.split("/")[3];
             String tripName = nowDir.split("/")[2];
             String memoryName = FileHelper.getRealNameFromURI(this, uri);
             if (type == Type.picture) {
-                toFile = new File(rootPath + "/" + tripName + "/" + poiName + "/pictures/" + memoryName); //picture file
+                toFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures").createFile("", memoryName); //picture file
             } else if (type == Type.video) {
-                toFile = new File(rootPath + "/" + tripName + "/" + poiName + "/videos/" + memoryName); //video file
+                toFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos").createFile("", memoryName); //video file
             } else if (type == Type.audio) {
-                toFile = new File(rootPath + "/" + tripName + "/" + poiName + "/audios/" + memoryName); //audio file
+                toFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios").createFile("", memoryName); //audio file
             }
             return toFile;
         }
@@ -442,14 +453,14 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
 
         Activity activity;
         Uri[] fromUris;
-        File[] toFiles;
+        DocumentFile[] toFiles;
         TextView message;
         ProgressBar progress;
         TextView progressMessage;
         AlertDialog dialog;
         boolean cancel = false;
 
-        public MoveFilesTask(Activity activity, Uri[] fromUris, File[] toFiles) {
+        public MoveFilesTask(Activity activity, Uri[] fromUris, DocumentFile[] toFiles) {
             this.activity = activity;
             if (fromUris != null && toFiles != null && fromUris.length == toFiles.length) {
                 this.fromUris = fromUris;
@@ -484,21 +495,18 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 for (int i = 0; i < Math.min(fromUris.length, toFiles.length); i++) {
                     if (cancel)
                         break;
-                    publishProgress(toFiles[i].getName(), String.valueOf(i));
+                    publishProgress(FileHelper.getFileName(toFiles[i]), String.valueOf(i));
                     if (fromUris[i] == null || toFiles == null)
                         continue;
-                    if (fromUris[i].getPath().equals(toFiles[i].getPath()))
+                    if (fromUris[i].getPath().equals(toFiles[i].getUri().getPath()))
                         continue;
                     try {
                         InputStream inputStream = getContentResolver().openInputStream(fromUris[i]);
-                        FileOutputStream fileOutputStream = new FileOutputStream(toFiles[i]);
-                        FileHelper.copyByStream(inputStream, fileOutputStream);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (NullPointerException e) {
+                        OutputStream outputStream = getContentResolver().openOutputStream(toFiles[i].getUri());
+                        FileHelper.copyByStream(inputStream, outputStream);
+                    } catch (FileNotFoundException | NullPointerException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
             return null;

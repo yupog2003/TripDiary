@@ -3,15 +3,15 @@ package com.yupog2003.tripdiary;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -25,19 +25,20 @@ import android.widget.VideoView;
 import android.widget.ViewFlipper;
 
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class PlayPointActivity extends MyActivity implements View.OnClickListener {
     POI poi;
-    String pointPath;
-    String picturePath;
-    String videoPath;
-    String audioPath;
-    String textPath;
+    DocumentFile pictureFile;
+    DocumentFile videoFile;
+    DocumentFile audioFile;
+    DocumentFile textFile;
     ProgressDialog pd;
     ViewFlipper viewFlipper;
     Thread playThread;
@@ -54,8 +55,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     VideoView videoView;
     int interval;
     private static final int readTextSpeed = 100; //milli seconds per character
-    public static final String tag_trip="tag_trip";
-    public static final String tag_poi="tag_poi";
+    public static final String tag_trip = "tag_trip";
+    public static final String tag_poi = "tag_poi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +67,14 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         if (toolBar != null) {
             setSupportActionBar(toolBar);
         }
-        String tripName=getIntent().getStringExtra(tag_trip);
-        String poiName=getIntent().getStringExtra(tag_poi);
-        String rootPath=TripDiaryApplication.rootPath;
-        this.pointPath = rootPath+"/"+tripName+"/"+poiName;
-        poi = new POI(new File(pointPath));
+        String tripName = getIntent().getStringExtra(tag_trip);
+        String poiName = getIntent().getStringExtra(tag_poi);
+        poi = new POI(this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName));
         this.name = poi.title;
-        this.picturePath = poi.picDir.getPath();
-        this.videoPath = poi.videoDir.getPath();
-        this.audioPath = poi.audioDir.getPath();
-        this.textPath = poi.diaryFile.getPath();
+        this.pictureFile = poi.picDir;
+        this.videoFile = poi.videoDir;
+        this.audioFile = poi.audioDir;
+        this.textFile = poi.diaryFile;
         viewFlipper = (ViewFlipper) findViewById(R.id.pointviewflipper);
         viewFlipper.setInAnimation(this, android.R.anim.fade_in);
         viewFlipper.setOutAnimation(this, android.R.anim.fade_out);
@@ -86,7 +85,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         next = (ImageButton) findViewById(R.id.next);
         next.setOnClickListener(this);
         handler = new Handler();
-        setTitle(name + poi.time.formatInTimezone(MyCalendar.getPOITimeZone(PlayPointActivity.this, pointPath)));
+        setTitle(name + poi.time.formatInTimezone(MyCalendar.getTripTimeZone(this, poi.dir.getParentFile().getName())));
         new PrepareViewsTask().execute("");
     }
 
@@ -135,9 +134,13 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             option.inJustDecodeBounds = true;
             for (int i = 0; i < poi.picFiles.length; i++) {
                 BitmapFactory.Options option2 = new BitmapFactory.Options();
-                File file = poi.picFiles[i];
+                DocumentFile file = poi.picFiles[i];
                 final ImageView img = new ImageView(PlayPointActivity.this);
-                BitmapFactory.decodeFile(file.getPath(), option);
+                try {
+                    BitmapFactory.decodeStream(getContentResolver().openInputStream(file.getUri()), new Rect(0, 0, 0, 0), option);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 if (option.outWidth / width > option.outHeight / height) {
                     option2.inSampleSize = option.outWidth / width;
                 } else {
@@ -162,7 +165,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                     public void run() {
 
                         VideoView videoView = new VideoView(PlayPointActivity.this);
-                        videoView.setVideoPath(poi.videoFiles[index].getPath());
+                        videoView.setVideoURI(poi.videoFiles[index].getUri());
                         videoView.setMediaController(new MediaController(PlayPointActivity.this));
                         viewFlipper.addView(videoView);
                     }
@@ -174,7 +177,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             publishProgress(getString(R.string.prepare_audio));
             for (int i = 0; i < poi.audioFiles.length; i++) {
                 final TextView audiotext = new TextView(PlayPointActivity.this);
-                audiotext.setText(poi.audioFiles[i].getName());
+                audiotext.setText(FileHelper.getFileName(poi.audioFiles[i]));
                 audiotext.setTextSize(30);
                 runOnUiThread(new Runnable() {
 
@@ -215,15 +218,16 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                         if (viewFlipper.getChildAt(currentIndex) instanceof ImageView) {
                             final ImageView img = (ImageView) viewFlipper.getChildAt(currentIndex);
                             final ImgTag tag = (ImgTag) img.getTag();
-                            Bitmap bitmap = null;
+                            Bitmap bitmap;
                             while (true) {
                                 try {
-                                    bitmap = BitmapFactory.decodeFile(tag.file.getPath(), tag.option);
+                                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(tag.file.getUri()), new Rect(0, 0, 0, 0), tag.option);
                                     break;
                                 } catch (OutOfMemoryError e) {
                                     e.printStackTrace();
                                     System.gc();
-                                    continue;
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
                                 }
                             }
                             final Bitmap b = bitmap;
@@ -267,7 +271,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                                 e.printStackTrace();
                             }
                         } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView) {
-                            mp = MediaPlayer.create(PlayPointActivity.this, Uri.fromFile(new File(audioPath + "/" + ((TextView) viewFlipper.getChildAt(currentIndex)).getText().toString())));
+                            String audioName = ((TextView) viewFlipper.getChildAt(currentIndex)).getText().toString();
+                            mp = MediaPlayer.create(PlayPointActivity.this, FileHelper.findfile(poi.audioDir, audioName).getUri());
                             mp.start();
                             mediafinish = false;
                             mp.setOnCompletionListener(new OnCompletionListener() {
@@ -363,10 +368,10 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     }
 
     private class ImgTag {
-        public File file;
+        public DocumentFile file;
         public BitmapFactory.Options option;
 
-        public ImgTag(File file, BitmapFactory.Options option) {
+        public ImgTag(DocumentFile file, BitmapFactory.Options option) {
             this.file = file;
             this.option = option;
         }

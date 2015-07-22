@@ -21,16 +21,16 @@ public final class R {
 		public static final int ambilwarna_target = 0x7f020041;
 	}
 	public static final class id {
-		public static final int ambilwarna_cursor = 0x7f0e00ca;
-		public static final int ambilwarna_dialogView = 0x7f0e00c6;
-		public static final int ambilwarna_pref_widget_kotak = 0x7f0e00cf;
-		public static final int ambilwarna_state = 0x7f0e00cc;
-		public static final int ambilwarna_target = 0x7f0e00cb;
-		public static final int ambilwarna_viewContainer = 0x7f0e00c7;
-		public static final int ambilwarna_viewHue = 0x7f0e00c9;
-		public static final int ambilwarna_viewSatBri = 0x7f0e00c8;
-		public static final int ambilwarna_warnaBaru = 0x7f0e00ce;
-		public static final int ambilwarna_warnaLama = 0x7f0e00cd;
+		public static final int ambilwarna_cursor = 0x7f0e00cb;
+		public static final int ambilwarna_dialogView = 0x7f0e00c7;
+		public static final int ambilwarna_pref_widget_kotak = 0x7f0e00d0;
+		public static final int ambilwarna_state = 0x7f0e00cd;
+		public static final int ambilwarna_target = 0x7f0e00cc;
+		public static final int ambilwarna_viewContainer = 0x7f0e00c8;
+		public static final int ambilwarna_viewHue = 0x7f0e00ca;
+		public static final int ambilwarna_viewSatBri = 0x7f0e00c9;
+		public static final int ambilwarna_warnaBaru = 0x7f0e00cf;
+		public static final int ambilwarna_warnaLama = 0x7f0e00ce;
 	}
 	public static final class layout {
 		public static final int ambilwarna_dialog = 0x7f030028;

@@ -20,9 +20,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.provider.DocumentsContract;
+import android.preference.SwitchPreference;
 import android.support.v4.provider.DocumentFile;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -43,10 +42,9 @@ import com.yupog2003.tripdiary.preferences.SeekBarPreference;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class PreferFragment extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
     Preference musicpath;
@@ -63,24 +61,24 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     ListPreference distanceUnit;
     ListPreference altitudeUnit;
     SeekBarPreference diaryfontsize;
+    SwitchPreference usesaf;
 
     private static final int selectmusicpath = 0;
     private static final int selectdiaryfont = 1;
     private static final int selectrootpath = 2;
-    private static String backedupPreferencePath = TripDiaryApplication.rootPath + "/.settings";
+    private static DocumentFile backupPreferenceFile;
     private static final String categorySettingName = "category";
     private static final String tripSettingName = "trip";
+    private static final String tripTimeSettingName = "tripTime";
     private static final String tripExpandSettingName = "categoryExpand";
     private static final String tripTimezoneSettingName = "tripTimezone";
     private static final String defaultSettingName = "com.yupog2003.tripdiary_preferences";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
-        File file = new File(backedupPreferencePath);
-        if (!file.exists())
-            file.mkdirs();
         musicpath = findPreference("musicpath");
         musicpath.setSummary(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("musicpath", getString(R.string.select_music_path)));
         musicpath.setOnPreferenceClickListener(this);
@@ -118,6 +116,14 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         distanceUnit.setOnPreferenceChangeListener(this);
         altitudeUnit = (ListPreference) findPreference("altitude_unit");
         altitudeUnit.setOnPreferenceChangeListener(this);
+        usesaf = (SwitchPreference) findPreference("usesaf");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            usesaf.setEnabled(false);
+        }
+        backupPreferenceFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, ".settings");
+        if (backupPreferenceFile == null) {
+            backupPreferenceFile = TripDiaryApplication.rootDocumentFile.createDirectory(".settings");
+        }
 
     }
 
@@ -160,30 +166,9 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                         Uri uri = data.getData();
                         String authority = uri.getAuthority();
                         if (authority.equals("com.android.externalstorage.documents")) {
-                            final int flags = (Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            final int flags = (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                             getActivity().getContentResolver().takePersistableUriPermission(uri, flags);
-                            String id = DocumentsContract.getTreeDocumentId(uri);
-                            String[] toks = id.split(":");
-                            String type = toks[0];
-                            String dir = toks.length > 1 ? toks[1] : "";
-                            String newRootPath = Environment.getExternalStorageDirectory() + "/TripDiary";
-                            if (type.equals("primary")) {
-                                newRootPath = Environment.getExternalStorageDirectory() + "/" + dir;
-                            } else {
-                                File[] files = getActivity().getExternalFilesDirs(null);
-                                for (File file : files) {
-                                    if (file != null) {
-                                        File root = file.getParentFile().getParentFile().getParentFile().getParentFile();
-                                        if (root != null && !root.getPath().equals(Environment.getExternalStorageDirectory().getPath())) {
-                                            newRootPath = root.getPath() + "/" + dir;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if (FileHelper.checkHasWritePermission(getActivity(), newRootPath)){
-                                setNewRootPath(newRootPath);
-                            }
+                            setNewRootPath(uri.toString());
                         } else {
                             Toast.makeText(getActivity(), "Please select another path. Either internal or external storage.", Toast.LENGTH_SHORT).show();
                         }
@@ -206,23 +191,56 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
             i.setType("file/*");
             startActivityForResult(Intent.createChooser(i, getString(R.string.diary_font)), selectdiaryfont);
         } else if (preference.equals(backupsetting)) {
-            boolean b1 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), defaultSettingName, new File(backedupPreferencePath + "/" + defaultSettingName));
-            boolean b2 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), categorySettingName, new File(backedupPreferencePath + "/" + categorySettingName));
-            boolean b3 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripSettingName, new File(backedupPreferencePath + "/" + tripSettingName));
-            boolean b4 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripExpandSettingName, new File(backedupPreferencePath + "/" + tripExpandSettingName));
-            boolean b5 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripTimezoneSettingName, new File(backedupPreferencePath + "/" + tripTimezoneSettingName));
-            if (b1 && b2 && b3 & b4 && b5)
+            DocumentFile[] settingFiles = backupPreferenceFile.listFiles();
+            DocumentFile file = FileHelper.findfile(settingFiles, defaultSettingName);
+            if (file == null) {
+                file = backupPreferenceFile.createFile("", defaultSettingName);
+            }
+            boolean b1 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), defaultSettingName, file);
+
+            file = FileHelper.findfile(settingFiles, categorySettingName);
+            if (file == null) {
+                file = backupPreferenceFile.createFile("", categorySettingName);
+            }
+            boolean b2 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), categorySettingName, file);
+
+            file = FileHelper.findfile(settingFiles, tripSettingName);
+            if (file == null) {
+                file = backupPreferenceFile.createFile("", tripSettingName);
+            }
+            boolean b3 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripSettingName, file);
+
+            file = FileHelper.findfile(settingFiles, tripExpandSettingName);
+            if (file == null) {
+                file = backupPreferenceFile.createFile("", tripExpandSettingName);
+            }
+            boolean b4 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripExpandSettingName, file);
+
+            file = FileHelper.findfile(settingFiles, tripTimezoneSettingName);
+            if (file == null) {
+                file = backupPreferenceFile.createFile("", tripTimezoneSettingName);
+            }
+            boolean b5 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripTimezoneSettingName, file);
+
+            file = FileHelper.findfile(settingFiles, tripTimeSettingName);
+            if (file == null) {
+                file = backupPreferenceFile.createFile("", tripTimeSettingName);
+            }
+            boolean b6 = MyBackupAgent.saveSharedPreferencesToFile(getActivity(), tripTimeSettingName, file);
+            if (b1 && b2 && b3 & b4 && b5 && b6)
                 Toast.makeText(getActivity(), getString(R.string.setting_has_been_backed_up), Toast.LENGTH_SHORT).show();
         } else if (preference.equals(restoresetting)) {
-            boolean b1 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), defaultSettingName, new File(backedupPreferencePath + "/" + defaultSettingName));
-            boolean b2 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), categorySettingName, new File(backedupPreferencePath + "/" + categorySettingName));
-            boolean b3 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripSettingName, new File(backedupPreferencePath + "/" + tripSettingName));
-            boolean b4 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripExpandSettingName, new File(backedupPreferencePath + "/" + tripExpandSettingName));
-            boolean b5 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripTimezoneSettingName, new File(backedupPreferencePath + "/" + tripTimezoneSettingName));
-            if (b1 && b2 && b3 && b4 && b5)
+            boolean b1 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), defaultSettingName, FileHelper.findfile(backupPreferenceFile, defaultSettingName));
+            boolean b2 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), categorySettingName, FileHelper.findfile(backupPreferenceFile, categorySettingName));
+            boolean b3 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripSettingName, FileHelper.findfile(backupPreferenceFile, tripSettingName));
+            boolean b4 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripExpandSettingName, FileHelper.findfile(backupPreferenceFile, tripExpandSettingName));
+            boolean b5 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripTimezoneSettingName, FileHelper.findfile(backupPreferenceFile, tripTimezoneSettingName));
+            boolean b6 = MyBackupAgent.loadSharedPreferencesFromFile(getActivity(), tripTimeSettingName, FileHelper.findfile(backupPreferenceFile, tripTimeSettingName));
+            if (b1 && b2 && b3 && b4 && b5 && b6)
                 Toast.makeText(getActivity(), getString(R.string.setting_has_been_restored), Toast.LENGTH_SHORT).show();
         } else if (preference.equals(rootpath)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            boolean isUseSAF = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("usesaf", false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isUseSAF) {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                 startActivityForResult(intent, selectrootpath);
             } else {
@@ -235,7 +253,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 ab.setView(listView);
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        String newRootPath=adapter.getRoot().getPath();
+                        String newRootPath = adapter.getRoot().getPath();
                         if (FileHelper.checkHasWritePermission(getActivity(), newRootPath)) {
                             setNewRootPath(newRootPath);
                         }
@@ -302,8 +320,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                 editor.putString("rootpath", newPath);
                 editor.commit();
-                TripDiaryApplication.rootPath = newPath;
-                TripDiaryApplication.creatRootDir(newPath);
+                TripDiaryApplication.updateRootPath(newPath);
             } else {
                 Toast.makeText(getActivity(), newPath + " " + getString(R.string.is_not_a_valid_directory), Toast.LENGTH_SHORT).show();
             }
@@ -324,8 +341,11 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         editor.putString("rootpath", newRootPath);
         editor.commit();
         rootpath.setSummary(newRootPath);
-        TripDiaryApplication.rootPath = newRootPath;
-        backedupPreferencePath = TripDiaryApplication.rootPath + "/.settings";
+        TripDiaryApplication.updateRootPath(newRootPath);
+        backupPreferenceFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, ".settings");
+        if (backupPreferenceFile == null) {
+            backupPreferenceFile = TripDiaryApplication.rootDocumentFile.createDirectory(".settings");
+        }
     }
 
     class UpdateTripTimeZoneTask extends AsyncTask<String, String, String> {
@@ -360,21 +380,15 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         @Override
         protected String doInBackground(String... params) {
 
-            File[] trips = new File(TripDiaryApplication.rootPath).listFiles(new FileFilter() {
-
-                public boolean accept(File pathname) {
-
-                    return pathname.isDirectory() && !pathname.getName().startsWith(".");
-                }
-            });
+            DocumentFile[] trips = FileHelper.listFiles(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
             publishProgress("setMax", String.valueOf(trips.length));
             for (int i = 0; i < trips.length; i++) {
                 if (cancel)
                     break;
-                String tripName = trips[i].getName();
+                String tripName = FileHelper.getFileName(trips[i]);
                 publishProgress(tripName, String.valueOf(i));
                 try {
-                    BufferedReader br = new BufferedReader(new FileReader(new File(trips[i].getPath() + "/" + tripName + ".gpx")));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(FileHelper.findfile(trips[i], tripName + ".gpx").getUri())));
                     String s;
                     while ((s = br.readLine()) != null) {
                         if (s.contains("<trkpt ")) {
@@ -388,7 +402,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                                 lng = Double.parseDouble(toks[3]);
                             }
                             MyCalendar.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
-                            new File(trips[i].getPath() + "/" + tripName + ".gpx.cache").delete();
+                            FileHelper.findfile(trips[i], tripName + ".gpx.cache").delete();
                             break;
                         }
                     }

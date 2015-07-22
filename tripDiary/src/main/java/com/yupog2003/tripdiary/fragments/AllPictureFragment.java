@@ -1,10 +1,10 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,32 +22,28 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
 
-import java.io.File;
-
 public class AllPictureFragment extends Fragment {
     POI[] pois;
     RecyclerView recyclerView;
+    POIAdapter poiAdapter;
     int width;
     int numColums;
-    DisplayImageOptions options;
+
 
     public AllPictureFragment() {
-        options = new DisplayImageOptions.Builder()
-                .displayer(new FadeInBitmapDisplayer(500))
-                .cacheInMemory(true)
-                .cacheOnDisk(false)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
+
     }
 
     @Override
@@ -62,23 +58,22 @@ public class AllPictureFragment extends Fragment {
             numColums = 3;
         }
         recyclerView = new RecyclerView(getActivity());
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         setHasOptionsMenu(true);
-        refresh();
         return recyclerView;
     }
 
     @Override
     public void onResume() {
-        //refresh();
         super.onResume();
     }
 
     public void refresh() {
         this.pois = ViewTripActivity.trip.pois;
-        recyclerView.setAdapter(new POIAdapter(pois));
+        poiAdapter = new POIAdapter(pois);
+        recyclerView.setAdapter(poiAdapter);
     }
 
     @Override
@@ -92,12 +87,22 @@ public class AllPictureFragment extends Fragment {
     }
 
     class PictureAdapter extends BaseAdapter implements OnItemClickListener {
-        File[] pictures;
+        DocumentFile[] pictures;
         Bitmap[] bitmaps;
+        DisplayImageOptions options;
 
-        public PictureAdapter(File[] pictures) {
+        public PictureAdapter(DocumentFile[] pictures) {
             this.pictures = pictures;
-            this.bitmaps=new Bitmap[pictures.length];
+            this.bitmaps = new Bitmap[pictures.length];
+            if (pictures.length > 0)
+                options = new DisplayImageOptions.Builder()
+                        .displayer(new FadeInBitmapDisplayer(500))
+                        .cacheInMemory(true)
+                        .cacheOnDisk(false)
+                        .bitmapConfig(Bitmap.Config.RGB_565)
+                        .imageScaleType(ImageScaleType.EXACTLY)
+                        .extraForDownloader(pictures[0].getParentFile())
+                        .build();
         }
 
         public int getCount() {
@@ -126,27 +131,28 @@ public class AllPictureFragment extends Fragment {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 convertView = imageView;
             }
-            if (bitmaps[position]==null){
-                ImageLoader.getInstance().displayImage("file://" + pictures[position].getPath(), (ImageView) convertView, options, new SimpleImageLoadingListener() {
+            if (bitmaps[position] == null) {
+                ImageLoader.getInstance().displayImage(FileHelper.getFileName(pictures[position]), (ImageView) convertView, options, new SimpleImageLoadingListener() {
                     @Override
-                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                        try{
-                            bitmaps[position]=bitmap.copy(Bitmap.Config.RGB_565,true);
-                        }catch (OutOfMemoryError e){
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        try {
+                            bitmaps[position] = loadedImage;
+                        } catch (OutOfMemoryError e) {
                             e.printStackTrace();
                         }
                     }
 
                 });
-            }else{
-                ((ImageView)convertView).setImageBitmap(bitmaps[position]);
+            } else {
+                ((ImageView) convertView).setImageBitmap(bitmaps[position]);
             }
             return convertView;
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(pictures[position]), "image/*");
+            intent.setDataAndType(pictures[position].getUri(), "image/*");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             getActivity().startActivity(intent);
         }
     }
@@ -173,11 +179,12 @@ public class AllPictureFragment extends Fragment {
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String tripName=pois[index].dir.getParentFile().getName();
-                        String poiName=pois[index].dir.getName();
+                        String tripName = FileHelper.getFileName(pois[index].dir.getParentFile());
+                        String poiName = FileHelper.getFileName(pois[index].dir);
                         Intent intent = new Intent(getActivity(), ViewPointActivity.class);
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);
+                        intent.putExtra(ViewPointActivity.tag_fromActivity, ViewTripActivity.class.getSimpleName());
                         startActivity(intent);
                     }
                 };

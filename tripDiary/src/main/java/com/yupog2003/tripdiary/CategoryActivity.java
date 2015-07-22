@@ -32,7 +32,7 @@ import java.util.Set;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
-public class CategoryActivity extends MyActivity implements View.OnClickListener{
+public class CategoryActivity extends MyActivity implements View.OnClickListener {
 
     SharedPreferences categorysp;
     SharedPreferences tripsp;
@@ -51,7 +51,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
         setContentView(R.layout.activity_category);
         listView = (ListView) findViewById(R.id.listView);
         toolBar = (Toolbar) findViewById(R.id.toolbar);
-        add=(FloatingActionButton)findViewById(R.id.add);
+        add = (FloatingActionButton) findViewById(R.id.add);
         add.setOnClickListener(this);
         setSupportActionBar(toolBar);
         setTitle(R.string.manage_category);
@@ -63,8 +63,6 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
         tripsp = getSharedPreferences("trip", MODE_PRIVATE);
         categoryeditor = categorysp.edit();
         tripeditor = tripsp.edit();
-        categoryeditor.commit();
-        tripeditor.commit();
         Map<String, ?> map = categorysp.getAll();
         Set<String> set = map.keySet();
         categories = set.toArray(new String[set.size()]);
@@ -79,7 +77,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (v.equals(add)){
+        if (v.equals(add)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.edit_category));
             LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, null);
@@ -198,9 +196,9 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
 
                     String nameStr = categoryName.getText().toString();
                     int color = (Integer) colorImage.getTag();
-                    for (int i = 0; i < trips.length; i++) {
-                        if (tripsp.getString(trips[i], getString(R.string.nocategory)).equals(categories[position])) {
-                            tripeditor.putString(trips[i], nameStr);
+                    for (String trip : trips) {
+                        if (tripsp.getString(trip, getString(R.string.nocategory)).equals(categories[position])) {
+                            tripeditor.putString(trip, nameStr);
                         }
                     }
                     tripeditor.commit();
@@ -229,10 +227,10 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                     if (categories[position].equals(getString(R.string.nocategory))) {
                         Toast.makeText(CategoryActivity.this, getString(R.string.cannot_delete_nocategory), Toast.LENGTH_SHORT).show();
                     } else {
-                        for (int i = 0; i < trips.length; i++) {
-                            String category = tripsp.getString(trips[i], getString(R.string.nocategory));
+                        for (String trip : trips) {
+                            String category = tripsp.getString(trip, getString(R.string.nocategory));
                             if (category.equals(categories[position])) {
-                                tripeditor.putString(trips[i], getString(R.string.nocategory));
+                                tripeditor.putString(trip, getString(R.string.nocategory));
                                 tripeditor.commit();
                             }
                         }

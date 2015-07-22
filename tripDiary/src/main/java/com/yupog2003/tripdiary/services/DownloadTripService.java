@@ -2,9 +2,9 @@ package com.yupog2003.tripdiary.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 
-import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.FileHelper;
@@ -17,17 +17,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class DownloadTripService extends IntentService {
 
     int totalread = 0;
     int fileSize = 0;
-    static final String phpURL = MainActivity.serverURL + "/zipTrip.php";
+    static final String phpURL = TripDiaryApplication.serverURL + "/zipTrip.php";
     NotificationCompat.Builder nb;
+    Handler handler;
 
     public DownloadTripService() {
         super("DownloadTripService");
         nb = new NotificationCompat.Builder(this);
+        handler=new Handler();
     }
 
     @Override
@@ -38,18 +41,19 @@ public class DownloadTripService extends IntentService {
             return;
         final String tripName = tripPath.substring(tripPath.lastIndexOf("/") + 1);
         updateNotification(tripName, getString(R.string.zipping) + "...", 0);
-        String url = phpURL + "?tripPath=" + tripPath;
-        url = url.replace(" ", "%20");
         try {
-            HttpURLConnection connection=(HttpURLConnection)new URL(url).openConnection();
-            String tripLink= IOUtils.toString(connection.getInputStream(), "UTF-8");
-            tripLink = MainActivity.serverURL + "/" + tripLink;
-            tripLink = tripLink.replace(" ", "%20");
+            tripPath=URLEncoder.encode(tripPath, "UTF-8");
+            String url = phpURL + "?tripPath=" + tripPath;
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            String tripLink = IOUtils.toString(connection.getInputStream(), "UTF-8");
+            String zipFileName=tripLink.substring(tripLink.lastIndexOf("/") + 1);
+            tripLink=tripLink.replace(zipFileName, URLEncoder.encode(zipFileName, "UTF-8").replace("+", "%20"));
+            tripLink = TripDiaryApplication.serverURL + "/" + tripLink;
             URL tripURL = new URL(tripLink);
             connection = (HttpURLConnection) tripURL.openConnection();
             fileSize = connection.getContentLength();
             InputStream is = connection.getInputStream();
-            File zipFile = new File(TripDiaryApplication.rootPath + "/" + tripName + ".zip");
+            File zipFile = new File(getCacheDir(), tripName + ".zip");
             FileOutputStream fos = new FileOutputStream(zipFile);
             byte[] buffer = new byte[4096];
             int read;
@@ -78,7 +82,7 @@ public class DownloadTripService extends IntentService {
             is.close();
             fileSize = 0;
             updateNotification(tripName, getString(R.string.unzipping) + "...", 100);
-            FileHelper.unZip(zipFile.getPath(), TripDiaryApplication.rootPath + "/");
+            FileHelper.unZip(zipFile, TripDiaryApplication.rootDocumentFile);
         } catch (IOException e) {
 
             e.printStackTrace();

@@ -211,7 +211,7 @@
     <string name="max_altitude">最大高度</string>
     <string name="min_altitude">最低高度</string>
     <string name="velocity">速率</string>
-    <string name="share_track_kml">分享轨迹(kml)</string>
+    <string name="share_track_kml">分享轨迹(KML)</string>
     <string name="has_not_been_installed">未安装</string>
     <string name="do_you_want_to_install">要安装吗？</string>
     <string name="street_view">街景服务</string>
@@ -242,7 +242,7 @@
     <string name="sound">声音</string>
     <string name="share_track_by...">分享轨迹…</string>
     <string name="gpx">Gpx</string>
-    <string name="kml">Kml</string>
+    <string name="kml">KML</string>
     <string name="root_path">根目录</string>
     <string name="is_not_a_valid_directory">不是一个正确的目录</string>
     <string name="street_view_is_not_available">无街景服务</string>
@@ -262,8 +262,8 @@
     <string name="zipping">压缩中</string>
     <string name="uploading">上传中</string>
     <string name="local_trips">本机旅程</string>
-    <string name="remote_public_trips">远端公开旅程</string>
-    <string name="remote_personal_trips">远端个人旅程</string>
+    <string name="remote_public_trips">云端公开旅程</string>
+    <string name="remote_personal_trips">云端个人旅程</string>
     <string name="downloading">下载中</string>
     <string name="unzipping">解压缩中</string>
     <string name="download">下载</string>
@@ -339,5 +339,12 @@
     <string name="barchart">直方图</string>
     <string name="list">列表</string>
     <string name="piechart">圆饼图</string>
+    <string name="marker_color">标记颜色</string>
+    <string name="use_storage_access_framework">使用Storage Access Framework</string>
+    <string name="storage_access_framework_explanation">为棒棒糖开启SD卡写入权限，会降低一点效能，改变后请重新设定根目录</string>
+    <string name="kmz_with_explanation">KMZ (Google Earth, 包含压缩后的图片)</string>
+    <string name="share_track_kmz">分享轨迹(KMZ)</string>
+    <string name="share_track_gpx">分享轨迹(GPX)</string>
+    <string name="please_stop_previous_trip_first">请先停止之前的旅程</string>
 
 </resources>

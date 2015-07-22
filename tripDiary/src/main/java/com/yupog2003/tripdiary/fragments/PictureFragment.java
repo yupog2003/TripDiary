@@ -1,7 +1,6 @@
 package com.yupog2003.tripdiary.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -9,7 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.print.PrintHelper;
+import android.support.v4.provider.DocumentFile;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,8 +38,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class PictureFragment extends Fragment implements OnItemClickListener {
@@ -58,15 +58,13 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onPause() {
-
-        // adapter.run=false;
         super.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        File[] picFiles = ViewPointActivity.poi.picDir.listFiles(FileHelper.getPictureFileFilter());
+        DocumentFile[] picFiles = FileHelper.listFiles(ViewPointActivity.poi.picDir, FileHelper.list_pics);
         if (picFiles != null && adapter != null && picFiles.length != adapter.getCount()) {
             adapter.reFresh();
         }
@@ -82,7 +80,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     }
 
     class PictureAdapter extends BaseAdapter {
-        File[] files;
+        DocumentFile[] files;
         int width;
         DisplayImageOptions options;
         Bitmap[] bitmaps;
@@ -99,14 +97,23 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 width = screenWidth / 3;
                 layout.setNumColumns(3);
             }
-            dp2=(int)DeviceHelper.pxFromDp(getActivity(), 2);
-            options = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).cacheInMemory(true).cacheOnDisk(false).imageScaleType(ImageScaleType.EXACTLY_STRETCHED).bitmapConfig(Bitmap.Config.RGB_565).build();
+            dp2 = (int) DeviceHelper.pxFromDp(getActivity(), 2);
             files = ViewPointActivity.poi.picFiles;
             if (files == null) {
-                files = new File[0];
+                files = new DocumentFile[0];
             }
+            options = new DisplayImageOptions.Builder()
+                    .displayer(new FadeInBitmapDisplayer(500))
+                    .cacheInMemory(true)
+                    .cacheOnDisk(false)
+                    .imageScaleType(ImageScaleType.EXACTLY)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .extraForDownloader(ViewPointActivity.poi.picDir)
+                    .build();
+
             bitmaps = new Bitmap[files.length];
-            onMultiChoiceMode=false;
+            onMultiChoiceMode = false;
+
         }
 
         public void reFresh() {
@@ -147,7 +154,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 convertView.setTag(i);
             }
             if (bitmaps[position] == null) {
-                ImageLoader.getInstance().displayImage("file://" + files[position].getPath(), (ImageView) convertView.getTag(), options, new SimpleImageLoadingListener() {
+                ImageLoader.getInstance().displayImage(FileHelper.getFileName(files[position]), (ImageView) convertView.getTag(), options, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         bitmaps[position] = loadedImage;
@@ -156,7 +163,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
             } else {
                 ((ImageView) convertView.getTag()).setImageBitmap(bitmaps[position]);
             }
-            ((CheckableLayout)convertView).setOnMultiChoiceMode(onMultiChoiceMode);
+            ((CheckableLayout) convertView).setOnMultiChoiceMode(onMultiChoiceMode);
             return convertView;
         }
 
@@ -174,10 +181,10 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-            final ArrayList<File> checksName = new ArrayList<File>();
+            final ArrayList<DocumentFile> checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
-                    checksName.add((File) adapter.getItem(i));
+                    checksName.add((DocumentFile) adapter.getItem(i));
                 }
             }
             if (item.getItemId() == R.id.delete) {
@@ -201,18 +208,18 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 mode.finish();
             } else if (item.getItemId() == R.id.rename) {
                 if (checksName.size() == 1) {
-                    final File checkFile = checksName.get(0);
+                    final DocumentFile checkFile = checksName.get(0);
                     AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
                     ab2.setTitle(getString(R.string.filename));
                     final EditText name = new EditText(getActivity());
-                    name.setText(checkFile.getName());
+                    name.setText(FileHelper.getFileName(checkFile));
                     ab2.setView(name);
                     ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
 
                             String s = name.getText().toString();
-                            checkFile.renameTo(new File(checkFile.getParent() + "/" + s));
+                            checkFile.renameTo(s);
                             adapter.reFresh();
                             ViewPointActivity.requestUpdatePOI();
                         }
@@ -226,8 +233,8 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 }
                 checkAll = !checkAll;
             } else if (item.getItemId() == R.id.print) {
-                final File picFile = checksName.get(0);
-                final String fileName = picFile.getName();
+                final DocumentFile picFile = checksName.get(0);
+                final String fileName = FileHelper.getFileName(picFile);
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 final EditText editText = new EditText(getActivity());
                 editText.setText(fileName.substring(0, fileName.lastIndexOf(".")));
@@ -240,17 +247,23 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
                         PrintHelper photoPrinter = new PrintHelper(getActivity());
                         photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-                        Bitmap bitmap = BitmapFactory.decodeFile(picFile.getPath());
-                        photoPrinter.printBitmap(editText.getText().toString(), bitmap);
+                        Bitmap bitmap;
+                        try {
+                            bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(picFile.getUri()));
+                            photoPrinter.printBitmap(editText.getText().toString(), bitmap);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
                 ab.setNegativeButton(R.string.cancel, null);
                 ab.show();
             } else if (item.getItemId() == R.id.share) {
-                ArrayList<Uri> uris = new ArrayList<Uri>();
+                ArrayList<Uri> uris = new ArrayList<>();
                 for (int i = 0; i < checks.length; i++) {
                     if (checks[i]) {
-                        uris.add(Uri.fromFile((File) adapter.getItem(i)));
+                        uris.add(((DocumentFile) adapter.getItem(i)).getUri());
                     }
                 }
                 Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
@@ -258,21 +271,8 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final File tripFile = ViewPointActivity.poi.dir.getParentFile();
-                final String[] pois = tripFile.list(new FilenameFilter() {
-
-                    @Override
-                    public boolean accept(File dir, String filename) {
-
-                        if (filename.equals(ViewPointActivity.poi.dir.getName())) {
-                            return false;
-                        }
-                        if (new File(dir, filename).isFile()) {
-                            return false;
-                        }
-                        return true;
-                    }
-                });
+                final DocumentFile tripFile = ViewPointActivity.poi.dir.getParentFile();
+                final String[] pois = FileHelper.listFileNames(tripFile, FileHelper.list_dirs);
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);
                 ab.setItems(pois, new OnClickListener() {
@@ -280,17 +280,19 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        File[] fromFiles = checksName.toArray(new File[checksName.size()]);
-                        File[] toFiles = new File[checksName.size()];
+                        DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
+                        DocumentFile[] toFiles = new DocumentFile[checksName.size()];
+                        DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "pictures");
                         for (int i = 0; i < toFiles.length; i++) {
-                            toFiles[i] = new File(tripFile.getPath() + "/" + pois[which] + "/pictures/" + checksName.get(i).getName());
+                            toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            fromFiles[i] = checksName.get(i);
                         }
                         new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
 
                             @Override
                             public void onFinish() {
                                 adapter.reFresh();
-                                ViewPointActivity.requestUpdatePOI();
+                                ViewPointActivity.requestUpdatePOIs();
                             }
                         }).execute();
 
@@ -309,12 +311,12 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 checks[i] = false;
             }
             checkAll = false;
-            adapter.onMultiChoiceMode=true;
+            adapter.onMultiChoiceMode = true;
             return true;
         }
 
         public void onDestroyActionMode(ActionMode mode) {
-            adapter.onMultiChoiceMode=false;
+            adapter.onMultiChoiceMode = false;
         }
 
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -326,8 +328,8 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
             checks[position] = checked;
             int selects = 0;
-            for (int i = 0; i < checks.length; i++) {
-                if (checks[i]) {
+            for (boolean check : checks) {
+                if (check) {
                     selects++;
                 }
             }
@@ -341,7 +343,9 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile((File) adapter.getItem(position)), "image/*");
+        Uri uri = ((DocumentFile) adapter.getItem(position)).getUri();
+        intent.setDataAndType(uri, "image/*");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         getActivity().startActivity(intent);
     }
 

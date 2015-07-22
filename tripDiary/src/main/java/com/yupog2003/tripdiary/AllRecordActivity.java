@@ -1,7 +1,6 @@
 package com.yupog2003.tripdiary;
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -9,6 +8,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +20,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.yupog2003.tripdiary.data.ColorHelper;
+import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -36,20 +41,19 @@ import com.yupog2003.tripdiary.views.POIInfoWindowAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class AllRecordActivity extends MyActivity implements OnInfoWindowClickListener {
-    MapFragment mapFragment;
+    SupportMapFragment mapFragment;
     GoogleMap gmap;
     Record record;
-    String rootPath;
     String[] tripNames;
-    Trip[] trips;
+    static Trip[] trips;
     AnalysisTask analysisTask;
     ArrayList<Marker> markers;
+    ProgressBar progressBar;
     public static final int[] colors = new int[]{Color.parseColor("#FF0000"), Color.parseColor("#FF8000"), Color.parseColor("#FFFF00"), Color.parseColor("#00FF00"), Color.parseColor("#00FFFF"), Color.parseColor("#0000FF"), Color.parseColor("#FF00FF")};
     public static final String tag_trip_names = "tripNames";
 
@@ -61,13 +65,17 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         if (toolBar != null) {
             setSupportActionBar(toolBar);
         }
-        mapFragment = MapFragment.newInstance();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        progressBar = (ProgressBar) findViewById(R.id.analysis_progress);
+        mapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.maplayout, mapFragment, "mapFragment");
         ft.commit();
-        rootPath = TripDiaryApplication.rootPath;
-        markers = new ArrayList<Marker>();
+        markers = new ArrayList<>();
         record = new Record();
+        record.maxAltitude = -Float.MAX_VALUE;
+        record.minAltitude = Float.MAX_VALUE;
+        record.maxLatitude = -Float.MAX_VALUE;
+        record.minLatitude = Float.MAX_VALUE;
         tripNames = getIntent().getStringArrayExtra(tag_trip_names);
         if (tripNames == null) {
             tripNames = new String[0];
@@ -85,12 +93,11 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
-                gmap = googleMap;
-                gmap.setInfoWindowAdapter(new POIInfoWindowAdapter(AllRecordActivity.this, rootPath));
-                gmap.setOnInfoWindowClickListener(AllRecordActivity.this);
-                gmap.getUiSettings().setZoomControlsEnabled(true);
-                analysisTask = new AnalysisTask();
-                analysisTask.execute();
+                    gmap = googleMap;
+                    gmap.setOnInfoWindowClickListener(AllRecordActivity.this);
+                    gmap.getUiSettings().setZoomControlsEnabled(true);
+                    analysisTask = new AnalysisTask();
+                    analysisTask.execute();
                 }
             });
         }
@@ -112,7 +119,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                 ab.setTitle(R.string.statistics);
                 View rootView = getLayoutInflater().inflate(R.layout.all_record_statistics, null);
                 TextView totalTime = (TextView) rootView.findViewById(R.id.totalTime);
-                totalTime.setText(record.totalTime);
+                totalTime.setText(MyCalendar.formatTotalTime(record.totalTime));
                 TextView totalDistance = (TextView) rootView.findViewById(R.id.distance);
                 totalDistance.setText(GpxAnalyzer2.getDistanceString(record.totalDistance / 1000, "km"));
                 TextView totalClimb = (TextView) rootView.findViewById(R.id.totalClimb);
@@ -144,28 +151,19 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
     class AnalysisTask extends AsyncTask<String, Object, Boolean> implements OnCancelListener {
 
-        AlertDialog ad;
-        TextView message;
-        TextView smallMessage;
-        ProgressBar progressBar;
+        String progressFormat;
+        BitmapDescriptor bd;
 
         @Override
         protected void onPreExecute() {
-
             setProgressBarIndeterminateVisibility(true);
-            AlertDialog.Builder ab = new AlertDialog.Builder(AllRecordActivity.this);
-            ab.setTitle(R.string.analysis_gpx);
-            View rootView = getLayoutInflater().inflate(R.layout.classical_progress_dialog, null);
-            message = (TextView) rootView.findViewById(R.id.message);
-            progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
-            progressBar.setMax(tripNames.length);
-            smallMessage = (TextView) rootView.findViewById(R.id.smallmessage);
-            ab.setView(rootView);
-            ad = ab.create();
-            ad.show();
             if (!libraryLoadSuccess) {
                 Toast.makeText(AllRecordActivity.this, getString(R.string.failed_to_loadlibrary), Toast.LENGTH_SHORT).show();
             }
+            progressBar.setMax(tripNames.length);
+            progressFormat = getString(R.string.lifetime_record) + "(%d/%d)";
+            float hue = ColorHelper.getMarkerColorHue(getActivity());
+            bd = BitmapDescriptorFactory.defaultMarker(hue);
         }
 
         public void changeProgress(int progress) {
@@ -181,16 +179,39 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
             if (tripNames == null)
                 return false;
+            boolean success = true;
+            DocumentFile[] tripFiles = TripDiaryApplication.rootDocumentFile.listFiles();
             for (int i = 0; i < tripNames.length; i++) {
-                tripNames[i] = rootPath + "/" + tripNames[i];
-                trips[i] = new Trip(AllRecordActivity.this, new File(tripNames[i]), false);
+                DocumentFile tripFile = FileHelper.findfile(tripFiles, tripNames[i]);
+                trips[i] = new Trip(AllRecordActivity.this, tripFile, false);
+                publishProgress(i);
+                DocumentFile gpxFile = FileHelper.findfile(tripFile, tripNames[i] + ".gpx");
+                File tempFile = new File(getCacheDir(), tripNames[i] + ".gpx");
+                FileHelper.copyFile(gpxFile, tempFile);
+                Record record = new Record();
+                if (libraryLoadSuccess) {
+                    success &= parse(tempFile.getPath(), record);
+                } else {
+                    success &= parseJava(tempFile.getPath(), record);
+                }
+                tempFile.delete();
+                AllRecordActivity.this.record.totalTime += record.totalTime;
+                AllRecordActivity.this.record.totalDistance += record.totalDistance;
+                AllRecordActivity.this.record.totalClimb += record.totalClimb;
+                if (AllRecordActivity.this.record.maxAltitude < record.maxAltitude) {
+                    AllRecordActivity.this.record.maxAltitude = record.maxAltitude;
+                }
+                if (AllRecordActivity.this.record.minAltitude > record.minAltitude) {
+                    AllRecordActivity.this.record.minAltitude = record.minAltitude;
+                }
+                if (AllRecordActivity.this.record.maxLatitude < record.maxLatitude) {
+                    AllRecordActivity.this.record.maxLatitude = record.maxLatitude;
+                }
+                if (AllRecordActivity.this.record.minLatitude > record.minLatitude) {
+                    AllRecordActivity.this.record.minLatitude = record.minLatitude;
+                }
             }
-            boolean success;
-            if (libraryLoadSuccess) {
-                success = parse(rootPath, tripNames, new int[0], record);
-            } else {
-                success = parseJava(rootPath, tripNames, new int[0], record);
-            }
+
             return success;
         }
 
@@ -201,20 +222,26 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
             if (values[0] instanceof Integer) {
                 int value = (Integer) values[0];
-                if (ad != null && ad.isShowing()) {
-                    progressBar.setProgress(value);
-                    message.setText(trips[value].tripName);
-                    smallMessage.setText(String.valueOf(value) + "/" + String.valueOf(progressBar.getMax()));
-                }
+                progressBar.setProgress(value);
+                setTitle(String.format(progressFormat, value, tripNames.length));
                 POI[] pois = trips[value].pois;
-                record.num_POIs += pois.length;
-                for (int j = 0; j < pois.length; j++) {
-                    record.num_Pictures += pois[j].picFiles.length;
-                    record.num_Videos += pois[j].videoFiles.length;
-                    record.num_Audios += pois[j].audioFiles.length;
+                int poisLength = pois.length;
+                record.num_POIs += poisLength;
+                for (POI poi : pois) {
+                    record.num_Pictures += poi.picFiles.length;
+                    record.num_Videos += poi.videoFiles.length;
+                    record.num_Audios += poi.audioFiles.length;
                     if (markers == null || gmap == null)
                         continue;
-                    markers.add(gmap.addMarker(new MarkerOptions().position(new LatLng(pois[j].latitude, pois[j].longitude)).title(trips[value].tripName + "/" + pois[j].title).snippet(" " + pois[j].time.formatInTimezone(trips[value].timezone) + "\n " + pois[j].diary).draggable(false)));
+                    markers.add(gmap.addMarker(new MarkerOptions()
+                            .position(new LatLng(poi.latitude, poi.longitude))
+                            .title(trips[value].tripName + "/" + poi.title)
+                            .snippet(" " + poi.time.formatInTimezone(trips[value].timezone) + "\n " + poi.diary)
+                            .draggable(false)
+                            .icon(bd)));
+                }
+                if (value == tripNames.length - 1) {
+                    gmap.setInfoWindowAdapter(new POIInfoWindowAdapter(getActivity(), null, trips));
                 }
             } else if (values[0] instanceof double[]) {
                 if (gmap != null) {
@@ -243,9 +270,8 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
         @Override
         protected void onPostExecute(Boolean result) {
-
-            ad.dismiss();
-            setProgressBarIndeterminateVisibility(false);
+            progressBar.setVisibility(View.GONE);
+            setTitle(getString(R.string.lifetime_record));
         }
 
         public void onCancel(DialogInterface dialog) {
@@ -267,21 +293,30 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         }
     }
 
-    public native boolean parse(String rootPath, String[] tripPaths, int[] timezones, Record record);
+    public native boolean parse(String gpxPath, Record record);
 
     public native void stop();
 
     public void onInfoWindowClick(Marker marker) {
 
         String pointtitle = marker.getTitle();
-        if (new File(rootPath + "/" + pointtitle).exists()) {
-            String tripName=pointtitle.split("/")[0];
-            String poiName=pointtitle.split("/")[1];
-            Intent intent = new Intent(AllRecordActivity.this, ViewPointActivity.class);
-            intent.putExtra(ViewPointActivity.tag_tripname, tripName);
-            intent.putExtra(ViewPointActivity.tag_poiname, poiName);
-            startActivity(intent);
+        String tripName = pointtitle.split("/")[0];
+        String poiName = pointtitle.split("/")[1];
+        Intent intent = new Intent(AllRecordActivity.this, ViewPointActivity.class);
+        intent.putExtra(ViewPointActivity.tag_tripname, tripName);
+        intent.putExtra(ViewPointActivity.tag_poiname, poiName);
+        intent.putExtra(ViewPointActivity.tag_fromActivity, AllRecordActivity.class.getSimpleName());
+        startActivity(intent);
+
+    }
+
+    public static POI getPOI(String tripName, String poiName){
+        for (Trip trip: trips){
+            if (tripName.equals(trip.tripName)){
+                return trip.getPOI(poiName);
+            }
         }
+        return null;
     }
 
     @Override
@@ -293,106 +328,86 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
     boolean stop;
     public static final int altitudeDifferThreshold = 20;
 
-    public boolean parseJava(String rootPath, String[] tripPaths, int[] timezones, Record record) {
+    public boolean parseJava(String gpxPath, Record record) {
         stop = false;
-        int num_trips = tripPaths.length;
         float totalDistance = 0;
         float totalClimb = 0;
-        float maxAltitude = Float.MIN_VALUE;
+        float maxAltitude = -Float.MAX_VALUE;
         float minAltitude = Float.MAX_VALUE;
-        double maxLatitude = Float.MIN_VALUE;
+        double maxLatitude = -Float.MAX_VALUE;
         double minLatitude = Float.MAX_VALUE;
         long totalSeconds = 0;
         String s;
         MyLatLng2 latlng = new MyLatLng2();
-        for (int i = 0; i < num_trips; i++) {
-            try {
-                if (stop)
+
+        try {
+            if (stop)
+                return false;
+            MyLatLng2 preLatLng = new MyLatLng2();
+            boolean first = true;
+            File gpxFile = new File(gpxPath);
+            BufferedReader br = new BufferedReader(new FileReader(gpxFile));
+            ArrayList<MyLatLng2> track = new ArrayList<>();
+            ArrayList<String> timeStrs = new ArrayList<>();
+            while ((s = br.readLine()) != null) {
+                if (stop) {
                     return false;
-                progressChanged(i);
-                MyLatLng2 preLatLng = new MyLatLng2();
-                boolean first = true;
-                String tripPath = tripPaths[i];
-                String tripName = tripPath.substring(tripPath.lastIndexOf("/") + 1);
-                String gpxPath = tripPath + "/" + tripName + ".gpx";
-                BufferedReader br = new BufferedReader(new FileReader(new File(gpxPath)));
-                ArrayList<MyLatLng2> track = new ArrayList<MyLatLng2>();
-                ArrayList<String> timeStrs = new ArrayList<String>();
-                while ((s = br.readLine()) != null) {
-                    if (stop) {
-                        return false;
-                    }
-                    if (s.contains("<trkpt")) {
-                        latlng = new MyLatLng2();
-                        if (s.indexOf("lat") > s.indexOf("lon")) {
-                            latlng.longitude = Double.parseDouble(s.split("\"")[1]);
-                            latlng.latitude = Double.parseDouble(s.split("\"")[3]);
-                        } else {
-                            latlng.latitude = Double.parseDouble(s.split("\"")[1]);
-                            latlng.longitude = Double.parseDouble(s.split("\"")[3]);
-                        }
-                        if (latlng.latitude > maxLatitude) {
-                            maxLatitude = latlng.latitude;
-                        }
-                        if (latlng.latitude < minLatitude) {
-                            minLatitude = latlng.latitude;
-                        }
-                    } else if (s.contains("<ele>")) {
-                        float altitude = Float.parseFloat(s.substring(s.indexOf(">") + 1, s.lastIndexOf("<")));
-                        latlng.altitude = altitude;
-                        if (altitude > maxAltitude)
-                            maxAltitude = altitude;
-                        if (altitude < minAltitude)
-                            minAltitude = altitude;
-                    } else if (s.contains("<time>")) {
-                        timeStrs.add(s);
-                    } else if (s.contains("</trkpt>")) {
-                        if (!first) {
-                            float altitudeDiffer = latlng.altitude - preLatLng.altitude;
-                            if (Math.abs(altitudeDiffer) > altitudeDifferThreshold) {
-                                if (altitudeDiffer > 0)
-                                    totalClimb += altitudeDiffer;
-                            }
-                            totalDistance += GpxAnalyzerJava.distFrom(preLatLng.latitude, preLatLng.longitude, latlng.latitude, latlng.longitude);
-                        } else {
-                            first = false;
-                        }
-                        preLatLng = latlng;
-                        track.add(latlng);
-                    }
                 }
-                br.close();
-                int trackSize = track.size();
-                if (timeStrs.size() > 0)
-                    totalSeconds += MyCalendar.getMinusTimeInSecond(MyCalendar.getTime(timeStrs.get(0), MyCalendar.type_gpx), MyCalendar.getTime(timeStrs.get(timeStrs.size() - 1), MyCalendar.type_gpx));
-                double[] latitudes = new double[trackSize];
-                double[] longitudes = new double[trackSize];
-                for (int j = 0; j < trackSize; j++) {
-                    latitudes[j] = track.get(j).latitude;
-                    longitudes[j] = track.get(j).longitude;
+                if (s.contains("<trkpt")) {
+                    latlng = new MyLatLng2();
+                    if (s.indexOf("lat") > s.indexOf("lon")) {
+                        latlng.longitude = Double.parseDouble(s.split("\"")[1]);
+                        latlng.latitude = Double.parseDouble(s.split("\"")[3]);
+                    } else {
+                        latlng.latitude = Double.parseDouble(s.split("\"")[1]);
+                        latlng.longitude = Double.parseDouble(s.split("\"")[3]);
+                    }
+                    if (latlng.latitude > maxLatitude) {
+                        maxLatitude = latlng.latitude;
+                    }
+                    if (latlng.latitude < minLatitude) {
+                        minLatitude = latlng.latitude;
+                    }
+                } else if (s.contains("<ele>")) {
+                    float altitude = Float.parseFloat(s.substring(s.indexOf(">") + 1, s.lastIndexOf("<")));
+                    latlng.altitude = altitude;
+                    if (altitude > maxAltitude)
+                        maxAltitude = altitude;
+                    if (altitude < minAltitude)
+                        minAltitude = altitude;
+                } else if (s.contains("<time>")) {
+                    timeStrs.add(s);
+                } else if (s.contains("</trkpt>")) {
+                    if (!first) {
+                        float altitudeDiffer = latlng.altitude - preLatLng.altitude;
+                        if (Math.abs(altitudeDiffer) > altitudeDifferThreshold) {
+                            if (altitudeDiffer > 0)
+                                totalClimb += altitudeDiffer;
+                        }
+                        totalDistance += GpxAnalyzerJava.distFrom(preLatLng.latitude, preLatLng.longitude, latlng.latitude, latlng.longitude);
+                    } else {
+                        first = false;
+                    }
+                    preLatLng = latlng;
+                    track.add(latlng);
                 }
-                onTrackFinished(latitudes, longitudes);
-            } catch (FileNotFoundException e) {
-
-                e.printStackTrace();
-            } catch (NumberFormatException e) {
-
-                e.printStackTrace();
-            } catch (IOException e) {
-
-                e.printStackTrace();
             }
+            br.close();
+            int trackSize = track.size();
+            if (timeStrs.size() > 0)
+                totalSeconds += MyCalendar.getMinusTimeInSecond(MyCalendar.getTime(timeStrs.get(0), MyCalendar.type_gpx), MyCalendar.getTime(timeStrs.get(timeStrs.size() - 1), MyCalendar.type_gpx));
+            double[] lats = new double[trackSize];
+            double[] lngs = new double[trackSize];
+            for (int j = 0; j < trackSize; j++) {
+                lats[j] = track.get(j).latitude;
+                lngs[j] = track.get(j).longitude;
+            }
+            onTrackFinished(lats, lngs);
+        } catch (NumberFormatException | IOException e) {
+            e.printStackTrace();
         }
-        String totalTime = "";
-        long day = totalSeconds / 86400;
-        long hour = totalSeconds % 86400 / 3600;
-        long min = totalSeconds % 3600 / 60;
-        long sec = totalSeconds % 60;
-        if (day != 0) {
-            totalTime = String.valueOf(day) + "T";
-        }
-        totalTime += String.valueOf(hour) + ":" + String.valueOf(min) + ":" + String.valueOf(sec);
-        record.totalTime = totalTime;
+
+        record.totalTime = totalSeconds;
         record.totalDistance = totalDistance;
         record.totalClimb = totalClimb;
         record.maxAltitude = maxAltitude;
@@ -409,13 +424,9 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         try {
             System.loadLibrary("TripDiary");
             libraryLoadSuccess = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            libraryLoadSuccess = false;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (Exception | UnsatisfiedLinkError e) {
             e.printStackTrace();
             libraryLoadSuccess = false;
         }
-
     }
 }

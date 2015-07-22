@@ -1,11 +1,12 @@
 package com.yupog2003.tripdiary.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.provider.DocumentFile;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,19 +22,23 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.ViewCostActivity;
+import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.ComparatorHelper;
 import com.yupog2003.tripdiary.data.CostData;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.views.CheckableLinearLayout;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class CostListFragment extends Fragment implements View.OnClickListener {
@@ -44,54 +49,71 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
     TextView typeColumn;
     TextView nameColumn;
     TextView dollarColumn;
-    String path;
-    String title;
     CostAdapter adapter;
+    public String tripName;
+    public String poiName;
+    ViewGroup rootView;
+    DocumentFile[] costFiles;
+    ViewCostFragment viewCostFragment;
+
+    public CostListFragment() {
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.option = getArguments().getInt("option");
-        this.path = getArguments().getString("path");
-        this.title = getArguments().getString("title");
-        return inflater.inflate(R.layout.fragment_cost_list, container, false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        costsList = (ListView) getView().findViewById(R.id.costslist);
-        costsList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        costsList.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-        costsList.setLongClickable(true);
-        summary = (TextView) getView().findViewById(R.id.summary);
-        if (option == ViewCostFragment.optionTrip) {
+        this.option = getArguments().getInt(ViewCostActivity.tag_option);
+        this.tripName = getArguments().getString(ViewCostActivity.tag_trip);
+        this.poiName = getArguments().getString(ViewCostActivity.tag_poi);
+        this.viewCostFragment=(ViewCostFragment)getParentFragment();
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_cost_list, container, false);
+        costsList = (ListView) rootView.findViewById(R.id.costslist);
+        poiColumn = (TextView) rootView.findViewById(R.id.poicolumn);
+        poiColumn.setOnClickListener(this);
+        typeColumn = (TextView) rootView.findViewById(R.id.typecolumn);
+        typeColumn.setOnClickListener(this);
+        nameColumn = (TextView) rootView.findViewById(R.id.namecolumn);
+        nameColumn.setOnClickListener(this);
+        dollarColumn = (TextView) rootView.findViewById(R.id.dollarcolumn);
+        dollarColumn.setOnClickListener(this);
+        summary = (TextView) rootView.findViewById(R.id.summary);
+        if (option == ViewCostActivity.optionTrip) {
             summary.setPadding(0, 0, 0, 0);
         }
-        adapter = new CostAdapter(path, option);
+        refresh();
+        return rootView;
+    }
+
+    public void refresh() {
+        if (option == ViewCostActivity.optionTrip) {
+            Trip trip = ViewTripActivity.trip;
+            ArrayList<DocumentFile> costList = new ArrayList<>();
+            for (POI poi : trip.pois) {
+                costList.addAll(Arrays.asList(poi.costFiles));
+            }
+            costFiles = costList.toArray(new DocumentFile[costList.size()]);
+        } else if (option == ViewCostActivity.optionPOI) {
+            DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs");
+            costFiles = poiFile.listFiles();
+        }
+        adapter = new CostAdapter(option);
         costsList.setAdapter(adapter);
-        poiColumn = (TextView) getView().findViewById(R.id.poicolumn);
-        //poiColumn.append("↑↓");
-        poiColumn.setOnClickListener(this);
-        typeColumn = (TextView) getView().findViewById(R.id.typecolumn);
-        //typeColumn.append("↑↓");
-        typeColumn.setOnClickListener(this);
-        nameColumn = (TextView) getView().findViewById(R.id.namecolumn);
-        //nameColumn.append("↑↓");
-        nameColumn.setOnClickListener(this);
-        dollarColumn = (TextView) getView().findViewById(R.id.dollarcolumn);
-        //dollarColumn.append("↑↓");
-        dollarColumn.setOnClickListener(this);
+        if (option == ViewCostActivity.optionPOI) {
+            costsList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            costsList.setLongClickable(true);
+            costsList.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+        }
     }
 
     class CostAdapter extends BaseAdapter {
-        public ArrayList<CostData> costDatas = new ArrayList<CostData>();
+        public ArrayList<CostData> costDatas = new ArrayList<>();
         private LayoutParams textParams = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1f);
         public String[] types = getResources().getStringArray(R.array.cost_types);
         public int[] colors;
         public float[] totals = new float[5];
         private boolean[] sortState = new boolean[4];
 
-        public CostAdapter(String path, int option) {
+        public CostAdapter(int option) {
             textParams.bottomMargin = 1;
             textParams.topMargin = 1;
             textParams.leftMargin = 1;
@@ -102,32 +124,14 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                 colors[i] = array.getColor(i, 0);
             array.recycle();
             switch (option) {
-                case ViewCostFragment.optionPOI:
-                    File file = new File(path + "/costs");
-                    FileHelper.maintenDir(file);
-                    File[] costs = file.listFiles();
-                    if (costs != null) {
-                        final String POI = title;
-                        for (int i = 0; i < costs.length; i++) {
-                            costDatas.add(readCostData(costs[i], POI));
-                        }
+                case ViewCostActivity.optionPOI:
+                    for (DocumentFile costFile : costFiles) {
+                        costDatas.add(readCostData(costFile, poiName));
                     }
                     break;
-                case ViewCostFragment.optionTrip:
-                    File file2 = new File(path);
-                    FileHelper.maintenDir(file2);
-                    File[] files = file2.listFiles();
-                    if (files != null) {
-                        for (int i = 0; i < files.length; i++) {
-                            File file3 = new File(files[i].getPath() + "/costs");
-                            FileHelper.maintenDir(file3);
-                            File[] files2 = file3.listFiles();
-                            if (files2 != null) {
-                                for (int j = 0; j < files2.length; j++) {
-                                    costDatas.add(readCostData(files2[j], files[i].getName()));
-                                }
-                            }
-                        }
+                case ViewCostActivity.optionTrip:
+                    for (DocumentFile costFile : costFiles) {
+                        costDatas.add(readCostData(costFile, FileHelper.getFileName(costFile.getParentFile().getParentFile())));
                     }
                     break;
             }
@@ -138,13 +142,13 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
             summary.append(getString(R.string.total_cost) + ":" + totals[4]);
         }
 
-        private CostData readCostData(File file, String POI) {
-            String costName = file.getName();
+        private CostData readCostData(DocumentFile file, String POI) {
+            String costName = FileHelper.getFileName(file);
             int costType = -1;
             float costDollar = -1;
             CostData data = null;
             try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
+                BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(file.getUri())));
                 String s;
                 while ((s = br.readLine()) != null) {
                     if (s.startsWith("type=")) {
@@ -159,11 +163,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                     totals[costType] += costDollar;
                 }
                 data = new CostData(POI, costType, costName, costDollar, file);
-            } catch (FileNotFoundException e) {
-
-                e.printStackTrace();
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
             return data;
@@ -250,7 +250,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-            final ArrayList<CostData> checkedItems = new ArrayList<CostData>();
+            final ArrayList<CostData> checkedItems = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
                     checkedItems.add((CostData) adapter.getItem(i));
@@ -269,8 +269,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                         for (int i = 0; i < checkedItems.size(); i++) {
                             checkedItems.get(i).file.delete();
                         }
-                        adapter = new CostAdapter(path, option);
-                        costsList.setAdapter(adapter);
+                        viewCostFragment.refreshData(true);
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -279,7 +278,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                 final CostData data = checkedItems.get(0);
                 AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
                 ab2.setTitle(getString(R.string.cost));
-                final LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.take_money, null);
+                final LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.take_money, rootView, false);
                 final EditText costName = (EditText) layout.findViewById(R.id.costname);
                 costName.setText(data.costName);
                 final RadioGroup costType = (RadioGroup) layout.findViewById(R.id.costtype);
@@ -310,7 +309,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                         String name = costName.getText().toString();
                         String dollar = costDollar.getText().toString();
                         if (!name.equals("") && !dollar.equals("")) {
-                            int type = -1;
+                            int type;
                             if (costType.getCheckedRadioButtonId() == R.id.food) {
                                 type = 0;
                             } else if (costType.getCheckedRadioButtonId() == R.id.lodging) {
@@ -322,10 +321,10 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                             } else {
                                 type = 0;
                             }
-                            String dataParentPath = data.file.getParent();
+                            DocumentFile dataParent = data.file.getParentFile();
                             data.file.delete();
                             try {
-                                BufferedWriter bw = new BufferedWriter(new FileWriter(dataParentPath + "/" + name, false));
+                                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(dataParent.createFile("", name).getUri())));
                                 bw.write("type=" + String.valueOf(type) + "\n");
                                 bw.write("dollar=" + dollar);
                                 bw.flush();
@@ -334,8 +333,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
                                 e.printStackTrace();
                             }
-                            adapter = new CostAdapter(path, option);
-                            costsList.setAdapter(adapter);
+                            viewCostFragment.refreshData(true);
                         }
                     }
                 });
@@ -362,7 +360,6 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
         public void onDestroyActionMode(ActionMode mode) {
 
-            mode = null;
         }
 
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -374,8 +371,8 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
             checks[position] = checked;
             int selects = 0;
-            for (int i = 0; i < checks.length; i++) {
-                if (checks[i])
+            for (boolean check : checks) {
+                if (check)
                     selects++;
             }
             mode.getMenu().findItem(R.id.edit).setVisible(!(selects > 1));

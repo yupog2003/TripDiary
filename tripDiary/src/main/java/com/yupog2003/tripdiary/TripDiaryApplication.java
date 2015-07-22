@@ -2,24 +2,29 @@ package com.yupog2003.tripdiary;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
+import android.support.v4.provider.DocumentFile;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.yupog2003.tripdiary.data.FileHelper;
 
 import java.io.File;
-import java.io.IOException;
 
-public class TripDiaryApplication extends Application{
+public class TripDiaryApplication extends Application {
     Tracker appTracker;
-    public static String rootPath;
+    public static DocumentFile rootDocumentFile;
     public static TripDiaryApplication instance;
+    public static final String serverURL = "http://219.85.61.62/TripDiary";
+
     synchronized public Tracker getTracker() {
-        if (appTracker==null){
-            GoogleAnalytics analytics=GoogleAnalytics.getInstance(this);
-            appTracker=analytics.newTracker(R.xml.global_tracker);
+        if (appTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            appTracker = analytics.newTracker(R.xml.global_tracker);
         }
         return appTracker;
     }
@@ -27,9 +32,8 @@ public class TripDiaryApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        instance=this;
-        rootPath= PreferenceManager.getDefaultSharedPreferences(this).getString("rootpath", Environment.getExternalStorageDirectory()+"/TripDiary");
-        creatRootDir(rootPath);
+        instance = this;
+        updateRootPath(PreferenceManager.getDefaultSharedPreferences(this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary"));
     }
 
     @Override
@@ -38,19 +42,36 @@ public class TripDiaryApplication extends Application{
         MultiDex.install(this);
     }
 
-    public static void creatRootDir(String rootPath) {
+    public static void updateRootPath(String rootPath) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                rootDocumentFile = DocumentFile.fromTreeUri(instance, Uri.parse(rootPath));
+            } catch (Exception e) {
+                creatRootDir(rootPath);
+                rootDocumentFile = DocumentFile.fromFile(new File(rootPath));
+            }
+        } else {
+            creatRootDir(rootPath);
+            rootDocumentFile = DocumentFile.fromFile(new File(rootPath));
+        }
+        DocumentFile settings = FileHelper.findfile(rootDocumentFile, ".settings");
+        if (settings == null) {
+            rootDocumentFile.createDirectory(".settings");
+        }
+        DocumentFile nomedia = FileHelper.findfile(rootDocumentFile, ".nomedia");
+        if (nomedia == null) {
+            rootDocumentFile.createFile("", ".nomedia");
+        }
+    }
+
+    public static boolean creatRootDir(String rootPath) {
         File file = new File(rootPath);
         if (!file.exists()) {
-            file.mkdirs();
+            return file.mkdirs();
         } else if (file.isFile()) {
-            file.delete();
-            file.mkdirs();
+            boolean b = file.delete();
+            return b & file.mkdirs();
         }
-        File nomedia = new File(rootPath + "/.nomedia");
-        try {
-            nomedia.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return true;
     }
 }

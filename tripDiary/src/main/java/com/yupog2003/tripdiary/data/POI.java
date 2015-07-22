@@ -1,29 +1,29 @@
 package com.yupog2003.tripdiary.data;
 
-import com.google.android.gms.maps.model.LatLng;
+import android.content.Context;
+import android.support.v4.provider.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class POI {
 
-    public File parentTrip;
-    public File dir;
-    public File picDir;
-    public File audioDir;
-    public File videoDir;
-    public File costDir;
-    public File diaryFile;
-    public File basicInformationFile;
-    public File[] picFiles;
-    public File[] audioFiles;
-    public File[] videoFiles;
-    public File[] costFiles;
+    Context context;
+    public DocumentFile parentTrip;
+    public DocumentFile dir;
+    public DocumentFile picDir;
+    public DocumentFile audioDir;
+    public DocumentFile videoDir;
+    public DocumentFile costDir;
+    public DocumentFile diaryFile;
+    public DocumentFile basicInformationFile;
+    public DocumentFile[] picFiles;
+    public DocumentFile[] audioFiles;
+    public DocumentFile[] videoFiles;
+    public DocumentFile[] costFiles;
     public String title;
     public MyCalendar time; //in UTC
     public double latitude;
@@ -31,53 +31,42 @@ public class POI {
     public double altitude;
     public String diary;
 
-    public POI(File dir) {
+    public POI(Context context, DocumentFile dir) {
+        this.context = context;
         this.dir = dir;
-        if (!dir.exists())
-            dir.mkdirs();
         updateAllFields();
     }
 
     public void updateAllFields() {
+        DocumentFile[] files = dir.listFiles();
         this.parentTrip = dir.getParentFile();
-        this.picDir = new File(dir.getPath() + "/pictures");
-        FileHelper.maintenDir(picDir);
-        this.audioDir = new File(dir.getPath() + "/audios");
-        FileHelper.maintenDir(audioDir);
-        this.videoDir = new File(dir.getPath() + "/videos");
-        FileHelper.maintenDir(videoDir);
-        this.costDir = new File(dir.getPath() + "/costs");
-        FileHelper.maintenDir(costDir);
-        this.diaryFile = new File(dir.getPath() + "/text");
-        if (!diaryFile.exists())
-            try {
-                diaryFile.createNewFile();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        this.picFiles = picDir.listFiles(FileHelper.getPictureFileFilter());
-        this.audioFiles = audioDir.listFiles(FileHelper.getAudioFileFilter());
-        this.videoFiles = videoDir.listFiles(FileHelper.getVideoFileFilter());
-        this.costFiles = costDir.listFiles();
-        if (picFiles == null)
-            picFiles = new File[0];
-        if (audioFiles == null)
-            audioFiles = new File[0];
-        if (videoFiles == null)
-            videoFiles = new File[0];
-        if (costFiles == null)
-            costFiles = new File[0];
-        this.title = dir.getName();
-        this.basicInformationFile = new File(dir.getPath() + "/basicinformation");
-        if (!basicInformationFile.exists()) {
-            try {
-                basicInformationFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        this.picDir = FileHelper.findfile(files, "pictures");
+        if (picDir == null)
+            this.picDir = dir.createDirectory("pictures");
+        this.audioDir = FileHelper.findfile(files, "audios");
+        if (audioDir == null)
+            this.audioDir = dir.createDirectory("audios");
+        this.videoDir = FileHelper.findfile(files, "videos");
+        if (videoDir == null)
+            this.videoDir = dir.createDirectory("videos");
+        this.costDir = FileHelper.findfile(files, "costs");
+        if (costDir == null)
+            this.costDir = dir.createDirectory("costs");
+        this.diaryFile = FileHelper.findfile(files, "text");
+        if (diaryFile == null) {
+            this.diaryFile = dir.createFile("", "text");
         }
+        this.basicInformationFile = FileHelper.findfile(files, "basicinformation");
+        if (basicInformationFile == null) {
+            this.basicInformationFile = dir.createFile("", "basicinformation");
+        }
+        this.picFiles = FileHelper.listFiles(picDir, FileHelper.list_pics);
+        this.audioFiles = FileHelper.listFiles(audioDir, FileHelper.list_audios);
+        this.videoFiles = FileHelper.listFiles(videoDir, FileHelper.list_videos);
+        this.costFiles = FileHelper.listFiles(costDir, FileHelper.list_all);
+        this.title = FileHelper.getFileName(dir);
         try {
-            BufferedReader br = new BufferedReader(new FileReader(basicInformationFile));
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(basicInformationFile.getUri())));
             String s;
             this.time = MyCalendar.getInstance();
             this.latitude = 0;
@@ -98,18 +87,14 @@ public class POI {
                 }
             }
             br.close();
-            br = new BufferedReader(new FileReader(diaryFile));
-            StringBuffer sb = new StringBuffer();
+            br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(diaryFile.getUri())));
+            StringBuilder sb = new StringBuilder();
             while ((s = br.readLine()) != null) {
-                sb.append(s);
-                sb.append("\n");
+                sb.append(s).append("\n");
             }
+            br.close();
             diary = sb.toString();
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
@@ -126,7 +111,7 @@ public class POI {
         if (altitude != null)
             this.altitude = altitude;
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(basicInformationFile, false));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(basicInformationFile.getUri())));
             bw.write("Title=" + this.title + "\n");
             bw.write("Time=" + this.time.format3339() + "\n");
             bw.write("Latitude=" + String.valueOf(this.latitude) + "\n");
@@ -144,7 +129,7 @@ public class POI {
         if (text != null) {
             this.diary = text;
             try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(diaryFile, false));
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(diaryFile.getUri())));
                 bw.write(text);
                 bw.flush();
                 bw.close();
@@ -155,114 +140,29 @@ public class POI {
         }
     }
 
-    public void copyPicture(File picture) {
-        if (FileHelper.isPicture(picture)) {
-            FileHelper.copyFile(picture, new File(picDir.getPath() + "/" + picture.getName()));
-            this.picFiles = picDir.listFiles(FileHelper.getPictureFileFilter());
-        }
-    }
-
-    public void copyVideo(File video) {
-        if (FileHelper.isVideo(video)) {
-            FileHelper.copyFile(video, new File(videoDir.getPath() + "/" + video.getName()));
-            this.videoFiles = videoDir.listFiles(FileHelper.getVideoFileFilter());
-        }
-    }
-
-    public void copyAudio(File audio) {
-        if (FileHelper.isAudio(audio)) {
-            FileHelper.copyFile(audio, new File(audioDir.getPath() + "/" + audio.getName()));
-            this.audioFiles = audioDir.listFiles(FileHelper.getAudioFileFilter());
-        }
-    }
-
     public void addCost(int type, String name, float dollar) {
-        File cost = new File(costDir.getPath() + "/" + name);
+        DocumentFile cost = costDir.createFile("", name);
         BufferedWriter bw;
         try {
-            bw = new BufferedWriter(new FileWriter(cost, false));
+            bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(cost.getUri())));
             bw.write("type=" + String.valueOf(type) + "\n");
             bw.write("dollar=" + String.valueOf(dollar));
             bw.flush();
             bw.close();
             this.costFiles = costDir.listFiles();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
 
-    public void deletePicture(File file) {
-        if (file.isFile()) {
-            file.delete();
-            this.picFiles = picDir.listFiles(FileHelper.getPictureFileFilter());
-        }
-    }
-
-    public void deleteVideo(File file) {
-        if (file.isFile()) {
-            file.delete();
-            this.videoFiles = videoDir.listFiles(FileHelper.getVideoFileFilter());
-        }
-    }
-
-    public void deleteAudio(File file) {
-        if (file.isFile()) {
-            file.delete();
-            this.audioFiles = audioDir.listFiles(FileHelper.getAudioFileFilter());
-        }
-    }
-
-    public void deleteCost(File file) {
-        if (file.isFile()) {
-            file.delete();
-            this.costFiles = costDir.listFiles();
-        }
-    }
-
     public void renamePOI(String name) {
-        dir.renameTo(new File(dir.getParent() + "/" + name));
-        dir = new File(dir.getParent() + "/" + name);
+        dir.renameTo(name);
         updateAllFields();
         updateBasicInformation(name, null, null, null, null);
     }
 
     public void deleteSelf() {
-        FileHelper.deletedir(dir.getPath());
+        dir.delete();
     }
 
-    public static LatLng getPOILatLng(File poiFile) {
-        if (poiFile == null || poiFile.isFile())
-            return null;
-        File basicInformationFile = new File(poiFile, "basicinformation");
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(basicInformationFile));
-            String s;
-            double latitude = Double.MAX_VALUE;
-            double longitude = Double.MAX_VALUE;
-            while ((s = br.readLine()) != null) {
-                if (s.startsWith("Latitude")) {
-                    latitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
-                } else if (s.startsWith("Longitude")) {
-                    longitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
-                }
-            }
-            br.close();
-            if (latitude != Double.MAX_VALUE && longitude != Double.MAX_VALUE) {
-                return new LatLng(latitude, longitude);
-            }
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-        return null;
-
-    }
 }

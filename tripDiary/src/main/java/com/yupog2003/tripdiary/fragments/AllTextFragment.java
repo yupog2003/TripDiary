@@ -1,10 +1,10 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 
 import java.io.File;
@@ -27,6 +28,7 @@ import java.io.File;
 public class AllTextFragment extends Fragment {
     POI[] pois;
     RecyclerView recyclerView;
+    POIAdapter poiAdapter;
 
     public AllTextFragment() {
 
@@ -34,24 +36,30 @@ public class AllTextFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         recyclerView = new RecyclerView(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         setHasOptionsMenu(true);
-        refresh();
         return recyclerView;
     }
 
     @Override
     public void onResume() {
-        //refresh();
         super.onResume();
 
     }
 
     public void refresh() {
         this.pois = ViewTripActivity.trip.pois;
-        recyclerView.setAdapter(new POIAdapter(pois));
+        poiAdapter = new POIAdapter(pois);
+        recyclerView.setAdapter(poiAdapter);
+        File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
+        if (fontFile.exists() && fontFile.isFile()) {
+            try {
+                poiAdapter.setTypeFace(Typeface.createFromFile(fontFile));
+            } catch (RuntimeException e) {
+                Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -90,11 +98,12 @@ public class AllTextFragment extends Fragment {
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String tripName=pois[index].dir.getParentFile().getName();
-                        String poiName=pois[index].dir.getName();
+                        String tripName = FileHelper.getFileName(pois[index].dir.getParentFile());
+                        String poiName = FileHelper.getFileName(pois[index].dir);
                         Intent intent = new Intent(getActivity(), ViewPointActivity.class);
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);
+                        intent.putExtra(ViewPointActivity.tag_fromActivity, ViewTripActivity.class.getSimpleName());
                         startActivity(intent);
                     }
                 };
@@ -114,15 +123,11 @@ public class AllTextFragment extends Fragment {
                     diarys[i] = diarys[i].substring(0, diarys[i].length() - 1);
                 }
             }
-            File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
-            if (fontFile.exists() && fontFile.isFile()) {
-                try {
-                    this.typeFace = Typeface.createFromFile(fontFile);
-                } catch (RuntimeException e) {
-                    this.typeFace = null;
-                    Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
-                }
-            }
+
+        }
+
+        public void setTypeFace(Typeface typeFace) {
+            this.typeFace = typeFace;
         }
 
         @Override

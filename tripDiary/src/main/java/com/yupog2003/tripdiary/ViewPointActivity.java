@@ -2,18 +2,17 @@ package com.yupog2003.tripdiary;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -35,30 +34,30 @@ import com.yupog2003.tripdiary.fragments.AudioFragment;
 import com.yupog2003.tripdiary.fragments.PictureFragment;
 import com.yupog2003.tripdiary.fragments.TextFragment;
 import com.yupog2003.tripdiary.fragments.VideoFragment;
-import com.yupog2003.tripdiary.fragments.ViewCostFragment;
-import com.yupog2003.tripdiary.views.SlidingTabLayout;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 public class ViewPointActivity extends MyActivity {
-    String path;
-    String name;
     public static POI poi;
     public static final DecimalFormat latlngFormat = new DecimalFormat("#.######");
     MyPagerAdapter adapter;
-    SlidingTabLayout pagerTab;
+    TabLayout pagerTab;
     static final int pick_multi_file = 0;
     static final int import_picture = 1;
     static final int import_video = 2;
     static final int import_audio = 3;
     String timezone;
     ViewPager viewPager;
-    public static final String tag_tripname="tag_tripname";
-    public static final String tag_poiname="tag_poiname";
+    public static final String tag_tripname = "tag_tripname";
+    public static final String tag_poiname = "tag_poiname";
+    public static final String tag_fromActivity = "tag_activity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,17 +66,24 @@ public class ViewPointActivity extends MyActivity {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        String tripName=getIntent().getStringExtra(tag_tripname);
-        String poiName=getIntent().getStringExtra(tag_poiname);
-        String rootPath= TripDiaryApplication.rootPath;
-        path = rootPath+"/"+tripName+"/"+poiName;
-        name = poiName;
-        timezone = MyCalendar.getPOITimeZone(ViewPointActivity.this, path);
-        poi = new POI(new File(path));
-        setTitle(name);
-        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTrip.getName() + "-" + poi.title, null);
-        initialtab(savedInstanceState);
+        String tripName = getIntent().getStringExtra(tag_tripname);
+        String poiName = getIntent().getStringExtra(tag_poiname);
+        String activity = getIntent().getStringExtra(tag_fromActivity);
+        if (activity != null && activity.equals(ViewTripActivity.class.getSimpleName())) {
+            poi = ViewTripActivity.trip.getPOI(poiName);
+            timezone = ViewTripActivity.trip.timezone;
+        } else if (activity !=null && activity.equals(AllRecordActivity.class.getSimpleName())){
+            poi = AllRecordActivity.getPOI(tripName, poiName);
+            timezone = MyCalendar.getTripTimeZone(this, tripName);
+        }
+        if (poi == null){
+            finish();
+        }
+        setTitle(poiName);
+        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", FileHelper.getFileName(poi.parentTrip) + "-" + poi.title, null);
+        initialtab();
     }
 
     @Override
@@ -85,16 +91,12 @@ public class ViewPointActivity extends MyActivity {
         super.onSaveInstanceState(outState);
     }
 
-    private void initialtab(Bundle savedInstanceState) {
-
+    private void initialtab() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        adapter = new MyPagerAdapter(getFragmentManager());
+        adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        pagerTab = (SlidingTabLayout) findViewById(R.id.tabs);
-        pagerTab.setSelectedIndicatorColors(Color.WHITE);
-        pagerTab.setDistributeEvenly(true);
-        pagerTab.setViewPager(viewPager);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        pagerTab = (TabLayout) findViewById(R.id.tabs);
+        pagerTab.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -111,7 +113,6 @@ public class ViewPointActivity extends MyActivity {
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-
             textFragment = new TextFragment();
             pictureFragment = new PictureFragment();
             videoFragment = new VideoFragment();
@@ -120,7 +121,6 @@ public class ViewPointActivity extends MyActivity {
 
         @Override
         public Fragment getItem(int arg0) {
-
             switch (arg0) {
                 case 0:
                     return textFragment;
@@ -182,8 +182,8 @@ public class ViewPointActivity extends MyActivity {
             startActivityForResult(intent, pick_multi_file);
         } else if (item.getItemId() == R.id.playpoint) {
             Intent intent = new Intent(ViewPointActivity.this, PlayPointActivity.class);
-            intent.putExtra(PlayPointActivity.tag_trip, poi.dir.getParentFile().getName());
-            intent.putExtra(PlayPointActivity.tag_poi, poi.dir.getName());
+            intent.putExtra(PlayPointActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
+            intent.putExtra(PlayPointActivity.tag_poi, FileHelper.getFileName(poi.dir));
             ViewPointActivity.this.startActivity(intent);
         } else if (item.getItemId() == android.R.id.home) {
             ViewPointActivity.this.finish();
@@ -197,7 +197,7 @@ public class ViewPointActivity extends MyActivity {
             TextView altitude = (TextView) layout.findViewById(R.id.altitude);
             altitude.setText(GpxAnalyzer2.getAltitudeString((float) poi.altitude, "m"));
             TextView time = (TextView) layout.findViewById(R.id.time);
-            String timeStr=poi.time.formatInTimezone(timezone);
+            String timeStr = poi.time.formatInTimezone(timezone);
             time.setText(timeStr);
             ab.setView(layout);
             ab.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
@@ -228,6 +228,8 @@ public class ViewPointActivity extends MyActivity {
                     edittime.setCurrentHour(time.get(Calendar.HOUR_OF_DAY));
                     edittime.setCurrentMinute(time.get(Calendar.MINUTE));
                     ab2.setView(layout);
+                    final String oldName = poi.title;
+                    final int oldSec = time.get(Calendar.SECOND);
                     ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
@@ -239,18 +241,23 @@ public class ViewPointActivity extends MyActivity {
                                 Toast.makeText(ViewPointActivity.this, R.string.some_fields_are_not_filled, Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            MyCalendar time=MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
-                            time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), 0);
+                            MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
+                            time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), oldSec);
                             time.format3339();
                             time.setTimeZone("UTC");
                             double altitude = Double.parseDouble(editAltitudeStr);
                             if (MainActivity.altitude_unit == MainActivity.unit_ft) {
                                 altitude *= 0.3048;
                             }
-                            poi.renamePOI(edittitle.getText().toString());
-                            poi.updateBasicInformation(edittitle.getText().toString(), time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude);
-                            setTitle(edittitle.getText().toString());
-                            requestUpdatePOI();
+                            poi.updateBasicInformation(null, time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude);
+                            String newName = edittitle.getText().toString();
+                            if (!newName.equals(oldName)) {
+                                poi.renamePOI(newName);
+                                setTitle(newName);
+                                requestUpdatePOIs();
+                            } else {
+                                requestUpdatePOI();
+                            }
                         }
                     });
                     ab2.setNegativeButton(getString(R.string.cancel), null);
@@ -260,9 +267,9 @@ public class ViewPointActivity extends MyActivity {
             ab.show();
         } else if (item.getItemId() == R.id.viewcost) {
             Intent intent2 = new Intent(ViewPointActivity.this, ViewCostActivity.class);
-            intent2.putExtra("path", path);
-            intent2.putExtra("title", name);
-            intent2.putExtra("option", ViewCostFragment.optionPOI);
+            intent2.putExtra(ViewCostActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
+            intent2.putExtra(ViewCostActivity.tag_poi, FileHelper.getFileName(poi.dir));
+            intent2.putExtra(ViewCostActivity.tag_option, ViewCostActivity.optionPOI);
             startActivity(intent2);
         } else if (item.getItemId() == R.id.delete) {
             AlertDialog.Builder ab2 = new AlertDialog.Builder(ViewPointActivity.this);
@@ -272,7 +279,7 @@ public class ViewPointActivity extends MyActivity {
 
                 public void onClick(DialogInterface dialog, int which) {
                     poi.deleteSelf();
-                    requestUpdatePOI();
+                    requestUpdatePOIs();
                     ViewPointActivity.this.finish();
                 }
 
@@ -284,9 +291,15 @@ public class ViewPointActivity extends MyActivity {
         }
         return false;
     }
-    public static void requestUpdatePOI(){
-        ViewTripActivity.updatePOI=true;
+
+    public static void requestUpdatePOI() {
+        ViewTripActivity.onPOIUpdate(poi.title);
     }
+
+    public static void requestUpdatePOIs() {
+        ViewTripActivity.onPOIUpdate(null);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
@@ -297,17 +310,24 @@ public class ViewPointActivity extends MyActivity {
             } else {
                 try {
                     Uri uri = data.getData();
-                    if (requestCode == import_picture) {
-                        FileHelper.copyFromUriToFile(this, uri, new File(path + "/pictures"), null);
+                    String fileName = FileHelper.getRealNameFromURI(this, uri);
+                    if (requestCode == import_picture && FileHelper.isPicture(fileName)) {
+                        InputStream is = getContentResolver().openInputStream(uri);
+                        OutputStream os = getContentResolver().openOutputStream(poi.picDir.createFile("", fileName).getUri());
+                        FileHelper.copyByStream(is, os);
                         requestUpdatePOI();
-                    } else if (requestCode == import_video) {
-                        FileHelper.copyFromUriToFile(this, uri, new File(path + "/videos"), null);
+                    } else if (requestCode == import_video && FileHelper.isVideo(fileName)) {
+                        InputStream is = getContentResolver().openInputStream(uri);
+                        OutputStream os = getContentResolver().openOutputStream(poi.videoDir.createFile("", fileName).getUri());
+                        FileHelper.copyByStream(is, os);
                         requestUpdatePOI();
-                    } else if (requestCode == import_audio) {
-                        FileHelper.copyFromUriToFile(this, uri, new File(path + "/audios"), null);
+                    } else if (requestCode == import_audio && FileHelper.isAudio(fileName)) {
+                        InputStream is = getContentResolver().openInputStream(uri);
+                        OutputStream os = getContentResolver().openOutputStream(poi.audioDir.createFile("", fileName).getUri());
+                        FileHelper.copyByStream(is, os);
                         requestUpdatePOI();
                     }
-                } catch (NullPointerException e) {
+                } catch (NullPointerException | FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -342,14 +362,12 @@ public class ViewPointActivity extends MyActivity {
             for (int i = 0; i < files.size(); i++) {
                 publishProgress(i);
                 File file = new File(files.get(i));
-                if (file.isDirectory()) {
-                    continue;
-                } else if (FileHelper.isPicture(file)) {
-                    FileHelper.copyFile(file, new File(poi.picDir, file.getName()));
+                if (FileHelper.isPicture(file)) {
+                    FileHelper.copyFile(file, poi.picDir.createFile("", file.getName()));
                 } else if (FileHelper.isVideo(file)) {
-                    FileHelper.copyFile(file, new File(poi.videoDir, file.getName()));
+                    FileHelper.copyFile(file, poi.videoDir.createFile("", file.getName()));
                 } else if (FileHelper.isAudio(file)) {
-                    FileHelper.copyFile(file, new File(poi.audioDir, file.getName()));
+                    FileHelper.copyFile(file, poi.audioDir.createFile("", file.getName()));
                 }
             }
             return null;

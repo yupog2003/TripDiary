@@ -166,7 +166,7 @@
         android:layout_height="3dip"
         android:layout_above="@+id/addPOILayout"
         android:background="@drawable/actionbar_shadow"
-        android:rotation="0"></View>
+        android:rotation="0"/>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
         android:layout_above="@+id/addPOILayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp">
 

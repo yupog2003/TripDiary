@@ -11,13 +11,6 @@
         android:layout_toEndOf="@+id/buttonbar"
         android:layout_toRightOf="@+id/buttonbar" />
 
-    <ProgressBar
-        android:id="@+id/analysis_progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-7dip" />
-
     <LinearLayout
         android:id="@+id/playPanel"
         android:layout_width="wrap_content"
@@ -68,6 +61,10 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/buttonbar"
         android:layout_toRightOf="@+id/buttonbar"
+        android:paddingLeft="65dp"
+        android:paddingStart="65dp"
+        android:paddingEnd="65dp"
+        android:paddingRight="65dp"
         android:visibility="gone" />
 
     <View

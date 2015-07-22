@@ -8,16 +8,17 @@ import com.yupog2003.tripdiary.fragments.PreferFragment;
 
 public class PreferActivity extends PreferenceActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getFragmentManager().beginTransaction()
-        .replace(android.R.id.content, new PreferFragment())
-        .commit();
-	}
-	@Override
-	public void onPause(){
-		MyBackupAgent.requestBackup(this);
-		super.onPause();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new PreferFragment())
+                .commit();
+    }
+
+    @Override
+    public void onPause() {
+        MyBackupAgent.requestBackup(this);
+        super.onPause();
+    }
 }

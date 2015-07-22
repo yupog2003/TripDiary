@@ -11,28 +11,28 @@ import android.widget.SpinnerAdapter;
 import java.util.ArrayList;
 
 public class SpinnerActionProvider extends ActionProvider {
-	Spinner spinner;
-	Context context;
+    Spinner spinner;
+    Context context;
 
-	public SpinnerActionProvider(Context context) {
-		super(context);
-		this.context = context;
-		this.spinner = new Spinner(context);
-		
+    public SpinnerActionProvider(Context context) {
+        super(context);
+        this.context = context;
+        this.spinner = new Spinner(context);
 
-	}
 
-	@Override
-	public View onCreateActionView() {
+    }
 
-		return spinner;
-	}
+    @Override
+    public View onCreateActionView() {
 
-	public void setItems(ArrayList<String> itemNames, OnItemSelectedListener listener) {
-		SpinnerAdapter adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, itemNames);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(listener);
-		
-	}
-	
+        return spinner;
+    }
+
+    public void setItems(ArrayList<String> itemNames, OnItemSelectedListener listener) {
+        SpinnerAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, itemNames);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(listener);
+
+    }
+
 }

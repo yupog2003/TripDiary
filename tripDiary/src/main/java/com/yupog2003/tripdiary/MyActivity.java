@@ -8,33 +8,20 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.yupog2003.tripdiary.data.MyImageDecoder;
+import com.yupog2003.tripdiary.data.MyImageDownloader;
 
 
 public class MyActivity extends AppCompatActivity {
 
-	@Override
-	public void onStart() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyImageDecoder imageDecoder = new MyImageDecoder(this, new BaseImageDecoder(false));
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(new MyImageDownloader(this)).imageDecoder(imageDecoder).build();
+        ImageLoader.getInstance().init(conf);
+    }
 
-		super.onStart();
-		//EasyTracker.getInstance(this).activityStart(this);
-	}
-
-	@Override
-	public void onStop() {
-
-		super.onStop();
-		//EasyTracker.getInstance(this).activityStop(this);
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		MyImageDecoder imageDecoder=new MyImageDecoder(this,new BaseImageDecoder(false));
-		ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDecoder(imageDecoder).build();
-		ImageLoader.getInstance().init(conf);
-	}
-
-	public Activity getActivity(){
+    public Activity getActivity() {
         return this;
     }
 }

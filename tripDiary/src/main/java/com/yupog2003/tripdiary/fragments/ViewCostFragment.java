@@ -1,13 +1,15 @@
 package com.yupog2003.tripdiary.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -21,59 +23,88 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.yupog2003.tripdiary.R;
-import com.yupog2003.tripdiary.views.SlidingTabLayout;
+import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.ViewCostActivity;
+import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Trip;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
     public int option;
-    public static final int optionPOI = 0;
-    public static final int optionTrip = 1;
-    public String path;
-    public String title;
-    View rootView;
-    SlidingTabLayout tabLayout;
+    public String tripName;
+    public String poiName;
+    ViewGroup rootView;
+    TabLayout tabLayout;
     FloatingActionButton add;
     ViewPager viewPager;
     TabsAdapter adapter;
+    public DocumentFile[] costFiles;
+    float[] totals;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        this.option = getArguments().getInt("option");
-        this.path = getArguments().getString("path");
-        this.title = getArguments().getString("title");
-        rootView = inflater.inflate(R.layout.fragment_view_cost, container, false);
+        this.option = getArguments().getInt(ViewCostActivity.tag_option);
+        this.tripName = getArguments().getString(ViewCostActivity.tag_trip);
+        this.poiName = getArguments().getString(ViewCostActivity.tag_poi);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_view_cost, container, false);
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        tabLayout = (SlidingTabLayout) rootView.findViewById(R.id.tabs);
+        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
         add = (FloatingActionButton) rootView.findViewById(R.id.add);
         add.setOnClickListener(this);
-        if (option == optionTrip) {
+        if (option == ViewCostActivity.optionTrip) {
             add.setVisibility(View.GONE);
         }
-        refresh();
+        if (option == ViewCostActivity.optionPOI) {
+            refreshData(false);
+        }
         return rootView;
     }
 
     @Override
     public void onResume() {
-
         super.onResume();
         setHasOptionsMenu(true);
+    }
+
+    public void refreshData(boolean updatePOI) {
+        if (option == ViewCostActivity.optionTrip) {
+            Trip trip = ViewTripActivity.trip;
+            ArrayList<DocumentFile> costList = new ArrayList<>();
+            for (POI poi : trip.pois) {
+                costList.addAll(Arrays.asList(poi.costFiles));
+            }
+            costFiles = costList.toArray(new DocumentFile[costList.size()]);
+        } else if (option == ViewCostActivity.optionPOI) {
+            if (updatePOI) {
+                ViewTripActivity.onPOIUpdate(poiName);
+            }
+            DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs");
+            costFiles = poiFile.listFiles();
+        }
+        TypedArray array = getActivity().getResources().obtainTypedArray(R.array.cost_type_colors);
+        totals = new float[array.length()];
+        array.recycle();
+        for (DocumentFile file : costFiles) {
+            readData(file);
+        }
+        refresh();
     }
 
     public void refresh() {
         adapter = new TabsAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(adapter);
-        tabLayout.setSelectedIndicatorColors(Color.WHITE);
-        tabLayout.setDistributeEvenly(true);
-        tabLayout.setViewPager(viewPager);
-
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -93,7 +124,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
         if (v.equals(add)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setTitle(getString(R.string.cost));
-            final LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.take_money, null);
+            final LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.take_money, rootView, false);
             ab.setView(layout);
             ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
@@ -118,12 +149,13 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             type = 0;
                         }
                         try {
-                            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path + "/costs/" + name), false));
+                            DocumentFile outputFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs").createFile("", name);
+                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(outputFile.getUri())));
                             bw.write("type=" + String.valueOf(type) + "\n");
                             bw.write("dollar=" + dollar);
                             bw.flush();
                             bw.close();
-                            refresh();
+                            refreshData(true);
                         } catch (IOException e) {
 
                             e.printStackTrace();
@@ -136,7 +168,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    class TabsAdapter extends FragmentStatePagerAdapter implements OnPageChangeListener {
+    class TabsAdapter extends FragmentPagerAdapter implements OnPageChangeListener {
 
         CostListFragment costListFragment;
         CostPieChartFragment costPieChartFragment;
@@ -149,9 +181,10 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
             costPieChartFragment = new CostPieChartFragment();
             costBarChartFragment = new CostBarChartFragment();
             Bundle args = new Bundle();
-            args.putString("path", path);
-            args.putString("title", title);
-            args.putInt("option", option);
+            args.putString(ViewCostActivity.tag_trip, tripName);
+            args.putString(ViewCostActivity.tag_poi, poiName);
+            args.putInt(ViewCostActivity.tag_option, option);
+            args.putFloatArray(ViewCostActivity.tag_totals, totals);
             costListFragment.setArguments(args);
             costPieChartFragment.setArguments(args);
             costBarChartFragment.setArguments(args);
@@ -199,7 +232,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onPageSelected(int position) {
-            add.setVisibility(option == optionPOI && position == 0 ? View.VISIBLE : View.GONE);
+            add.setVisibility(option == ViewCostActivity.optionPOI && position == 0 ? View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -208,4 +241,23 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void readData(DocumentFile file) {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(file.getUri())));
+            String s;
+            int type = -1;
+            while ((s = br.readLine()) != null) {
+                if (s.startsWith("type=")) {
+                    type = Integer.valueOf(s.substring(s.indexOf("=") + 1));
+                } else if (s.startsWith("dollar=") && type != -1) {
+                    totals[type] += Float.valueOf(s.substring(s.indexOf("=") + 1));
+                    type = -1;
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
 }

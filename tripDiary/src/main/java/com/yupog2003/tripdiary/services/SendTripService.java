@@ -3,10 +3,11 @@ package com.yupog2003.tripdiary.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.provider.DocumentFile;
 import android.widget.Toast;
 
-import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.thrift.TripDiary;
 
@@ -17,9 +18,8 @@ import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransportException;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -33,8 +33,8 @@ import java.util.List;
 
 public class SendTripService extends IntentService {
 
-    static final String url = MainActivity.serverURL + "/uploadTrip.php";
-    public static final String filePathTag = "filePath";
+    static final String url = TripDiaryApplication.serverURL + "/uploadTrip.php";
+    public static final String tripNameTag = "filePath";
     public static final String accountTag = "account";
     public static final String tokenTag = "token";
     public static final String publicTag = "public";
@@ -42,7 +42,7 @@ public class SendTripService extends IntentService {
     NotificationCompat.Builder nb;
     long totalBytes = 0;
     long totalUploaded = 0;
-    File tripFile;
+    DocumentFile tripFile;
 
     public SendTripService() {
         super("SendTripService");
@@ -53,25 +53,26 @@ public class SendTripService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        final String tripP = intent.getStringExtra(filePathTag);
+        final String tripP = intent.getStringExtra(tripNameTag);
         final String account = intent.getStringExtra(accountTag);
         final String token = intent.getStringExtra(tokenTag);
         final boolean uploadPublic = intent.getBooleanExtra(publicTag, false);
         if (tripP == null || account == null || token == null)
             return;
-        tripFile = new File(tripP);
+        tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripP);
+        final String tripName = FileHelper.getFileName(tripFile);
         try {
-            updateNotification(tripFile.getName(), getString(R.string.zipping) + "...", 0);
-            File zipFile = new File(tripFile.getParentFile().getPath() + "/" + tripFile.getName() + ".zip");
+            updateNotification(tripName, getString(R.string.zipping) + "...", 0);
+            DocumentFile zipFile = TripDiaryApplication.rootDocumentFile.createFile("", tripName + ".zip");
             FileHelper.zip(tripFile, zipFile);
-            totalBytes=zipFile.length();
-            updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", 0);
+            totalBytes = zipFile.length();
+            updateNotification(tripName, getString(R.string.uploading) + "...", 0);
             final MultipartUtility multipart = new MultipartUtility(url, "UTF-8");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (totalUploaded < totalBytes) {
-                        updateNotification(tripFile.getName(), getString(R.string.uploading) + "...", (int) (totalUploaded * 100f / totalBytes));
+                        updateNotification(tripName, getString(R.string.uploading) + "...", (int) (totalUploaded * 100f / totalBytes));
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -91,7 +92,7 @@ public class SendTripService extends IntentService {
                     final String returnURL = resultStr.substring(0, resultStr.lastIndexOf("\n"));
                     final String tripPath = returnURL.substring(returnURL.indexOf("trippath=") + 9);
                     if (uploadPublic) {
-                        THttpClient transport = new THttpClient(MainActivity.serverURL + "/TripDiaryService_binary.php");
+                        THttpClient transport = new THttpClient(TripDiaryApplication.serverURL + "/TripDiaryService_binary.php");
                         transport.open();
                         TProtocol protocol = new TBinaryProtocol(transport);
                         TripDiary.Client client2 = new TripDiary.Client(protocol, protocol);
@@ -194,9 +195,9 @@ public class SendTripService extends IntentService {
          * @param uploadFile a File to be uploaded
          * @throws IOException
          */
-        public void addFilePart(String fieldName, File uploadFile)
+        public void addFilePart(String fieldName, DocumentFile uploadFile)
                 throws IOException {
-            String fileName = uploadFile.getName();
+            String fileName = FileHelper.getFileName(uploadFile);
             writer.append("--" + boundary).append(LINE_FEED);
             writer.append(
                     "Content-Disposition: form-data; name=\"" + fieldName
@@ -210,7 +211,7 @@ public class SendTripService extends IntentService {
             writer.append(LINE_FEED);
             writer.flush();
 
-            FileInputStream inputStream = new FileInputStream(uploadFile);
+            InputStream inputStream = getContentResolver().openInputStream(uploadFile.getUri());
             byte[] buffer = new byte[4096];
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(buffer)) != -1) {

@@ -47,7 +47,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
         upDir.setOnClickListener(this);
         currentDir = (TextView) findViewById(R.id.currentDir);
         listView = (ListView) findViewById(R.id.listView);
-        choosedFiles = new ArrayList<String>();
+        choosedFiles = new ArrayList<>();
         adapter = new FileAdapter(new File(getIntent().getStringExtra("root")), FileHelper.getNoStartWithDotFilter());
         currentDir.setText(adapter.dir.getPath());
         listView.setAdapter(adapter);
@@ -97,9 +97,9 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
         public void selectAll() {
             if (filedatas != null) {
-                for (int i = 0; i < filedatas.length; i++) {
-                    filedatas[i].checkBox.setChecked(!isSelectAll);
-                    filedatas[i].isSelected = !isSelectAll;
+                for (FileData fileData : filedatas) {
+                    fileData.checkBox.setChecked(!isSelectAll);
+                    fileData.isSelected = !isSelectAll;
                 }
                 isSelectAll = !isSelectAll;
                 notifyDataSetChanged();
@@ -166,7 +166,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
                 if (isChecked) {
                     addFile(file);
-                } else if (choosedFiles.contains(file)) {
+                } else if (choosedFiles.contains(file.getPath())) {
                     removeFile(file);
                 }
             }
@@ -196,8 +196,8 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
                 choosedFiles.add(file.getPath());
                 File[] files = file.listFiles(filter);
                 if (files != null) {
-                    for (int i = 0; i < files.length; i++) {
-                        addFile(files[i]);
+                    for (File file1 : files) {
+                        addFile(file1);
                     }
                 }
             } else if (FileHelper.isMemory(file) && !choosedFiles.contains(file.getPath())) {
@@ -210,8 +210,8 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
                 choosedFiles.remove(file.getPath());
                 File[] files = file.listFiles(filter);
                 if (files != null) {
-                    for (int i = 0; i < files.length; i++) {
-                        removeFile(files[i]);
+                    for (File file1 : files) {
+                        removeFile(file1);
                     }
                 }
             } else if (choosedFiles.contains(file.getPath())) {

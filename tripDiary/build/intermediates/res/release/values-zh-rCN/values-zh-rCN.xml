@@ -82,7 +82,7 @@
     <string name="Start_Trip">开始旅程</string>
     <string name="Time">时间</string>
     <string name="Title">标题</string>
-    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-zh-rCN/values-zh-rCN.xml -->
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values-zh-rCN/values-zh-rCN.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"转到主屏幕"</string>
     <string msgid="1594238315039666878" name="abc_action_bar_up_description">"转到上一层级"</string>
@@ -232,7 +232,8 @@
     <string name="invalid_gpx_file">错误的gpx档</string>
     <string name="is_not_a_valid_directory">不是一个正确的目录</string>
     <string name="kilometer_or_mile">公里或英哩</string>
-    <string name="kml">Kml</string>
+    <string name="kml">KML</string>
+    <string name="kmz_with_explanation">KMZ (Google Earth, 包含压缩后的图片)</string>
     <string name="lifetime_record">生涯纪录</string>
     <string name="list">列表</string>
     <string name="local_trips">本机旅程</string>
@@ -244,6 +245,7 @@
     <string name="manage_category">管理类别</string>
     <string name="manage_category_summary">管理旅程类别</string>
     <string name="map">地图</string>
+    <string name="marker_color">标记颜色</string>
     <string name="max_altitude">最大高度</string>
     <string name="max_latitude">最高纬度</string>
     <string name="max_speed">最高速</string>
@@ -296,6 +298,7 @@
     <string name="please_connect_to_internet_for_downloading_google_map_background">请连线至网路以下载Google Map背景</string>
     <string name="please_enable_the_gps_provider">请开启GPS</string>
     <string name="please_input_poi_name">请输入兴趣点名称</string>
+    <string name="please_stop_previous_trip_first">请先停止之前的旅程</string>
     <string name="poi">兴趣点</string>
     <string name="poi_has_been_saved">已储存兴趣点</string>
     <string name="poi_name">兴趣点名称</string>
@@ -312,8 +315,8 @@
     <string name="record_duration">纪录时间间隔</string>
     <string name="record_setting">纪录设定</string>
     <string name="recording">纪录中</string>
-    <string name="remote_personal_trips">远端个人旅程</string>
-    <string name="remote_public_trips">远端公开旅程</string>
+    <string name="remote_personal_trips">云端个人旅程</string>
+    <string name="remote_public_trips">云端公开旅程</string>
     <string name="rename">更名</string>
     <string name="resolution">解析度</string>
     <string name="restore_setting">还原设定</string>
@@ -347,7 +350,9 @@
     <string name="share">分享</string>
     <string name="share_diary">分享日记</string>
     <string name="share_track_by...">分享轨迹…</string>
-    <string name="share_track_kml">分享轨迹(kml)</string>
+    <string name="share_track_gpx">分享轨迹(GPX)</string>
+    <string name="share_track_kml">分享轨迹(KML)</string>
+    <string name="share_track_kmz">分享轨迹(KMZ)</string>
     <string name="some_fields_are_not_filled">有些栏位未填写</string>
     <string name="sort_by_time">依时间排序</string>
     <string name="sound">声音</string>
@@ -358,6 +363,7 @@
     <string name="statistics">统计资料</string>
     <string name="stop">停止</string>
     <string name="stop_time">结束时间</string>
+    <string name="storage_access_framework_explanation">为棒棒糖开启SD卡写入权限，会降低一点效能，改变后请重新设定根目录</string>
     <string name="street_view">街景服务</string>
     <string name="street_view_is_not_available">无街景服务</string>
     <string name="take_a_audio">录音</string>
@@ -393,6 +399,7 @@
     <string name="updating">更新中</string>
     <string name="upload">上传</string>
     <string name="uploading">上传中</string>
+    <string name="use_storage_access_framework">使用Storage Access Framework</string>
     <string name="velocity">速率</string>
     <string name="video">影片</string>
     <string name="video_codec">影片编码</string>

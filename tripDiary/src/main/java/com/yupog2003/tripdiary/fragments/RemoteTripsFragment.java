@@ -4,7 +4,6 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -39,10 +39,10 @@ import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.services.DownloadTripService;
 import com.yupog2003.tripdiary.thrift.TripDiary;
 import com.yupog2003.tripdiary.views.CheckableLayout;
@@ -53,7 +53,6 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransportException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,7 +128,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     public TripDiary.Client getClient() {
         TripDiary.Client client = null;
         try {
-            THttpClient transport = new THttpClient(MainActivity.serverURL + "/TripDiaryService_binary.php");
+            THttpClient transport = new THttpClient(TripDiaryApplication.serverURL + "/TripDiaryService_binary.php");
             transport.open();
             TProtocol protocol = new TBinaryProtocol(transport);
             client = new TripDiary.Client(protocol, protocol);
@@ -374,7 +373,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             String tripPath = trips.get(position).path;
             String tripName = trips.get(position).name;
             String tripPublic = trip_option == option_public ? "yes" : "no";
-            String uri = MainActivity.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
+            String uri = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(uri));
             startActivity(intent);
@@ -395,7 +394,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     for (int i = 0; i < checksName.size(); i++) {
                         String tripPath = checksName.get(i).path;
                         String tripName = checksName.get(i).name;
-                        if (new File(TripDiaryApplication.rootPath + "/" + tripName).exists()) {
+                        if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
                             Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
                         } else {
                             Activity activity = getActivity();
@@ -532,7 +531,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                 } else if (founds.size() == 1) {
                     String tripPath = founds.get(0).path;
                     String tripName = founds.get(0).name;
-                    String uri = MainActivity.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath;
+                    String uri = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath;
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(uri));
                     startActivity(intent);
@@ -549,7 +548,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
                             String tripPath = founds.get(which).path;
                             String tripName = founds.get(which).name;
-                            String uri = MainActivity.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath;
+                            String uri = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath;
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(uri));
                             startActivity(intent);

@@ -1,16 +1,18 @@
 package com.yupog2003.tripdiary.data;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.support.v4.provider.DocumentFile;
+
+import com.yupog2003.tripdiary.TripDiaryApplication;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
@@ -173,18 +175,32 @@ public class MyCalendar extends GregorianCalendar {
         return format3339.substring(0, format3339.lastIndexOf("."));
     }
 
-    public static MyCalendar getTripTime(String path, String tripName) {
+    public static String formatTotalTime(long totalSeconds) {
+        int day = (int) (totalSeconds / 86400);
+        int hour = (int) (totalSeconds % 86400 / 3600);
+        int min = (int) (totalSeconds % 86400 % 3600 / 60);
+        int sec = (int) (totalSeconds % 86400 % 3600 % 60);
+        return String.format("%dT%d:%d:%d", day, hour, min, sec);
+    }
+
+    public static MyCalendar getTripTime(String tripName) { //in UTC
         try {
-            BufferedReader br = new BufferedReader(new FileReader(path + "/" + tripName + "/" + tripName + ".gpx"));
+            SharedPreferences tripTimePreference = TripDiaryApplication.instance.getSharedPreferences("tripTime", 0);
             String s;
+            if ((s = tripTimePreference.getString(tripName, null)) != null) {
+                return getTime(s, type_gpx);
+            }
+            DocumentFile gpxFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, tripName + ".gpx");
+            ContentResolver c = TripDiaryApplication.instance.getContentResolver();
+            BufferedReader br = new BufferedReader(new InputStreamReader(c.openInputStream(gpxFile.getUri())));
             while ((s = br.readLine()) != null) {
                 if (s.contains("<time>")) {
-                    br.close();
-                    return getTime(s, MyCalendar.type_gpx);
+                    tripTimePreference.edit().putString(tripName, s).commit();
+                    return getTime(s, type_gpx);
                 }
             }
             br.close();
-        } catch (FileNotFoundException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -246,6 +262,7 @@ public class MyCalendar extends GregorianCalendar {
         SharedPreferences.Editor editor = preference.edit();
         editor.putString(tripName, timezone);
         editor.commit();
+        context.getSharedPreferences("tripTime", Context.MODE_PRIVATE).edit().remove(tripName).commit();
     }
 
     @Override
