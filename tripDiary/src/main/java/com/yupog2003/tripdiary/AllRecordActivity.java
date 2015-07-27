@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,7 +118,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             case R.id.statistics:
                 AlertDialog.Builder ab = new AlertDialog.Builder(this);
                 ab.setTitle(R.string.statistics);
-                View rootView = getLayoutInflater().inflate(R.layout.all_record_statistics, null);
+                View rootView = getLayoutInflater().inflate(R.layout.all_record_statistics, (ViewGroup)findViewById(android.R.id.content), false);
                 TextView totalTime = (TextView) rootView.findViewById(R.id.totalTime);
                 totalTime.setText(MyCalendar.formatTotalTime(record.totalTime));
                 TextView totalDistance = (TextView) rootView.findViewById(R.id.distance);

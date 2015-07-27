@@ -211,6 +211,8 @@
     <string name="first_analysis_gpx">解析.gpx檔(第一次會花較久時間)</string>
     <string name="food">食</string>
     <string name="fps">Fps</string>
+    <string name="from_new_to_old">新 -> 舊</string>
+    <string name="from_old_to_new">舊 -> 新</string>
     <string name="generate_video">生成影片(實驗性)</string>
     <string name="gps_is_disabled">GPS未開啟</string>
     <string name="gpx">Gpx</string>

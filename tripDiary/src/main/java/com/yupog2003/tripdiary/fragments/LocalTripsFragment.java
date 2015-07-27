@@ -87,11 +87,8 @@ public class LocalTripsFragment extends Fragment {
     TripAdapter adapter;
     SearchView search;
     SharedPreferences categorysp;
-    SharedPreferences.Editor categoryeditor;
     SharedPreferences tripsp;
-    SharedPreferences.Editor tripeditor;
     SharedPreferences categoryExpandSp;
-    SharedPreferences.Editor categoryExpandEditor;
     private static final int REQUEST_GET_TOKEN = 0;
     private static final int REQUEST_RESTORE_TRIP = 1;
     private static final int REQUEST_IMPORT_TRIP = 2;
@@ -110,9 +107,6 @@ public class LocalTripsFragment extends Fragment {
         categorysp = getActivity().getSharedPreferences("category", Context.MODE_PRIVATE);
         tripsp = getActivity().getSharedPreferences("trip", Context.MODE_PRIVATE);
         categoryExpandSp = getActivity().getSharedPreferences("categoryExpand", Context.MODE_PRIVATE);
-        categoryeditor = categorysp.edit();
-        tripeditor = tripsp.edit();
-        categoryExpandEditor = categoryExpandSp.edit();
         return listView;
     }
 
@@ -215,7 +209,7 @@ public class LocalTripsFragment extends Fragment {
         } else if (item.getItemId() == R.id.timeSort) {
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             int nowSelection = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0);
-            ab.setSingleChoiceItems(new String[]{getString(R.string.ascending), getString(R.string.descending)}, nowSelection, new DialogInterface.OnClickListener() {
+            ab.setSingleChoiceItems(new String[]{getString(R.string.from_old_to_new), getString(R.string.from_new_to_old)}, nowSelection, new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -279,7 +273,7 @@ public class LocalTripsFragment extends Fragment {
                 try {
                     categoryDrawables.put(categories[i], ColorHelper.getColorDrawable(getActivity(), 40, Integer.valueOf(categorysp.getString(categories[i], String.valueOf(Color.WHITE)))));
                 } catch (NumberFormatException e) {
-                    categoryeditor.putString(categories[i], String.valueOf(Color.WHITE));
+                    categorysp.edit().putString(categories[i], String.valueOf(Color.WHITE)).commit();
                     i--;
                     e.printStackTrace();
                 }
@@ -448,7 +442,7 @@ public class LocalTripsFragment extends Fragment {
             } else {
                 String name = trips.get(groupPosition).get(childPosition).tripName;
                 Intent i = new Intent(getActivity(), ViewTripActivity.class);
-                i.putExtra("name", name);
+                i.putExtra(ViewTripActivity.tag_tripName, name);
                 DeviceHelper.sendGATrack(getActivity(), "Trip", "view", name, null);
                 getActivity().startActivity(i);
             }
@@ -477,8 +471,7 @@ public class LocalTripsFragment extends Fragment {
 
                         for (int i = 0; i < checksName.size(); i++) {
                             FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(i)).delete();
-                            tripeditor.remove(checksName.get(i));
-                            tripeditor.commit();
+                            tripsp.edit().remove(checksName.get(i)).commit();
                         }
                         loaddata();
                     }
@@ -619,9 +612,8 @@ public class LocalTripsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         for (int i = 0; i < checksName.size(); i++) {
-                            tripeditor.putString(checksName.get(i), categories[which]);
+                            tripsp.edit().putString(checksName.get(i), categories[which]).commit();
                         }
-                        tripeditor.commit();
                         dialog.dismiss();
                         loaddata();
                     }
@@ -703,7 +695,7 @@ public class LocalTripsFragment extends Fragment {
                 } else if (founds.size() == 1) {
                     String name = founds.get(0);
                     Intent intent = new Intent(getActivity(), ViewTripActivity.class);
-                    intent.putExtra("name", name);
+                    intent.putExtra(ViewTripActivity.tag_tripName, name);
                     getActivity().startActivity(intent);
                 } else {
                     AlertDialog.Builder choose = new AlertDialog.Builder(getActivity());
@@ -714,7 +706,7 @@ public class LocalTripsFragment extends Fragment {
 
                             String name = founds.get(which);
                             Intent intent = new Intent(getActivity(), ViewTripActivity.class);
-                            intent.putExtra("name", name);
+                            intent.putExtra(ViewTripActivity.tag_tripName, name);
                             dialog.dismiss();
                             getActivity().startActivity(intent);
                         }
@@ -731,15 +723,11 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public void onGroupExpand(int groupPosition) {
-
-            categoryExpandEditor.putBoolean(categories[groupPosition], true);
-            categoryExpandEditor.commit();
+            categoryExpandSp.edit().putBoolean(categories[groupPosition], true).commit();
         }
 
         public void onGroupCollapse(int groupPosition) {
-
-            categoryExpandEditor.putBoolean(categories[groupPosition], false);
-            categoryExpandEditor.commit();
+            categoryExpandSp.edit().putBoolean(categories[groupPosition], false).commit();
         }
     }
 

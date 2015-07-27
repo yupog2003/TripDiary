@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,9 +37,6 @@ import com.yupog2003.tripdiary.fragments.TextFragment;
 import com.yupog2003.tripdiary.fragments.VideoFragment;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,6 +56,7 @@ public class ViewPointActivity extends MyActivity {
     public static final String tag_tripname = "tag_tripname";
     public static final String tag_poiname = "tag_poiname";
     public static final String tag_fromActivity = "tag_activity";
+    public static final int REQUEST_VIEW_COST=4;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,19 +65,21 @@ public class ViewPointActivity extends MyActivity {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
+            assert getSupportActionBar() != null;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         String tripName = getIntent().getStringExtra(tag_tripname);
         String poiName = getIntent().getStringExtra(tag_poiname);
         String activity = getIntent().getStringExtra(tag_fromActivity);
+        poi = null;
         if (activity != null && activity.equals(ViewTripActivity.class.getSimpleName())) {
             poi = ViewTripActivity.trip.getPOI(poiName);
             timezone = ViewTripActivity.trip.timezone;
-        } else if (activity !=null && activity.equals(AllRecordActivity.class.getSimpleName())){
+        } else if (activity != null && activity.equals(AllRecordActivity.class.getSimpleName())) {
             poi = AllRecordActivity.getPOI(tripName, poiName);
             timezone = MyCalendar.getTripTimeZone(this, tripName);
         }
-        if (poi == null){
+        if (poi == null) {
             finish();
         }
         setTitle(poiName);
@@ -191,7 +192,7 @@ public class ViewPointActivity extends MyActivity {
             AlertDialog.Builder ab = new AlertDialog.Builder(ViewPointActivity.this);
             ab.setTitle(poi.title);
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.view_basicinformation, null);
+            View layout = inflater.inflate(R.layout.view_basicinformation, (ViewGroup) findViewById(android.R.id.content), false);
             TextView location = (TextView) layout.findViewById(R.id.location);
             location.setText("(" + latlngFormat.format(poi.latitude) + "," + latlngFormat.format(poi.longitude) + ")");
             TextView altitude = (TextView) layout.findViewById(R.id.altitude);
@@ -206,7 +207,7 @@ public class ViewPointActivity extends MyActivity {
 
                     AlertDialog.Builder ab2 = new AlertDialog.Builder(ViewPointActivity.this);
                     ab2.setTitle(getString(R.string.edit));
-                    View layout = getLayoutInflater().inflate(R.layout.edit_poi, null);
+                    View layout = getLayoutInflater().inflate(R.layout.edit_poi, (ViewGroup) findViewById(android.R.id.content), false);
                     final EditText edittitle = (EditText) layout.findViewById(R.id.edit_poi_title);
                     edittitle.setText(poi.title);
                     final EditText editlatitude = (EditText) layout.findViewById(R.id.edit_poi_latitude);
@@ -270,7 +271,7 @@ public class ViewPointActivity extends MyActivity {
             intent2.putExtra(ViewCostActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
             intent2.putExtra(ViewCostActivity.tag_poi, FileHelper.getFileName(poi.dir));
             intent2.putExtra(ViewCostActivity.tag_option, ViewCostActivity.optionPOI);
-            startActivity(intent2);
+            startActivityForResult(intent2, REQUEST_VIEW_COST);
         } else if (item.getItemId() == R.id.delete) {
             AlertDialog.Builder ab2 = new AlertDialog.Builder(ViewPointActivity.this);
             ab2.setMessage(getString(R.string.are_you_sure_to_delete_this_poi));
@@ -292,12 +293,22 @@ public class ViewPointActivity extends MyActivity {
         return false;
     }
 
-    public static void requestUpdatePOI() {
-        ViewTripActivity.onPOIUpdate(poi.title);
+    public void requestUpdatePOI() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ViewTripActivity.tag_request_updatePOI, true);
+        bundle.putString(ViewTripActivity.tag_update_poiNames, poi.title);
+        intent.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent);
     }
 
-    public static void requestUpdatePOIs() {
-        ViewTripActivity.onPOIUpdate(null);
+    public void requestUpdatePOIs() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ViewTripActivity.tag_request_updatePOI, true);
+        bundle.putString(ViewTripActivity.tag_update_poiNames, null);
+        intent.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent);
     }
 
     @Override
@@ -307,28 +318,19 @@ public class ViewPointActivity extends MyActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     new ImportFilesTask(data.getExtras().getStringArrayList("files")).execute();
                 }
-            } else {
-                try {
-                    Uri uri = data.getData();
-                    String fileName = FileHelper.getRealNameFromURI(this, uri);
-                    if (requestCode == import_picture && FileHelper.isPicture(fileName)) {
-                        InputStream is = getContentResolver().openInputStream(uri);
-                        OutputStream os = getContentResolver().openOutputStream(poi.picDir.createFile("", fileName).getUri());
-                        FileHelper.copyByStream(is, os);
-                        requestUpdatePOI();
-                    } else if (requestCode == import_video && FileHelper.isVideo(fileName)) {
-                        InputStream is = getContentResolver().openInputStream(uri);
-                        OutputStream os = getContentResolver().openOutputStream(poi.videoDir.createFile("", fileName).getUri());
-                        FileHelper.copyByStream(is, os);
-                        requestUpdatePOI();
-                    } else if (requestCode == import_audio && FileHelper.isAudio(fileName)) {
-                        InputStream is = getContentResolver().openInputStream(uri);
-                        OutputStream os = getContentResolver().openOutputStream(poi.audioDir.createFile("", fileName).getUri());
-                        FileHelper.copyByStream(is, os);
+            } else if (requestCode == import_picture || requestCode == import_video || requestCode == import_audio) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    poi.importMemories(null, uri);
+                    requestUpdatePOI();
+                }
+            } else if (requestCode == REQUEST_VIEW_COST) {
+                if (resultCode == Activity.RESULT_OK) {
+                    Bundle bundle = data.getExtras();
+                    if (bundle == null) return;
+                    if (bundle.getBoolean(ViewTripActivity.tag_request_updatePOI, false)) {
                         requestUpdatePOI();
                     }
-                } catch (NullPointerException | FileNotFoundException e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -359,23 +361,22 @@ public class ViewPointActivity extends MyActivity {
 
             if (files == null)
                 return null;
-            for (int i = 0; i < files.size(); i++) {
-                publishProgress(i);
-                File file = new File(files.get(i));
-                if (FileHelper.isPicture(file)) {
-                    FileHelper.copyFile(file, poi.picDir.createFile("", file.getName()));
-                } else if (FileHelper.isVideo(file)) {
-                    FileHelper.copyFile(file, poi.videoDir.createFile("", file.getName()));
-                } else if (FileHelper.isAudio(file)) {
-                    FileHelper.copyFile(file, poi.audioDir.createFile("", file.getName()));
-                }
+            File[] filess = new File[files.size()];
+            for (int i = 0; i < filess.length; i++) {
+                filess[i] = new File(files.get(i));
             }
+            POI.ImportMemoriesListener listener = new POI.ImportMemoriesListener() {
+                @Override
+                public void onProgressUpdate(int progess) {
+                    publishProgress(progess);
+                }
+            };
+            poi.importMemories(listener, filess);
             return null;
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-
             pd.setProgress(values[0]);
         }
 

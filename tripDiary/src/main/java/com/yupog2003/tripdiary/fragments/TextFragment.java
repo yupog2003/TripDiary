@@ -128,7 +128,9 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
             ViewPointActivity.poi.updateDiary(editText.getText().toString());
             text.setText(ViewPointActivity.poi.diary);
             editText.setText(ViewPointActivity.poi.diary);
-            ViewPointActivity.requestUpdatePOI();
+            if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                ((ViewPointActivity) getActivity()).requestUpdatePOI();
+            }
             setEditMode(false);
         } else if (v.equals(cancel)) {
             text.setText(ViewPointActivity.poi.diary);

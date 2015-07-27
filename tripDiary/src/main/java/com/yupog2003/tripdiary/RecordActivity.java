@@ -93,6 +93,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     boolean isGPSEnabled;
     Menu menu;
     SharedPreferences preference;
+    DocumentFile nowFileForCameraIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +222,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 finish();
             } else {
                 Intent i = new Intent(RecordActivity.this, ViewTripActivity.class);
-                i.putExtra("name", tripName);
+                i.putExtra(ViewTripActivity.tag_tripName, tripName);
                 i.putExtra("stoptrip", true);
                 startActivity(i);
                 finish();
@@ -288,7 +289,11 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 } else {
                     setAddPOIMode(true);
                     String poiNameStr = poiName.getText().toString();
-                    poi = new POI(RecordActivity.this, RecordService.instance.trip.dir.createDirectory(poiNameStr));
+                    DocumentFile poiDir = FileHelper.findfile(RecordService.instance.trip.dir, poiNameStr);
+                    if (poiDir == null) {
+                        poiDir = RecordService.instance.trip.dir.createDirectory(poiNameStr);
+                    }
+                    poi = new POI(RecordActivity.this, poiDir);
                     MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
                     if (isGPSEnabled) {
                         if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
@@ -321,20 +326,22 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             new RefreshTask(true, false).execute();
         } else if (v.equals(takePicture)) {
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            i.putExtra(MediaStore.EXTRA_OUTPUT, poi.picDir.createFile("", fileName + ".jpg").getUri());
-            i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             if (i.resolveActivity(getPackageManager()) != null) {
+                nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".jpg");
+                i.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
+                i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 startActivityForResult(i, REQUEST_PICTURE);
             } else {
                 Toast.makeText(this, getString(R.string.camera_is_not_available), Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeVideo)) {
             Intent i = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            i.putExtra(MediaStore.EXTRA_OUTPUT, poi.videoDir.createFile("", fileName + ".3gp").getUri());
-            i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             if (i.resolveActivity(getPackageManager()) != null) {
+                nowFileForCameraIntent = poi.videoDir.createFile("", fileName + ".3gp");
+                i.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
+                i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 startActivityForResult(i, REQUEST_VIDEO);
             } else {
                 Toast.makeText(this, getString(R.string.camera_is_not_available), Toast.LENGTH_SHORT).show();
@@ -445,17 +452,21 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 takeMoney.setText(getString(R.string.spend) + "(" + poi.costDir.listFiles().length + ")");
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                // cancel.performClick();
             }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_PICTURE || requestCode == REQUEST_VIDEO) {
+        if (requestCode == REQUEST_PICTURE || requestCode == REQUEST_VIDEO) {
+            if (resultCode == Activity.RESULT_OK) {
                 updatePOIStatus();
+            } else {
+                if (nowFileForCameraIntent != null) {
+                    nowFileForCameraIntent.delete();
+                }
             }
+            nowFileForCameraIntent = null;
         }
     }
 
@@ -528,7 +539,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
         @Override
         protected String doInBackground(Boolean... params) {
-            if(RecordService.instance==null)return null;
+            if (RecordService.instance == null) return null;
             if (refreshTrack) {
                 try {
                     ArrayList<LatLng> latArray = new ArrayList<>();
@@ -553,6 +564,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                     e.printStackTrace();
                 }
             }
+            if (RecordService.instance == null) return null;
             DocumentFile[] poiFiles = FileHelper.listFiles(RecordService.instance.trip.dir, FileHelper.list_dirs);
             if (poiFiles == null)
                 return null;

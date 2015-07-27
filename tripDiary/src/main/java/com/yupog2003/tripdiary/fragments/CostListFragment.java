@@ -65,7 +65,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
         this.option = getArguments().getInt(ViewCostActivity.tag_option);
         this.tripName = getArguments().getString(ViewCostActivity.tag_trip);
         this.poiName = getArguments().getString(ViewCostActivity.tag_poi);
-        this.viewCostFragment=(ViewCostFragment)getParentFragment();
+        this.viewCostFragment = (ViewCostFragment) getParentFragment();
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_cost_list, container, false);
         costsList = (ListView) rootView.findViewById(R.id.costslist);
         poiColumn = (TextView) rootView.findViewById(R.id.poicolumn);
@@ -324,7 +324,11 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                             DocumentFile dataParent = data.file.getParentFile();
                             data.file.delete();
                             try {
-                                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(dataParent.createFile("", name).getUri())));
+                                DocumentFile outFile = FileHelper.findfile(dataParent, name);
+                                if (outFile == null) {
+                                    outFile = dataParent.createFile("", name);
+                                }
+                                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(outFile.getUri())));
                                 bw.write("type=" + String.valueOf(type) + "\n");
                                 bw.write("dollar=" + dollar);
                                 bw.flush();

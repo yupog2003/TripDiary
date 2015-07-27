@@ -36,7 +36,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.R;
@@ -53,7 +52,6 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransportException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -158,7 +156,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                 List<com.yupog2003.tripdiary.thrift.Trip> tripList = client.getTrips(token, trip_option == option_public, account, 0);
                 if (tripList == null)
                     return null;
-                ArrayList<Trip> trips = new ArrayList<Trip>();
+                ArrayList<Trip> trips = new ArrayList<>();
                 for (int i = 0; i < tripList.size(); i++) {
                     com.yupog2003.tripdiary.thrift.Trip trip = tripList.get(i);
                     if (trip != null && trip.getPath() != null && trip.getName() != null) {
@@ -177,7 +175,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         protected void onPostExecute(Trip[] result) {
 
             if (result != null) {
-                adapter = new TripAdapter(new ArrayList<Trip>(Arrays.asList(result)));
+                adapter = new TripAdapter(new ArrayList<>(Arrays.asList(result)));
                 listView.setAdapter(adapter);
                 listView.setLongClickable(true);
                 listView.setOnItemClickListener(adapter);
@@ -259,12 +257,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
                 e.printStackTrace();
                 loginIntent = e.getIntent();
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            } catch (GoogleAuthException e) {
-
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -288,7 +280,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     List<com.yupog2003.tripdiary.thrift.Trip> tripList = client.getTrips(token, true, account, adapter.getCount() / 20);
                     if (tripList == null)
                         return null;
-                    ArrayList<Trip> trips = new ArrayList<Trip>();
+                    ArrayList<Trip> trips = new ArrayList<>();
                     for (int i = 0; i < tripList.size(); i++) {
                         com.yupog2003.tripdiary.thrift.Trip trip = tripList.get(i);
                         if (trip != null && trip.getPath() != null && trip.getName() != null) {
@@ -318,8 +310,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             }
         }
     }
-
-    public static String gpxStr;
 
     class TripAdapter extends BaseAdapter implements OnItemClickListener, OnQueryTextListener, MultiChoiceModeListener, OnScrollListener {
 
@@ -382,7 +372,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         ArrayList<Trip> checksName;
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) { //
-            checksName = new ArrayList<Trip>();
+            checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
                     checksName.add(trips.get(i));
@@ -485,7 +475,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         public void onDestroyActionMode(ActionMode mode) {
-            mode = null;
             onActionMode = false;
         }
 
@@ -497,8 +486,8 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
             checks[position] = checked;
             int selects = 0;
-            for (int i = 0; i < checks.length; i++) {
-                if (checks[i])
+            for (boolean check : checks) {
+                if (check)
                     selects++;
             }
             if (!account.equals("public")) {
@@ -518,7 +507,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
             searchView.clearFocus();
             if (!searchname.equals("")) {
-                final ArrayList<Trip> founds = new ArrayList<Trip>();
+                final ArrayList<Trip> founds = new ArrayList<>();
                 int adaptercount = trips.size();
                 for (int i = 0; i < adaptercount; i++) {
                     String itemname = trips.get(i).name;

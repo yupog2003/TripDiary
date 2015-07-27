@@ -26,6 +26,7 @@ public class ViewActivity extends MyActivity {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
+            assert getSupportActionBar() != null;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         viewPager = (ViewPager) findViewById(R.id.viewPager);

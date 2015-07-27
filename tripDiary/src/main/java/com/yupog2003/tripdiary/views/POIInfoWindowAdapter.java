@@ -1,6 +1,7 @@
 package com.yupog2003.tripdiary.views;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
 
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import java.util.HashMap;
 public class POIInfoWindowAdapter implements InfoWindowAdapter {
 
     Activity activity;
-    Trip trip;
+    POI[] pois;
     Trip[] trips;
     HashMap<String, Bitmap> bitmaps;
     View rootView;
@@ -31,10 +33,13 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
     TextView diary;
     ImageView img;
     Bitmap poiBitmap;
+    ContentResolver contentResolver;
+    int imageWidth;
+    Rect rect;
 
-    public POIInfoWindowAdapter(Activity activity, Trip trip, Trip[] trips) {
+    public POIInfoWindowAdapter(Activity activity, POI[] pois, Trip[] trips) {
         this.activity = activity;
-        this.trip = trip;
+        this.pois = pois;
         this.trips = trips;
         this.bitmaps = new HashMap<>();
         this.rootView = activity.getLayoutInflater().inflate(R.layout.poi_infowindow, null);
@@ -43,6 +48,9 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
         this.diary = (TextView) rootView.findViewById(R.id.poiDiary);
         this.img = (ImageView) rootView.findViewById(R.id.poiImage);
         this.poiBitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
+        this.contentResolver=activity.getContentResolver();
+        this.imageWidth=(int) DeviceHelper.pxFromDp(activity, 72);
+        this.rect=new Rect(0,0,0,0);
     }
 
     @Override
@@ -59,21 +67,21 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
             if (poiName.contains("/") && trips != null) {
                 String tripName = poiName.split("/")[0];
                 String realPOIName = poiName.split("/")[1];
-                for (int i = 0; i < trips.length; i++) {
-                    if (tripName.equals(trips[i].tripName)) {
-                        for (int j = 0; j < trips[i].pois.length; j++) {
-                            if (realPOIName.equals(trips[i].pois[j].title)) {
-                                imgs = trips[i].pois[j].picFiles;
+                for (Trip trip : trips) {
+                    if (tripName.equals(trip.tripName)) {
+                        for (POI poi : trip.pois) {
+                            if (realPOIName.equals(poi.title)) {
+                                imgs = poi.picFiles;
                                 break;
                             }
                         }
                         break;
                     }
                 }
-            } else if (trip != null) {
-                for (int i = 0; i < trip.pois.length; i++) {
-                    if (poiName.equals(trip.pois[i].title)) {
-                        imgs = trip.pois[i].picFiles;
+            } else if (pois != null) {
+                for (POI poi : pois) {
+                    if (poiName.equals(poi.title)) {
+                        imgs = poi.picFiles;
                         break;
                     }
                 }
@@ -86,15 +94,18 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                 }
                 BitmapFactory.Options op = new BitmapFactory.Options();
                 op.inJustDecodeBounds = true;
-                BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri), new Rect(0, 0, 0, 0), op);
+                BitmapFactory.decodeStream(contentResolver.openInputStream(uri), rect, op);
                 op.inJustDecodeBounds = false;
                 op.inPreferredConfig = Bitmap.Config.RGB_565;
                 op.inPreferQualityOverSpeed = false;
-                int imageWidth = (int) DeviceHelper.pxFromDp(activity, 72);
                 op.inSampleSize = (int) Math.max((float) op.outWidth / imageWidth, (float) op.outHeight / imageWidth);
-                Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri), new Rect(0, 0, 0, 0), op);
-                img.setImageBitmap(bitmap);
-                bitmaps.put(uri.toString(), bitmap);
+                Bitmap bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri), rect, op);
+                if (bitmap!=null){
+                    img.setImageBitmap(bitmap);
+                    bitmaps.put(uri.toString(), bitmap);
+                }else{
+                    img.setImageBitmap(poiBitmap);
+                }
             } else {
                 img.setImageBitmap(poiBitmap);
             }
@@ -110,5 +121,7 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
 
         return null;
     }
-
+    public void setPOIs(POI[] pois){
+        this.pois=pois;
+    }
 }

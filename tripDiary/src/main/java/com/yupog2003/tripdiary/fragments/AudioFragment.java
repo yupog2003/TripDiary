@@ -75,7 +75,7 @@ public class AudioFragment extends Fragment {
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-            final ArrayList<DocumentFile> checksName = new ArrayList<DocumentFile>();
+            final ArrayList<DocumentFile> checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
                     checksName.add((DocumentFile) adapter.getItem(i));
@@ -94,7 +94,9 @@ public class AudioFragment extends Fragment {
                             checksName.get(i).delete();
                         }
                         setAudio();
-                        ViewPointActivity.requestUpdatePOI();
+                        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                            ((ViewPointActivity) getActivity()).requestUpdatePOI();
+                        }
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -115,7 +117,9 @@ public class AudioFragment extends Fragment {
                             String s = name.getText().toString();
                             checkFile.renameTo(s);
                             setAudio();
-                            ViewPointActivity.requestUpdatePOI();
+                            if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                                ((ViewPointActivity) getActivity()).requestUpdatePOI();
+                            }
                         }
                     });
                     ab2.show();
@@ -127,7 +131,7 @@ public class AudioFragment extends Fragment {
                 }
                 checkAll = !checkAll;
             } else if (item.getItemId() == R.id.share) {
-                ArrayList<Uri> uris = new ArrayList<Uri>();
+                ArrayList<Uri> uris = new ArrayList<>();
                 for (int i = 0; i < checks.length; i++) {
                     if (checks[i]) {
                         uris.add(((DocumentFile) adapter.getItem(i)).getUri());
@@ -150,8 +154,12 @@ public class AudioFragment extends Fragment {
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
                         DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "audios");
+                        DocumentFile[] filesIntoDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
-                            toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            toFiles[i] = FileHelper.findfile(filesIntoDir, FileHelper.getFileName(checksName.get(i)));
+                            if (toFiles[i] == null) {
+                                toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            }
                             fromFiles[i] = checksName.get(i);
                         }
                         new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
@@ -160,7 +168,9 @@ public class AudioFragment extends Fragment {
                             public void onFinish() {
 
                                 setAudio();
-                                ViewPointActivity.requestUpdatePOIs();
+                                if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs();
+                                }
                             }
                         }).execute();
 
@@ -198,8 +208,8 @@ public class AudioFragment extends Fragment {
 
             checks[position] = checked;
             int selects = 0;
-            for (int i = 0; i < checks.length; i++) {
-                if (checks[i]) {
+            for (boolean check : checks) {
+                if (check) {
                     selects++;
                 }
             }

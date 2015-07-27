@@ -185,7 +185,7 @@ public class AllPictureFragment extends Fragment {
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);
                         intent.putExtra(ViewPointActivity.tag_fromActivity, ViewTripActivity.class.getSimpleName());
-                        startActivity(intent);
+                        getActivity().startActivityForResult(intent, ViewTripActivity.REQUEST_VIEW_POI);
                     }
                 };
                 this.cardView.setOnClickListener(onClickListener);

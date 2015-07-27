@@ -660,6 +660,7 @@ com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask.class
 android/support/v4/app/NotificationCompat$NotificationCompatImplGingerbread.class
 com/google/android/gms/ads/internal/zzi.class
 com/google/android/gms/internal/zzda.class
+com/yupog2003/tripdiary/data/POI$ImportMemoriesListener.class
 android/support/design/R$styleable.class
 android/support/design/widget/SwipeDismissBehavior$OnDismissListener.class
 android/support/design/widget/AppBarLayout$ScrollingViewBehavior.class

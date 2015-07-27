@@ -14,27 +14,30 @@ import java.util.TimeZone;
 
 public class GpxAnalyzerJava {
     TrackCache cache;
-    DocumentFile gpxFile;
+    Trip trip;
     Context context;
     Handler contextHandler;
     ProgressChangedListener listener;
     public static final double earthRadius = 6378.1 * 1000;
     public static final int altitudeDifferThreshold = 20;
+    long fileSize;
 
-    public GpxAnalyzerJava(DocumentFile gpxFile, Context context, Handler contextHandler) {
-        this.gpxFile = gpxFile;
+    public GpxAnalyzerJava(Trip trip, Context context, Handler contextHandler) {
+        this.trip = trip;
         this.context = context;
         this.contextHandler = contextHandler;
         stop = false;
     }
 
     public boolean analyze() {
-        String tripName = FileHelper.getFileName(gpxFile.getParentFile());
+        String tripName = trip.tripName;
         int timeZoneOffset = 0;
         cache = new TrackCache();
-        DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), tripName + ".gpx.cache");
-        boolean cacheExsit = cacheFile != null && cacheFile.length() > 0;
+        DocumentFile cacheFile = trip.cacheFile;
+        long cacheFileLength=cacheFile.length();
+        boolean cacheExsit = cacheFileLength > 0;
         if (cacheExsit) {
+            fileSize=cacheFileLength;
             int numOfLines = FileHelper.getNumOfLinesInFile(cacheFile);
             int size = (numOfLines - 9) / 4;
             cache.latitudes = new double[size];
@@ -42,10 +45,11 @@ public class GpxAnalyzerJava {
             cache.altitudes = new float[size];
             cache.times = new String[size];
         } else {
+            fileSize=trip.gpxFile.length();
             String timezone = MyCalendar.getTripTimeZone(context, tripName);
             timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
         }
-        return cacheExsit ? getCache(cacheFile, cache) : parse(gpxFile, cache, timeZoneOffset);
+        return cacheExsit ? getCache(cacheFile, cache) : parse(trip.gpxFile, cache, timeZoneOffset);
     }
 
     public TrackCache getCache() {
@@ -97,7 +101,7 @@ public class GpxAnalyzerJava {
 
     public boolean parse(DocumentFile gpxFile, TrackCache cache, int timeZoneOffset) {
         try {
-            DocumentFile cacheFile = gpxFile.getParentFile().createFile("", FileHelper.getFileName(gpxFile) + ".cache");
+            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), FileHelper.getFileName(gpxFile)+".cache");
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(gpxFile.getUri())));
             String s;
             int count = 0;
@@ -179,9 +183,6 @@ public class GpxAnalyzerJava {
                 float dist = distFrom(track.get(i).latitude, track.get(i).longitude, track.get(i + 20).latitude, track.get(i + 20).longitude);
                 float seconds = times.get(i + 20) - times.get(i);
                 float speed = dist / seconds * 18 / 5;
-                /*if (speeds != null) {
-                    speeds.add(speed);
-				}*/
                 if (maxSpeed < speed)
                     maxSpeed = speed;
             }
@@ -263,11 +264,11 @@ public class GpxAnalyzerJava {
 
     public void onProgressChanged(long progress) {
         if (listener != null) {
-            listener.onProgressChanged(progress);
+            listener.onProgressChanged(progress, fileSize);
         }
     }
 
     public interface ProgressChangedListener {
-        void onProgressChanged(long progress);
+        void onProgressChanged(long progress, long fileSize);
     }
 }

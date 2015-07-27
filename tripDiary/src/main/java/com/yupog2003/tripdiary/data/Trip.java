@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.provider.DocumentFile;
-import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
@@ -101,7 +100,7 @@ public class Trip {
     }
 
     public void getCacheJava(Context context, Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
-        analyzer = new GpxAnalyzerJava(gpxFile, context, handler);
+        analyzer = new GpxAnalyzerJava(this, context, handler);
         analyzer.setOnProgressChangedListener(listener);
         if (analyzer.analyze()) {
             cache = analyzer.getCache();
@@ -111,7 +110,7 @@ public class Trip {
 
     public void getCacheJNI(Context context, Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
         try {
-            analyzer2 = new GpxAnalyzer2(gpxFile, context, handler);
+            analyzer2 = new GpxAnalyzer2(this, context, handler);
             analyzer2.setOnProgressChangedListener(listener);
             if (analyzer2.analyze()) {
                 cache = analyzer2.getCache();

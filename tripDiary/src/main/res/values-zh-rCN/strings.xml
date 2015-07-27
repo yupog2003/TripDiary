@@ -346,5 +346,7 @@
     <string name="share_track_kmz">分享轨迹(KMZ)</string>
     <string name="share_track_gpx">分享轨迹(GPX)</string>
     <string name="please_stop_previous_trip_first">请先停止之前的旅程</string>
+    <string name="from_new_to_old">新 -> 旧</string>
+    <string name="from_old_to_new">旧 -> 新</string>
 
 </resources>

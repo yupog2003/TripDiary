@@ -432,19 +432,25 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
 
     private DocumentFile getToFile(Uri uri) {
         if (uri != null) {
-            DocumentFile toFile = null;
             String nowDir = adapter.nowDir;
             String poiName = nowDir.split("/")[3];
             String tripName = nowDir.split("/")[2];
             String memoryName = FileHelper.getRealNameFromURI(this, uri);
+            DocumentFile toDir = null;
             if (type == Type.picture) {
-                toFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures").createFile("", memoryName); //picture file
+                toDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures");
             } else if (type == Type.video) {
-                toFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos").createFile("", memoryName); //video file
+                toDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos");
             } else if (type == Type.audio) {
-                toFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios").createFile("", memoryName); //audio file
+                toDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios");
             }
-            return toFile;
+            if (toDir != null) {
+                DocumentFile toFile = FileHelper.findfile(toDir, memoryName);
+                if (toFile == null) {
+                    toFile = toDir.createFile("", memoryName);
+                }
+                return toFile;
+            }
         }
         return null;
     }
@@ -495,9 +501,9 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 for (int i = 0; i < Math.min(fromUris.length, toFiles.length); i++) {
                     if (cancel)
                         break;
-                    publishProgress(FileHelper.getFileName(toFiles[i]), String.valueOf(i));
-                    if (fromUris[i] == null || toFiles == null)
+                    if (fromUris[i] == null || toFiles[i] == null)
                         continue;
+                    publishProgress(FileHelper.getFileName(toFiles[i]), String.valueOf(i));
                     if (fromUris[i].getPath().equals(toFiles[i].getUri().getPath()))
                         continue;
                     try {

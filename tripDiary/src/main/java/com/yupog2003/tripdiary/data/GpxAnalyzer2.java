@@ -14,25 +14,28 @@ import java.util.TimeZone;
 public class GpxAnalyzer2 {
 
     private TrackCache cache;
-    DocumentFile gpxFile;
+    Trip trip;
     Context context;
     Handler contextHandler;
     ProgressChangedListener listener;
+    long fileSize;
 
-    public GpxAnalyzer2(DocumentFile gpxFile, Context context, Handler contextHandler) {
-        this.gpxFile = gpxFile;
+    public GpxAnalyzer2(Trip trip, Context context, Handler contextHandler) {
+        this.trip = trip;
         this.context = context;
         this.contextHandler = contextHandler;
     }
 
     public boolean analyze() {
-        String tripName = FileHelper.getFileName(gpxFile.getParentFile());
+        String tripName = trip.tripName;
         cache = new TrackCache();
-        DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), tripName + ".gpx.cache");
-        boolean cacheExist = cacheFile != null && cacheFile.length() > 0;
+        DocumentFile cacheFile = trip.cacheFile;
+        long cacheFileLength=cacheFile.length();
+        boolean cacheExist = cacheFileLength > 0;
         File temp = new File(context.getCacheDir(), "temp");
         boolean success;
         if (cacheExist) {
+            fileSize=cacheFileLength;
             FileHelper.copyFile(cacheFile, temp);
             int numOfLines = FileHelper.getNumOfLinesInFile(temp);
             int size = (numOfLines - 9) / 4;
@@ -45,7 +48,8 @@ public class GpxAnalyzer2 {
         } else {
             String timezone = MyCalendar.getTripTimeZone(context, tripName);
             int timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
-            FileHelper.copyFile(gpxFile, temp);
+            FileHelper.copyFile(trip.gpxFile, temp);
+            fileSize=temp.length();
             success = parse(temp.getPath(), cache, timeZoneOffset);
             FileHelper.copyFile(new File(temp.getPath() + ".cache"), cacheFile);
             new File(temp.getPath() + ".cache").delete();
@@ -56,7 +60,7 @@ public class GpxAnalyzer2 {
 
     public void onProgressChanged(long progress) {
         if (listener != null) {
-            listener.onProgressChanged(progress);
+            listener.onProgressChanged(progress, fileSize);
         }
     }
 

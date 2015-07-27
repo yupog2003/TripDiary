@@ -63,7 +63,11 @@ public class SendTripService extends IntentService {
         final String tripName = FileHelper.getFileName(tripFile);
         try {
             updateNotification(tripName, getString(R.string.zipping) + "...", 0);
-            DocumentFile zipFile = TripDiaryApplication.rootDocumentFile.createFile("", tripName + ".zip");
+            DocumentFile zipFile=FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName+".zip");
+            if (zipFile != null){
+                zipFile.delete();
+            }
+            zipFile = TripDiaryApplication.rootDocumentFile.createFile("", tripName + ".zip");
             FileHelper.zip(tripFile, zipFile);
             totalBytes = zipFile.length();
             updateNotification(tripName, getString(R.string.uploading) + "...", 0);

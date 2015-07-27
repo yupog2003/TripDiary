@@ -42,24 +42,24 @@
             android:title="@string/altitude_unit" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/record_setting">
-        <ListPreference
+        <EditTextPreference
             android:defaultValue="1000"
-            android:entries="@array/record_durations"
-            android:entryValues="@array/record_durations"
+            android:inputType="number"
+            android:digits="1234567890"
             android:key="record_duration"
             android:summary="@string/duration_between_record_each_location"
             android:title="@string/record_duration" />
-        <ListPreference
+        <EditTextPreference
             android:defaultValue="20"
-            android:entries="@array/record_distance_Intervals"
-            android:entryValues="@array/record_distance_Intervals"
+            android:inputType="number"
+            android:digits="1234567890"
             android:key="min_distance_record"
             android:summary="@string/minimum_distance_between_record_localtions"
             android:title="@string/record_distance_interval" />
-        <ListPreference
+        <EditTextPreference
             android:defaultValue="1000"
-            android:entries="@array/record_durations"
-            android:entryValues="@array/record_durations"
+            android:inputType="number"
+            android:digits="1234567890"
             android:key="update_duration"
             android:summary="@string/duration_between_update_the_notification"
             android:title="@string/update_duration" />

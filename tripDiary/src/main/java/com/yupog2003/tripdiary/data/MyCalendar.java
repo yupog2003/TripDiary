@@ -106,7 +106,7 @@ public class MyCalendar extends GregorianCalendar {
 
     public static MyCalendar getTime(String timezone, String s, int type) {
         MyCalendar c = MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
-        String date = "", t = "";
+        String date, t;
         String[] datetoks = new String[3], timetoks = new String[3];
         switch (type) {
             case type_gpx:
@@ -142,7 +142,7 @@ public class MyCalendar extends GregorianCalendar {
                 }
                 break;
         }
-        if (datetoks != null && datetoks.length > 2 && timetoks != null && timetoks.length > 2) {
+        if (datetoks.length > 2 && timetoks.length > 2) {
             int year = (int) Double.parseDouble(datetoks[0]);
             int month = (int) Double.parseDouble(datetoks[1]) - 1;
             int day = (int) Double.parseDouble(datetoks[2]);
@@ -157,10 +157,6 @@ public class MyCalendar extends GregorianCalendar {
 
     public static MyCalendar getTime(String s, int type) {
         return getTime("UTC", s, type);
-    }
-
-    public static boolean isTimeMatched(MyCalendar time1, MyCalendar time2, MyCalendar time3) {
-        return time1.compareTo(time2) <= 0 && time2.compareTo(time3) <= 0;
     }
 
     public String formatInCurrentTimezone() {
@@ -200,9 +196,7 @@ public class MyCalendar extends GregorianCalendar {
                 }
             }
             br.close();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             e.printStackTrace();
         }
         return MyCalendar.getInstance();
@@ -222,9 +216,7 @@ public class MyCalendar extends GregorianCalendar {
             if (s.contains("OK")) {
                 result = s.substring(s.indexOf("<time_zone_id>") + 14, s.indexOf("</time_zone_id>"));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return result;
@@ -237,18 +229,6 @@ public class MyCalendar extends GregorianCalendar {
         if (preference == null)
             return TimeZone.getDefault().getID();
         return preference.getString(tripName, TimeZone.getDefault().getID());
-    }
-
-    public static String getPOITimeZone(Context context, String poiPath) {
-        if (poiPath == null || !poiPath.contains("/")) {
-            return TimeZone.getDefault().getID();
-        }
-        String[] toks = poiPath.split("/");
-        if (toks.length < 2) {
-            return TimeZone.getDefault().getID();
-        }
-        String tripName = toks[toks.length - 2];
-        return getTripTimeZone(context, tripName);
     }
 
     public static void updateTripTimeZoneFromLatLng(Context context, String tripName, double lat, double lng) {

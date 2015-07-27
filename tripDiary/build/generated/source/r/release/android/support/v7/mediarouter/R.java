@@ -518,8 +518,8 @@ public final class R {
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f070000;
-		public static final int abc_action_bar_home_description_format = 0x7f070147;
-		public static final int abc_action_bar_home_subtitle_description_format = 0x7f070148;
+		public static final int abc_action_bar_home_description_format = 0x7f070149;
+		public static final int abc_action_bar_home_subtitle_description_format = 0x7f07014a;
 		public static final int abc_action_bar_up_description = 0x7f070001;
 		public static final int abc_action_menu_overflow_description = 0x7f070002;
 		public static final int abc_action_mode_done = 0x7f070003;
@@ -532,7 +532,7 @@ public final class R {
 		public static final int abc_searchview_description_voice = 0x7f07000a;
 		public static final int abc_shareactionprovider_share_with = 0x7f07000b;
 		public static final int abc_shareactionprovider_share_with_application = 0x7f07000c;
-		public static final int abc_toolbar_collapse_description = 0x7f07014a;
+		public static final int abc_toolbar_collapse_description = 0x7f07014c;
 		public static final int mr_media_route_button_content_description = 0x7f07002d;
 		public static final int mr_media_route_chooser_searching = 0x7f07002e;
 		public static final int mr_media_route_chooser_title = 0x7f07002f;

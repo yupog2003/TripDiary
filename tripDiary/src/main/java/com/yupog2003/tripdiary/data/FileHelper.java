@@ -31,8 +31,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 
-import org.apache.commons.io.input.CountingInputStream;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
@@ -44,8 +42,6 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -180,7 +176,7 @@ public class FileHelper {
             Log.i("trip", "from Openable");
             return name;
         }
-        Log.i("trip", "from Media Store");
+        Log.i("trip", "from Get Path");
         return new File(contentUri.getPath()).getName();
     }
 
@@ -352,7 +348,7 @@ public class FileHelper {
                     break;
                 case list_dirs:
                     for (int i = 0; i < size; i++) {
-                        if (!temp.get(i).isDirectory() || getFileName(temp.get(i)).startsWith(".")) {
+                        if (getFileName(temp.get(i)).startsWith(".") || !temp.get(i).isDirectory()) {
                             temp.remove(i);
                             size--;
                             i--;
@@ -424,53 +420,6 @@ public class FileHelper {
         return null;
     }
 
-    public static void saveObjectToFile(Object obj, File file) {
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(obj);
-            oos.flush();
-            oos.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Object readObjectFromFile(File file, final GpxAnalyzerJava.ProgressChangedListener listener) {
-        Object result = new Object();
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            final CountingInputStream cis = new CountingInputStream(fis);
-            ObjectInputStream ois = new ObjectInputStream(cis);
-            final long fileSize = file.length();
-            if (listener != null) {
-                new Thread(new Runnable() {
-
-                    public void run() {
-
-                        long count;
-                        while ((count = cis.getByteCount()) < fileSize) {
-                            listener.onProgressChanged(count);
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }).start();
-            }
-            result = ois.readObject();
-            ois.close();
-        } catch (IOException | ClassNotFoundException e) {
-
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public static void zip(DocumentFile source, DocumentFile zip) {
         try {
             ZipOutputStream zos = new ZipOutputStream(TripDiaryApplication.instance.getContentResolver().openOutputStream(zip.getUri()));
@@ -531,10 +480,9 @@ public class FileHelper {
                             bos.close();
                         }
                     } else {
-                        if (FileHelper.findfile(entryFile, dirs[i]) == null) {
+                        entryFile = FileHelper.findfile(entryFile, dirs[i]);
+                        if (entryFile == null) {
                             entryFile = entryFile.createDirectory(dirs[i]);
-                        } else {
-                            entryFile = FileHelper.findfile(entryFile, dirs[i]);
                         }
                     }
 

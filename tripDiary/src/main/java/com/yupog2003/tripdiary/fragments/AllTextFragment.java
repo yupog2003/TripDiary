@@ -104,7 +104,7 @@ public class AllTextFragment extends Fragment {
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);
                         intent.putExtra(ViewPointActivity.tag_fromActivity, ViewTripActivity.class.getSimpleName());
-                        startActivity(intent);
+                        getActivity().startActivityForResult(intent, ViewTripActivity.REQUEST_VIEW_POI);
                     }
                 };
                 this.cardView.setOnClickListener(onClickListener);
@@ -133,8 +133,7 @@ public class AllTextFragment extends Fragment {
         @Override
         public POIAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             CardView v = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.card_texts, parent, false);
-            ViewHolder viewHolder = new ViewHolder(v);
-            return viewHolder;
+            return new ViewHolder(v);
         }
 
         @Override

@@ -1,12 +1,17 @@
 package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.provider.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 public class POI {
@@ -134,14 +139,92 @@ public class POI {
                 bw.flush();
                 bw.close();
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
         }
     }
 
+    public void importMemories(ImportMemoriesListener listener, File... inFiles) {
+        int size = inFiles.length;
+        for (int i = 0; i < size; i++) {
+            File inFile = inFiles[i];
+            if (inFile == null) continue;
+            if (!FileHelper.isMemory(inFile)) continue;
+            DocumentFile outFile = null;
+            if (FileHelper.isPicture(inFile)) {
+                outFile = FileHelper.findfile(picFiles, inFile.getName());
+                if (outFile == null) {
+                    outFile = picDir.createFile("", inFile.getName());
+                }
+            } else if (FileHelper.isVideo(inFile)) {
+                outFile = FileHelper.findfile(videoFiles, inFile.getName());
+                if (outFile == null) {
+                    outFile = videoDir.createFile("", inFile.getName());
+                }
+            } else if (FileHelper.isAudio(inFile)) {
+                outFile = FileHelper.findfile(audioFiles, inFile.getName());
+                if (outFile == null) {
+                    outFile = audioDir.createFile("", inFile.getName());
+                }
+            }
+            if (outFile != null) {
+                FileHelper.copyFile(inFile, outFile);
+            }
+            if (listener != null) {
+                listener.onProgressUpdate(i);
+            }
+        }
+    }
+
+    public void importMemories(ImportMemoriesListener listener, Uri... inUris) {
+        if (inUris == null) return;
+        int size = inUris.length;
+        for (int i = 0; i < size; i++) {
+            Uri inUri = inUris[i];
+            if (inUri == null) continue;
+            String fileName = FileHelper.getRealNameFromURI(context, inUri);
+            if (!FileHelper.isMemory(fileName)) continue;
+            DocumentFile outFile = null;
+            if (FileHelper.isPicture(fileName)) {
+                outFile = FileHelper.findfile(picFiles, fileName);
+                if (outFile == null) {
+                    outFile = picDir.createFile("", fileName);
+                }
+            } else if (FileHelper.isVideo(fileName)) {
+                outFile = FileHelper.findfile(videoFiles, fileName);
+                if (outFile == null) {
+                    outFile = videoDir.createFile("", fileName);
+                }
+            } else if (FileHelper.isAudio(fileName)) {
+                outFile = FileHelper.findfile(audioFiles, fileName);
+                if (outFile == null) {
+                    outFile = audioDir.createFile("", fileName);
+                }
+            }
+            if (outFile != null) {
+                try {
+                    InputStream is = context.getContentResolver().openInputStream(inUri);
+                    OutputStream os = context.getContentResolver().openOutputStream(outFile.getUri());
+                    FileHelper.copyByStream(is, os);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (listener != null) {
+                listener.onProgressUpdate(i);
+            }
+        }
+    }
+
+    public interface ImportMemoriesListener {
+        void onProgressUpdate(int progess);
+    }
+
     public void addCost(int type, String name, float dollar) {
-        DocumentFile cost = costDir.createFile("", name);
+        DocumentFile cost = FileHelper.findfile(costDir, name);
+        if (cost == null) {
+            cost = costDir.createFile("", name);
+        }
         BufferedWriter bw;
         try {
             bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(cost.getUri())));

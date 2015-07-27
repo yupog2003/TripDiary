@@ -35,6 +35,8 @@ import com.yupog2003.tripdiary.data.Trip;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -63,9 +65,9 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     ScreenOnOffReceiver screenOnOffReceiver;
     String name;
     public Trip trip;
-    int recordDuration;
-    int recordDistanceInterval;
-    public int updateDuration;
+    int recordDuration; //in milliseconds
+    int recordDistanceInterval; //in meters
+    public int updateDuration; //in milliseconds
     long lastFixTime;
     public static final String actionStopTrip = "com.yupog2003.tripdiary.stopTrip";
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
@@ -81,7 +83,9 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         screenOn = true;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RecordService.this);
         recordDuration = Integer.valueOf(preferences.getString("record_duration", "1000"));
+        recordDuration = Math.max(recordDuration, 200);
         updateDuration = Integer.valueOf(preferences.getString("update_duration", "1000"));
+        updateDuration = Math.max(recordDuration, 200);
         recordDistanceInterval = Integer.valueOf(preferences.getString("min_distance_record", "20"));
         setupNotification(name);
         if (trip.gpxFile.exists()) {
@@ -94,9 +98,9 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                     bw.write("	<trkseg>\n");
                     bw.flush();
                 } else {
-                    DocumentFile temp = trip.dir.createFile("", "temp");
+                    File temp = new File(getCacheDir(), "temp");
                     FileHelper.copyFile(trip.gpxFile, temp);
-                    BufferedReader br = new BufferedReader(new InputStreamReader(getContentResolver().openInputStream(temp.getUri())));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(temp)));
                     bw = new BufferedWriter(new OutputStreamWriter(getContentResolver().openOutputStream(trip.gpxFile.getUri())));
                     String s;
                     while ((s = br.readLine()) != null) {
@@ -200,7 +204,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         unregisterReceiver(screenOnOffReceiver);
         SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sm.unregisterListener(RecordService.this);
-        instance=null;
+        instance = null;
         super.onDestroy();
     }
 

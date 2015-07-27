@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.TrackCache;
@@ -36,15 +35,13 @@ import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
 public class ViewTripActivity extends MyActivity implements OnClickListener {
 
-    public static String name;
     public static Trip trip;
-    public static int rotation;
-    public static ViewMapFragment viewMapFragment;
-    public static AllAudioFragment allAudioFragment;
-    public static AllTextFragment allTextFragment;
-    public static AllPictureFragment allPictureFragment;
-    public static AllVideoFragment allVideoFragment;
-    public static ViewCostFragment viewCostFragment;
+    public ViewMapFragment viewMapFragment;
+    public AllAudioFragment allAudioFragment;
+    public AllTextFragment allTextFragment;
+    public AllPictureFragment allPictureFragment;
+    public AllVideoFragment allVideoFragment;
+    public ViewCostFragment viewCostFragment;
     Button diary;
     Button photo;
     Button video;
@@ -54,9 +51,10 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     Mode mode = Mode.map_mode;
-    public static LatLng[] lat;
-    public static LatLngBounds bounds;
-    public static ProgressDialog pd;
+    public static final int REQUEST_VIEW_POI = 1;
+    public static final String tag_request_updatePOI = "request_update_poi";
+    public static final String tag_update_poiNames = "update_poiNames";
+    public static final String tag_tripName="tag_tripname";
 
     enum Mode {
         map_mode, text_mode, photo_mode, video_mode, audio_mode, money_mode
@@ -73,18 +71,13 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
+            assert getSupportActionBar() != null;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-        int sWidth = DeviceHelper.getScreenWidth(this);
-        int sHeight = DeviceHelper.getScreenHeight(this);
-        rotation = sWidth > sHeight ? Surface.ROTATION_90 : Surface.ROTATION_0;
-        name = getIntent().getStringExtra("name");
-        setTitle(name);
+        String tripName = getIntent().getStringExtra(tag_tripName);
+        setTitle(tripName);
         trip = null;
-        lat = null;
-        bounds = null;
-        pd = null;
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
@@ -109,19 +102,19 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         viewMapFragment = new ViewMapFragment();
         viewCostFragment = new ViewCostFragment();
         Bundle args = new Bundle();
-        args.putString(ViewCostActivity.tag_trip, name);
+        args.putString(ViewCostActivity.tag_trip, tripName);
         args.putInt(ViewCostActivity.tag_option, ViewCostActivity.optionTrip);
         viewCostFragment.setArguments(args);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.fragment, viewMapFragment);
-        ft.add(R.id.fragment, allAudioFragment);
-        ft.add(R.id.fragment, allPictureFragment);
-        ft.add(R.id.fragment, allTextFragment);
-        ft.add(R.id.fragment, allVideoFragment);
-        ft.add(R.id.fragment, viewCostFragment);
+        ft.add(R.id.fragment, viewMapFragment, ViewMapFragment.class.getSimpleName());
+        ft.add(R.id.fragment, allAudioFragment, AllAudioFragment.class.getSimpleName());
+        ft.add(R.id.fragment, allPictureFragment, AllPictureFragment.class.getSimpleName());
+        ft.add(R.id.fragment, allTextFragment, AllTextFragment.class.getSimpleName());
+        ft.add(R.id.fragment, allVideoFragment, AllVideoFragment.class.getSimpleName());
+        ft.add(R.id.fragment, viewCostFragment, ViewCostFragment.class.getSimpleName());
         ft.commit();
         setMode(Mode.map_mode);
-        new PrepareTripTask().execute();
+        new PrepareTripTask().execute(tripName);
     }
 
     private void setMode(Mode mode) {
@@ -227,10 +220,12 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         }
     }
 
-    class PrepareTripTask extends AsyncTask<Integer, Object, LatLng[]> implements GpxAnalyzerJava.ProgressChangedListener, Trip.ConstructListener {
+    class PrepareTripTask extends AsyncTask<String, Object, Boolean> implements GpxAnalyzerJava.ProgressChangedListener, Trip.ConstructListener {
 
-        long fileSize;
         Handler handler;
+        LatLngBounds bounds;
+        LatLng[] lat;
+        ProgressDialog pd;
 
         public void stop() {
             if (trip != null) {
@@ -253,9 +248,12 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         }
 
         @Override
-        protected LatLng[] doInBackground(Integer... params) {
-            trip = new Trip(ViewTripActivity.this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name), false, this);
-            fileSize = trip.cacheFile.length() > 0 ? trip.cacheFile.length() : trip.gpxFile.length();
+        protected Boolean doInBackground(String... params) {
+            String tripName = params[0];
+            if (tripName == null) {
+                return false;
+            }
+            trip = new Trip(ViewTripActivity.this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName), false, this);
             if (libraryLoadSuccess) {
                 trip.getCacheJNI(getActivity(), handler, this);
             } else {
@@ -263,7 +261,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
             }
             try {
                 if (trip.cache != null) {
-                    TrackCache cache = ViewTripActivity.trip.cache;
+                    TrackCache cache = trip.cache;
                     final int latsSize = Math.min(cache.latitudes.length, cache.longitudes.length);
                     lat = new LatLng[latsSize];
                     LatLngBounds.Builder latlngBoundesBuilder = new LatLngBounds.Builder();
@@ -272,13 +270,13 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
                         latlngBoundesBuilder.include(lat[i]);
                     }
                     bounds = latlngBoundesBuilder.build();
-                    return lat;
+                    return lat.length > 0;
                 }
             } catch (Exception e) {
                 trip.cacheFile.delete();
                 e.printStackTrace();
             }
-            return null;
+            return false;
 
         }
 
@@ -289,19 +287,19 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(LatLng[] result) {
-            super.onPostExecute(result);
-            if (result == null || result.length == 0) {
-                Toast.makeText(getActivity(), getString(R.string.invalid_gpx_file), Toast.LENGTH_SHORT).show();
-                trip.deleteCache();
-                pd.dismiss();
-            } else {
-                viewMapFragment.refresh();
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
+            if (success) {
+                viewMapFragment.refresh(lat, bounds, pd);
                 allTextFragment.refresh();
                 allPictureFragment.refresh();
                 allVideoFragment.refresh();
                 allAudioFragment.refresh();
                 viewCostFragment.refreshData(false);
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.invalid_gpx_file), Toast.LENGTH_SHORT).show();
+                trip.deleteCache();
+                pd.dismiss();
             }
         }
 
@@ -313,7 +311,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         }
 
         @Override
-        public void onProgressChanged(long progress) { //analyze gpx
+        public void onProgressChanged(long progress, long fileSize) { //analyze gpx
             publishProgress(500 + (int) (500 * progress / fileSize), analyzeGpx);
         }
     }
@@ -335,12 +333,25 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_VIEW_POI) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) return;
+                if (bundle.getBoolean(tag_request_updatePOI, false)) {
+                    onPOIUpdate(bundle.getString(tag_update_poiNames, null));
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
 
-    public static void onPOIUpdate(final String poiName) {
+    public void onPOIUpdate(final String poiName) {
         if (trip != null) {
             if (poiName == null) {
                 trip.refreshPOIs();
@@ -382,4 +393,10 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        trip = null;
+        System.gc();
+    }
 }

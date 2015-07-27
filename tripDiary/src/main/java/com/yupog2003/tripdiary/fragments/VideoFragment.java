@@ -150,7 +150,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-            final ArrayList<DocumentFile> checksName = new ArrayList<DocumentFile>();
+            final ArrayList<DocumentFile> checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
                     checksName.add((DocumentFile) adapter.getItem(i));
@@ -169,7 +169,9 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                             checksName.get(i).delete();
                         }
                         setVideo();
-                        ViewPointActivity.requestUpdatePOI();
+                        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                            ((ViewPointActivity) getActivity()).requestUpdatePOI();
+                        }
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -190,7 +192,9 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                             String s = name.getText().toString();
                             checkFile.renameTo(s);
                             setVideo();
-                            ViewPointActivity.requestUpdatePOI();
+                            if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                                ((ViewPointActivity) getActivity()).requestUpdatePOI();
+                            }
                         }
                     });
                     ab2.show();
@@ -202,7 +206,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                 }
                 checkAll = !checkAll;
             } else if (item.getItemId() == R.id.share) {
-                ArrayList<Uri> uris = new ArrayList<Uri>();
+                ArrayList<Uri> uris = new ArrayList<>();
                 for (int i = 0; i < checks.length; i++) {
                     if (checks[i]) {
                         uris.add(((DocumentFile) adapter.getItem(i)).getUri());
@@ -225,8 +229,12 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
                         DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "videos");
+                        DocumentFile[] filesInToDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
-                            toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            toFiles[i] = FileHelper.findfile(filesInToDir, FileHelper.getFileName(checksName.get(i)));
+                            if (toFiles[i] == null) {
+                                toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            }
                             fromFiles[i] = checksName.get(i);
                         }
                         new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
@@ -235,7 +243,9 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                             public void onFinish() {
 
                                 setVideo();
-                                ViewPointActivity.requestUpdatePOIs();
+                                if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs();
+                                }
                             }
                         }).execute();
 
@@ -274,8 +284,8 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
             checks[position] = checked;
             int selects = 0;
-            for (int i = 0; i < checks.length; i++) {
-                if (checks[i]) {
+            for (boolean check : checks) {
+                if (check) {
                     selects++;
                 }
             }

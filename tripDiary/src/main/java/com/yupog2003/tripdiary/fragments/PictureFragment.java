@@ -200,7 +200,9 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             checksName.get(i).delete();
                         }
                         adapter.reFresh();
-                        ViewPointActivity.requestUpdatePOI();
+                        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                            ((ViewPointActivity) getActivity()).requestUpdatePOI();
+                        }
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -221,7 +223,9 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             String s = name.getText().toString();
                             checkFile.renameTo(s);
                             adapter.reFresh();
-                            ViewPointActivity.requestUpdatePOI();
+                            if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                                ((ViewPointActivity) getActivity()).requestUpdatePOI();
+                            }
                         }
                     });
                     ab2.show();
@@ -283,8 +287,12 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
                         DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "pictures");
+                        DocumentFile[] filesInToDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
-                            toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            toFiles[i] = FileHelper.findfile(filesInToDir, FileHelper.getFileName(checksName.get(i)));
+                            if (toFiles[i] == null) {
+                                toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                            }
                             fromFiles[i] = checksName.get(i);
                         }
                         new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
@@ -292,7 +300,9 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             @Override
                             public void onFinish() {
                                 adapter.reFresh();
-                                ViewPointActivity.requestUpdatePOIs();
+                                if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs();
+                                }
                             }
                         }).execute();
 

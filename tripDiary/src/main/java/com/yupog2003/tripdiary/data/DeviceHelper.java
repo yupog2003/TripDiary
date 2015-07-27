@@ -12,6 +12,10 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 public class DeviceHelper {
 
     public static int getScreenWidth(Activity activity) {
@@ -73,4 +77,5 @@ public class DeviceHelper {
     public static void sendGATrack(Service service, String category, String action, String label, Long value) {
         sendGATrack(service.getApplication(), category, action, label, value);
     }
+
 }

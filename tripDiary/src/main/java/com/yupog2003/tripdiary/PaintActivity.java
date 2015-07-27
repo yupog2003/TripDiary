@@ -87,7 +87,11 @@ public class PaintActivity extends MyActivity implements OnClickListener {
         String tripName = getIntent().getStringExtra(tag_trip);
         String poiName = getIntent().getStringExtra(tag_poi);
         String fileName = getIntent().getStringExtra(tag_filename);
-        outputFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures").createFile("", fileName);
+        DocumentFile outDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures");
+        outputFile = FileHelper.findfile(outDir, fileName);
+        if (outputFile == null) {
+            outputFile = outDir.createFile("", fileName);
+        }
     }
 
     @Override
@@ -228,7 +232,6 @@ public class PaintActivity extends MyActivity implements OnClickListener {
                 setResult(Activity.RESULT_OK);
                 PaintActivity.this.finish();
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
         }

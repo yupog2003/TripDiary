@@ -86,7 +86,9 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
             costFiles = costList.toArray(new DocumentFile[costList.size()]);
         } else if (option == ViewCostActivity.optionPOI) {
             if (updatePOI) {
-                ViewTripActivity.onPOIUpdate(poiName);
+                if (getActivity() != null && getActivity() instanceof ViewCostActivity) {
+                    ((ViewCostActivity) getActivity()).requestUpdatePOI();
+                }
             }
             DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs");
             costFiles = poiFile.listFiles();
@@ -97,10 +99,6 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
         for (DocumentFile file : costFiles) {
             readData(file);
         }
-        refresh();
-    }
-
-    public void refresh() {
         adapter = new TabsAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(adapter);
@@ -149,8 +147,12 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             type = 0;
                         }
                         try {
-                            DocumentFile outputFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs").createFile("", name);
-                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(outputFile.getUri())));
+                            DocumentFile outDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs");
+                            DocumentFile outFile = FileHelper.findfile(outDir, name);
+                            if (outFile == null) {
+                                outFile = outDir.createFile("", name);
+                            }
+                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(outFile.getUri())));
                             bw.write("type=" + String.valueOf(type) + "\n");
                             bw.write("dollar=" + dollar);
                             bw.flush();

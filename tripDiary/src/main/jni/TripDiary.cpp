@@ -434,6 +434,7 @@ extern "C" {
 		}
 		fis.close();
 		env->SetObjectField(cache, mTimes, times);
+
 		env->DeleteLocalRef(times);
 		env->DeleteLocalRef(latitudes);
 		env->DeleteLocalRef(longitudes);
