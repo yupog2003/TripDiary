@@ -478,7 +478,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         protected void onPreExecute() {
             AlertDialog.Builder ab = new AlertDialog.Builder(activity);
             ab.setTitle(activity.getString(R.string.move_to));
-            LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
+            LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, (ViewGroup)findViewById(android.R.id.content), false);
             message = (TextView) layout.findViewById(R.id.message);
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);

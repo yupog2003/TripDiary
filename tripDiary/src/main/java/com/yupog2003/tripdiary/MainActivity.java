@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,10 +48,10 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     Button viewHistory;
     Button allRecord;
     public static int distance_unit;
-    public static final int unit_km = 0;
+    //public static final int unit_km = 0;
     public static final int unit_mile = 1;
     public static int altitude_unit;
-    public static final int unit_m = 0;
+    //public static final int unit_m = 0;
     public static final int unit_ft = 1;
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
@@ -62,9 +63,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         if (toolBar != null) {
             setSupportActionBar(toolBar);
         }
-        SharedPreferences.Editor editor = getSharedPreferences("category", MODE_PRIVATE).edit();
-        editor.putString(getString(R.string.nocategory), String.valueOf(Color.WHITE));
-        editor.commit();
+        getSharedPreferences("category", MODE_PRIVATE).edit().putString(getString(R.string.nocategory), String.valueOf(Color.WHITE)).apply();
         distance_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("distance_unit", "0"));
         altitude_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("altitude_unit", "0"));
         startTrip = (Button) findViewById(R.id.starttrip);
@@ -127,11 +126,11 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     private void startTripDialog() {
         tripNameClicked = false;
         final SharedPreferences categorysp = getSharedPreferences("category", MODE_PRIVATE);
-        Map<String, String> map = (Map<String, String>) categorysp.getAll();
+        Map<String, ?> map = categorysp.getAll();
         Set<String> keyset = map.keySet();
         final String[] categories = keyset.toArray(new String[keyset.size()]);
         AlertDialog.Builder ab2 = new AlertDialog.Builder(MainActivity.this);
-        View layout = getLayoutInflater().inflate(R.layout.edit_trip, null);
+        View layout = getLayoutInflater().inflate(R.layout.edit_trip, (ViewGroup) findViewById(android.R.id.content), false);
         final RadioGroup rg = (RadioGroup) layout.findViewById(R.id.categories);
         final TextView category = (TextView) layout.findViewById(R.id.category);
         for (int i = 0; i < categories.length; i++) {
@@ -221,15 +220,17 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         if (category != null) {
             trip.setCategory(MainActivity.this, category);
         }
-        trip.updateNote(note);
+        if (note != null) {
+            trip.updateNote(note);
+        }
         if (isGpsEnabled()) {
-            if (RecordService.instance == null){
+            if (RecordService.instance == null) {
                 Intent i = new Intent(MainActivity.this, RecordService.class);
-                i.putExtra("name", name);
+                i.putExtra(RecordService.tag_tripName, name);
                 startService(i);
                 DeviceHelper.sendGATrack(MainActivity.this, "Trip", "start", name, null);
                 MainActivity.this.finish();
-            }else{
+            } else {
                 Toast.makeText(MainActivity.this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -323,7 +324,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
             }
         } else if (v.equals(allRecord)) {
-            DeviceHelper.sendGATrack(MainActivity.this, "Trip", "view", "all_record", null);
             Intent i = new Intent(MainActivity.this, AllRecordActivity.class);
             String[] tripNames = FileHelper.listFileNames(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
             i.putExtra(AllRecordActivity.tag_trip_names, tripNames);

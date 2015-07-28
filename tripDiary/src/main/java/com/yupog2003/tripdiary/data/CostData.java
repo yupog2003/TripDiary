@@ -16,4 +16,44 @@ public class CostData {
         this.costDollar = costDollar;
         this.file = file;
     }
+
+    public String getPOI() {
+        return POI;
+    }
+
+    public void setPOI(String POI) {
+        this.POI = POI;
+    }
+
+    public int getCostType() {
+        return costType;
+    }
+
+    public void setCostType(int costType) {
+        this.costType = costType;
+    }
+
+    public String getCostName() {
+        return costName;
+    }
+
+    public void setCostName(String costName) {
+        this.costName = costName;
+    }
+
+    public Float getCostDollar() {
+        return costDollar;
+    }
+
+    public void setCostDollar(Float costDollar) {
+        this.costDollar = costDollar;
+    }
+
+    public DocumentFile getFile() {
+        return file;
+    }
+
+    public void setFile(DocumentFile file) {
+        this.file = file;
+    }
 }

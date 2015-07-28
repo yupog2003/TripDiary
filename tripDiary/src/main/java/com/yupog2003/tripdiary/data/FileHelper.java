@@ -10,7 +10,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v4.provider.DocumentFile;
@@ -347,13 +349,42 @@ public class FileHelper {
                     }
                     break;
                 case list_dirs:
-                    for (int i = 0; i < size; i++) {
-                        if (getFileName(temp.get(i)).startsWith(".") || !temp.get(i).isDirectory()) {
-                            temp.remove(i);
-                            size--;
-                            i--;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && DocumentFile.isDocumentUri(TripDiaryApplication.instance, dir.getUri())) {
+                        Cursor c = null;
+                        final ContentResolver contentResolver = TripDiaryApplication.instance.getContentResolver();
+                        try {
+                            Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(dir.getUri(), DocumentsContract.getDocumentId(dir.getUri()));
+                            String[] columns = new String[]{DocumentsContract.Document.COLUMN_MIME_TYPE};
+                            c = contentResolver.query(childrenUri, columns, null, null, null);
+                            int i = 0;
+                            while (c.moveToNext()) {
+                                if (i >= temp.size()) break;
+                                if (getFileName(temp.get(i)).startsWith(".")) {
+                                    temp.remove(i);
+                                    continue;
+                                }
+                                String mimeType = c.getString(0);
+                                if (!DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType)) {
+                                    temp.remove(i);
+                                    i--;
+                                }
+                                i++;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            c.close();
+                        }
+                    } else {
+                        for (int i = 0; i < size; i++) {
+                            if (getFileName(temp.get(i)).startsWith(".") || !temp.get(i).isDirectory()) {
+                                temp.remove(i);
+                                size--;
+                                i--;
+                            }
                         }
                     }
+
                     break;
                 case list_withoutdots:
                     for (int i = 0; i < size; i++) {
@@ -480,10 +511,11 @@ public class FileHelper {
                             bos.close();
                         }
                     } else {
-                        entryFile = FileHelper.findfile(entryFile, dirs[i]);
-                        if (entryFile == null) {
-                            entryFile = entryFile.createDirectory(dirs[i]);
+                        DocumentFile temp=FileHelper.findfile(entryFile, dirs[i]);
+                        if (temp == null) {
+                            temp = entryFile.createDirectory(dirs[i]);
                         }
+                        entryFile=temp;
                     }
 
                 }

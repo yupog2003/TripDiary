@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.yupog2003.tripdiary.data.ColorHelper;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
@@ -83,6 +84,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         }
         trips = new Trip[tripNames.length];
         record.num_Trips = tripNames.length;
+        DeviceHelper.sendGATrack(AllRecordActivity.this, "Trip", "view", "all_record", null);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class ViewCostActivity extends MyActivity {
     public static final String tag_trip = "tag_trip";
     public static final String tag_poi = "tag_poi";
     public static final String tag_option = "tag_option";
-    public static final String tag_totals="tah_totoals";
+    public static final String tag_totals = "tag_totoals";
     public static final int optionPOI = 0;
     public static final int optionTrip = 1;
 
@@ -26,6 +26,7 @@ public class ViewCostActivity extends MyActivity {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
+            assert getSupportActionBar() != null;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         int option = getIntent().getIntExtra(tag_option, 0);
@@ -59,9 +60,10 @@ public class ViewCostActivity extends MyActivity {
         }
         return false;
     }
-    public void requestUpdatePOI(){
-        Intent intent=new Intent();
-        Bundle bundle=new Bundle();
+
+    public void requestUpdatePOI() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
         bundle.putBoolean(ViewTripActivity.tag_request_updatePOI, true);
         intent.putExtras(bundle);
         setResult(Activity.RESULT_OK, intent);

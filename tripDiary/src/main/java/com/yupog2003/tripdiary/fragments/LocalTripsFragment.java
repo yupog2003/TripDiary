@@ -22,6 +22,7 @@ import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -625,7 +626,7 @@ public class LocalTripsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AllRecordActivity.class);
                 String[] tripNames = checksName.toArray(new String[checksName.size()]);
                 intent.putExtra(AllRecordActivity.tag_trip_names, tripNames);
-                getActivity().startActivity(intent);
+                startActivity(intent);
             }
             return true;
         }
@@ -723,11 +724,11 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public void onGroupExpand(int groupPosition) {
-            categoryExpandSp.edit().putBoolean(categories[groupPosition], true).commit();
+            categoryExpandSp.edit().putBoolean(categories[groupPosition], true).apply();
         }
 
         public void onGroupCollapse(int groupPosition) {
-            categoryExpandSp.edit().putBoolean(categories[groupPosition], false).commit();
+            categoryExpandSp.edit().putBoolean(categories[groupPosition], false).apply();
         }
     }
 
@@ -856,12 +857,11 @@ public class LocalTripsFragment extends Fragment {
                         }
                         if (replace) {
                             FileHelper.unZip(tempZip, TripDiaryApplication.rootDocumentFile);
-                            tempZip.delete();
                         }
                     } else {
                         FileHelper.unZip(tempZip, TripDiaryApplication.rootDocumentFile);
-                        tempZip.delete();
                     }
+                    tempZip.delete();
                 }
             } catch (IOException | NullPointerException | InterruptedException e) {
                 e.printStackTrace();

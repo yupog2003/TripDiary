@@ -21,7 +21,6 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.provider.DocumentFile;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
@@ -72,11 +71,12 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     public static final String actionStopTrip = "com.yupog2003.tripdiary.stopTrip";
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
     public static final DecimalFormat doubleFormat = new DecimalFormat("#.#");
+    public static final String tag_tripName="tag_tripName";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         instance = this;
-        name = intent.getStringExtra("name");
+        name = intent.getStringExtra(tag_tripName);
         trip = new Trip(RecordService.this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name), false);
         trip.deleteCache();
         run = true;

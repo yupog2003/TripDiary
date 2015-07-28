@@ -182,19 +182,19 @@ public class GenerateVideoService extends IntentService {
             } else {
                 success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "trip_input.txt", "-c", "copy", resultVideoPath}, null, null);
             }
-            if (tripTitleVideoName != null){
+            if (tripTitleVideoName != null) {
                 new File(tempDir, tripTitleVideoName).delete();
             }
-            if (tripNoteVideoName!=null){
+            if (tripNoteVideoName != null) {
                 new File(tempDir, tripNoteVideoName).delete();
             }
             for (String trackVideoName : trackVideoNames) {
-                if (trackVideoName !=null){
+                if (trackVideoName != null) {
                     new File(tempDir, trackVideoName).delete();
                 }
             }
             for (String poiVideoName : poiVideoNames) {
-                if (poiVideoName != null){
+                if (poiVideoName != null) {
                     new File(tempDir, poiVideoName).delete();
                 }
             }

@@ -1451,7 +1451,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("application/vnd.google-earth.kmz");
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(kmzFile));
-            getActivity().startActivity(intent);
+            startActivity(intent);
             DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_kmz", ViewTripActivity.trip.tripName, null);
         }
 

@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
 public class ColorHelper {
+
     public static Drawable getColorDrawable(Context context, int sizeInDp, int color) {
         int size = (int) DeviceHelper.pxFromDp(context, sizeInDp);
         Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);

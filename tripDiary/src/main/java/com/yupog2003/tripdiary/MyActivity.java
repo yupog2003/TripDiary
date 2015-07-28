@@ -17,7 +17,8 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyImageDecoder imageDecoder = new MyImageDecoder(this, new BaseImageDecoder(false));
-        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(new MyImageDownloader(this)).imageDecoder(imageDecoder).build();
+        MyImageDownloader imageDownloader=new MyImageDownloader(this);
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(imageDownloader).imageDecoder(imageDecoder).build();
         ImageLoader.getInstance().init(conf);
     }
 

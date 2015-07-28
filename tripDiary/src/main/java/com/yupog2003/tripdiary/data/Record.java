@@ -15,4 +15,5 @@ public class Record {
     public int num_Pictures;
     public int num_Videos;
     public int num_Audios;
+
 }

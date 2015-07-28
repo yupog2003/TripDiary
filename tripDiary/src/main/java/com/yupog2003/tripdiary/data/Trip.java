@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.provider.DocumentFile;
+import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;

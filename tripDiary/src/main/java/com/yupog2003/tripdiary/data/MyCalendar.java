@@ -238,10 +238,7 @@ public class MyCalendar extends GregorianCalendar {
     public static void updateTripTimeZone(Context context, String tripName, String timezone) {
         if (context == null)
             return;
-        SharedPreferences preference = context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preference.edit();
-        editor.putString(tripName, timezone);
-        editor.commit();
+        context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE).edit().putString(tripName, timezone).commit();
         context.getSharedPreferences("tripTime", Context.MODE_PRIVATE).edit().remove(tripName).commit();
     }
 

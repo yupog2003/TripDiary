@@ -173,8 +173,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         boolean[] checks;
         boolean checkAll;
 
-        // ShareActionProvider shareProvider;
-
         public MyMultiChoiceModeListener() {
 
         }

@@ -36,8 +36,6 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
 
     SharedPreferences categorysp;
     SharedPreferences tripsp;
-    SharedPreferences.Editor categoryeditor;
-    SharedPreferences.Editor tripeditor;
     String[] categories;
     String[] trips;
     ListView listView;
@@ -61,8 +59,6 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
     private void loaddata() {
         categorysp = getSharedPreferences("category", MODE_PRIVATE);
         tripsp = getSharedPreferences("trip", MODE_PRIVATE);
-        categoryeditor = categorysp.edit();
-        tripeditor = tripsp.edit();
         Map<String, ?> map = categorysp.getAll();
         Set<String> set = map.keySet();
         categories = set.toArray(new String[set.size()]);
@@ -117,8 +113,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                         Toast.makeText(CategoryActivity.this, getString(R.string.cannot_add_nocategory), Toast.LENGTH_SHORT).show();
                     } else {
                         int color = (Integer) colorImage.getTag();
-                        categoryeditor.putString(nameStr, String.valueOf(color));
-                        categoryeditor.commit();
+                        categorysp.edit().putString(nameStr, String.valueOf(color)).commit();
                         loaddata();
                     }
                 }
@@ -198,14 +193,11 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                     int color = (Integer) colorImage.getTag();
                     for (String trip : trips) {
                         if (tripsp.getString(trip, getString(R.string.nocategory)).equals(categories[position])) {
-                            tripeditor.putString(trip, nameStr);
+                            tripsp.edit().putString(trip, nameStr).commit();
                         }
                     }
-                    tripeditor.commit();
-                    categoryeditor.remove(categories[position]);
-                    categoryeditor.commit();
-                    categoryeditor.putString(nameStr, String.valueOf(color));
-                    categoryeditor.commit();
+                    categorysp.edit().remove(categories[position]).commit();
+                    categorysp.edit().putString(nameStr, String.valueOf(color)).commit();
                     loaddata();
                 }
             });
@@ -230,12 +222,10 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                         for (String trip : trips) {
                             String category = tripsp.getString(trip, getString(R.string.nocategory));
                             if (category.equals(categories[position])) {
-                                tripeditor.putString(trip, getString(R.string.nocategory));
-                                tripeditor.commit();
+                                tripsp.edit().putString(trip, getString(R.string.nocategory)).commit();
                             }
                         }
-                        categoryeditor.remove(categories[position]);
-                        categoryeditor.commit();
+                        categorysp.edit().remove(categories[position]).commit();
                         loaddata();
                     }
                 }
