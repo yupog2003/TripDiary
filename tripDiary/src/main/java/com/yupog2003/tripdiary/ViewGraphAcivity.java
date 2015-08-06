@@ -20,6 +20,7 @@ import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.TrackCache;
+import com.yupog2003.tripdiary.data.Trip;
 
 import java.util.ArrayList;
 
@@ -38,9 +39,10 @@ public class ViewGraphAcivity extends MyActivity {
         setContentView(R.layout.activity_view_graph_acivity);
         lineChart = (LineChart) findViewById(R.id.linechart);
         int trackLength = 0;
-        if (ViewTripActivity.trip != null && ViewTripActivity.trip.cache != null) {
-            trackCache = ViewTripActivity.trip.cache;
-            tripName = ViewTripActivity.trip.tripName;
+        Trip trip=((TripDiaryApplication)getApplication()).getTrip();
+        if (trip != null && trip.cache != null) {
+            trackCache = trip.cache;
+            tripName = trip.tripName;
             trackLength = trackCache.altitudes.length;
         } else {
             Toast.makeText(getActivity(), "Can not get track", Toast.LENGTH_SHORT).show();

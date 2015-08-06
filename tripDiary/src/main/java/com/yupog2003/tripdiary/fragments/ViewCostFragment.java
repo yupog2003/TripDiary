@@ -78,7 +78,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
     public void refreshData(boolean updatePOI) {
         if (option == ViewCostActivity.optionTrip) {
-            Trip trip = ViewTripActivity.trip;
+            Trip trip = ((ViewTripActivity)getActivity()).trip;
             ArrayList<DocumentFile> costList = new ArrayList<>();
             for (POI poi : trip.pois) {
                 costList.addAll(Arrays.asList(poi.costFiles));

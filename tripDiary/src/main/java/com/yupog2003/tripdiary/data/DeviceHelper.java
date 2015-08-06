@@ -4,30 +4,30 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
 import android.content.Context;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
+import android.view.Surface;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 public class DeviceHelper {
 
     public static int getScreenWidth(Activity activity) {
-        DisplayMetrics dm = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        return dm.widthPixels;
+        return getDisPlayMetrics(activity).widthPixels;
     }
 
     public static int getScreenHeight(Activity activity) {
+        return getDisPlayMetrics(activity).heightPixels;
+    }
+
+    private static DisplayMetrics getDisPlayMetrics(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        return dm.heightPixels;
+        return dm;
     }
 
     public static float dpFromPx(Context c, float px) {
@@ -67,7 +67,6 @@ public class DeviceHelper {
         if (value != null)
             builders.setValue(value);
         t.send(builders.build());
-
     }
 
     public static void sendGATrack(Activity activity, String category, String action, String label, Long value) {
@@ -78,4 +77,14 @@ public class DeviceHelper {
         sendGATrack(service.getApplication(), category, action, label, value);
     }
 
+    public static boolean isGpsEnabled(Context c) {
+        LocationManager locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public static int getRotation(Activity a) {
+        if (a == null) return Surface.ROTATION_0;
+        DisplayMetrics dm = getDisPlayMetrics(a);
+        return dm.widthPixels > dm.heightPixels ? Surface.ROTATION_90 : Surface.ROTATION_0;
+    }
 }

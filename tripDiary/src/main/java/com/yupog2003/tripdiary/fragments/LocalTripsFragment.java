@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -22,7 +23,6 @@ import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -72,7 +72,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -104,7 +103,9 @@ public class LocalTripsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         listView = new FloatingGroupExpandableListView(getActivity());
         listView.setGroupIndicator(null);
-        setHasOptionsMenu(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            listView.setNestedScrollingEnabled(true);
+        }
         categorysp = getActivity().getSharedPreferences("category", Context.MODE_PRIVATE);
         tripsp = getActivity().getSharedPreferences("trip", Context.MODE_PRIVATE);
         categoryExpandSp = getActivity().getSharedPreferences("categoryExpand", Context.MODE_PRIVATE);
@@ -125,6 +126,7 @@ public class LocalTripsFragment extends Fragment {
         super.onResume();
         if (adapter == null) {
             loaddata();
+            setHasOptionsMenu(true);
         }
     }
 
@@ -133,7 +135,9 @@ public class LocalTripsFragment extends Fragment {
         inflater.inflate(R.menu.fragment_local_trip, menu);
         MenuItem searchItem = menu.findItem(R.id.searchview);
         search = (SearchView) MenuItemCompat.getActionView(searchItem);
-        search.setQueryHint(getString(R.string.search_trip));
+        if (isAdded()) {
+            search.setQueryHint(getString(R.string.search_trip));
+        }
         search.setOnQueryTextListener(adapter);
     }
 
@@ -186,8 +190,8 @@ public class LocalTripsFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
                         } else {
                             newTripName = name;
-                            Trip trip = Trip.createTrip(getActivity(), newTripName);
-                            trip.setCategory(getActivity(), category);
+                            Trip trip = Trip.createTrip(getActivity().getApplicationContext(), newTripName);
+                            trip.setCategory(category);
                             trip.updateNote(note);
                             loaddata();
                             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
@@ -283,41 +287,15 @@ public class LocalTripsFragment extends Fragment {
             DocumentFile[] files = FileHelper.listFiles(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
             ArrayList<Trip> list = new ArrayList<>();
             for (DocumentFile file : files) {
-                Trip trip = new Trip(getActivity(), file, true);
+                Trip trip = new Trip(getActivity().getApplicationContext(), file, true);
                 trip.setDrawable(categoryDrawables.get(trip.category));
                 list.add(trip);
             }
             final TimeSort timeSort = TimeSort.fromInteger(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0));
-            if (timeSort == TimeSort.ascending){
-                Collections.sort(list, new Comparator<Trip>() {
-                    @Override
-                    public int compare(Trip lhs, Trip rhs) {
-                        if (lhs.time == null || rhs.time == null)
-                            return 0;
-                        if (lhs.time.after(rhs.time)) {
-                            return 1;
-                        } else if (rhs.time.after(lhs.time)) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                });
-            }else if (timeSort == TimeSort.descending){
-                Collections.sort(list, new Comparator<Trip>() {
-                    @Override
-                    public int compare(Trip lhs, Trip rhs) {
-                        if (lhs.time == null || rhs.time == null)
-                            return 0;
-                        if (lhs.time.after(rhs.time)) {
-                            return -1;
-                        } else if (rhs.time.after(lhs.time)) {
-                            return 1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                });
+            if (timeSort == TimeSort.ascending) {
+                Collections.sort(list);
+            } else if (timeSort == TimeSort.descending) {
+                Collections.sort(list, Collections.reverseOrder());
             }
             tripsArray = list.toArray(new Trip[list.size()]);
             list = new ArrayList<>();
@@ -560,10 +538,10 @@ public class LocalTripsFragment extends Fragment {
 
                         String s = name.getText().toString();
                         if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, s) == null || s.equals(checksName.get(0))) {
-                            Trip trip = new Trip(getActivity(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(0)), false);
-                            trip.renameTrip(getActivity(), s);
+                            Trip trip = new Trip(getActivity().getApplicationContext(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(0)), false);
+                            trip.renameTrip(s);
                             trip.updateNote(note.getText().toString());
-                            trip.setCategory(getActivity(), categories[rg.getCheckedRadioButtonId()]);
+                            trip.setCategory(categories[rg.getCheckedRadioButtonId()]);
                             loaddata();
                         } else {
                             Toast.makeText(getActivity(), getString(R.string.explain_conflict_trip), Toast.LENGTH_SHORT).show();
@@ -612,8 +590,8 @@ public class LocalTripsFragment extends Fragment {
 
                     public void onClick(DialogInterface dialog, int which) {
 
-                        for (int i = 0; i < checksName.size(); i++) {
-                            tripsp.edit().putString(checksName.get(i), categories[which]).commit();
+                        for (String checkName : checksName) {
+                            tripsp.edit().putString(checkName, categories[which]).commit();
                         }
                         dialog.dismiss();
                         loaddata();
@@ -844,8 +822,8 @@ public class LocalTripsFragment extends Fragment {
                         s = entry.getName();
                     }
                     zis.close();
-                    if (s.contains("/")){
-                        s=s.replace("/", "");
+                    if (s.contains("/")) {
+                        s = s.replace("/", "");
                     }
                     tripName = s;
                     if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {

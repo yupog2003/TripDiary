@@ -2,13 +2,12 @@ package com.yupog2003.tripdiary;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -53,7 +51,9 @@ import com.yupog2003.tripdiary.services.RecordService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
@@ -62,8 +62,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     Toolbar toolBar;
     String tripName;
     public static final String tag_tripname = "tripname";
-    public static final String tag_addpoi_intent = "add_poi";
-    public static final String tag_isgpsenabled = "isgpsenabled";
     public static final String pref_tag_onaddpoi = "on_add_poi";
     TextView distance;
     TextView totalTime;
@@ -90,7 +88,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     GoogleMap gmap;
     Polyline polyline;
     boolean addPOIMode;
-    boolean isGPSEnabled;
     Menu menu;
     SharedPreferences preference;
     DocumentFile nowFileForCameraIntent;
@@ -102,19 +99,14 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         tripName = getIntent().getStringExtra(tag_tripname);
-        isGPSEnabled = getIntent().getBooleanExtra(tag_isgpsenabled, false);
         if (tripName == null) {
             finish();
         }
-        if (isGPSEnabled) {
-            setTitle(tripName + " - " + getString(R.string.recording));
-            mapFragment = SupportMapFragment.newInstance();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.maplayout, mapFragment, "mapFragment");
-            ft.commit();
-        } else {
-            setTitle(tripName);
-        }
+        setTitle(tripName + " - " + getString(R.string.recording));
+        mapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.maplayout, mapFragment, "mapFragment");
+        ft.commit();
         preference = PreferenceManager.getDefaultSharedPreferences(this);
         handler = new Handler();
         maplayout = (RelativeLayout) findViewById(R.id.maplayout);
@@ -147,47 +139,30 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         save = (Button) findViewById(R.id.save);
         save.setOnClickListener(this);
         refreshProgress = (ProgressBar) findViewById(R.id.refreshProgress);
-        if (isGPSEnabled) {
-            new Thread(new UpdateRunnable()).start();
-        } else {
-            refresh.setVisibility(View.GONE);
-            informationLayout.setVisibility(View.GONE);
-        }
+        new Thread(new UpdateRunnable()).start();
         setAddPOIMode(false);
-        if (getIntent().getBooleanExtra(tag_addpoi_intent, false)) {
-            poiName.postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(poiName, 0);
-                }
-            }, 200);
-        }
     }
 
     @Override
     protected void onResume() {
 
-        if (isGPSEnabled && RecordService.instance == null) {
+        if (RecordService.instance == null) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
-        if (isGPSEnabled) {
-            mapFragment.getMapAsync(new OnMapReadyCallback() {
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
 
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    gmap = googleMap;
-                    gmap.setMyLocationEnabled(true);
-                    gmap.setOnMarkerDragListener(RecordActivity.this);
-                    gmap.setOnInfoWindowClickListener(addPOIMode ? null : RecordActivity.this);
-                    gmap.getUiSettings().setZoomControlsEnabled(true);
-                    new RefreshTask(true, true).execute();
-                }
-            });
-        }
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                gmap = googleMap;
+                gmap.setMyLocationEnabled(true);
+                gmap.setOnMarkerDragListener(RecordActivity.this);
+                gmap.setOnInfoWindowClickListener(addPOIMode ? null : RecordActivity.this);
+                gmap.getUiSettings().setZoomControlsEnabled(true);
+                new RefreshTask(true, true).execute();
+            }
+        });
+
         super.onResume();
     }
 
@@ -196,9 +171,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_record, menu);
         this.menu = menu;
-        if (!isGPSEnabled) {
-            menu.findItem(R.id.pause).setVisible(false);
-        }
         return true;
     }
 
@@ -216,17 +188,9 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             Intent i = new Intent(RecordService.actionPauseTrip);
             sendBroadcast(i);
         } else if (item.getItemId() == R.id.stop) {
-            if (isGPSEnabled) {
-                Intent i = new Intent(RecordService.actionStopTrip);
-                sendBroadcast(i);
-                finish();
-            } else {
-                Intent i = new Intent(RecordActivity.this, ViewTripActivity.class);
-                i.putExtra(ViewTripActivity.tag_tripName, tripName);
-                i.putExtra("stoptrip", true);
-                startActivity(i);
-                finish();
-            }
+            Intent i = new Intent(RecordService.actionStopTrip);
+            sendBroadcast(i);
+            finish();
         }
         return true;
     }
@@ -244,9 +208,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 gmap.setOnInfoWindowClickListener(null);
             }
         } else {
-            if (isGPSEnabled) {
-                informationLayout.setVisibility(View.VISIBLE);
-            }
+            informationLayout.setVisibility(View.VISIBLE);
             addMemoryLayout.setVisibility(View.GONE);
             save.setVisibility(View.GONE);
             cancel.setVisibility(View.GONE);
@@ -268,6 +230,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     ArrayList<Marker> markers = new ArrayList<>();
     private static final int REQUEST_PICTURE = 0;
     private static final int REQUEST_VIDEO = 1;
+    private static final int REQUEST_AUDIO = 2;
 
     @Override
     public void onClick(View v) {
@@ -284,7 +247,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             } else {
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (isGPSEnabled && location == null) {
+                if (location == null) {
                     Toast.makeText(RecordActivity.this, getString(R.string.location_not_found), Toast.LENGTH_SHORT).show();
                 } else {
                     setAddPOIMode(true);
@@ -295,28 +258,24 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                     }
                     poi = new POI(RecordActivity.this, poiDir);
                     MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
-                    if (isGPSEnabled) {
-                        if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
-                            POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                            gmap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-                            poi.updateBasicInformation(null, time, location.getLatitude(), location.getLongitude(), location.getAltitude());
-                        } else { // edit exist poi
-                            location.setAltitude(poi.altitude);
-                            cancel.setVisibility(View.GONE);
-                            if (markers != null) {
-                                for (int i = 0; i < markers.size(); i++) {
-                                    if (markers.get(i).getTitle().equals(poi.title)) {
-                                        POIMarker = markers.get(i);
-                                        POIMarker.setDraggable(true);
-                                        POIMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                                        markers.remove(i);
-                                        break;
-                                    }
+                    if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
+                        POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                        gmap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                        poi.updateBasicInformation(null, time, location.getLatitude(), location.getLongitude(), location.getAltitude());
+                    } else { // edit exist poi
+                        location.setAltitude(poi.altitude);
+                        cancel.setVisibility(View.GONE);
+                        if (markers != null) {
+                            for (int i = 0; i < markers.size(); i++) {
+                                if (markers.get(i).getTitle().equals(poi.title)) {
+                                    POIMarker = markers.get(i);
+                                    POIMarker.setDraggable(true);
+                                    POIMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                                    markers.remove(i);
+                                    break;
                                 }
                             }
                         }
-                    } else {
-                        poi.updateBasicInformation(null, time, null, null, null);
                     }
                     preference.edit().putString(pref_tag_onaddpoi, poi.title).commit();
                     updatePOIStatus();
@@ -333,7 +292,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 startActivityForResult(i, REQUEST_PICTURE);
             } else {
-                Toast.makeText(this, getString(R.string.camera_is_not_available), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.camera_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeVideo)) {
             Intent i = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -344,10 +303,16 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 startActivityForResult(i, REQUEST_VIDEO);
             } else {
-                Toast.makeText(this, getString(R.string.camera_is_not_available), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.camera_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeAudio)) {
-            new RecordAudioTask(poi.audioDir.createFile("", fileName + ".mp3")).execute();
+            Intent i = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+            if (i.resolveActivity(getPackageManager()) != null) {
+                nowFileForCameraIntent = poi.audioDir.createFile("", fileName + ".mp3");
+                startActivityForResult(i, REQUEST_AUDIO);
+            } else {
+                Toast.makeText(this, R.string.audio_recorder_is_not_available, Toast.LENGTH_SHORT).show();
+            }
         } else if (v.equals(takeText)) {
             final EditText getText = new EditText(this);
             getText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -367,10 +332,10 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             ab.setNegativeButton(getString(R.string.cancel), null);
             ab.show();
         } else if (v.equals(takePaint)) {
+            nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".png");
             Intent intent = new Intent(this, PaintActivity.class);
-            intent.putExtra(PaintActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
-            intent.putExtra(PaintActivity.tag_poi, FileHelper.getFileName(poi.dir));
-            intent.putExtra(PaintActivity.tag_filename, fileName + ".png");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
+            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             startActivityForResult(intent, REQUEST_PICTURE);
         } else if (v.equals(takeMoney)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
@@ -422,9 +387,8 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             Toast.makeText(RecordActivity.this, R.string.poi_has_been_saved, Toast.LENGTH_SHORT).show();
             setAddPOIMode(false);
             preference.edit().remove(pref_tag_onaddpoi).commit();
-            if (isGPSEnabled) {
-                new RefreshTask(false, false).execute();
-            }
+            new RefreshTask(false, false).execute();
+
         }
     }
 
@@ -458,13 +422,27 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_PICTURE || requestCode == REQUEST_VIDEO) {
+        if (requestCode == REQUEST_PICTURE || requestCode == REQUEST_VIDEO || requestCode == REQUEST_AUDIO) {
+            if (nowFileForCameraIntent == null) return;
             if (resultCode == Activity.RESULT_OK) {
-                updatePOIStatus();
-            } else {
-                if (nowFileForCameraIntent != null) {
+                if (nowFileForCameraIntent.length() > 0) {
+                    updatePOIStatus();
+                } else if (data != null && data.getData() != null) {
+                    try {
+                        Uri uri = data.getData();
+                        InputStream is = getContentResolver().openInputStream(uri);
+                        OutputStream os = getContentResolver().openOutputStream(nowFileForCameraIntent.getUri());
+                        FileHelper.copyByStream(is, os);
+                        updatePOIStatus();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        nowFileForCameraIntent.delete();
+                    }
+                } else {
                     nowFileForCameraIntent.delete();
                 }
+            } else {
+                nowFileForCameraIntent.delete();
             }
             nowFileForCameraIntent = null;
         }
@@ -533,7 +511,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
         @Override
         protected void onPreExecute() {
-
             refreshProgress.setVisibility(View.VISIBLE);
         }
 
@@ -629,114 +606,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             refreshProgress.setVisibility(View.GONE);
         }
 
-    }
-
-    class RecordAudioTask extends AsyncTask<Integer, Integer, Integer> {
-        MediaRecorder mr;
-        ProgressBar pb;
-        TextView time;
-        boolean run;
-        long startTime;
-        DocumentFile file;
-        static final int base = 40;
-        boolean canPlay;
-
-        public RecordAudioTask(DocumentFile file) {
-            this.file = file;
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-            canPlay = false;
-            run = false;
-            mr = new MediaRecorder();
-            try {
-                mr.setAudioSource(MediaRecorder.AudioSource.MIC);
-                mr.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
-                mr.setOutputFile(getContentResolver().openFileDescriptor(file.getUri(), "rw").getFileDescriptor());
-                mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                mr.prepare();
-                LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.record_audio, null);
-                pb = (ProgressBar) layout.findViewById(R.id.volum);
-                pb.setMax((int) (20 * Math.log10(32767)) - base);
-                pb.setProgress(0);
-                time = (TextView) layout.findViewById(R.id.time);
-                time.setText("00:00:00");
-                AlertDialog.Builder ab = new AlertDialog.Builder(RecordActivity.this);
-                ab.setTitle(getString(R.string.record_audio));
-                ab.setView(layout);
-                ab.setPositiveButton(getString(R.string.finish), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        run = false;
-                        dialog.dismiss();
-                    }
-                });
-                ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        run = false;
-                        file.delete();
-                        dialog.dismiss();
-                    }
-                });
-                ab.setCancelable(false);
-                ab.show();
-                startTime = System.currentTimeMillis();
-                mr.start();
-                canPlay = true;
-                run = true;
-            } catch (IllegalStateException | IOException e) {
-                e.printStackTrace();
-                Toast.makeText(RecordActivity.this, getString(R.string.cannot_start_media_recorder_due_to_unknowm_error), Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected Integer doInBackground(Integer... params) {
-
-            while (run) {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-
-                    e.printStackTrace();
-                }
-                publishProgress(mr.getMaxAmplitude());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-
-            time.setText(convertSecondToTime(System.currentTimeMillis() - startTime));
-            pb.setProgress((int) (20 * Math.log10(values[0])) - base);
-        }
-
-        private String convertSecondToTime(long mSecond) {
-            int second = (int) (mSecond / 1000);
-            StringBuilder sb = new StringBuilder();
-            sb.append(String.valueOf(second / 3600)).append(":");
-            second = second % 3600;
-            sb.append(String.valueOf(second / 60)).append(":");
-            second = second % 60;
-            sb.append(String.valueOf(second));
-            return sb.toString();
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-
-            if (canPlay) {
-                mr.stop();
-                mr.release();
-                updatePOIStatus();
-            }
-        }
     }
 
     @Override

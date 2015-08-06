@@ -83,8 +83,8 @@ public class DownloadTripService extends IntentService {
             fileSize = 0;
             updateNotification(tripName, getString(R.string.unzipping) + "...", 100);
             FileHelper.unZip(zipFile, TripDiaryApplication.rootDocumentFile);
+            zipFile.delete();
         } catch (IOException e) {
-
             e.printStackTrace();
 
         }

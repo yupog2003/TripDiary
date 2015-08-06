@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,7 +47,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class ViewPointActivity extends MyActivity {
-    public static POI poi;
+    public POI poi;
     public static final DecimalFormat latlngFormat = new DecimalFormat("#.######");
     MyPagerAdapter adapter;
     TabLayout pagerTab;
@@ -53,10 +57,13 @@ public class ViewPointActivity extends MyActivity {
     static final int import_audio = 3;
     String timezone;
     ViewPager viewPager;
+    AppBarLayout appBarLayout;
+    CoordinatorLayout coordinatorLayout;
+    int appBarLayoutDefaultHeight;
     public static final String tag_tripname = "tag_tripname";
     public static final String tag_poiname = "tag_poiname";
     public static final String tag_fromActivity = "tag_activity";
-    public static final int REQUEST_VIEW_COST=4;
+    public static final int REQUEST_VIEW_COST = 4;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,10 +78,14 @@ public class ViewPointActivity extends MyActivity {
         String tripName = getIntent().getStringExtra(tag_tripname);
         String poiName = getIntent().getStringExtra(tag_poiname);
         String activity = getIntent().getStringExtra(tag_fromActivity);
+        appBarLayout=(AppBarLayout)findViewById(R.id.appbar);
+        coordinatorLayout=(CoordinatorLayout)findViewById(R.id.coordinatorLayout);
+        pagerTab = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         poi = null;
         if (activity != null && activity.equals(ViewTripActivity.class.getSimpleName())) {
-            poi = ViewTripActivity.trip.getPOI(poiName);
-            timezone = ViewTripActivity.trip.timezone;
+            poi = ((TripDiaryApplication)getApplication()).getTrip().getPOI(poiName);
+            timezone = ((TripDiaryApplication)getApplication()).getTrip().timezone;
         } else if (activity != null && activity.equals(AllRecordActivity.class.getSimpleName())) {
             poi = AllRecordActivity.getPOI(tripName, poiName);
             timezone = MyCalendar.getTripTimeZone(this, tripName);
@@ -84,7 +95,18 @@ public class ViewPointActivity extends MyActivity {
         }
         setTitle(poiName);
         DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", FileHelper.getFileName(poi.parentTrip) + "-" + poi.title, null);
-        initialtab();
+        appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    appBarLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    appBarLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+                appBarLayoutDefaultHeight = appBarLayout.getHeight();
+                initialtab();
+            }
+        });
     }
 
     @Override
@@ -93,11 +115,11 @@ public class ViewPointActivity extends MyActivity {
     }
 
     private void initialtab() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        pagerTab = (TabLayout) findViewById(R.id.tabs);
+        viewPager.addOnPageChangeListener(adapter);
         pagerTab.setupWithViewPager(viewPager);
+        adapter.onPageSelected(0);
     }
 
     @Override
@@ -106,7 +128,18 @@ public class ViewPointActivity extends MyActivity {
         return true;
     }
 
-    class MyPagerAdapter extends FragmentPagerAdapter {
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void resetAppBar() {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
+    }
+
+    class MyPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
         TextFragment textFragment;
         PictureFragment pictureFragment;
         VideoFragment videoFragment;
@@ -137,7 +170,6 @@ public class ViewPointActivity extends MyActivity {
 
         @Override
         public int getCount() {
-
             return 4;
         }
 
@@ -160,6 +192,31 @@ public class ViewPointActivity extends MyActivity {
                     break;
             }
             return title;
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            resetAppBar();
+            switch (position){
+                case 0:
+                    viewPager.setPadding(0,0,0,appBarLayoutDefaultHeight);
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    viewPager.setPadding(0,0,0,0);
+                    break;
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
         }
     }
 
@@ -184,7 +241,7 @@ public class ViewPointActivity extends MyActivity {
         } else if (item.getItemId() == R.id.playpoint) {
             Intent intent = new Intent(ViewPointActivity.this, PlayPointActivity.class);
             intent.putExtra(PlayPointActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
-            intent.putExtra(PlayPointActivity.tag_poi, FileHelper.getFileName(poi.dir));
+            intent.putExtra(PlayPointActivity.tag_poi, poi.title);
             ViewPointActivity.this.startActivity(intent);
         } else if (item.getItemId() == android.R.id.home) {
             ViewPointActivity.this.finish();
@@ -216,7 +273,7 @@ public class ViewPointActivity extends MyActivity {
                     editlongitude.setText(String.valueOf(poi.longitude));
                     final EditText editaltitude = (EditText) layout.findViewById(R.id.edit_poi_altitude);
                     double altitude = poi.altitude;
-                    if (MainActivity.altitude_unit == MainActivity.unit_ft) {
+                    if (TripDiaryApplication.altitude_unit == TripDiaryApplication.unit_ft) {
                         altitude /= 0.3048;
                     }
                     editaltitude.setText(String.valueOf(altitude));
@@ -247,7 +304,7 @@ public class ViewPointActivity extends MyActivity {
                             time.format3339();
                             time.setTimeZone("UTC");
                             double altitude = Double.parseDouble(editAltitudeStr);
-                            if (MainActivity.altitude_unit == MainActivity.unit_ft) {
+                            if (TripDiaryApplication.altitude_unit == TripDiaryApplication.unit_ft) {
                                 altitude *= 0.3048;
                             }
                             poi.updateBasicInformation(null, time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude);

@@ -77,7 +77,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     public int onStartCommand(Intent intent, int flags, int startId) {
         instance = this;
         name = intent.getStringExtra(tag_tripName);
-        trip = new Trip(RecordService.this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name), false);
+        trip = new Trip(getApplicationContext(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name), false);
         trip.deleteCache();
         run = true;
         screenOn = true;
@@ -135,8 +135,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         Intent i = new Intent(this, RecordActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(RecordActivity.tag_tripname, name);
-        i.putExtra(RecordActivity.tag_isgpsenabled, true);
-        i.putExtra(RecordActivity.tag_addpoi_intent, false);
         startActivity(i);
         return START_REDELIVER_INTENT;
     }
@@ -148,20 +146,14 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         nb.setSmallIcon(R.drawable.ic_satellite);
         nb.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         nb.setTicker(getString(R.string.Start_Trip));
-        Intent i2 = new Intent(this, RecordActivity.class);
-        i2.putExtra(RecordActivity.tag_tripname, name);
-        i2.putExtra(RecordActivity.tag_isgpsenabled, true);
-        i2.putExtra(RecordActivity.tag_addpoi_intent, true);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, i2, PendingIntent.FLAG_UPDATE_CURRENT);
-        nb.addAction(R.drawable.poi, getString(R.string.add_poi), pi);
-        PendingIntent pi2 = PendingIntent.getBroadcast(this, 0, new Intent(actionPauseTrip), PendingIntent.FLAG_UPDATE_CURRENT);
-        nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pi2);
-        PendingIntent pi3 = PendingIntent.getBroadcast(this, 0, new Intent(actionStopTrip), PendingIntent.FLAG_UPDATE_CURRENT);
-        nb.addAction(R.drawable.ic_stop, getString(R.string.stop), pi3);
+        Intent pauseIntent=new Intent(actionPauseTrip);
+        PendingIntent pausePendingIntent=PendingIntent.getBroadcast(this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pausePendingIntent);
+        Intent stopIntent=new Intent(actionStopTrip);
+        PendingIntent stopPendingIntent=PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        nb.addAction(R.drawable.ic_stop, getString(R.string.stop), stopPendingIntent);
         Intent i3 = new Intent(this, RecordActivity.class);
         i3.putExtra(RecordActivity.tag_tripname, name);
-        i3.putExtra("isgpsenabled", true);
-        i3.putExtra(RecordActivity.tag_addpoi_intent, false);
         PendingIntent pi4 = PendingIntent.getActivity(this, 1, i3, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(pi4);
         nb.setOngoing(true);
@@ -170,7 +162,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     }
 
     protected void updateNotification() {
-
         if (run && screenOn) {
             totalTime = System.currentTimeMillis() / 1000 - startTime;
             nb.setStyle(getContent());
@@ -245,45 +236,39 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             nb.setContentText(getString(R.string.click_or_swipe_down_to_view_detail));
             nb.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
             nb.setTicker(getString(R.string.Start_Trip));
-            Intent i2 = new Intent(RecordService.this, RecordActivity.class);
-            i2.putExtra(RecordActivity.tag_tripname, name);
-            i2.putExtra(RecordActivity.tag_isgpsenabled, true);
-            i2.putExtra(RecordActivity.tag_addpoi_intent, "true");
-            PendingIntent pi = PendingIntent.getActivity(RecordService.this, 0, i2, PendingIntent.FLAG_CANCEL_CURRENT);
-            nb.addAction(R.drawable.poi, getString(R.string.add_poi), pi);
             if (run) {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, RecordService.this);
                 new Thread(RecordService.this).start();
-                PendingIntent pi2 = PendingIntent.getBroadcast(RecordService.this, 0, new Intent(actionPauseTrip), PendingIntent.FLAG_UPDATE_CURRENT);
-                nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pi2);
                 nb.setSmallIcon(R.drawable.ic_satellite);
+                Intent pauseIntent=new Intent(actionPauseTrip);
+                PendingIntent pausePendingIntent=PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pausePendingIntent);
             } else {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 lm.removeUpdates(RecordService.this);
-                PendingIntent pi2 = PendingIntent.getBroadcast(RecordService.this, 0, new Intent(actionPauseTrip), PendingIntent.FLAG_UPDATE_CURRENT);
-                nb.addAction(R.drawable.ic_resume, getString(R.string.resume), pi2);
                 nb.setSmallIcon(R.drawable.ic_pause);
+                Intent pauseIntent=new Intent(actionPauseTrip);
+                PendingIntent pausePendingIntent=PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                nb.addAction(R.drawable.ic_resume, getString(R.string.resume), pausePendingIntent);
             }
-            PendingIntent pi3 = PendingIntent.getBroadcast(RecordService.this, 0, new Intent(actionStopTrip), PendingIntent.FLAG_UPDATE_CURRENT);
-            nb.addAction(R.drawable.ic_stop, getString(R.string.stop), pi3);
+            Intent stopIntent=new Intent(actionStopTrip);
+            PendingIntent stopPendingIntent=PendingIntent.getBroadcast(RecordService.this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            nb.addAction(R.drawable.ic_stop, getString(R.string.stop), stopPendingIntent);
             Intent i3 = new Intent(RecordService.this, RecordActivity.class);
             i3.putExtra(RecordActivity.tag_tripname, name);
-            i3.putExtra("isgpsenabled", true);
             PendingIntent pi4 = PendingIntent.getActivity(RecordService.this, 1, i3, PendingIntent.FLAG_CANCEL_CURRENT);
             nb.setContentIntent(pi4);
             nb.setOngoing(true);
             nb.setStyle(getContent());
             startForeground(1, nb.build());
         }
-
     }
 
     public class ScreenOnOffReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 screenOn = true;
                 new Thread(RecordService.this).start();
@@ -297,7 +282,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                 sm.unregisterListener(RecordService.this);
             }
         }
-
     }
 
 
@@ -342,13 +326,11 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     }
 
     public void onProviderDisabled(String provider) {
-
         nb.setSmallIcon(R.drawable.ic_pause);
         startForeground(1, nb.build());
     }
 
     public void onProviderEnabled(String provider) {
-
         nb.setSmallIcon(R.drawable.ic_satellite);
         startForeground(1, nb.build());
     }

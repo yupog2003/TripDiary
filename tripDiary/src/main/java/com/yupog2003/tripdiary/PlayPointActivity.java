@@ -1,13 +1,11 @@
 package com.yupog2003.tripdiary;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -31,15 +29,9 @@ import com.yupog2003.tripdiary.data.POI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class PlayPointActivity extends MyActivity implements View.OnClickListener {
     POI poi;
-    DocumentFile pictureFile;
-    DocumentFile videoFile;
-    DocumentFile audioFile;
-    DocumentFile textFile;
-    ProgressDialog pd;
     ViewFlipper viewFlipper;
     Thread playThread;
     ImageButton pause;
@@ -71,10 +63,6 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         String poiName = getIntent().getStringExtra(tag_poi);
         poi = new POI(this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName));
         this.name = poi.title;
-        this.pictureFile = poi.picDir;
-        this.videoFile = poi.videoDir;
-        this.audioFile = poi.audioDir;
-        this.textFile = poi.diaryFile;
         viewFlipper = (ViewFlipper) findViewById(R.id.pointviewflipper);
         viewFlipper.setInAnimation(this, android.R.anim.fade_in);
         viewFlipper.setOutAnimation(this, android.R.anim.fade_out);
@@ -85,8 +73,10 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         next = (ImageButton) findViewById(R.id.next);
         next.setOnClickListener(this);
         handler = new Handler();
+        interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("playpoispeed", "1000"));
         setTitle(name + poi.time.formatInTimezone(MyCalendar.getTripTimeZone(this, poi.dir.getParentFile().getName())));
-        new PrepareViewsTask().execute("");
+        prepareViews();
+        play();
     }
 
     @Override
@@ -95,205 +85,56 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         getMenuInflater().inflate(R.menu.activity_play_point, menu);
         return true;
     }
+    private void play(){
+        playThread = new Thread(new Runnable() {
 
-    class PrepareViewsTask extends AsyncTask<String, String, ArrayList<View>> {
+            public void run() {
 
-        @Override
-        protected ArrayList<View> doInBackground(String... params) {
-
-            // ---------------------------------text-------------------------------
-            publishProgress(getString(R.string.prepare_diary));
-            final TextView textView = new TextView(PlayPointActivity.this);
-            int padding = (int) DeviceHelper.pxFromDp(PlayPointActivity.this, 10);
-            textView.setPadding(padding, padding, padding, padding);
-            textView.setText(poi.diary);
-            File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("diaryfont", ""));
-            if (fontFile.exists() && fontFile.isFile()) {
-                try {
-                    textView.setTypeface(Typeface.createFromFile(fontFile));
-                } catch (RuntimeException e) {
-                    Toast.makeText(PlayPointActivity.this, getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            textView.setTextSize(PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getInt("diaryfontsize", 20));
-            runOnUiThread(new Runnable() {
-
-                public void run() {
-
-                    viewFlipper.addView(textView);
-                }
-
-            });
-            // -------------------------------------picture--------------------------
-            publishProgress(getString(R.string.prepare_pictures));
-
-            int width = DeviceHelper.getScreenWidth(PlayPointActivity.this);
-            int height = DeviceHelper.getScreenHeight(PlayPointActivity.this);
-            BitmapFactory.Options option = new BitmapFactory.Options();
-            option.inJustDecodeBounds = true;
-            for (int i = 0; i < poi.picFiles.length; i++) {
-                BitmapFactory.Options option2 = new BitmapFactory.Options();
-                DocumentFile file = poi.picFiles[i];
-                final ImageView img = new ImageView(PlayPointActivity.this);
-                try {
-                    BitmapFactory.decodeStream(getContentResolver().openInputStream(file.getUri()), new Rect(0, 0, 0, 0), option);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (option.outWidth / width > option.outHeight / height) {
-                    option2.inSampleSize = option.outWidth / width;
-                } else {
-                    option2.inSampleSize = option.outHeight / height;
-                }
-                img.setTag(new ImgTag(file, option2));
-                runOnUiThread(new Runnable() {
-
-                    public void run() {
-
-                        viewFlipper.addView(img);
-                    }
-                });
-            }
-
-            // ------------------------------------------video------------------------
-            publishProgress(getString(R.string.prepare_video));
-            for (int i = 0; i < poi.videoFiles.length; i++) {
-                final int index = i;
-                handler.post(new Runnable() {
-
-                    public void run() {
-
-                        VideoView videoView = new VideoView(PlayPointActivity.this);
-                        videoView.setVideoURI(poi.videoFiles[index].getUri());
-                        videoView.setMediaController(new MediaController(PlayPointActivity.this));
-                        viewFlipper.addView(videoView);
-                    }
-
-                });
-            }
-
-            // ----------------------------------audio--------------------------
-            publishProgress(getString(R.string.prepare_audio));
-            for (int i = 0; i < poi.audioFiles.length; i++) {
-                final TextView audiotext = new TextView(PlayPointActivity.this);
-                audiotext.setText(FileHelper.getFileName(poi.audioFiles[i]));
-                audiotext.setTextSize(30);
-                runOnUiThread(new Runnable() {
-
-                    public void run() {
-
-                        viewFlipper.addView(audiotext);
-                    }
-                });
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... progress) {
-            pd.setMessage(progress[0]);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("playpoispeed", "1000"));
-            pd = new ProgressDialog(PlayPointActivity.this);
-            pd.setTitle(getString(R.string.prepare_data));
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("");
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<View> result) {
-            pd.dismiss();
-            playThread = new Thread(new Runnable() {
-
-                public void run() {
-
-                    for (currentIndex = 0; currentIndex < viewFlipper.getChildCount(); currentIndex++) {
-                        if (viewFlipper.getChildAt(currentIndex) instanceof ImageView) {
-                            final ImageView img = (ImageView) viewFlipper.getChildAt(currentIndex);
-                            final ImgTag tag = (ImgTag) img.getTag();
-                            Bitmap bitmap;
-                            while (true) {
-                                try {
-                                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(tag.file.getUri()), new Rect(0, 0, 0, 0), tag.option);
-                                    break;
-                                } catch (OutOfMemoryError e) {
-                                    e.printStackTrace();
-                                    System.gc();
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            final Bitmap b = bitmap;
-                            handler.post(new Runnable() {
-                                public void run() {
-
-                                    img.setImageBitmap(b);
-                                }
-                            });
+                for (currentIndex = 0; currentIndex < viewFlipper.getChildCount(); currentIndex++) {
+                    if (viewFlipper.getChildAt(currentIndex) instanceof ImageView) {
+                        final ImageView img = (ImageView) viewFlipper.getChildAt(currentIndex);
+                        final ImgTag tag = (ImgTag) img.getTag();
+                        Bitmap bitmap;
+                        while (true) {
                             try {
-                                Thread.sleep(interval);
-                            } catch (InterruptedException e) {
-
+                                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(tag.file.getUri()), new Rect(0, 0, 0, 0), tag.option);
+                                break;
+                            } catch (OutOfMemoryError e) {
                                 e.printStackTrace();
-                            }
-                        } else if (viewFlipper.getChildAt(currentIndex) instanceof VideoView) {
-                            videoView = (VideoView) viewFlipper.getChildAt(currentIndex);
-                            videoView.start();
-                            mediafinish = false;
-                            videoView.setOnCompletionListener(new OnCompletionListener() {
-
-                                public void onCompletion(MediaPlayer mp) {
-
-                                    mediafinish = true;
-                                }
-                            });
-                            while (!mediafinish) {
-                                try {
-                                    Thread.sleep(50);
-                                } catch (InterruptedException e) {
-
-                                    e.printStackTrace();
-                                }
-                            }
-                        } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView && currentIndex == 0) {
-                            try {
-                                TextView textView = (TextView) viewFlipper.getChildAt(currentIndex);
-                                Thread.sleep(textView.getText().length() * readTextSpeed);
-                            } catch (InterruptedException e) {
-
+                                System.gc();
+                            } catch (FileNotFoundException e) {
                                 e.printStackTrace();
-                            }
-                        } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView) {
-                            String audioName = ((TextView) viewFlipper.getChildAt(currentIndex)).getText().toString();
-                            mp = MediaPlayer.create(PlayPointActivity.this, FileHelper.findfile(poi.audioDir, audioName).getUri());
-                            mp.start();
-                            mediafinish = false;
-                            mp.setOnCompletionListener(new OnCompletionListener() {
-
-                                public void onCompletion(MediaPlayer mp) {
-
-                                    mediafinish = true;
-                                }
-                            });
-                            while (!mediafinish) {
-                                try {
-                                    Thread.sleep(50);
-                                } catch (InterruptedException e) {
-
-                                    e.printStackTrace();
-                                }
                             }
                         }
-                        if (stop)
-                            break;
-                        while (threadpause) {
+                        final Bitmap b = bitmap;
+                        handler.post(new Runnable() {
+                            public void run() {
+                                img.setImageBitmap(b);
+                            }
+                        });
+                        try {
+                            Thread.sleep(interval);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                img.setImageBitmap(null);
+                                b.recycle();
+                            }
+                        });
+                    } else if (viewFlipper.getChildAt(currentIndex) instanceof VideoView) {
+                        videoView = (VideoView) viewFlipper.getChildAt(currentIndex);
+                        videoView.start();
+                        mediafinish = false;
+                        videoView.setOnCompletionListener(new OnCompletionListener() {
+
+                            public void onCompletion(MediaPlayer mp) {
+                                mediafinish = true;
+                            }
+                        });
+                        while (!mediafinish) {
                             try {
                                 Thread.sleep(50);
                             } catch (InterruptedException e) {
@@ -301,18 +142,117 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                                 e.printStackTrace();
                             }
                         }
-                        runOnUiThread(new Runnable() {
+                    } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView && currentIndex == 0) {
+                        try {
+                            TextView textView = (TextView) viewFlipper.getChildAt(currentIndex);
+                            Thread.sleep(textView.getText().length() * readTextSpeed);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView) {
+                        String audioName = ((TextView) viewFlipper.getChildAt(currentIndex)).getText().toString();
+                        mp = MediaPlayer.create(PlayPointActivity.this, FileHelper.findfile(poi.audioDir, audioName).getUri());
+                        mp.start();
+                        mediafinish = false;
+                        mp.setOnCompletionListener(new OnCompletionListener() {
 
-                            public void run() {
-
-                                viewFlipper.showNext();
+                            public void onCompletion(MediaPlayer mp) {
+                                mediafinish = true;
                             }
                         });
+                        while (!mediafinish) {
+                            try {
+                                Thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                    PlayPointActivity.this.finish();
+                    if (stop)
+                        break;
+                    while (threadpause) {
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            viewFlipper.showNext();
+                        }
+                    });
                 }
-            });
-            playThread.start();
+                PlayPointActivity.this.finish();
+            }
+        });
+        playThread.start();
+    }
+    private void prepareViews() {
+        prepareDiary();
+        preparePictures();
+        prepareVideos();
+        prepareAudios();
+    }
+
+    private void prepareDiary() {
+        final TextView textView = new TextView(PlayPointActivity.this);
+        int padding = (int) DeviceHelper.pxFromDp(PlayPointActivity.this, 10);
+        textView.setPadding(padding, padding, padding, padding);
+        textView.setText(poi.diary);
+        File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("diaryfont", ""));
+        if (fontFile.exists() && fontFile.isFile()) {
+            try {
+                textView.setTypeface(Typeface.createFromFile(fontFile));
+            } catch (RuntimeException e) {
+                Toast.makeText(PlayPointActivity.this, getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
+            }
+        }
+        textView.setTextSize(PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getInt("diaryfontsize", 20));
+        viewFlipper.addView(textView);
+    }
+
+    private void preparePictures() {
+        int width = DeviceHelper.getScreenWidth(PlayPointActivity.this);
+        int height = DeviceHelper.getScreenHeight(PlayPointActivity.this);
+        BitmapFactory.Options option = new BitmapFactory.Options();
+        option.inJustDecodeBounds = true;
+        for (int i = 0; i < poi.picFiles.length; i++) {
+            BitmapFactory.Options option2 = new BitmapFactory.Options();
+            DocumentFile file = poi.picFiles[i];
+            final ImageView img = new ImageView(PlayPointActivity.this);
+            try {
+                BitmapFactory.decodeStream(getContentResolver().openInputStream(file.getUri()), new Rect(0, 0, 0, 0), option);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (option.outWidth / width > option.outHeight / height) {
+                option2.inSampleSize = option.outWidth / width;
+            } else {
+                option2.inSampleSize = option.outHeight / height;
+            }
+            img.setTag(new ImgTag(file, option2));
+            viewFlipper.addView(img);
+
+        }
+    }
+
+    private void prepareVideos() {
+        for (int i = 0; i < poi.videoFiles.length; i++) {
+            VideoView videoView = new VideoView(PlayPointActivity.this);
+            videoView.setVideoURI(poi.videoFiles[i].getUri());
+            videoView.setMediaController(new MediaController(PlayPointActivity.this));
+
+        }
+    }
+
+    private void prepareAudios() {
+        for (int i = 0; i < poi.audioFiles.length; i++) {
+            TextView audiotext = new TextView(PlayPointActivity.this);
+            audiotext.setText(FileHelper.getFileName(poi.audioFiles[i]));
+            audiotext.setTextSize(30);
+            viewFlipper.addView(audiotext);
         }
     }
 

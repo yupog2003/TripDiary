@@ -356,5 +356,14 @@
     <string name="please_stop_previous_trip_first">Please stop previous trip first</string>
     <string name="from_new_to_old">New -> Old</string>
     <string name="from_old_to_new">Old -> New</string>
+    <string name="open_with_browser">Open with browser</string>
+    <string name="audio_recorder_is_not_available">Audio recorder is not available</string>
+    <string name="title_activity_test">TestActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

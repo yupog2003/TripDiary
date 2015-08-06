@@ -2,7 +2,6 @@ package com.yupog2003.tripdiary.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
@@ -40,6 +39,7 @@ public class AllVideoFragment extends Fragment {
     int width;
     int numColums;
     POIAdapter poiAdapter;
+    String timezone;
 
     public AllVideoFragment() {
 
@@ -47,7 +47,7 @@ public class AllVideoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        recyclerView = new RecyclerView(getActivity());
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         int screenWidth = DeviceHelper.getScreenWidth(getActivity());
         int screenHeight = DeviceHelper.getScreenHeight(getActivity());
@@ -71,9 +71,13 @@ public class AllVideoFragment extends Fragment {
     }
 
     public void refresh() {
-        this.pois = ViewTripActivity.trip.pois;
-        poiAdapter = new POIAdapter(pois);
-        recyclerView.setAdapter(poiAdapter);
+        if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
+            this.pois = ((ViewTripActivity)getActivity()).trip.pois;
+            this.timezone = ((ViewTripActivity)getActivity()).trip.timezone;
+            poiAdapter = new POIAdapter();
+            recyclerView.setAdapter(poiAdapter);
+        }
+
     }
 
     @Override
@@ -91,11 +95,9 @@ public class AllVideoFragment extends Fragment {
 
         DocumentFile[] videos;
         DisplayImageOptions options;
-        MediaMetadataRetriever mmr;
 
         public VideoAdapter(DocumentFile[] videos) {
             this.videos = videos;
-            mmr = new MediaMetadataRetriever();
             if (videos.length > 0) {
                 options = new DisplayImageOptions.Builder()
                         .displayer(new FadeInBitmapDisplayer(500))
@@ -146,7 +148,6 @@ public class AllVideoFragment extends Fragment {
 
     class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
 
-        POI[] pois;
         VideoAdapter[] videoAdapters;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -181,8 +182,7 @@ public class AllVideoFragment extends Fragment {
             }
         }
 
-        public POIAdapter(POI[] pois) {
-            this.pois = pois;
+        public POIAdapter() {
             videoAdapters = new VideoAdapter[pois.length];
             for (int i = 0; i < videoAdapters.length; i++) {
                 videoAdapters[i] = new VideoAdapter(pois[i].videoFiles);
@@ -199,7 +199,7 @@ public class AllVideoFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].videoFiles.length) + ")");
-            holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
+            holder.poiTime.setText(pois[position].time.formatInTimezone(timezone));
             holder.index = position;
             holder.gridView.setVisibility(videoAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
             holder.gridView.setAdapter(videoAdapters[position]);
@@ -210,7 +210,5 @@ public class AllVideoFragment extends Fragment {
         public int getItemCount() {
             return pois.length;
         }
-
-
     }
 }

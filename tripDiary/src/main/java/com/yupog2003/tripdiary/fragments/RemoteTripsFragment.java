@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -86,7 +87,9 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_remotetrips, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        // listView.setBackgroundColor(getResources().getColor(R.color.item_background));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            listView.setNestedScrollingEnabled(true);
+        }
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -98,12 +101,10 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     public void onResume() {
         super.onResume();
         this.trip_option = getArguments().getInt(tag_option, 0);
-        setHasOptionsMenu(true);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -173,17 +174,19 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
         @Override
         protected void onPostExecute(Trip[] result) {
-
             if (result != null) {
                 adapter = new TripAdapter(new ArrayList<>(Arrays.asList(result)));
                 listView.setAdapter(adapter);
-                listView.setLongClickable(true);
                 listView.setOnItemClickListener(adapter);
-                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-                listView.setMultiChoiceModeListener(adapter);
+                if (trip_option == option_personal) {
+                    listView.setLongClickable(true);
+                    listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+                    listView.setMultiChoiceModeListener(adapter);
+                }
                 listView.setOnScrollListener(adapter);
                 if (swipeRefreshLayout.isRefreshing())
                     swipeRefreshLayout.setRefreshing(false);
+                setHasOptionsMenu(true);
             }
         }
 
@@ -249,20 +252,26 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
         @Override
         protected String doInBackground(String... params) {
-
             try {
                 token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
-                new GetTripsTask().execute();
             } catch (UserRecoverableAuthException e) {
-
                 e.printStackTrace();
                 loginIntent = e.getIntent();
+                token = null;
             } catch (Exception e) {
                 e.printStackTrace();
+                token = null;
             }
             return null;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            setHasOptionsMenu(true);
+            if (token != null) {
+                new GetTripsTask().execute();
+            }
+        }
     }
 
     class LoadMoreTripTask extends AsyncTask<String, String, ArrayList<Trip>> {
@@ -355,18 +364,33 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
-            /*Intent intent=new Intent(getActivity(), ViewTripOnlineActivity.class);
-            intent.putExtra(ViewTripOnlineActivity.tag_totken, token);
-            intent.putExtra(ViewTripOnlineActivity.tag_trippath, trips.get(position).path);
-            startActivity(intent);*/
+            String[] selections = new String[]{getString(R.string.download), getString(R.string.open_with_browser)};
+            AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+            ab.setSingleChoiceItems(selections, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String tripPath = trips.get(position).path;
+                    String tripName = trips.get(position).name;
+                    if (which == 0) {
+                        if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
+                            Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent intent = new Intent(getActivity(), DownloadTripService.class);
+                            intent.putExtra("path", tripPath);
+                            getActivity().startService(intent);
+                        }
+                    } else if (which == 1) {
+                        String tripPublic = trip_option == option_public ? "yes" : "no";
+                        String uri = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(uri));
+                        startActivity(intent);
+                    }
+                    dialog.dismiss();
+                }
+            });
+            ab.show();
 
-            String tripPath = trips.get(position).path;
-            String tripName = trips.get(position).name;
-            String tripPublic = trip_option == option_public ? "yes" : "no";
-            String uri = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(uri));
-            startActivity(intent);
         }
 
         ArrayList<Trip> checksName;
@@ -380,22 +404,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             }
             mode.finish();
             switch (item.getItemId()) {
-                case R.id.download:
-                    for (int i = 0; i < checksName.size(); i++) {
-                        String tripPath = checksName.get(i).path;
-                        String tripName = checksName.get(i).name;
-                        if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
-                            Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Activity activity = getActivity();
-                            if (activity != null) {
-                                Intent intent = new Intent(activity, DownloadTripService.class);
-                                intent.putExtra("path", tripPath);
-                                activity.startService(intent);
-                            }
-                        }
-                    }
-                    break;
                 case R.id.edit:
                     final String tripPath = checksName.get(0).path;
                     final String tripName = checksName.get(0).name;
@@ -578,7 +586,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.fragment_remote_trip, menu);
         if (account != null && account.equals("public") || token != null) {
             menu.removeItem(R.id.login);

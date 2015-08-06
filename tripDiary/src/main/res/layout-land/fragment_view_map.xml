@@ -170,15 +170,4 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/showbar"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerHorizontal="true"
-        android:alpha="0.4"
-        android:contentDescription="@string/imagebutton_description"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_fullscreen" />
-
 </RelativeLayout>

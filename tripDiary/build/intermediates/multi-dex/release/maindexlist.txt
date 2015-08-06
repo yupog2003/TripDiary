@@ -69,6 +69,7 @@ org/apache/http/client/params/ClientPNames.class
 com/yupog2003/tripdiary/RecordActivity$2.class
 android/support/v4/app/NotificationCompat$NotificationCompatImpl.class
 org/apache/http/params/HttpConnectionParams.class
+com/yupog2003/tripdiary/R$color.class
 android/support/v4/app/NotificationCompat$BigPictureStyle.class
 android/support/v4/app/NotificationCompat$NotificationCompatImplKitKat.class
 com/yupog2003/tripdiary/PaintActivity$MyPaintView.class
@@ -94,7 +95,6 @@ android/support/v7/appcompat/R.class
 org/apache/http/auth/AuthSchemeRegistry.class
 org/apache/http/protocol/BasicHttpProcessor.class
 org/apache/http/HttpMessage.class
-com/yupog2003/tripdiary/MainActivity$5.class
 com/yupog2003/tripdiary/ViewTripActivity$PrepareTripTask.class
 com/google/android/gms/maps/MapView.class
 com/google/android/gms/internal/zzgq.class
@@ -165,6 +165,7 @@ android/support/v4/app/NotificationCompatHoneycomb.class
 com/google/android/gms/common/internal/zzi.class
 android/support/v4/app/NotificationCompatKitKat.class
 android/support/v7/app/ActionBar.class
+com/yupog2003/tripdiary/ViewTripActivity$2.class
 android/support/v4/view/animation/LookupTableInterpolator.class
 com/github/mikephil/charting/data/LineDataSet.class
 com/yupog2003/tripdiary/MultiFileChooseActivity$FileAdapter.class
@@ -189,6 +190,7 @@ com/google/android/gms/ads/internal/request/zzd.class
 com/yupog2003/tripdiary/ViewPointActivity$2.class
 org/apache/http/impl/conn/DefaultClientConnectionOperator.class
 com/google/android/gms/internal/zzdv.class
+com/yupog2003/tripdiary/ViewPointActivity$3.class
 com/github/mikephil/charting/components/MarkerView.class
 android/support/design/widget/TabLayout$SlidingTabStrip.class
 org/apache/http/impl/cookie/PublicSuffixFilter.class
@@ -214,6 +216,7 @@ com/google/android/gms/internal/zzbk.class
 android/support/v7/widget/RecyclerView$LayoutManager.class
 com/google/ads/mediation/EmptyNetworkExtras.class
 com/yupog2003/tripdiary/GetContentActivity.class
+android/support/design/widget/NavigationView.class
 com/google/android/gms/internal/zzfn.class
 android/support/design/widget/CoordinatorLayout$SavedState.class
 com/yupog2003/tripdiary/services/SendTripService$MultipartUtility.class
@@ -256,6 +259,7 @@ android/support/design/widget/ViewOffsetBehavior.class
 android/support/v4/widget/SimpleCursorAdapter.class
 com/yupog2003/tripdiary/fragments/AllTextFragment.class
 com/google/android/gms/internal/zzfo.class
+android/support/design/internal/ScrimInsetsFrameLayout.class
 com/google/ads/mediation/AbstractAdViewAdapter.class
 org/apache/http/protocol/UriPatternMatcher.class
 com/yupog2003/tripdiary/GetContentActivity$Action.class
@@ -318,6 +322,7 @@ com/google/android/gms/internal/zzds.class
 org/apache/http/client/config/RequestConfig.class
 yuku/ambilwarna/AmbilWarnaDialog.class
 org/apache/http/conn/ClientConnectionManagerFactory.class
+com/yupog2003/tripdiary/PlayPointActivity$1.class
 org/apache/http/impl/io/SocketInputBuffer.class
 com/google/android/gms/ads/mediation/NetworkExtras.class
 com/google/android/gms/ads/internal/client/zzac.class
@@ -327,6 +332,7 @@ android/support/design/widget/TabLayout$TabGravity.class
 com/google/android/gms/internal/zzie.class
 com/google/android/gms/common/annotation/KeepName.class
 org/apache/http/conn/ssl/SSLSocketFactory.class
+com/yupog2003/tripdiary/TestFragment.class
 org/apache/http/protocol/ExecutionContext.class
 org/apache/http/impl/conn/ProxySelectorRoutePlanner.class
 com/google/android/gms/ads/internal/request/zze.class
@@ -349,7 +355,6 @@ org/apache/thrift/protocol/TCompactProtocol.class
 com/google/android/gms/ads/internal/zzm.class
 com/google/android/gms/maps/CameraUpdateFactory.class
 android/support/annotation/RequiresPermission.class
-com/yupog2003/tripdiary/RecordActivity$RecordAudioTask.class
 com/yupog2003/tripdiary/PaintActivity.class
 com/google/android/gms/ads/internal/client/zzx$zza.class
 com/google/android/gms/wearable/ChannelApi.class
@@ -372,6 +377,7 @@ org/apache/http/conn/scheme/LayeredSchemeSocketFactory.class
 android/support/multidex/MultiDex$V19.class
 android/support/v7/app/AppCompatActivity.class
 android/support/annotation/IntDef.class
+com/yupog2003/tripdiary/TestActivity.class
 org/apache/http/auth/AuthState.class
 org/apache/http/impl/conn/tsccm/AbstractConnPool.class
 org/apache/http/conn/ssl/SSLContextBuilder.class
@@ -554,6 +560,7 @@ android/support/v4/app/NotificationCompat$NotificationCompatImplHoneycomb.class
 org/apache/http/impl/conn/DefaultHttpRoutePlanner.class
 com/google/android/gms/internal/zzhc.class
 com/google/android/gms/internal/zzcg.class
+com/yupog2003/tripdiary/ViewTripActivity$LoadNavigationHeaderBackgroundTask.class
 com/google/android/gms/internal/zzdj.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 com/google/android/gms/ads/internal/reward/client/RewardedVideoAdRequestParcel.class
@@ -758,7 +765,6 @@ com/google/android/gms/internal/zzri.class
 android/support/v7/widget/StaggeredGridLayoutManager.class
 com/google/android/gms/internal/zzel.class
 com/yupog2003/tripdiary/fragments/AllPictureFragment.class
-com/yupog2003/tripdiary/PlayPointActivity$PrepareViewsTask.class
 com/yupog2003/tripdiary/GetContentActivity$Type.class
 org/apache/http/impl/auth/GGSSchemeBase.class
 android/support/v4/widget/CursorAdapter.class
@@ -901,7 +907,6 @@ android/support/annotation/StyleableRes.class
 com/google/ads/mediation/MediationServerParameters$MappingException.class
 com/yupog2003/tripdiary/MainActivity$4.class
 com/nostra13/universalimageloader/core/ImageLoader.class
-com/yupog2003/tripdiary/RecordActivity$4.class
 com/yupog2003/tripdiary/services/GenerateVideoService.class
 android/support/annotation/LayoutRes.class
 android/support/design/widget/AppBarLayout$LayoutParams.class
@@ -944,6 +949,7 @@ com/google/android/gms/appindexing/AppIndexApi$AppIndexingLink.class
 com/google/android/gms/internal/zzed.class
 com/google/android/gms/drive/query/Query.class
 android/support/design/widget/CoordinatorLayout$OnPreDrawListener.class
+android/support/design/widget/NavigationView$OnNavigationItemSelectedListener.class
 android/support/v4/app/NotificationCompatApi21$Builder.class
 android/support/annotation/IntRange.class
 com/google/android/gms/wallet/WalletConstants.class

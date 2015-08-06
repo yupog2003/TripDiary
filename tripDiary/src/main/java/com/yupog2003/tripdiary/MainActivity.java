@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -37,7 +35,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,12 +44,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     Button resumeTrip;
     Button viewHistory;
     Button allRecord;
-    public static int distance_unit;
-    //public static final int unit_km = 0;
-    public static final int unit_mile = 1;
-    public static int altitude_unit;
-    //public static final int unit_m = 0;
-    public static final int unit_ft = 1;
+
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
@@ -64,8 +56,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             setSupportActionBar(toolBar);
         }
         getSharedPreferences("category", MODE_PRIVATE).edit().putString(getString(R.string.nocategory), String.valueOf(Color.WHITE)).apply();
-        distance_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("distance_unit", "0"));
-        altitude_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("altitude_unit", "0"));
         startTrip = (Button) findViewById(R.id.starttrip);
         viewHistory = (Button) findViewById(R.id.viewhistory);
         resumeTrip = (Button) findViewById(R.id.resume_trip);
@@ -87,7 +77,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (isGpsEnabled()) {
+        if (DeviceHelper.isGpsEnabled(this)) {
             if (requestCode == 0)
                 startTripDialog();
             else if (requestCode == 1)
@@ -114,11 +104,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
         super.onResume();
         checkPlayService();
-    }
-
-    private boolean isGpsEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     boolean tripNameClicked;
@@ -216,14 +201,14 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         if (dir == null) {
             dir = TripDiaryApplication.rootDocumentFile.createDirectory(name);
         }
-        Trip trip = new Trip(MainActivity.this, dir, false);
+        Trip trip = new Trip(getApplicationContext(), dir, false);
         if (category != null) {
-            trip.setCategory(MainActivity.this, category);
+            trip.setCategory(category);
         }
         if (note != null) {
             trip.updateNote(note);
         }
-        if (isGpsEnabled()) {
+        if (DeviceHelper.isGpsEnabled(this)) {
             if (RecordService.instance == null) {
                 Intent i = new Intent(MainActivity.this, RecordService.class);
                 i.putExtra(RecordService.tag_tripName, name);
@@ -254,23 +239,10 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             files = new DocumentFile[0];
         ArrayList<Trip> trips = new ArrayList<>();
         for (DocumentFile file : files) {
-            Trip trip = new Trip(MainActivity.this, file, true);
+            Trip trip = new Trip(getApplicationContext(), file, true);
             trips.add(trip);
         }
-        Collections.sort(trips, new Comparator<Trip>() {
-
-            public int compare(Trip lhs, Trip rhs) {
-
-                if (lhs.time == null || rhs.time == null)
-                    return 0;
-                else if (lhs.time.after(rhs.time))
-                    return -1;
-                else if (rhs.time.after(lhs.time))
-                    return 1;
-                else
-                    return 0;
-            }
-        });
+        Collections.sort(trips, Collections.reverseOrder());
         final String[] strs = new String[trips.size()];
         for (int i = 0; i < strs.length; i++) {
             strs[i] = trips.get(i).tripName;
@@ -308,7 +280,10 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     public void onClick(View v) {
 
         if (v.equals(startTrip)) {
-            if (isGpsEnabled()) {
+            /*Intent intent=new Intent(this, TestActivity.class);
+            intent.putExtra("tag", String.valueOf(System.currentTimeMillis()));
+            startActivity(intent);*/
+            if (DeviceHelper.isGpsEnabled(this)) {
                 startTripDialog();
             } else {
                 Toast.makeText(getBaseContext(), getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
@@ -317,7 +292,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         } else if (v.equals(viewHistory)) {
             startActivity(new Intent(MainActivity.this, ViewActivity.class));
         } else if (v.equals(resumeTrip)) {
-            if (isGpsEnabled()) {
+            if (DeviceHelper.isGpsEnabled(this)) {
                 resumeTripDialog();
             } else {
                 Toast.makeText(getBaseContext(), getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
@@ -327,7 +302,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             Intent i = new Intent(MainActivity.this, AllRecordActivity.class);
             String[] tripNames = FileHelper.listFileNames(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
             i.putExtra(AllRecordActivity.tag_trip_names, tripNames);
-            MainActivity.this.startActivity(i);
+            startActivity(i);
         }
     }
 

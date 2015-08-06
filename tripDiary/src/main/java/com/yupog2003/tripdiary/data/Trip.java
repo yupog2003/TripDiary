@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.provider.DocumentFile;
-import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.TimeZone;
 
-public class Trip {
+public class Trip implements Comparable<Trip> {
+
     public Context context;
     public DocumentFile dir;
     public DocumentFile gpxFile;
@@ -41,11 +41,13 @@ public class Trip {
         this(context, dir, onlyBasic, null);
     }
 
-    public Trip(Context context, DocumentFile dir, boolean onlyBasic, ConstructListener listener) {
+    public Trip(Context context, DocumentFile dir, boolean onlyBasic, ConstructListener listener)  throws NullPointerException{
         this.dir = dir;
         this.context = context;
         this.listener = listener;
-        if (onlyBasic) {
+        if (context == null || dir == null) {
+            throw new NullPointerException();
+        } else if (onlyBasic) {
             refreshBasic();
         } else {
             refreshAllFields();
@@ -100,7 +102,7 @@ public class Trip {
         refreshPOIs();
     }
 
-    public void getCacheJava(Context context, Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
+    public void getCacheJava(Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
         analyzer = new GpxAnalyzerJava(this, context, handler);
         analyzer.setOnProgressChangedListener(listener);
         if (analyzer.analyze()) {
@@ -109,7 +111,7 @@ public class Trip {
         analyzer = null;
     }
 
-    public void getCacheJNI(Context context, Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
+    public void getCacheJNI(Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
         try {
             analyzer2 = new GpxAnalyzer2(this, context, handler);
             analyzer2.setOnProgressChangedListener(listener);
@@ -183,24 +185,11 @@ public class Trip {
             } else {
                 this.pois = new POI[0];
             }
-            Arrays.sort(pois, new Comparator<POI>() {
-
-                @Override
-                public int compare(POI lhs, POI rhs) {
-
-                    if (lhs == null || rhs == null || lhs.time == null || rhs.time == null)
-                        return 0;
-                    if (lhs.time.after(rhs.time))
-                        return 1;
-                    else if (rhs.time.after(lhs.time))
-                        return -1;
-                    return 0;
-                }
-            });
+            Arrays.sort(pois);
         }
     }
 
-    public void renameTrip(Context context, String name) {
+    public void renameTrip(String name) {
         SharedPreferences p = context.getSharedPreferences("trip", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = p.edit();
         editor.remove(tripName);
@@ -217,7 +206,7 @@ public class Trip {
         refreshAllFields();
     }
 
-    public void setCategory(Context context, String category) {
+    public void setCategory(String category) {
         this.category = category;
         SharedPreferences.Editor editor = context.getSharedPreferences("trip", Context.MODE_PRIVATE).edit();
         editor.putString(tripName, category);
@@ -226,6 +215,15 @@ public class Trip {
 
     public void deleteSelf() {
         dir.delete();
+    }
+
+    @Override
+    public int compareTo(@NonNull Trip another) {
+        if (this.time == null || another.time == null) {
+            return 0;
+        } else {
+            return time.compareTo(another.time);
+        }
     }
 
     public interface ConstructListener {

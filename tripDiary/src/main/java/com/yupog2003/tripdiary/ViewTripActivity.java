@@ -1,29 +1,44 @@
 package com.yupog2003.tripdiary;
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
+import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TrackCache;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.fragments.AllAudioFragment;
@@ -33,28 +48,36 @@ import com.yupog2003.tripdiary.fragments.AllVideoFragment;
 import com.yupog2003.tripdiary.fragments.ViewCostFragment;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
-public class ViewTripActivity extends MyActivity implements OnClickListener {
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
-    public static Trip trip;
-    public ViewMapFragment viewMapFragment;
-    public AllAudioFragment allAudioFragment;
-    public AllTextFragment allTextFragment;
-    public AllPictureFragment allPictureFragment;
-    public AllVideoFragment allVideoFragment;
-    public ViewCostFragment viewCostFragment;
-    Button diary;
-    Button photo;
-    Button video;
-    Button audio;
-    Button map;
-    Button money;
+public class ViewTripActivity extends MyActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+
+    public Trip trip;
+    ViewMapFragment viewMapFragment;
+    AllAudioFragment allAudioFragment;
+    AllTextFragment allTextFragment;
+    AllPictureFragment allPictureFragment;
+    AllVideoFragment allVideoFragment;
+    ViewCostFragment viewCostFragment;
+    TextView navigationTripName;
+    TextView navigationTripTime;
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    RelativeLayout navigationHeader;
     ActionBarDrawerToggle drawerToggle;
+    AppBarLayout appBarLayout;
+    FrameLayout fragmentLayout;
+    CoordinatorLayout coordinatorLayout;
     Mode mode = Mode.map_mode;
+    int appBarLayoutDefaultHeight;
+
     public static final int REQUEST_VIEW_POI = 1;
     public static final String tag_request_updatePOI = "request_update_poi";
     public static final String tag_update_poiNames = "update_poiNames";
-    public static final String tag_tripName="tag_tripname";
+    public static final String tag_tripName = "tag_tripname";
 
     enum Mode {
         map_mode, text_mode, photo_mode, video_mode, audio_mode, money_mode
@@ -64,9 +87,10 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_trip);
-        if (getIntent().getBooleanExtra("stoptrip", false)) {
-            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.cancel(0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
@@ -82,19 +106,16 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
-        map = (Button) findViewById(R.id.map);
-        map.setOnClickListener(this);
-        map.setSelected(true);
-        diary = (Button) findViewById(R.id.diary);
-        diary.setOnClickListener(this);
-        photo = (Button) findViewById(R.id.photo);
-        photo.setOnClickListener(this);
-        video = (Button) findViewById(R.id.video);
-        video.setOnClickListener(this);
-        audio = (Button) findViewById(R.id.audio);
-        audio.setOnClickListener(this);
-        money = (Button) findViewById(R.id.money);
-        money.setOnClickListener(this);
+        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationTripName = (TextView) findViewById(R.id.navigationTripName);
+        navigationTripTime = (TextView) findViewById(R.id.navigationTripTime);
+        navigationHeader = (RelativeLayout) findViewById(R.id.navigationHeader);
+        navigationHeader.setOnClickListener(this);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        fragmentLayout = (FrameLayout) findViewById(R.id.fragment);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         allAudioFragment = new AllAudioFragment();
         allVideoFragment = new AllVideoFragment();
         allPictureFragment = new AllPictureFragment();
@@ -113,8 +134,53 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         ft.add(R.id.fragment, allVideoFragment, AllVideoFragment.class.getSimpleName());
         ft.add(R.id.fragment, viewCostFragment, ViewCostFragment.class.getSimpleName());
         ft.commit();
+        appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    appBarLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    appBarLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+                appBarLayoutDefaultHeight = appBarLayout.getHeight();
+                setMode(Mode.map_mode);
+            }
+        });
         setMode(Mode.map_mode);
         new PrepareTripTask().execute(tripName);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.equals(navigationHeader)) {
+            new LoadNavigationHeaderBackgroundTask().execute();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        drawerLayout.closeDrawers();
+        switch (menuItem.getItemId()) {
+            case R.id.map:
+                setMode(Mode.map_mode);
+                break;
+            case R.id.diary:
+                setMode(Mode.text_mode);
+                break;
+            case R.id.photo:
+                setMode(Mode.photo_mode);
+                break;
+            case R.id.video:
+                setMode(Mode.video_mode);
+                break;
+            case R.id.audio:
+                setMode(Mode.audio_mode);
+                break;
+            case R.id.money:
+                setMode(Mode.money_mode);
+                break;
+        }
+        return false;
     }
 
     private void setMode(Mode mode) {
@@ -126,50 +192,51 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         ft.hide(allVideoFragment);
         ft.hide(viewCostFragment);
         ft.commit();
-        map.setSelected(false);
-        diary.setSelected(false);
-        photo.setSelected(false);
-        video.setSelected(false);
-        audio.setSelected(false);
-        money.setSelected(false);
         ft = getSupportFragmentManager().beginTransaction();
+        resetAppBar();
         this.mode = mode;
         switch (mode) {
             case map_mode:
                 if (trip != null)
                     setTitle(trip.tripName);
                 ft.show(viewMapFragment);
-                map.setSelected(true);
+                navigationView.getMenu().findItem(R.id.map).setChecked(true);
+                fragmentLayout.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
                 break;
             case text_mode:
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.diary));
                 ft.show(allTextFragment);
-                diary.setSelected(true);
+                navigationView.getMenu().findItem(R.id.diary).setChecked(true);
+                fragmentLayout.setPadding(0, 0, 0, 0);
                 break;
             case photo_mode:
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.photo));
                 ft.show(allPictureFragment);
-                photo.setSelected(true);
+                navigationView.getMenu().findItem(R.id.photo).setChecked(true);
+                fragmentLayout.setPadding(0, 0, 0, 0);
                 break;
             case video_mode:
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.video));
                 ft.show(allVideoFragment);
-                video.setSelected(true);
+                navigationView.getMenu().findItem(R.id.video).setChecked(true);
+                fragmentLayout.setPadding(0, 0, 0, 0);
                 break;
             case audio_mode:
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.sound));
                 ft.show(allAudioFragment);
-                audio.setSelected(true);
+                navigationView.getMenu().findItem(R.id.audio).setChecked(true);
+                fragmentLayout.setPadding(0, 0, 0, 0);
                 break;
             case money_mode:
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.cost));
                 ft.show(viewCostFragment);
-                money.setSelected(true);
+                navigationView.getMenu().findItem(R.id.money).setChecked(true);
+                fragmentLayout.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
                 break;
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -178,8 +245,9 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
     @Override
     public void onBackPressed() {
-
-        if (mode == Mode.map_mode) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawers();
+        } else if (mode == Mode.map_mode) {
             finish();
         } else {
             setMode(Mode.map_mode);
@@ -188,9 +256,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return drawerToggle.onOptionsItemSelected(item);
-
     }
 
     @Override
@@ -198,25 +264,12 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         super.onResume();
     }
 
-    public void onClick(View v) {
-        if (v.equals(map)) {
-            setMode(Mode.map_mode);
-            drawerLayout.closeDrawers();
-        } else if (v.equals(diary)) {
-            setMode(Mode.text_mode);
-            drawerLayout.closeDrawers();
-        } else if (v.equals(photo)) {
-            setMode(Mode.photo_mode);
-            drawerLayout.closeDrawers();
-        } else if (v.equals(video)) {
-            setMode(Mode.video_mode);
-            drawerLayout.closeDrawers();
-        } else if (v.equals(audio)) {
-            setMode(Mode.audio_mode);
-            drawerLayout.closeDrawers();
-        } else if (v.equals(money)) {
-            setMode(Mode.money_mode);
-            drawerLayout.closeDrawers();
+    private void resetAppBar() {
+        if (appBarLayout == null || coordinatorLayout == null) return;
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
         }
     }
 
@@ -253,12 +306,13 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
             if (tripName == null) {
                 return false;
             }
-            trip = new Trip(ViewTripActivity.this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName), false, this);
+            trip = new Trip(getApplicationContext(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName), false, this);
             if (libraryLoadSuccess) {
-                trip.getCacheJNI(getActivity(), handler, this);
+                trip.getCacheJNI(handler, this);
             } else {
-                trip.getCacheJava(getActivity(), handler, this);
+                trip.getCacheJava(handler, this);
             }
+            ((TripDiaryApplication)getApplication()).setTrip(trip);
             try {
                 if (trip.cache != null) {
                     TrackCache cache = trip.cache;
@@ -277,7 +331,6 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
                 e.printStackTrace();
             }
             return false;
-
         }
 
         @Override
@@ -296,6 +349,9 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
                 allVideoFragment.refresh();
                 allAudioFragment.refresh();
                 viewCostFragment.refreshData(false);
+                navigationTripName.setText(trip.tripName);
+                navigationTripTime.setText(trip.time.formatInTimezone(trip.timezone));
+                new LoadNavigationHeaderBackgroundTask().execute();
             } else {
                 Toast.makeText(getActivity(), getString(R.string.invalid_gpx_file), Toast.LENGTH_SHORT).show();
                 trip.deleteCache();
@@ -316,9 +372,62 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
         }
     }
 
+    class LoadNavigationHeaderBackgroundTask extends AsyncTask<String, String, Bitmap> {
+
+        ProgressBar progressBar;
+
+        @Override
+        protected void onPreExecute() {
+            progressBar = (ProgressBar) findViewById(R.id.loadbackgroudprocess);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            if (trip == null || trip.pois == null) return null;
+            ArrayList<DocumentFile> pics = new ArrayList<>();
+            for (POI poi : trip.pois) {
+                pics.addAll(Arrays.asList(poi.picFiles));
+            }
+            if (pics.size() > 0) {
+                try {
+                    int targetWidth = DeviceHelper.getScreenWidth(getActivity());
+                    int targetHeight = (int) DeviceHelper.pxFromDp(getActivity(), 172);
+                    DocumentFile pic = pics.get(new Random().nextInt(pics.size()));
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = true;
+                    BitmapFactory.decodeStream(getContentResolver().openInputStream(pic.getUri()), new Rect(0, 0, 0, 0), options);
+                    float ratio = Math.min(options.outWidth / targetWidth, options.outHeight / targetHeight);
+                    if (ratio < 1) ratio = 1;
+                    options.inJustDecodeBounds = false;
+                    options.inSampleSize = (int) ratio;
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
+                    return BitmapFactory.decodeStream(getContentResolver().openInputStream(pic.getUri()), new Rect(0, 0, 0, 0), options);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            progressBar.setVisibility(View.GONE);
+            if (bitmap != null) {
+                ImageView imageView = (ImageView) findViewById(R.id.navigationHeaderBackground);
+                imageView.setImageBitmap(bitmap);
+            }
+        }
+
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
@@ -343,6 +452,7 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
                 }
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -395,8 +505,11 @@ public class ViewTripActivity extends MyActivity implements OnClickListener {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         trip = null;
+        ((TripDiaryApplication)getApplication()).setTrip(null);
+        ImageView imageView = (ImageView) findViewById(R.id.navigationHeaderBackground);
+        imageView.setImageBitmap(null);
         System.gc();
+        super.onDestroy();
     }
 }

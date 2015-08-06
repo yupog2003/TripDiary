@@ -1,102 +1,45 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ViewTripActivity" >
+    android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/toolbar"/>
-
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawerlayout"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar" >
+        android:orientation="vertical"
+        android:id="@+id/coordinatorLayout">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/appbar">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways" />
+        </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </FrameLayout>
-
-        <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="#DDFFFFFF"
-            android:orientation="vertical" >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <Button
-                android:id="@+id/map"
-                android:layout_width="wrap_content"
-                android:layout_height="0dip"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_view_selector"
-                android:drawableLeft="@drawable/ic_map"
-                android:drawableStart="@drawable/ic_map"
-                android:text="@string/map" />
+    </android.support.design.widget.CoordinatorLayout>
 
-            <Button
-                android:id="@+id/diary"
-                android:layout_width="wrap_content"
-                android:layout_height="0dip"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_view_selector"
-                android:drawableLeft="@drawable/ic_taketext"
-                android:drawableStart="@drawable/ic_taketext"
-                android:text="@string/diary" />
 
-            <Button
-                android:id="@+id/photo"
-                android:layout_width="wrap_content"
-                android:layout_height="0dip"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_view_selector"
-                android:drawableLeft="@drawable/ic_picture"
-                android:drawableStart="@drawable/ic_picture"
-                android:text="@string/photo" />
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header_activity_view_trip"
+        app:menu="@menu/navigation_view_trip" />
 
-            <Button
-                android:id="@+id/video"
-                 android:layout_width="wrap_content"
-                android:layout_height="0dip"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_view_selector"
-                android:drawableLeft="@drawable/ic_takevideo"
-                android:drawableStart="@drawable/ic_takevideo"
-                android:text="@string/video" />
 
-            <Button
-                android:id="@+id/audio"
-                 android:layout_width="wrap_content"
-                android:layout_height="0dip"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_view_selector"
-                android:drawableLeft="@drawable/ic_takeaudio"
-                android:drawableStart="@drawable/ic_takeaudio"
-                android:text="@string/sound" />
-
-            <Button
-                android:id="@+id/money"
-                android:layout_width="wrap_content"
-                android:layout_height="0dip"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_view_selector"
-                android:drawableLeft="@drawable/ic_money"
-                android:drawableStart="@drawable/ic_money"
-                android:text="@string/cost" />
-        </LinearLayout>
-    </android.support.v4.widget.DrawerLayout>
-
-</RelativeLayout><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/activity_view_trip.xml -->
+</android.support.v4.widget.DrawerLayout><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/activity_view_trip.xml -->

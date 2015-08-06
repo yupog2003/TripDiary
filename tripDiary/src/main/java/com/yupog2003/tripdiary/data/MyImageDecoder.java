@@ -56,7 +56,7 @@ public class MyImageDecoder implements ImageDecoder {
             Bitmap scaledThumb = scaleBitmap(thumbnail, width, height);
             thumbnail.recycle();
             return scaledThumb;
-        } catch (NullPointerException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
         }
         return null;

@@ -25,7 +25,6 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewCostActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
-import com.yupog2003.tripdiary.data.ComparatorHelper;
 import com.yupog2003.tripdiary.data.CostData;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
@@ -86,7 +85,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
     public void refresh() {
         if (option == ViewCostActivity.optionTrip) {
-            Trip trip = ViewTripActivity.trip;
+            Trip trip = ((TripDiaryApplication)getActivity().getApplication()).getTrip();
             ArrayList<DocumentFile> costList = new ArrayList<>();
             for (POI poi : trip.pois) {
                 costList.addAll(Arrays.asList(poi.costFiles));
@@ -171,7 +170,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
         public void sort(int sorttype) {
             sortState[sorttype] = !sortState[sorttype];
-            Collections.sort(costDatas, ComparatorHelper.getCostDataComparator(sorttype, sortState[sorttype]));
+            Collections.sort(costDatas, CostData.getCostDataComparator(sorttype, sortState[sorttype]));
             this.notifyDataSetChanged();
             costsList.setAdapter(this);
         }
@@ -234,13 +233,13 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if (v.equals(poiColumn)) {
-            adapter.sort(ComparatorHelper.sort_by_cost_POI);
+            adapter.sort(CostData.sort_by_cost_POI);
         } else if (v.equals(typeColumn)) {
-            adapter.sort(ComparatorHelper.sort_by_cost_type);
+            adapter.sort(CostData.sort_by_cost_type);
         } else if (v.equals(nameColumn)) {
-            adapter.sort(ComparatorHelper.sort_by_cost_name);
+            adapter.sort(CostData.sort_by_cost_name);
         } else if (v.equals(dollarColumn)) {
-            adapter.sort(ComparatorHelper.sort_by_cost_dollar);
+            adapter.sort(CostData.sort_by_cost_dollar);
         }
     }
 

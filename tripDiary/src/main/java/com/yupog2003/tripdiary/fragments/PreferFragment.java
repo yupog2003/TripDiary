@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.yupog2003.tripdiary.CategoryActivity;
-import com.yupog2003.tripdiary.MainActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -42,7 +41,6 @@ import com.yupog2003.tripdiary.preferences.SeekBarPreference;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -327,11 +325,11 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         }
         if (preference.equals(distanceUnit)) {
             distanceUnit.setValue(String.valueOf(newValue));
-            MainActivity.distance_unit = Integer.valueOf(String.valueOf(newValue));
+            TripDiaryApplication.distance_unit = Integer.valueOf(String.valueOf(newValue));
         }
         if (preference.equals(altitudeUnit)) {
             altitudeUnit.setValue(String.valueOf(newValue));
-            MainActivity.altitude_unit = Integer.valueOf(String.valueOf(newValue));
+            TripDiaryApplication.altitude_unit = Integer.valueOf(String.valueOf(newValue));
         }
         return false;
     }
@@ -402,16 +400,15 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                                 lng = Double.parseDouble(toks[3]);
                             }
                             MyCalendar.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
-                            FileHelper.findfile(trips[i], tripName + ".gpx.cache").delete();
+                            DocumentFile cache = FileHelper.findfile(trips[i], tripName + ".gpx.cache");
+                            if (cache != null) {
+                                cache.delete();
+                            }
                             break;
                         }
                     }
                     br.close();
-                } catch (FileNotFoundException e) {
-
-                    e.printStackTrace();
                 } catch (IOException e) {
-
                     e.printStackTrace();
                 }
             }

@@ -92,6 +92,10 @@
     <init>();
 }
 
+-keep class com.yupog2003.tripdiary.TestActivity {
+    <init>();
+}
+
 -keep class com.google.android.gms.ads.AdActivity {
     <init>();
 }

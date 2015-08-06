@@ -48,9 +48,9 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
         this.diary = (TextView) rootView.findViewById(R.id.poiDiary);
         this.img = (ImageView) rootView.findViewById(R.id.poiImage);
         this.poiBitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
-        this.contentResolver=activity.getContentResolver();
-        this.imageWidth=(int) DeviceHelper.pxFromDp(activity, 72);
-        this.rect=new Rect(0,0,0,0);
+        this.contentResolver = activity.getContentResolver();
+        this.imageWidth = (int) DeviceHelper.pxFromDp(activity, 72);
+        this.rect = new Rect(0, 0, 0, 0);
     }
 
     @Override
@@ -100,10 +100,10 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                 op.inPreferQualityOverSpeed = false;
                 op.inSampleSize = (int) Math.max((float) op.outWidth / imageWidth, (float) op.outHeight / imageWidth);
                 Bitmap bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri), rect, op);
-                if (bitmap!=null){
+                if (bitmap != null) {
                     img.setImageBitmap(bitmap);
                     bitmaps.put(uri.toString(), bitmap);
-                }else{
+                } else {
                     img.setImageBitmap(poiBitmap);
                 }
             } else {
@@ -118,10 +118,19 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
-
         return null;
     }
-    public void setPOIs(POI[] pois){
-        this.pois=pois;
+
+    public void setPOIs(POI[] pois) {
+        this.pois = pois;
+    }
+
+    public void destroy(){
+        setPOIs(null);
+        poiBitmap.recycle();
+        for (String key : bitmaps.keySet()){
+            bitmaps.get(key).recycle();
+        }
+        bitmaps.clear();
     }
 }

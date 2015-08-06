@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
@@ -25,6 +26,7 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
+import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 public class AudioFragment extends Fragment {
     ListView layout;
     AudioAdapter adapter;
+    POI poi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +49,6 @@ public class AudioFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -56,13 +58,19 @@ public class AudioFragment extends Fragment {
     public void setAudio() {
         if (getView() == null)
             return;
-        layout = (ListView) getView().findViewById(R.id.audiolistview);
-        ViewPointActivity.poi.updateAllFields();
-        adapter = new AudioAdapter();
-        layout.setAdapter(adapter);
-        layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-        layout.setOnItemClickListener(adapter);
+        if (getActivity()!=null && getActivity() instanceof ViewPointActivity){
+            poi=((ViewPointActivity)getActivity()).poi;
+            layout = (ListView) getView().findViewById(R.id.audiolistview);
+            poi.updateAllFields();
+            adapter = new AudioAdapter();
+            layout.setAdapter(adapter);
+            layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+            layout.setOnItemClickListener(adapter);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                layout.setNestedScrollingEnabled(true);
+            }
+        }
     }
 
     class MyMultiChoiceModeListener implements ListView.MultiChoiceModeListener {
@@ -142,7 +150,7 @@ public class AudioFragment extends Fragment {
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final DocumentFile tripFile = ViewPointActivity.poi.dir.getParentFile();
+                final DocumentFile tripFile = poi.dir.getParentFile();
                 final String[] pois = FileHelper.listFileNames(tripFile, FileHelper.list_dirs);
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);
@@ -224,7 +232,7 @@ public class AudioFragment extends Fragment {
         boolean onMultiChoiceMode;
 
         public AudioAdapter() {
-            audios = ViewPointActivity.poi.audioFiles;
+            audios = poi.audioFiles;
             onMultiChoiceMode = false;
         }
 

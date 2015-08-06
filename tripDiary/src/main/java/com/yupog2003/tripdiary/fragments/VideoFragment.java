@@ -5,8 +5,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
@@ -32,6 +32,7 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
+import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 import com.yupog2003.tripdiary.views.SquareImageView;
 
@@ -41,6 +42,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
     GridView layout;
     VideoAdapter adapter;
     int width;
+    POI poi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +57,6 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -63,44 +64,47 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
     }
 
     public void setVideo() {
-
         if (getView() == null)
             return;
-        layout = (GridView) getView().findViewById(R.id.videogrid);
-        ViewPointActivity.poi.updateAllFields();
-        adapter = new VideoAdapter();
-        layout.setAdapter(adapter);
-        layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-        layout.setOnItemClickListener(this);
-        int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-        int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-        if (screenWidth > screenHeight) {
-            width = screenWidth / 5;
-            layout.setNumColumns(5);
-        } else {
-            width = screenWidth / 3;
-            layout.setNumColumns(3);
+        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+            poi = ((ViewPointActivity) getActivity()).poi;
+            layout = (GridView) getView().findViewById(R.id.videogrid);
+            poi.updateAllFields();
+            adapter = new VideoAdapter();
+            layout.setAdapter(adapter);
+            layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+            layout.setOnItemClickListener(this);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                layout.setNestedScrollingEnabled(true);
+            }
+            int screenWidth = DeviceHelper.getScreenWidth(getActivity());
+            int screenHeight = DeviceHelper.getScreenHeight(getActivity());
+            if (screenWidth > screenHeight) {
+                width = screenWidth / 5;
+                layout.setNumColumns(5);
+            } else {
+                width = screenWidth / 3;
+                layout.setNumColumns(3);
+            }
         }
     }
 
     class VideoAdapter extends BaseAdapter {
         DocumentFile[] videos;
-        MediaMetadataRetriever mmr;
         DisplayImageOptions options;
         int dp2;
         boolean onMultiChoiceMode;
 
         public VideoAdapter() {
-            videos = ViewPointActivity.poi.videoFiles;
-            mmr = new MediaMetadataRetriever();
+            videos = poi.videoFiles;
             options = new DisplayImageOptions.Builder()
                     .displayer(new FadeInBitmapDisplayer(500))
                     .showImageOnFail(R.drawable.ic_play)
                     .cacheInMemory(true)
                     .cacheOnDisk(false)
                     .bitmapConfig(Bitmap.Config.RGB_565)
-                    .extraForDownloader(ViewPointActivity.poi.videoDir)
+                    .extraForDownloader(poi.videoDir)
                     .build();
             dp2 = (int) DeviceHelper.pxFromDp(getActivity(), 2);
             onMultiChoiceMode = false;
@@ -217,7 +221,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final DocumentFile tripFile = ViewPointActivity.poi.dir.getParentFile();
+                final DocumentFile tripFile = poi.dir.getParentFile();
                 final String[] pois = FileHelper.listFileNames(tripFile, FileHelper.list_dirs);
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);

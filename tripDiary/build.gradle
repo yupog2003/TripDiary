@@ -3,12 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
+
     defaultConfig {
         applicationId "com.yupog2003.tripdiary"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 170
-        versionName "1.2.6"
+        versionCode 173
+        versionName "1.2.7"
         multiDexEnabled true
 
         ndk {
@@ -16,14 +17,8 @@ android {
             stl "gnustl_static"
             ldLibs "log"
         }
+    }
 
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-    }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
@@ -35,9 +30,17 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles 'proguard-rules.txt'
+        }
+    }
     productFlavors {
     }
 }
+
 
 dependencies {
     compile project(':ambilWarna')

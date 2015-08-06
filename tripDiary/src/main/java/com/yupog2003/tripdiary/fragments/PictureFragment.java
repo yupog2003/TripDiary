@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.print.PrintHelper;
@@ -36,6 +37,7 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
+import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 
 import java.io.FileNotFoundException;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 public class PictureFragment extends Fragment implements OnItemClickListener {
     GridView layout;
     PictureAdapter adapter;
+    POI poi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,8 +54,14 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         layout.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
         layout.setOnItemClickListener(this);
+        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+            poi = ((ViewPointActivity) getActivity()).poi;
+        }
         adapter = new PictureAdapter();
         layout.setAdapter(adapter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setNestedScrollingEnabled(true);
+        }
         return layout;
     }
 
@@ -64,7 +73,8 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        DocumentFile[] picFiles = FileHelper.listFiles(ViewPointActivity.poi.picDir, FileHelper.list_pics);
+        if (poi == null) return;
+        DocumentFile[] picFiles = FileHelper.listFiles(poi.picDir, FileHelper.list_pics);
         if (picFiles != null && adapter != null && picFiles.length != adapter.getCount()) {
             adapter.reFresh();
         }
@@ -98,30 +108,28 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 layout.setNumColumns(3);
             }
             dp2 = (int) DeviceHelper.pxFromDp(getActivity(), 2);
-            files = ViewPointActivity.poi.picFiles;
+            files = poi.picFiles;
             if (files == null) {
                 files = new DocumentFile[0];
             }
             options = new DisplayImageOptions.Builder()
                     .displayer(new FadeInBitmapDisplayer(500))
-                    .cacheInMemory(true)
+                    .cacheInMemory(false)
                     .cacheOnDisk(false)
                     .imageScaleType(ImageScaleType.EXACTLY)
                     .bitmapConfig(Bitmap.Config.RGB_565)
-                    .extraForDownloader(ViewPointActivity.poi.picDir)
+                    .extraForDownloader(poi.picDir)
                     .build();
-
             bitmaps = new Bitmap[files.length];
             onMultiChoiceMode = false;
 
         }
 
         public void reFresh() {
-            ViewPointActivity.poi.updateAllFields();
-            files = ViewPointActivity.poi.picFiles;
+            poi.updateAllFields();
+            files = poi.picFiles;
             bitmaps = new Bitmap[files.length];
             notifyDataSetChanged();
-
         }
 
         public int getCount() {
@@ -273,7 +281,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final DocumentFile tripFile = ViewPointActivity.poi.dir.getParentFile();
+                final DocumentFile tripFile = poi.dir.getParentFile();
                 final String[] pois = FileHelper.listFileNames(tripFile, FileHelper.list_dirs);
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);

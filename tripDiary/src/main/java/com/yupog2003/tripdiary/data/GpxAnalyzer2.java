@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.provider.DocumentFile;
 
-import com.yupog2003.tripdiary.MainActivity;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava.ProgressChangedListener;
 
 import java.io.File;
@@ -75,7 +75,7 @@ public class GpxAnalyzer2 {
     public static final DecimalFormat doubleFormat = new DecimalFormat("#.###");
 
     public static String getDistanceString(float kmNumber, String unit) {
-        if (MainActivity.distance_unit == MainActivity.unit_mile) {
+        if (TripDiaryApplication.distance_unit == TripDiaryApplication.unit_mile) {
             kmNumber /= 1.6;
             if (unit.equals("km"))
                 unit = "mi";
@@ -86,7 +86,7 @@ public class GpxAnalyzer2 {
     }
 
     public static String getAltitudeString(float mNumber, String unit) {
-        if (MainActivity.altitude_unit == MainActivity.unit_ft) {
+        if (TripDiaryApplication.altitude_unit == TripDiaryApplication.unit_ft) {
             mNumber /= 0.3048;
             if (unit.equals("m"))
                 unit = "ft";

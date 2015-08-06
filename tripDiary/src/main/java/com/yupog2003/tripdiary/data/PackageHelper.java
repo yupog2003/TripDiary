@@ -15,7 +15,7 @@ public class PackageHelper {
 
     public static boolean isAppInstalled(final Context context, final String packageName) {
         PackageManager pm = context.getPackageManager();
-        boolean installed = false;
+        boolean installed;
         try {
             pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
             installed = true;

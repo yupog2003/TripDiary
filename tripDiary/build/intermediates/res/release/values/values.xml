@@ -508,6 +508,7 @@
     <eat-comment/>
     <string name="account">Account</string>
     <string name="accuracy">Accuracy</string>
+    <string name="action_settings">Settings</string>
     <string name="add">Add</string>
     <string name="add_background_music">Add background music</string>
     <string name="add_poi">Add POI</string>
@@ -525,6 +526,7 @@
     <string name="ask_for_replace_trip">There is a same trip.Do you want to replace it?</string>
     <string name="ask_import_gpx_file">Do you want to import .gpx file?(must contain time information)</string>
     <string name="audio_codec">Audio codec</string>
+    <string name="audio_recorder_is_not_available">Audio recorder is not available</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
@@ -655,6 +657,8 @@
     <string name="gpx">Gpx</string>
     <string name="gpx_doesnt_contain_time_information">The .gpx file doesn\'t contain time information</string>
     <string name="has_not_been_installed">has not been installed</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_world">Hello world!</string>
     <string name="imagebutton_description">imagebutton</string>
     <string name="import_a_audio">Import a audio</string>
     <string name="import_a_picture">Import a picture</string>
@@ -718,6 +722,7 @@
     <string name="num_Pics">Num of Pics</string>
     <string name="num_Trips">Num of Trips</string>
     <string name="num_Videos">Num of Videos</string>
+    <string name="open_with_browser">Open with browser</string>
     <string name="other">Other</string>
     <string name="others">Others</string>
     <string name="paint">Paint</string>
@@ -827,6 +832,7 @@
     <string name="title_activity_paint">Paint</string>
     <string name="title_activity_play_point">PlayPointActivity</string>
     <string name="title_activity_preference">Preference</string>
+    <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_view">Trips</string>
     <string name="title_activity_view_graph_acivity">ViewGraphAcivity</string>
     <string name="title_activity_view_point">ViewPointActivity</string>

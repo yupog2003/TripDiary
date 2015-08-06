@@ -34,13 +34,15 @@ import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
 
+import java.util.Arrays;
+
 public class AllPictureFragment extends Fragment {
     POI[] pois;
     RecyclerView recyclerView;
     POIAdapter poiAdapter;
     int width;
     int numColums;
-
+    String timezone;
 
     public AllPictureFragment() {
 
@@ -57,7 +59,7 @@ public class AllPictureFragment extends Fragment {
             width = screenWidth / 3;
             numColums = 3;
         }
-        recyclerView = new RecyclerView(getActivity());
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -71,9 +73,12 @@ public class AllPictureFragment extends Fragment {
     }
 
     public void refresh() {
-        this.pois = ViewTripActivity.trip.pois;
-        poiAdapter = new POIAdapter(pois);
-        recyclerView.setAdapter(poiAdapter);
+        if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
+            this.pois = ((ViewTripActivity) getActivity()).trip.pois;
+            this.timezone = ((ViewTripActivity) getActivity()).trip.timezone;
+            poiAdapter = new POIAdapter();
+            recyclerView.setAdapter(poiAdapter);
+        }
     }
 
     @Override
@@ -97,7 +102,7 @@ public class AllPictureFragment extends Fragment {
             if (pictures.length > 0)
                 options = new DisplayImageOptions.Builder()
                         .displayer(new FadeInBitmapDisplayer(500))
-                        .cacheInMemory(true)
+                        .cacheInMemory(false)
                         .cacheOnDisk(false)
                         .bitmapConfig(Bitmap.Config.RGB_565)
                         .imageScaleType(ImageScaleType.EXACTLY)
@@ -120,6 +125,17 @@ public class AllPictureFragment extends Fragment {
         public long getItemId(int position) {
 
             return position;
+        }
+
+        public void destroy() {
+            if (bitmaps != null) {
+                for (Bitmap bitmap : bitmaps) {
+                    if (bitmap != null) {
+                        bitmap.recycle();
+                    }
+                }
+                Arrays.fill(bitmaps, null);
+            }
         }
 
         public View getView(final int position, View convertView, ViewGroup parent) {
@@ -153,12 +169,11 @@ public class AllPictureFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(pictures[position].getUri(), "image/*");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            getActivity().startActivity(intent);
+            startActivity(intent);
         }
     }
 
     class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
-        POI[] pois;
         PictureAdapter[] pictureAdapters;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -193,8 +208,7 @@ public class AllPictureFragment extends Fragment {
 
         }
 
-        public POIAdapter(POI[] pois) {
-            this.pois = pois;
+        public POIAdapter() {
             this.pictureAdapters = new PictureAdapter[pois.length];
             for (int i = 0; i < pictureAdapters.length; i++) {
                 pictureAdapters[i] = new PictureAdapter(pois[i].picFiles);
@@ -211,7 +225,7 @@ public class AllPictureFragment extends Fragment {
         @Override
         public void onBindViewHolder(POIAdapter.ViewHolder holder, int position) {
             holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].picFiles.length) + ")");
-            holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
+            holder.poiTime.setText(pois[position].time.formatInTimezone(timezone));
             holder.gridView.setVisibility(pictureAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
             holder.gridView.setAdapter(pictureAdapters[position]);
             holder.gridView.setOnItemClickListener(pictureAdapters[position]);
@@ -223,6 +237,22 @@ public class AllPictureFragment extends Fragment {
             return pois.length;
         }
 
+        public void destroy() {
+            if (pictureAdapters != null) {
+                for (PictureAdapter adapter : pictureAdapters) {
+                    if (adapter != null) {
+                        adapter.destroy();
+                    }
+                }
+            }
+        }
+    }
 
+    @Override
+    public void onDestroy() {
+        if (poiAdapter != null) {
+            poiAdapter.destroy();
+        }
+        super.onDestroy();
     }
 }

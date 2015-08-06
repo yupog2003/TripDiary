@@ -11,11 +11,12 @@ import android.view.MenuItem;
 import com.yupog2003.tripdiary.fragments.ViewCostFragment;
 
 public class ViewCostActivity extends MyActivity {
+
     ViewCostFragment viewCostFragment;
     public static final String tag_trip = "tag_trip";
     public static final String tag_poi = "tag_poi";
     public static final String tag_option = "tag_option";
-    public static final String tag_totals = "tag_totoals";
+    public static final String tag_totals = "tag_totals";
     public static final int optionPOI = 0;
     public static final int optionTrip = 1;
 

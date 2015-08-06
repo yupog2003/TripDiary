@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v4.provider.DocumentFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -43,8 +42,6 @@ public class MyBackupAgent extends BackupAgentHelper {
             SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
             output.writeObject(pref.getAll());
             res = true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -87,11 +84,7 @@ public class MyBackupAgent extends BackupAgentHelper {
             }
             prefEdit.commit();
             res = true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

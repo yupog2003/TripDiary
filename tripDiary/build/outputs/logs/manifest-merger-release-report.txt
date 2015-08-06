@@ -79,28 +79,12 @@ ADDED from AndroidManifest.xml:19:5
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:21:5
 	android:name
 		ADDED from AndroidManifest.xml:19:22
-uses-feature#0x00020000
-ADDED from AndroidManifest.xml:21:5
-MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
-MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
-MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
-MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
-	android:glEsVersion
-		ADDED from AndroidManifest.xml:22:9
-	android:required
-		ADDED from AndroidManifest.xml:23:9
-uses-feature#android.hardware.camera
-ADDED from AndroidManifest.xml:24:5
-	android:required
-		ADDED from AndroidManifest.xml:26:9
-	android:name
-		ADDED from AndroidManifest.xml:25:9
 uses-permission#android.permission.VIBRATE
-ADDED from AndroidManifest.xml:28:5
+ADDED from AndroidManifest.xml:20:5
 	android:name
-		ADDED from AndroidManifest.xml:28:22
+		ADDED from AndroidManifest.xml:20:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from AndroidManifest.xml:29:5
+ADDED from AndroidManifest.xml:21:5
 MERGED from com.google.android.gms:play-services-ads:7.5.0:21:5
 MERGED from com.google.android.gms:play-services-analytics:7.5.0:22:5
 MERGED from com.google.android.gms:play-services-analytics:7.5.0:22:5
@@ -110,9 +94,25 @@ MERGED from com.google.android.gms:play-services-maps:7.5.0:20:5
 MERGED from com.google.android.gms:play-services-nearby:7.5.0:19:5
 MERGED from com.google.android.gms:play-services-maps:7.5.0:20:5
 	android:name
-		ADDED from AndroidManifest.xml:29:22
+		ADDED from AndroidManifest.xml:21:22
+uses-feature#0x00020000
+ADDED from AndroidManifest.xml:23:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
+	android:glEsVersion
+		ADDED from AndroidManifest.xml:24:9
+	android:required
+		ADDED from AndroidManifest.xml:25:9
+uses-feature#android.hardware.camera
+ADDED from AndroidManifest.xml:26:5
+	android:required
+		ADDED from AndroidManifest.xml:28:9
+	android:name
+		ADDED from AndroidManifest.xml:27:9
 application
-ADDED from AndroidManifest.xml:31:5
+ADDED from AndroidManifest.xml:30:5
 MERGED from TripDiary:ambilWarna:unspecified:11:5
 MERGED from com.google.android.gms:play-services:7.5.0:19:5
 MERGED from com.google.android.gms:play-services-ads:7.5.0:24:5
@@ -180,17 +180,19 @@ MERGED from com.android.support:support-v4:22.2.1:22:5
 MERGED from com.android.support:cardview-v7:22.2.1:22:5
 MERGED from com.android.support:support-v4:22.2.1:22:5
 	android:backupAgent
-		ADDED from AndroidManifest.xml:34:9
+		ADDED from AndroidManifest.xml:33:9
 	android:label
 		ADDED from AndroidManifest.xml:36:9
+	android:hardwareAccelerated
+		ADDED from AndroidManifest.xml:34:9
 	android:allowBackup
-		ADDED from AndroidManifest.xml:33:9
+		ADDED from AndroidManifest.xml:32:9
 	android:icon
 		ADDED from AndroidManifest.xml:35:9
 	android:theme
 		ADDED from AndroidManifest.xml:37:9
 	android:name
-		ADDED from AndroidManifest.xml:32:9
+		ADDED from AndroidManifest.xml:31:9
 activity#com.yupog2003.tripdiary.MainActivity
 ADDED from AndroidManifest.xml:38:9
 	android:label
@@ -404,6 +406,12 @@ ADDED from AndroidManifest.xml:151:9
 		ADDED from AndroidManifest.xml:153:13
 	android:name
 		ADDED from AndroidManifest.xml:152:13
+activity#com.yupog2003.tripdiary.TestActivity
+ADDED from AndroidManifest.xml:154:9
+	android:label
+		ADDED from AndroidManifest.xml:156:13
+	android:name
+		ADDED from AndroidManifest.xml:155:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:multidex:1.0.1:18:5

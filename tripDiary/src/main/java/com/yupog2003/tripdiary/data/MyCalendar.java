@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MyCalendar extends GregorianCalendar {
+public class MyCalendar extends GregorianCalendar{
     public static final int type_gpx = 0;
     public static final int type_time_format3399 = 1;
     public static final int type_self = 2;

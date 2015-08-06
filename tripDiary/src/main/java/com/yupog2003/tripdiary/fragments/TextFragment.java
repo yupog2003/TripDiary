@@ -10,26 +10,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
+import com.yupog2003.tripdiary.data.POI;
 
 import java.io.File;
 
-public class TextFragment extends Fragment implements OnLongClickListener, OnClickListener {
+public class TextFragment extends Fragment implements OnClickListener {
     TextView text;
     EditText editText;
     Button enter;
     Button cancel;
     Button share;
+    LinearLayout buttomBar;
+    View shadow;
     FloatingActionButton edit;
+    POI poi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +48,12 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
         share.setOnClickListener(this);
         edit = (FloatingActionButton) view.findViewById(R.id.edit);
         edit.setOnClickListener(this);
+        buttomBar = (LinearLayout) view.findViewById(R.id.buttonbar);
+        shadow = view.findViewById(R.id.shadow);
         setEditMode(false);
+        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
+            poi = ((ViewPointActivity) getActivity()).poi;
+        }
         return view;
     }
 
@@ -68,25 +77,22 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
         if (isEdit) {
             text.setVisibility(View.GONE);
             editText.setVisibility(View.VISIBLE);
-            enter.setVisibility(View.VISIBLE);
-            cancel.setVisibility(View.VISIBLE);
-            share.setVisibility(View.VISIBLE);
+            buttomBar.setVisibility(View.VISIBLE);
+            shadow.setVisibility(View.VISIBLE);
             edit.setVisibility(View.GONE);
             imm.showSoftInput(editText, 0);
         } else {
             text.setVisibility(View.VISIBLE);
             editText.setVisibility(View.GONE);
-            enter.setVisibility(View.GONE);
-            cancel.setVisibility(View.GONE);
-            share.setVisibility(View.GONE);
+            buttomBar.setVisibility(View.GONE);
+            shadow.setVisibility(View.GONE);
             edit.setVisibility(View.VISIBLE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }
     }
 
     public void setText() {
-
-        if (!isAdded() || getView() == null || getActivity() == null)
+        if (!isAdded() || getView() == null || getActivity() == null || poi == null)
             return;
         text.setText("");
         editText.setText("");
@@ -99,18 +105,11 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
                 Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
             }
         }
-
-        text.setTextSize(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20));
-        editText.setTextSize(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20));
-        text.setText(ViewPointActivity.poi.diary);
-        editText.setText(ViewPointActivity.poi.diary);
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-
-
-        return true;
+        int textSize = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20);
+        text.setTextSize(textSize);
+        editText.setTextSize(textSize);
+        text.setText(poi.diary);
+        editText.setText(poi.diary);
     }
 
     public void shareDiary() {
@@ -123,18 +122,17 @@ public class TextFragment extends Fragment implements OnLongClickListener, OnCli
 
     @Override
     public void onClick(View v) {
-
         if (v.equals(enter)) {
-            ViewPointActivity.poi.updateDiary(editText.getText().toString());
-            text.setText(ViewPointActivity.poi.diary);
-            editText.setText(ViewPointActivity.poi.diary);
+            poi.updateDiary(editText.getText().toString());
+            text.setText(poi.diary);
+            editText.setText(poi.diary);
             if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                 ((ViewPointActivity) getActivity()).requestUpdatePOI();
             }
             setEditMode(false);
         } else if (v.equals(cancel)) {
-            text.setText(ViewPointActivity.poi.diary);
-            editText.setText(ViewPointActivity.poi.diary);
+            text.setText(poi.diary);
+            editText.setText(poi.diary);
             setEditMode(false);
         } else if (v.equals(share)) {
             shareDiary();

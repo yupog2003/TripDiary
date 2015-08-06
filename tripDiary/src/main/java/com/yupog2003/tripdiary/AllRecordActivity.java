@@ -120,7 +120,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             case R.id.statistics:
                 AlertDialog.Builder ab = new AlertDialog.Builder(this);
                 ab.setTitle(R.string.statistics);
-                View rootView = getLayoutInflater().inflate(R.layout.all_record_statistics, (ViewGroup)findViewById(android.R.id.content), false);
+                View rootView = getLayoutInflater().inflate(R.layout.all_record_statistics, (ViewGroup) findViewById(android.R.id.content), false);
                 TextView totalTime = (TextView) rootView.findViewById(R.id.totalTime);
                 totalTime.setText(MyCalendar.formatTotalTime(record.totalTime));
                 TextView totalDistance = (TextView) rootView.findViewById(R.id.distance);
@@ -185,8 +185,11 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             boolean success = true;
             DocumentFile[] tripFiles = TripDiaryApplication.rootDocumentFile.listFiles();
             for (int i = 0; i < tripNames.length; i++) {
+                if (trips == null) {
+                    return false;
+                }
                 DocumentFile tripFile = FileHelper.findfile(tripFiles, tripNames[i]);
-                trips[i] = new Trip(AllRecordActivity.this, tripFile, false);
+                trips[i] = new Trip(getApplicationContext(), tripFile, false);
                 publishProgress(i);
                 DocumentFile gpxFile = FileHelper.findfile(tripFile, tripNames[i] + ".gpx");
                 File tempFile = new File(getCacheDir(), tripNames[i] + ".gpx");
@@ -273,12 +276,11 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
         @Override
         protected void onPostExecute(Boolean result) {
-            progressBar.setVisibility(View.GONE);
             setTitle(getString(R.string.lifetime_record));
+            progressBar.setVisibility(View.GONE);
         }
 
         public void onCancel(DialogInterface dialog) {
-
             AllRecordActivity.this.stop();
         }
 
@@ -313,9 +315,9 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
     }
 
-    public static POI getPOI(String tripName, String poiName){
-        for (Trip trip: trips){
-            if (tripName.equals(trip.tripName)){
+    public static POI getPOI(String tripName, String poiName) {
+        for (Trip trip : trips) {
+            if (tripName.equals(trip.tripName)) {
                 return trip.getPOI(poiName);
             }
         }
@@ -419,6 +421,13 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         record.minLatitude = minLatitude;
         return true;
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        trips = null;
+        System.gc();
+        super.onDestroy();
     }
 
     public static boolean libraryLoadSuccess = false;

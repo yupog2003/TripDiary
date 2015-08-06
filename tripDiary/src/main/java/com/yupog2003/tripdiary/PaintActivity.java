@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
@@ -13,14 +14,18 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.provider.DocumentFile;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -30,9 +35,8 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
 
-import com.yupog2003.tripdiary.data.FileHelper;
-
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -51,10 +55,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
     boolean isBlur = false;
     int thicknessValue = 10;
     boolean clearMode;
-    public static final String tag_trip = "tag_trip";
-    public static final String tag_poi = "tag_poi";
-    public static final String tag_filename = "tag_filename";
-    DocumentFile outputFile;
+    Uri outputUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
         paintEraser.setOnClickListener(this);
         paintBackground.setOnClickListener(this);
         paintView = new MyPaintView(PaintActivity.this);
+        paintView.setDrawingCacheEnabled(true);
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
@@ -81,16 +83,13 @@ public class PaintActivity extends MyActivity implements OnClickListener {
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(thicknessValue);
+        paintView.setLayerType(View.LAYER_TYPE_SOFTWARE, paint);
         LinearLayout layout = (LinearLayout) findViewById(R.id.paintview);
         layout.addView(paintView);
         clearMode = false;
-        String tripName = getIntent().getStringExtra(tag_trip);
-        String poiName = getIntent().getStringExtra(tag_poi);
-        String fileName = getIntent().getStringExtra(tag_filename);
-        DocumentFile outDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures");
-        outputFile = FileHelper.findfile(outDir, fileName);
-        if (outputFile == null) {
-            outputFile = outDir.createFile("", fileName);
+        outputUri = getIntent().getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+        if (outputUri == null) {
+            outputUri = Uri.fromFile(new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), String.valueOf(System.currentTimeMillis()) + ".png"));
         }
     }
 
@@ -123,7 +122,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
             final int tempThicknessValue = thicknessValue;
             final boolean tempIsEmboss = isEmboss;
             final boolean tempIsBlur = isBlur;
-            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.paint_setting, null);
+            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.paint_setting, (ViewGroup) findViewById(android.R.id.content), false);
             SeekBar thicknessBar = (SeekBar) layout.findViewById(R.id.thickness);
             thicknessBar.setMax(50);
             thicknessBar.setProgress(tempThicknessValue);
@@ -221,15 +220,20 @@ public class PaintActivity extends MyActivity implements OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save) {
+            if (outputUri == null) PaintActivity.this.finish();
             try {
-                BufferedOutputStream bos = new BufferedOutputStream(getContentResolver().openOutputStream(outputFile.getUri()));
-                Bitmap bitmap = paintView.getBitmap();
+                BufferedOutputStream bos = new BufferedOutputStream(getContentResolver().openOutputStream(outputUri));
+                paintView.buildDrawingCache();
+                Bitmap bitmap = paintView.getDrawingCache();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
                 bos.flush();
                 bos.close();
                 bitmap.recycle();
                 System.gc();
-                setResult(Activity.RESULT_OK);
+                Intent intent = new Intent();
+                intent.setData(outputUri);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                setResult(Activity.RESULT_OK, intent);
                 PaintActivity.this.finish();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -254,14 +258,6 @@ public class PaintActivity extends MyActivity implements OnClickListener {
             super(context);
             path = new Path();
             bitmapPaint = new Paint(Paint.DITHER_FLAG);
-        }
-
-        public Bitmap getBitmap() {
-            return bitmap;
-        }
-
-        public Canvas getCanvas() {
-            return canvas;
         }
 
         @Override
@@ -319,7 +315,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
         }
 
         @Override
-        public boolean onTouchEvent(MotionEvent event) {
+        public boolean onTouchEvent(@NonNull MotionEvent event) {
             float x = event.getX();
             float y = event.getY();
             switch (event.getAction()) {

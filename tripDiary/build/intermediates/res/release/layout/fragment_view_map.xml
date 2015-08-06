@@ -1,8 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ViewMapActivity" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/maplayout"
@@ -165,18 +163,5 @@
             android:src="@drawable/ic_stop"
             android:visibility="gone" />
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/showbar"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:alpha="0.4"
-        android:scaleType="fitXY"
-        android:contentDescription="@string/imagebutton_description"
-        android:src="@drawable/ic_fullscreen" />
 
 </RelativeLayout><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/fragment_view_map.xml -->

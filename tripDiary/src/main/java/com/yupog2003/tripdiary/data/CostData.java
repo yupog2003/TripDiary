@@ -2,6 +2,8 @@ package com.yupog2003.tripdiary.data;
 
 import android.support.v4.provider.DocumentFile;
 
+import java.util.Comparator;
+
 public class CostData {
     public String POI;
     public int costType;
@@ -17,43 +19,29 @@ public class CostData {
         this.file = file;
     }
 
-    public String getPOI() {
-        return POI;
-    }
+    public static final int sort_by_cost_POI = 0;
+    public static final int sort_by_cost_name = 1;
+    public static final int sort_by_cost_type = 2;
+    public static final int sort_by_cost_dollar = 3;
 
-    public void setPOI(String POI) {
-        this.POI = POI;
-    }
+    public static Comparator<CostData> getCostDataComparator(final int sort_by, final boolean ascending) {
+        return new Comparator<CostData>() {
 
-    public int getCostType() {
-        return costType;
-    }
+            public int compare(CostData lhs, CostData rhs) {
 
-    public void setCostType(int costType) {
-        this.costType = costType;
-    }
-
-    public String getCostName() {
-        return costName;
-    }
-
-    public void setCostName(String costName) {
-        this.costName = costName;
-    }
-
-    public Float getCostDollar() {
-        return costDollar;
-    }
-
-    public void setCostDollar(Float costDollar) {
-        this.costDollar = costDollar;
-    }
-
-    public DocumentFile getFile() {
-        return file;
-    }
-
-    public void setFile(DocumentFile file) {
-        this.file = file;
+                switch (sort_by) {
+                    case sort_by_cost_POI:
+                        return (ascending ? lhs.POI.compareTo(rhs.POI) : rhs.POI.compareTo(lhs.POI));
+                    case sort_by_cost_name:
+                        return (ascending ? lhs.costName.compareTo(rhs.costName) : rhs.costName.compareTo(lhs.costName));
+                    case sort_by_cost_type:
+                        return (ascending ? lhs.costType - rhs.costType : rhs.costType - lhs.costType);
+                    case sort_by_cost_dollar:
+                        return (int) (ascending ? lhs.costDollar - rhs.costDollar : rhs.costDollar - lhs.costDollar);
+                    default:
+                        return 0;
+                }
+            }
+        };
     }
 }

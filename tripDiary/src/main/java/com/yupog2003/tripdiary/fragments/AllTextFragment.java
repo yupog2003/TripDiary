@@ -29,6 +29,7 @@ public class AllTextFragment extends Fragment {
     POI[] pois;
     RecyclerView recyclerView;
     POIAdapter poiAdapter;
+    String timezone;
 
     public AllTextFragment() {
 
@@ -36,7 +37,7 @@ public class AllTextFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        recyclerView = new RecyclerView(getActivity());
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         setHasOptionsMenu(true);
         return recyclerView;
@@ -49,15 +50,18 @@ public class AllTextFragment extends Fragment {
     }
 
     public void refresh() {
-        this.pois = ViewTripActivity.trip.pois;
-        poiAdapter = new POIAdapter(pois);
-        recyclerView.setAdapter(poiAdapter);
-        File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
-        if (fontFile.exists() && fontFile.isFile()) {
-            try {
-                poiAdapter.setTypeFace(Typeface.createFromFile(fontFile));
-            } catch (RuntimeException e) {
-                Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
+        if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
+            this.pois = ((ViewTripActivity)getActivity()).trip.pois;
+            this.timezone = ((ViewTripActivity)getActivity()).trip.timezone;
+            poiAdapter = new POIAdapter();
+            recyclerView.setAdapter(poiAdapter);
+            File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
+            if (fontFile.exists() && fontFile.isFile()) {
+                try {
+                    poiAdapter.setTypeFace(Typeface.createFromFile(fontFile));
+                } catch (RuntimeException e) {
+                    Toast.makeText(getActivity(), getString(R.string.invalid_font), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -73,7 +77,6 @@ public class AllTextFragment extends Fragment {
     }
 
     class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
-        POI[] pois;
         String[] diarys;
         Typeface typeFace;
 
@@ -111,8 +114,7 @@ public class AllTextFragment extends Fragment {
             }
         }
 
-        public POIAdapter(POI[] pois) {
-            this.pois = pois;
+        public POIAdapter() {
             diarys = new String[pois.length];
             for (int i = 0; i < diarys.length; i++) {
                 diarys[i] = pois[i].diary;
@@ -139,7 +141,7 @@ public class AllTextFragment extends Fragment {
         @Override
         public void onBindViewHolder(POIAdapter.ViewHolder holder, int position) {
             holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].diary.length()) + ")");
-            holder.poiTime.setText(pois[position].time.formatInTimezone(ViewTripActivity.trip.timezone));
+            holder.poiTime.setText(pois[position].time.formatInTimezone(timezone));
             holder.index = position;
             holder.text.setVisibility(diarys[position].length() == 0 ? View.GONE : View.VISIBLE);
             holder.text.setText(diarys[position]);
@@ -149,8 +151,6 @@ public class AllTextFragment extends Fragment {
         public int getItemCount() {
             return pois.length;
         }
-
-
     }
 
 }

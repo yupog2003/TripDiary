@@ -373,7 +373,13 @@ public class FileHelper {
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
-                            c.close();
+                            if (c != null) {
+                                try{
+                                    c.close();
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     } else {
                         for (int i = 0; i < size; i++) {
@@ -384,7 +390,6 @@ public class FileHelper {
                             }
                         }
                     }
-
                     break;
                 case list_withoutdots:
                     for (int i = 0; i < size; i++) {
@@ -434,6 +439,7 @@ public class FileHelper {
     }
 
     public static DocumentFile findfile(DocumentFile[] files, String... names) {
+        if (files == null || names == null) return null;
         for (int i = 0; i < names.length; i++) {
             int filesLength = files.length;
             for (int j = 0; j < filesLength; j++) {
@@ -511,11 +517,11 @@ public class FileHelper {
                             bos.close();
                         }
                     } else {
-                        DocumentFile temp=FileHelper.findfile(entryFile, dirs[i]);
+                        DocumentFile temp = FileHelper.findfile(entryFile, dirs[i]);
                         if (temp == null) {
                             temp = entryFile.createDirectory(dirs[i]);
                         }
-                        entryFile=temp;
+                        entryFile = temp;
                     }
 
                 }

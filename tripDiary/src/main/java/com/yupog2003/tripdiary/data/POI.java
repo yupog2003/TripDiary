@@ -2,6 +2,7 @@ package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.provider.DocumentFile;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-public class POI {
+public class POI implements Comparable<POI> {
 
     Context context;
     public DocumentFile parentTrip;
@@ -36,10 +37,14 @@ public class POI {
     public double altitude;
     public String diary;
 
-    public POI(Context context, DocumentFile dir) {
+    public POI(Context context, DocumentFile dir) throws NullPointerException{
         this.context = context;
         this.dir = dir;
-        updateAllFields();
+        if (context == null || dir == null) {
+            throw new NullPointerException();
+        } else {
+            updateAllFields();
+        }
     }
 
     public void updateAllFields() {
@@ -213,6 +218,15 @@ public class POI {
             if (listener != null) {
                 listener.onProgressUpdate(i);
             }
+        }
+    }
+
+    @Override
+    public int compareTo(@NonNull POI another) {
+        if (this.time == null || another.time == null) {
+            return 0;
+        } else {
+            return time.compareTo(another.time);
         }
     }
 
