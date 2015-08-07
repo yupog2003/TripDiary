@@ -76,7 +76,7 @@ public class FileHelper {
         try {
             InputStream is = TripDiaryApplication.instance.getContentResolver().openInputStream(infile.getUri());
             copyByStream(is, new FileOutputStream(outfile));
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -85,7 +85,7 @@ public class FileHelper {
         try {
             OutputStream os = TripDiaryApplication.instance.getContentResolver().openOutputStream(outfile.getUri());
             copyByStream(new FileInputStream(infile), os);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -95,7 +95,7 @@ public class FileHelper {
             InputStream is = TripDiaryApplication.instance.getContentResolver().openInputStream(infile.getUri());
             OutputStream os = TripDiaryApplication.instance.getContentResolver().openOutputStream(outfile.getUri());
             copyByStream(is, os);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -115,7 +115,7 @@ public class FileHelper {
             FileOutputStream fileOutputStream = new FileOutputStream(resultFile);
             copyByStream(inputStream, fileOutputStream);
             return resultFile;
-        } catch (FileNotFoundException | NullPointerException e) {
+        } catch (FileNotFoundException | NullPointerException | IllegalArgumentException e) {
             e.printStackTrace();
         }
         return null;
@@ -462,7 +462,7 @@ public class FileHelper {
             ZipOutputStream zos = new ZipOutputStream(TripDiaryApplication.instance.getContentResolver().openOutputStream(zip.getUri()));
             dozip(source, zos, source.getName());
             zos.close();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -487,14 +487,23 @@ public class FileHelper {
                 bis.close();
                 zos.closeEntry();
             }
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
 
     public static void unZip(File zip, final DocumentFile target) {
         try {
-            ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zip)));
+            unZip(new FileInputStream(zip), target);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void unZip(InputStream is, DocumentFile target){
+        try {
+            ZipInputStream zis = new ZipInputStream(is);
             ZipEntry entry;
             String strEntry;
             int count;
@@ -523,11 +532,10 @@ public class FileHelper {
                         }
                         entryFile = temp;
                     }
-
                 }
             }
             zis.close();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -617,7 +625,7 @@ public class FileHelper {
             bw.write("</kml>");
             bw.flush();
             bw.close();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
 
             e.printStackTrace();
         }
@@ -665,7 +673,7 @@ public class FileHelper {
             }
             is.close();
             return count == 0 && !empty ? 1 : count;
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
         return 0;
@@ -848,7 +856,7 @@ public class FileHelper {
                         continue;
                     try {
                         copyByStream(TripDiaryApplication.instance.getContentResolver().openInputStream(fromFiles[i].getUri()), TripDiaryApplication.instance.getContentResolver().openOutputStream(toFiles[i].getUri()));
-                    } catch (FileNotFoundException e) {
+                    } catch (FileNotFoundException | IllegalArgumentException e) {
                         e.printStackTrace();
                     }
                     fromFiles[i].delete();

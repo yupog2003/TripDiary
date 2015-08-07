@@ -35,6 +35,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.fragments.AudioFragment;
 import com.yupog2003.tripdiary.fragments.PictureFragment;
 import com.yupog2003.tripdiary.fragments.TextFragment;
@@ -78,14 +79,18 @@ public class ViewPointActivity extends MyActivity {
         String tripName = getIntent().getStringExtra(tag_tripname);
         String poiName = getIntent().getStringExtra(tag_poiname);
         String activity = getIntent().getStringExtra(tag_fromActivity);
-        appBarLayout=(AppBarLayout)findViewById(R.id.appbar);
-        coordinatorLayout=(CoordinatorLayout)findViewById(R.id.coordinatorLayout);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         pagerTab = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        poi = null;
         if (activity != null && activity.equals(ViewTripActivity.class.getSimpleName())) {
-            poi = ((TripDiaryApplication)getApplication()).getTrip().getPOI(poiName);
-            timezone = ((TripDiaryApplication)getApplication()).getTrip().timezone;
+            Trip trip = ((TripDiaryApplication) getApplication()).getTrip(tripName);
+            if (trip == null) {
+                finish();
+                return;
+            }
+            poi = trip.getPOI(poiName);
+            timezone = trip.timezone;
         } else if (activity != null && activity.equals(AllRecordActivity.class.getSimpleName())) {
             poi = AllRecordActivity.getPOI(tripName, poiName);
             timezone = MyCalendar.getTripTimeZone(this, tripName);
@@ -118,6 +123,7 @@ public class ViewPointActivity extends MyActivity {
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(adapter);
+        viewPager.setOffscreenPageLimit(2);
         pagerTab.setupWithViewPager(viewPager);
         adapter.onPageSelected(0);
     }
@@ -202,14 +208,18 @@ public class ViewPointActivity extends MyActivity {
         @Override
         public void onPageSelected(int position) {
             resetAppBar();
-            switch (position){
+            switch (position) {
                 case 0:
-                    viewPager.setPadding(0,0,0,appBarLayoutDefaultHeight);
+                    viewPager.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
                     break;
                 case 1:
+                    viewPager.setPadding(0, 0, 0, 0);
+                    break;
                 case 2:
+                    viewPager.setPadding(0, 0, 0, 0);
+                    break;
                 case 3:
-                    viewPager.setPadding(0,0,0,0);
+                    viewPager.setPadding(0, 0, 0, 0);
                     break;
             }
         }
@@ -357,6 +367,8 @@ public class ViewPointActivity extends MyActivity {
         bundle.putString(ViewTripActivity.tag_update_poiNames, poi.title);
         intent.putExtras(bundle);
         setResult(Activity.RESULT_OK, intent);
+        poi.updateAllFields();
+        updateFragments();
     }
 
     public void requestUpdatePOIs() {
@@ -366,6 +378,17 @@ public class ViewPointActivity extends MyActivity {
         bundle.putString(ViewTripActivity.tag_update_poiNames, null);
         intent.putExtras(bundle);
         setResult(Activity.RESULT_OK, intent);
+        poi.updateAllFields();
+        updateFragments();
+    }
+
+    private void updateFragments() {
+        if (adapter != null) {
+            adapter.textFragment.refresh();
+            adapter.pictureFragment.refresh();
+            adapter.videoFragment.refresh();
+            adapter.audioFragment.refresh();
+        }
     }
 
     @Override

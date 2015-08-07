@@ -196,7 +196,7 @@ public class MyCalendar extends GregorianCalendar{
                 }
             }
             br.close();
-        } catch (NullPointerException | IOException e) {
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
         return MyCalendar.getInstance();

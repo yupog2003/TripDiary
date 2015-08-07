@@ -2,7 +2,6 @@ package com.yupog2003.tripdiary.fragments;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -42,7 +41,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -182,13 +180,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         speed = (TextView) rootView.findViewById(R.id.speed);
         time = (TextView) rootView.findViewById(R.id.time);
         processSeekBar = (SeekBar) rootView.findViewById(R.id.playProcess);
-        stopTrip.setOnClickListener(this);
-        fastforward.setOnClickListener(this);
-        slowforward.setOnClickListener(this);
-        switchMapMode.setOnClickListener(this);
-        viewGraph.setOnClickListener(this);
-        streetView.setOnClickListener(this);
-        viewNote.setOnClickListener(this);
+        switchMapMode.setOnClickListener(ViewMapFragment.this);
+        streetView.setOnClickListener(ViewMapFragment.this);
         return rootView;
     }
 
@@ -207,13 +200,13 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
     }
 
-    public void refresh(final LatLng[] lats, final LatLngBounds bounds, final ProgressDialog pd) {
-        //pd.dismiss();
+    public void refresh(final Trip trip, final LatLng[] lats, final LatLngBounds bounds, final ProgressDialog pd) {
+        this.trip = trip;
+        viewNote.setOnClickListener(ViewMapFragment.this);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
 
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                trip = ((ViewTripActivity) getActivity()).trip;
                 gmap = googleMap;
                 gmap.setMyLocationEnabled(true);
                 gmap.getUiSettings().setZoomControlsEnabled(true);
@@ -230,6 +223,10 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 }
                 viewInformation.setOnClickListener(ViewMapFragment.this);
                 playTrip.setOnClickListener(ViewMapFragment.this);
+                stopTrip.setOnClickListener(ViewMapFragment.this);
+                fastforward.setOnClickListener(ViewMapFragment.this);
+                slowforward.setOnClickListener(ViewMapFragment.this);
+                viewGraph.setOnClickListener(ViewMapFragment.this);
                 setPOIs();
                 if (pd != null && pd.isShowing()) {
                     pd.dismiss();
@@ -304,12 +301,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             getActivity().finish();
-        } else if (item.getItemId() == R.id.clearcache) {
-            if (trip != null) {
-                trip.deleteCache();
-                Toast.makeText(getActivity(), getString(R.string.cache_has_been_cleared), Toast.LENGTH_SHORT).show();
-                DeviceHelper.sendGATrack(getActivity(), "Trip", "clear_cache", trip.tripName, null);
-            }
+        }
+        if (trip == null) return true;
+        if (item.getItemId() == R.id.clearcache) {
+            trip.deleteCache();
+            Toast.makeText(getActivity(), getString(R.string.cache_has_been_cleared), Toast.LENGTH_SHORT).show();
+            DeviceHelper.sendGATrack(getActivity(), "Trip", "clear_cache", trip.tripName, null);
         } else if (item.getItemId() == R.id.sharetrackby) {
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setTitle(getString(R.string.share_track_by___));
@@ -356,7 +353,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(outputFile));
                                         getActivity().startActivity(intent);
                                         DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_gpx", trip.tripName, null);
-                                    } catch (IOException e) {
+                                    } catch (IOException | IllegalArgumentException e) {
                                         e.printStackTrace();
                                     }
 
@@ -820,9 +817,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     }
 
-    @TargetApi(19)
     public void onClick(View v) {
-
         if (v == null)
             return;
         if (v.equals(viewInformation)) {
@@ -895,8 +890,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             }
         } else if (v.equals(viewGraph)) {
             Intent intent = new Intent(getActivity(), ViewGraphAcivity.class);
+            intent.putExtra(ViewGraphAcivity.tag_tripname, trip.tripName);
             startActivity(intent);
-            DeviceHelper.sendGATrack(getActivity(), "Trip", "view_graph", trip.tripName, null);
         } else if (v.equals(streetView)) {
             if (PackageHelper.isAppInstalled(getActivity(), PackageHelper.StreetViewPackageNmae)) {
                 final RelativeLayout mapLayout = (RelativeLayout) rootView.findViewById(R.id.maplayout);
@@ -928,7 +923,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     }
                 });
                 Toast.makeText(getActivity(), getString(R.string.explain_how_to_use_street_view), Toast.LENGTH_LONG).show();
-                DeviceHelper.sendGATrack(getActivity(), "Trip", "streetview", trip.tripName, null);
             } else {
                 PackageHelper.askForInstallApp(getActivity(), PackageHelper.StreetViewPackageNmae, getString(R.string.street_view));
             }
@@ -1371,7 +1365,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 writeEntry(tempKML.getName(), tempKML, zos);
                 zos.close();
                 FileHelper.deletedir(tempDir.getPath());
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
             return null;
@@ -1427,7 +1421,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         gmapBitmap = null;
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
         ab.setTitle(R.string.generate_video);
-        View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_generate_video, null);
+        View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_generate_video, rootView, false);
         ab.setView(layout);
         final EditText videoName = (EditText) layout.findViewById(R.id.videoName);
         videoName.setText(trip.tripName);
@@ -1578,17 +1572,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             markers.clear();
         }
         if (gmap != null) {
+            gmap.setMyLocationEnabled(false);
             gmap.clear();
-            gmap.setInfoWindowAdapter(null);
-            gmap.setOnInfoWindowClickListener(null);
-            gmap.setOnMapLongClickListener(null);
-            gmap.setOnMarkerDragListener(null);
-            gmap = null;
         }
-        if (poiInfoWindowAdapter != null) {
-            poiInfoWindowAdapter.destroy();
-        }
-        System.gc();
         super.onDestroy();
     }
 

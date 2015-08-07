@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewCostActivity;
-import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.CostData;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
@@ -85,7 +84,10 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
 
     public void refresh() {
         if (option == ViewCostActivity.optionTrip) {
-            Trip trip = ((TripDiaryApplication)getActivity().getApplication()).getTrip();
+            Trip trip = ((TripDiaryApplication) getActivity().getApplication()).getTrip(tripName);
+            if (trip == null) {
+                return;
+            }
             ArrayList<DocumentFile> costList = new ArrayList<>();
             for (POI poi : trip.pois) {
                 costList.addAll(Arrays.asList(poi.costFiles));
@@ -162,7 +164,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                     totals[costType] += costDollar;
                 }
                 data = new CostData(POI, costType, costName, costDollar, file);
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
             return data;
@@ -332,7 +334,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                                 bw.write("dollar=" + dollar);
                                 bw.flush();
                                 bw.close();
-                            } catch (IOException e) {
+                            } catch (IOException | IllegalArgumentException e) {
 
                                 e.printStackTrace();
                             }

@@ -92,7 +92,7 @@
     <init>();
 }
 
--keep class com.yupog2003.tripdiary.TestActivity {
+-keep class com.yupog2003.tripdiary.RestoreTripActivity {
     <init>();
 }
 

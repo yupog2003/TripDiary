@@ -42,34 +42,32 @@ public class AudioFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        setAudio();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
         }
     }
-
-    public void setAudio() {
-        if (getView() == null)
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+    public void refresh() {
+        if (getView()==null||getActivity()==null)
             return;
-        if (getActivity()!=null && getActivity() instanceof ViewPointActivity){
-            poi=((ViewPointActivity)getActivity()).poi;
-            layout = (ListView) getView().findViewById(R.id.audiolistview);
-            poi.updateAllFields();
-            adapter = new AudioAdapter();
-            layout.setAdapter(adapter);
-            layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-            layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-            layout.setOnItemClickListener(adapter);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                layout.setNestedScrollingEnabled(true);
-            }
+        this.poi =((ViewPointActivity)getActivity()).poi;
+        if (poi == null) {
+            return;
+        }
+        layout = (ListView) getView().findViewById(R.id.audiolistview);
+        adapter = new AudioAdapter();
+        layout.setAdapter(adapter);
+        layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+        layout.setOnItemClickListener(adapter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setNestedScrollingEnabled(true);
         }
     }
 
@@ -101,7 +99,6 @@ public class AudioFragment extends Fragment {
                         for (int i = 0; i < checksName.size(); i++) {
                             checksName.get(i).delete();
                         }
-                        setAudio();
                         if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                             ((ViewPointActivity) getActivity()).requestUpdatePOI();
                         }
@@ -124,7 +121,6 @@ public class AudioFragment extends Fragment {
 
                             String s = name.getText().toString();
                             checkFile.renameTo(s);
-                            setAudio();
                             if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                 ((ViewPointActivity) getActivity()).requestUpdatePOI();
                             }
@@ -175,7 +171,6 @@ public class AudioFragment extends Fragment {
                             @Override
                             public void onFinish() {
 
-                                setAudio();
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs();
                                 }

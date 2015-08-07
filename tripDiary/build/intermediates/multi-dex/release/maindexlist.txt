@@ -120,6 +120,7 @@ com/google/android/gms/internal/zzdr.class
 com/google/android/gms/ads/internal/purchase/zzb.class
 com/google/android/gms/analytics/GoogleAnalytics.class
 android/support/v4/widget/SlidingPaneLayout.class
+com/yupog2003/tripdiary/RestoreTripActivity$2.class
 android/support/design/widget/SnackbarManager.class
 com/yupog2003/tripdiary/ViewPointActivity.class
 com/google/android/gms/ads/internal/formats/NativeAdOptionsParcel.class
@@ -177,6 +178,7 @@ org/apache/http/protocol/HTTP.class
 android/support/design/widget/Snackbar$4.class
 com/google/android/gms/internal/zzfm.class
 com/google/android/gms/common/GooglePlayServicesUtil.class
+com/yupog2003/tripdiary/RestoreTripActivity.class
 android/support/v7/widget/LinearLayoutCompat$DividerMode.class
 com/google/android/gms/internal/zzid.class
 android/support/v4/app/FragmentManagerImpl$2.class
@@ -264,6 +266,7 @@ com/google/ads/mediation/AbstractAdViewAdapter.class
 org/apache/http/protocol/UriPatternMatcher.class
 com/yupog2003/tripdiary/GetContentActivity$Action.class
 android/support/v4/app/LoaderManagerImpl.class
+com/yupog2003/tripdiary/fragments/PictureFragment.class
 org/apache/http/auth/AuthScheme.class
 org/apache/http/client/params/HttpClientParamConfig.class
 com/yupog2003/tripdiary/data/Record.class
@@ -280,6 +283,7 @@ org/apache/http/conn/params/ConnRouteParamBean.class
 android/support/v7/widget/RecyclerView$SmoothScroller.class
 org/apache/http/conn/HttpRoutedConnection.class
 com/google/android/gms/internal/zzdd.class
+com/yupog2003/tripdiary/RestoreTripActivity$3.class
 android/support/v4/view/PagerAdapter.class
 android/support/v4/app/NotificationCompatApi21.class
 org/apache/http/conn/HttpInetSocketAddress.class
@@ -323,6 +327,7 @@ org/apache/http/client/config/RequestConfig.class
 yuku/ambilwarna/AmbilWarnaDialog.class
 org/apache/http/conn/ClientConnectionManagerFactory.class
 com/yupog2003/tripdiary/PlayPointActivity$1.class
+com/yupog2003/tripdiary/RestoreTripActivity$1.class
 org/apache/http/impl/io/SocketInputBuffer.class
 com/google/android/gms/ads/mediation/NetworkExtras.class
 com/google/android/gms/ads/internal/client/zzac.class
@@ -332,7 +337,6 @@ android/support/design/widget/TabLayout$TabGravity.class
 com/google/android/gms/internal/zzie.class
 com/google/android/gms/common/annotation/KeepName.class
 org/apache/http/conn/ssl/SSLSocketFactory.class
-com/yupog2003/tripdiary/TestFragment.class
 org/apache/http/protocol/ExecutionContext.class
 org/apache/http/impl/conn/ProxySelectorRoutePlanner.class
 com/google/android/gms/ads/internal/request/zze.class
@@ -377,7 +381,6 @@ org/apache/http/conn/scheme/LayeredSchemeSocketFactory.class
 android/support/multidex/MultiDex$V19.class
 android/support/v7/app/AppCompatActivity.class
 android/support/annotation/IntDef.class
-com/yupog2003/tripdiary/TestActivity.class
 org/apache/http/auth/AuthState.class
 org/apache/http/impl/conn/tsccm/AbstractConnPool.class
 org/apache/http/conn/ssl/SSLContextBuilder.class
@@ -544,6 +547,7 @@ com/google/android/gms/internal/zzer.class
 android/support/design/widget/Snackbar$2.class
 org/apache/http/impl/client/DefaultRequestDirector.class
 android/support/annotation/ColorInt.class
+com/yupog2003/tripdiary/fragments/VideoFragment.class
 org/apache/http/impl/pool/BasicConnFactory.class
 android/support/annotation/RawRes.class
 com/google/android/gms/internal/zzdt.class
@@ -565,6 +569,7 @@ com/google/android/gms/internal/zzdj.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 com/google/android/gms/ads/internal/reward/client/RewardedVideoAdRequestParcel.class
 com/google/android/gms/gcm/Task.class
+com/yupog2003/tripdiary/RestoreTripActivity$RestoreTripTask.class
 org/apache/thrift/TException.class
 android/support/v4/widget/MaterialProgressDrawable.class
 android/support/v7/app/ActionBarDrawerToggle$Delegate.class
@@ -787,6 +792,7 @@ android/support/v4/app/FragmentManagerState.class
 android/support/design/widget/CoordinatorLayout$DefaultBehavior.class
 com/yupog2003/tripdiary/R$string.class
 com/google/android/gms/ads/internal/client/SearchAdRequestParcel.class
+com/yupog2003/tripdiary/fragments/TextFragment.class
 android/support/design/widget/AppBarLayout.class
 com/yupog2003/tripdiary/services/RecordService.class
 com/google/android/gms/location/GeofencingApi.class
@@ -889,6 +895,7 @@ com/yupog2003/tripdiary/MainActivity$3.class
 org/apache/http/io/EofSensor.class
 com/google/android/gms/wallet/FullWallet.class
 android/support/v4/app/RemoteInputCompatBase$RemoteInput$Factory.class
+com/yupog2003/tripdiary/fragments/AudioFragment.class
 com/google/android/gms/location/places/PlaceFilter$zza.class
 org/apache/http/conn/ssl/StrictHostnameVerifier.class
 com/google/android/gms/internal/zzfv.class

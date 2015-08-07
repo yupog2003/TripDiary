@@ -239,8 +239,10 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             files = new DocumentFile[0];
         ArrayList<Trip> trips = new ArrayList<>();
         for (DocumentFile file : files) {
-            Trip trip = new Trip(getApplicationContext(), file, true);
-            trips.add(trip);
+            if (file!=null){
+                Trip trip = new Trip(getApplicationContext(), file, true);
+                trips.add(trip);
+            }
         }
         Collections.sort(trips, Collections.reverseOrder());
         final String[] strs = new String[trips.size()];
@@ -261,7 +263,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                         sb.append(s).append("\n");
                     }
                     br.close();
-                } catch (IOException e) {
+                } catch (IOException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
                 String noteStr = sb.toString();
@@ -278,11 +280,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     }
 
     public void onClick(View v) {
-
         if (v.equals(startTrip)) {
-            /*Intent intent=new Intent(this, TestActivity.class);
-            intent.putExtra("tag", String.valueOf(System.currentTimeMillis()));
-            startActivity(intent);*/
             if (DeviceHelper.isGpsEnabled(this)) {
                 startTripDialog();
             } else {

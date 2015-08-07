@@ -21,11 +21,11 @@ import android.util.Log;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
-import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
 import java.io.BufferedReader;
@@ -82,20 +82,24 @@ public class GenerateVideoService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         tripName = intent.getStringExtra(tag_tripName);
         timeZone = intent.getStringExtra(tag_timeZone);
-        tempDir = new File(getCacheDir(), cacheDirName);
-        tempDir.mkdirs();
-        ffmpegFile = new File(getFilesDir().getParent(), "ffmpeg");
-        if (!ffmpegFile.exists()) {
-            copyFFmpeg();
+        Trip trip = ((TripDiaryApplication) getApplication()).getTrip(tripName);
+        if (trip == null || ViewMapFragment.gmapBitmap == null || ViewMapFragment.trackPoints == null) {
+            return;
         }
-        pois = ((TripDiaryApplication)getApplication()).getTrip().pois.clone();
-        String noteStr = ((TripDiaryApplication)getApplication()).getTrip().note;
+        pois = trip.pois.clone();
+        String noteStr = trip.note;
         num_total_materials = getNum_total_materials(pois);
         num_processed_materials = 0;
         Bitmap gmapBitmap = ViewMapFragment.gmapBitmap.copy(Bitmap.Config.RGB_565, true);
         Point[] trackPoints = ViewMapFragment.trackPoints.clone();
         ViewMapFragment.gmapBitmap.recycle();
         ViewMapFragment.trackPoints = null;
+        tempDir = new File(getCacheDir(), cacheDirName);
+        tempDir.mkdirs();
+        ffmpegFile = new File(getFilesDir().getParent(), "ffmpeg");
+        if (!ffmpegFile.exists()) {
+            copyFFmpeg();
+        }
         String backgroundMusicPath = intent.getStringExtra(tag_background_music_path);
         fps = intent.getIntExtra(tag_fps, 25);
         fpsStr = "fps=" + String.valueOf(fps);
@@ -199,7 +203,7 @@ public class GenerateVideoService extends IntentService {
             }
             bufferedWriter.flush();
             bufferedWriter.close();
-            String addBackgroundMusicDescription=getString(R.string.add_background_music);
+            String addBackgroundMusicDescription = getString(R.string.add_background_music);
             String audioExt = backgroundMusicPath.substring(backgroundMusicPath.lastIndexOf(".") + 1);
             //extend music
             runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", "-c", "copy", "-strict", "-2", "atemp." + audioExt}, addBackgroundMusicDescription, null);

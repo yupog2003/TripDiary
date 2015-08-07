@@ -16,6 +16,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ValueFormatter;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -32,6 +33,7 @@ public class ViewGraphAcivity extends MyActivity {
     ArrayList<String> xVals;
     ArrayList<Float> distances;
     String tripName;
+    public static final String tag_tripname = "tag_tripname";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,10 @@ public class ViewGraphAcivity extends MyActivity {
         setContentView(R.layout.activity_view_graph_acivity);
         lineChart = (LineChart) findViewById(R.id.linechart);
         int trackLength = 0;
-        Trip trip=((TripDiaryApplication)getApplication()).getTrip();
+        tripName = getIntent().getStringExtra(tag_tripname);
+        Trip trip = ((TripDiaryApplication) getApplication()).getTrip(tripName);
         if (trip != null && trip.cache != null) {
+            DeviceHelper.sendGATrack(getActivity(), "Trip", "view_graph", trip.tripName, null);
             trackCache = trip.cache;
             tripName = trip.tripName;
             trackLength = trackCache.altitudes.length;

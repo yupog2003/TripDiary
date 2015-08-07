@@ -425,7 +425,6 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                     }
                     new MoveFilesTask(GetContentActivity.this, uriArray, toFiles).execute();
                 }
-
             }
         }
     }
@@ -510,7 +509,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         InputStream inputStream = getContentResolver().openInputStream(fromUris[i]);
                         OutputStream outputStream = getContentResolver().openOutputStream(toFiles[i].getUri());
                         FileHelper.copyByStream(inputStream, outputStream);
-                    } catch (FileNotFoundException | NullPointerException e) {
+                    } catch (FileNotFoundException | NullPointerException | IllegalArgumentException e) {
                         e.printStackTrace();
                     }
                 }

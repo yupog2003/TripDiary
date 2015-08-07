@@ -102,7 +102,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             } catch (OutOfMemoryError e) {
                                 e.printStackTrace();
                                 System.gc();
-                            } catch (FileNotFoundException e) {
+                            } catch (FileNotFoundException | IllegalArgumentException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -224,7 +224,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             final ImageView img = new ImageView(PlayPointActivity.this);
             try {
                 BitmapFactory.decodeStream(getContentResolver().openInputStream(file.getUri()), new Rect(0, 0, 0, 0), option);
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
             if (option.outWidth / width > option.outHeight / height) {

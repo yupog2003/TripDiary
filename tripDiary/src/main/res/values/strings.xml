@@ -57,22 +57,7 @@
         <item>Transportation</item>
         <item>Other</item>
     </string-array>
-    <string-array name="record_durations">
-        <item>200</item>
-        <item>500</item>
-        <item>1000</item>
-        <item>2000</item>
-        <item>5000</item>
-    </string-array>
-    <string-array name="record_distance_Intervals">
-        <item>0</item>
-        <item>20</item>
-        <item>50</item>
-        <item>100</item>
-        <item>200</item>
-        <item>500</item>
-        <item>1000</item>
-    </string-array>
+
     <string-array name="distance_units">
         <item>Kilometer</item>
         <item>Mile</item>
@@ -103,7 +88,6 @@
 
     <string name="title_activity_category">Categories</string>
     <string name="input_the_poi_title">Input the POI title</string>
-    <string name="record_audio">Record Audio</string>
     <string name="finish">Finish</string>
     <string name="input_diary">Write Diary</string>
     <string name="enter">Enter</string>
@@ -115,20 +99,11 @@
     <string name="cannot_delete_nocategory">Cannot delete uncategorized</string>
     <string name="delete">Delete</string>
     <string name="are_you_sure_to_delete">Are you sure to delete?</string>
-    <string name="gps_is_disabled">GPS is disabled</string>
-    <string name="explain_gpx">You can start trip without GPS. But you should import the .gpx file that contains time information after the trip.</string>
-    <string name="start_with_gps">Start with GPS</string>
-    <string name="start_without_gps">Start without GPS</string>
     <string name="input_the_trip_name">Input the Trip Name</string>
     <string name="same_trip">Same Trip</string>
     <string name="explain_same_trip">There is a same trip in history.Do you want to continue that trip?</string>
     <string name="explain_conflict_trip">There is a same trip.Please use another name.</string>
     <string name="add_poi">Add POI</string>
-    <string name="prepare_diary">Prepare diary</string>
-    <string name="prepare_pictures">Prepare pictures</string>
-    <string name="prepare_video">Prepare videos</string>
-    <string name="prepare_audio">Prepare audios</string>
-    <string name="prepare_data">Prepare data</string>
     <string name="explain_same_trip_when_import">There is a same trip in history.Please use another name</string>
     <string name="select_the_gpx">Select the .gpx</string>
     <string name="search_trip">Search Trip</string>
@@ -137,15 +112,10 @@
     <string name="be_careful">Be careful</string>
     <string name="rename">Rename</string>
     <string name="edit">Edit</string>
-    <string name="cannot_find_gpx_data">Can not find gpx data</string>
-    <string name="ask_import_gpx_file">Do you want to import .gpx file?(must contain time information)</string>
-    <string name="there_is_no_data_to_display">There is no data to display</string>
     <string name="search_poi">Search POI</string>
     <string name="poi_not_found">POI not found</string>
     <string name="choose_the_poi">Choose the POI</string>
     <string name="analysis_gpx">Analyzing .gpx</string>
-    <string name="setup_pois">Setup POIs</string>
-    <string name="gpx_doesnt_contain_time_information">The .gpx file doesn\'t contain time information</string>
     <string name="invalid_gpx_file">Invalid gpx file</string>
     <string name="start_time">Start Time</string>
     <string name="stop_time">Stop Time</string>
@@ -221,7 +191,6 @@
     <string name="has_not_been_installed">has not been installed</string>
     <string name="do_you_want_to_install">Do you want to install?</string>
     <string name="street_view">StreetView Service</string>
-    <string name="first_analysis_gpx">Analysis .gpx(Will take a long time at first time)</string>
     <string name="trip_has_been_stopped">Trip has been stopped</string>
     <string name="explain_how_to_use_street_view">Adjust map to let the man stand on a street and click the man.</string>
     <string name="cost">Cost</string>
@@ -258,7 +227,6 @@
     <string name="import_memory_explanation">TripDiary can import memory(pictures,videos,sounds) by selecting a folder that contains memory.And it will copy those files to the appropriate POI\'s folder according to their build time(for JPEG,by EXIF time) automatically.But you should be aware of the memory timezone is the same as the timezone now.</string>
     <string name="importing">Importing</string>
     <string name="select_a_directory">Select a directory</string>
-    <string name="finish_import_memory">Importing memory has been finished.Do you want to delete the source directory?</string>
     <string name="update_trip_timezone">Update trip timezone</string>
     <string name="update_all_trips_timezone_by_the_first_location_in_the_track">Update all trips timezone according to the first location in the track</string>
     <string name="explain_update_trip_timezone">Originally TripDiary shows every time informations in current timezone.But now you can update trip timezone according to the first location in the track.So that TripDiary can show the correct time in the trip timezone.It requires internet to do it.</string>
@@ -284,7 +252,6 @@
     <string name="move_to_category">Move to category</string>
     <string name="choose_a_category">Choose a category</string>
     <string name="no_data_can_be_displayed">No data can be displayed</string>
-    <string name="cannot_start_media_recorder_due_to_unknowm_error">Cannot start media recorder due to unknown error</string>
     <string name="lifetime_record">Lifetime Record</string>
     <string name="max_latitude">Max Latitude</string>
     <string name="min_latitude">Min Latitude</string>
@@ -338,11 +305,8 @@
     <string name="nocategory">uncatagorized</string>
     <string name="record_distance_interval">Record Distance Interval</string>
     <string name="minimum_distance_between_record_localtions">Minimum distance between record locations (in meters)</string>
-    <string name="title_activity_view_trip_online">ViewTripOnlineActivity</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="sort_by_time">Sort by time</string>
-    <string name="ascending">Ascending</string>
-    <string name="descending">Descending</string>
     <string name="title_activity_view_graph_acivity">ViewGraphAcivity</string>
     <string name="list">List</string>
     <string name="piechart">Pie Chart</string>
@@ -358,12 +322,5 @@
     <string name="from_old_to_new">Old -> New</string>
     <string name="open_with_browser">Open with browser</string>
     <string name="audio_recorder_is_not_available">Audio recorder is not available</string>
-    <string name="title_activity_test">TestActivity</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

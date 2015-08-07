@@ -51,21 +51,11 @@ public class TextFragment extends Fragment implements OnClickListener {
         buttomBar = (LinearLayout) view.findViewById(R.id.buttonbar);
         shadow = view.findViewById(R.id.shadow);
         setEditMode(false);
-        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
-            poi = ((ViewPointActivity) getActivity()).poi;
-        }
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        setText();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -90,10 +80,18 @@ public class TextFragment extends Fragment implements OnClickListener {
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }
     }
-
-    public void setText() {
-        if (!isAdded() || getView() == null || getActivity() == null || poi == null)
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+    public void refresh() {
+        if (getActivity() == null)
             return;
+        this.poi = ((ViewPointActivity)getActivity()).poi;
+        if (poi == null) {
+            return;
+        }
         text.setText("");
         editText.setText("");
         File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));

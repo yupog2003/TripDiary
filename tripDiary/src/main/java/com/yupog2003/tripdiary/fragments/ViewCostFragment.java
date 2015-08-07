@@ -158,7 +158,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             bw.flush();
                             bw.close();
                             refreshData(true);
-                        } catch (IOException e) {
+                        } catch (IOException | IllegalArgumentException e) {
 
                             e.printStackTrace();
                         }
@@ -256,7 +256,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                 }
             }
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
 
             e.printStackTrace();
         }

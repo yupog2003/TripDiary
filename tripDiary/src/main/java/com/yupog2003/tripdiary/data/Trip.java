@@ -96,7 +96,7 @@ public class Trip implements Comparable<Trip> {
             }
             note = sb.toString();
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
         refreshPOIs();
@@ -143,8 +143,7 @@ public class Trip implements Comparable<Trip> {
                 bw.flush();
                 bw.close();
                 this.note = note;
-            } catch (IOException e) {
-
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }

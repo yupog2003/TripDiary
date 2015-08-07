@@ -104,7 +104,7 @@ public class POI implements Comparable<POI> {
             }
             br.close();
             diary = sb.toString();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -129,8 +129,7 @@ public class POI implements Comparable<POI> {
             bw.write("Altitude=" + String.valueOf(this.altitude) + "\n");
             bw.flush();
             bw.close();
-        } catch (IOException e) {
-
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -143,7 +142,7 @@ public class POI implements Comparable<POI> {
                 bw.write(text);
                 bw.flush();
                 bw.close();
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
@@ -211,7 +210,7 @@ public class POI implements Comparable<POI> {
                     InputStream is = context.getContentResolver().openInputStream(inUri);
                     OutputStream os = context.getContentResolver().openOutputStream(outFile.getUri());
                     FileHelper.copyByStream(is, os);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             }
@@ -247,7 +246,7 @@ public class POI implements Comparable<POI> {
             bw.flush();
             bw.close();
             this.costFiles = costDir.listFiles();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

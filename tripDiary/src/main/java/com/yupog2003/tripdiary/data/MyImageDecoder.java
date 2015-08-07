@@ -40,7 +40,16 @@ public class MyImageDecoder implements ImageDecoder {
         if (isVideoUri(cleanedUriString)) {
             return makeVideoThumbnail((DocumentFile) info.getExtraForDownloader(), info.getTargetSize().getWidth(), info.getTargetSize().getHeight(), cleanedUriString);
         } else {
-            return m_imageUriDecoder.decode(info);
+            Bitmap bitmap = m_imageUriDecoder.decode(info);
+            int decodedWidth = bitmap.getWidth();
+            int decodedHeight = bitmap.getHeight();
+            int targetWidth = info.getTargetSize().getWidth();
+            int targetHeight = info.getTargetSize().getHeight();
+            if (decodedWidth > decodedHeight) {
+                return Bitmap.createBitmap(bitmap, (decodedWidth - targetWidth) / 2, 0, targetWidth, targetHeight);
+            } else {
+                return Bitmap.createBitmap(bitmap, 0, (decodedHeight - targetHeight) / 2, targetWidth, targetHeight);
+            }
         }
     }
 

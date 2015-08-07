@@ -42,7 +42,7 @@ public class MyBackupAgent extends BackupAgentHelper {
             SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
             output.writeObject(pref.getAll());
             res = true;
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -84,7 +84,7 @@ public class MyBackupAgent extends BackupAgentHelper {
             }
             prefEdit.commit();
             res = true;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | IllegalArgumentException e) {
             e.printStackTrace();
         } finally {
             try {

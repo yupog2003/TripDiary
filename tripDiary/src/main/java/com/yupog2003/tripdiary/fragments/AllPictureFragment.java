@@ -105,7 +105,7 @@ public class AllPictureFragment extends Fragment {
                         .cacheInMemory(false)
                         .cacheOnDisk(false)
                         .bitmapConfig(Bitmap.Config.RGB_565)
-                        .imageScaleType(ImageScaleType.EXACTLY)
+                        .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                         .extraForDownloader(pictures[0].getParentFile())
                         .build();
         }
@@ -118,16 +118,14 @@ public class AllPictureFragment extends Fragment {
         }
 
         public Object getItem(int position) {
-
             return pictures[position];
         }
 
         public long getItemId(int position) {
-
             return position;
         }
 
-        public void destroy() {
+        public void freeBitmaps() {
             if (bitmaps != null) {
                 for (Bitmap bitmap : bitmaps) {
                     if (bitmap != null) {
@@ -215,6 +213,15 @@ public class AllPictureFragment extends Fragment {
             }
         }
 
+        public void freeBitmaps() {
+            if (pictureAdapters != null) {
+                for (PictureAdapter adapter : pictureAdapters) {
+                    if (adapter != null) {
+                        adapter.freeBitmaps();
+                    }
+                }
+            }
+        }
 
         @Override
         public POIAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -236,23 +243,13 @@ public class AllPictureFragment extends Fragment {
         public int getItemCount() {
             return pois.length;
         }
-
-        public void destroy() {
-            if (pictureAdapters != null) {
-                for (PictureAdapter adapter : pictureAdapters) {
-                    if (adapter != null) {
-                        adapter.destroy();
-                    }
-                }
-            }
-        }
     }
 
     @Override
-    public void onDestroy() {
+    public void onLowMemory() {
         if (poiAdapter != null) {
-            poiAdapter.destroy();
+            poiAdapter.freeBitmaps();
         }
-        super.onDestroy();
+        super.onLowMemory();
     }
 }

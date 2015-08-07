@@ -84,7 +84,7 @@
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk" />
+            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
         <!-- publish key=  AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->
 
@@ -98,7 +98,11 @@
         <activity
             android:name=".ViewTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_view_trip" />
+            android:label="@string/title_activity_view_trip"
+            android:launchMode="standard"
+            android:maxRecents="3"
+            android:documentLaunchMode="always"/>
+
         <activity
             android:name=".AllRecordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -152,8 +156,24 @@
             android:name=".ViewGraphAcivity"
             android:label="@string/title_activity_view_graph_acivity" />
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
+            android:name=".RestoreTripActivity"
+            android:label="@string/restore_trip" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/zip" />
+
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/zip" />
+
+            </intent-filter>
         </activity>
     </application>
 

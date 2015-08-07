@@ -21,11 +21,13 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.provider.DocumentFile;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.RecordActivity;
 import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -71,13 +73,17 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     public static final String actionStopTrip = "com.yupog2003.tripdiary.stopTrip";
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
     public static final DecimalFormat doubleFormat = new DecimalFormat("#.#");
-    public static final String tag_tripName="tag_tripName";
+    public static final String tag_tripName = "tag_tripName";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         instance = this;
         name = intent.getStringExtra(tag_tripName);
-        trip = new Trip(getApplicationContext(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name), false);
+        DocumentFile tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name);
+        if (tripFile == null) {
+            stopSelf();
+        }
+        trip = new Trip(getApplicationContext(), tripFile, false);
         trip.deleteCache();
         run = true;
         screenOn = true;
@@ -115,7 +121,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                     br.close();
                     temp.delete();
                 }
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
 
                 e.printStackTrace();
             }
@@ -146,11 +152,11 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         nb.setSmallIcon(R.drawable.ic_satellite);
         nb.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         nb.setTicker(getString(R.string.Start_Trip));
-        Intent pauseIntent=new Intent(actionPauseTrip);
-        PendingIntent pausePendingIntent=PendingIntent.getBroadcast(this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent pauseIntent = new Intent(actionPauseTrip);
+        PendingIntent pausePendingIntent = PendingIntent.getBroadcast(this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pausePendingIntent);
-        Intent stopIntent=new Intent(actionStopTrip);
-        PendingIntent stopPendingIntent=PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent stopIntent = new Intent(actionStopTrip);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.addAction(R.drawable.ic_stop, getString(R.string.stop), stopPendingIntent);
         Intent i3 = new Intent(this, RecordActivity.class);
         i3.putExtra(RecordActivity.tag_tripname, name);
@@ -221,6 +227,10 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             Toast.makeText(getApplicationContext(), getString(R.string.trip_has_been_stopped), Toast.LENGTH_SHORT).show();
             DeviceHelper.sendGATrack(RecordService.this, "Trip", "stop", name, null);
             instance = null;
+            Intent i = new Intent(RecordService.this, ViewTripActivity.class);
+            i.putExtra(ViewTripActivity.tag_tripName, name);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
             RecordService.this.stopSelf();
         }
     }
@@ -241,19 +251,19 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, RecordService.this);
                 new Thread(RecordService.this).start();
                 nb.setSmallIcon(R.drawable.ic_satellite);
-                Intent pauseIntent=new Intent(actionPauseTrip);
-                PendingIntent pausePendingIntent=PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent pauseIntent = new Intent(actionPauseTrip);
+                PendingIntent pausePendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pausePendingIntent);
             } else {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 lm.removeUpdates(RecordService.this);
                 nb.setSmallIcon(R.drawable.ic_pause);
-                Intent pauseIntent=new Intent(actionPauseTrip);
-                PendingIntent pausePendingIntent=PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent pauseIntent = new Intent(actionPauseTrip);
+                PendingIntent pausePendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 nb.addAction(R.drawable.ic_resume, getString(R.string.resume), pausePendingIntent);
             }
-            Intent stopIntent=new Intent(actionStopTrip);
-            PendingIntent stopPendingIntent=PendingIntent.getBroadcast(RecordService.this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent stopIntent = new Intent(actionStopTrip);
+            PendingIntent stopPendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             nb.addAction(R.drawable.ic_stop, getString(R.string.stop), stopPendingIntent);
             Intent i3 = new Intent(RecordService.this, RecordActivity.class);
             i3.putExtra(RecordActivity.tag_tripname, name);
@@ -370,7 +380,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     }
 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
 
     }
 

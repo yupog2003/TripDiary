@@ -32,22 +32,6 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string-array name="record_distance_Intervals">
-        <item>0</item>
-        <item>20</item>
-        <item>50</item>
-        <item>100</item>
-        <item>200</item>
-        <item>500</item>
-        <item>1000</item>
-    </string-array>
-    <string-array name="record_durations">
-        <item>200</item>
-        <item>500</item>
-        <item>1000</item>
-        <item>2000</item>
-        <item>5000</item>
-    </string-array>
     <string-array name="speed">
         <item>非常慢</item>
         <item>慢</item>
@@ -109,9 +93,7 @@
     <string name="app_name">旅遊日記</string>
     <string name="are_you_sure_to_delete">確定要刪除嗎?</string>
     <string name="are_you_sure_to_delete_this_poi">確定要刪除這個興趣點嗎?</string>
-    <string name="ascending">升冪</string>
     <string name="ask_for_replace_trip">有相同的旅程，請問要取代嗎？</string>
-    <string name="ask_import_gpx_file">你要匯入gpx檔嗎?(包含時間資訊)</string>
     <string name="audio_codec">聲音編碼</string>
     <string name="audio_recorder_is_not_available">無錄音機</string>
     <string name="average_speed">平均速度</string>
@@ -130,8 +112,6 @@
     <string name="cancel">取消</string>
     <string name="cannot_add_nocategory">無法新增未分類</string>
     <string name="cannot_delete_nocategory">無法刪除未分類</string>
-    <string name="cannot_find_gpx_data">找不到gpx資料</string>
-    <string name="cannot_start_media_recorder_due_to_unknowm_error">不明原因無法啟動Media Recorder</string>
     <string name="choose_a_account">選擇一個帳戶</string>
     <string name="choose_a_category">選擇一個類別</string>
     <string name="choose_the_poi">選擇興趣點</string>
@@ -179,7 +159,6 @@
     <string name="cost_type">花費種類</string>
     <string name="delete">刪除</string>
     <string name="delete_poi">刪除興趣點</string>
-    <string name="descending">降冪</string>
     <string name="diary">日記</string>
     <string name="diary_font">日記字體</string>
     <string name="diary_font_size">日記字體大小</string>
@@ -200,7 +179,6 @@
     <string name="eraser_mode">橡皮擦模式</string>
     <string name="error_please_use_another_path">錯誤！請使用其他路徑</string>
     <string name="explain_conflict_trip">有相同的旅程，請使用其他名稱</string>
-    <string name="explain_gpx">你可以在沒有GPS的狀況下進行旅程，當旅程結束後，你必須匯入.gpx檔</string>
     <string name="explain_how_to_use_street_view">調整地圖使此人站在一條街上，然後點擊此人</string>
     <string name="explain_same_trip">有相同的旅程，你要繼續該旅程嗎?</string>
     <string name="explain_same_trip_when_import">有相同的旅程，請使用其他名稱</string>
@@ -208,16 +186,12 @@
     <string name="failed_to_loadlibrary">載入library失敗，使用較慢方法</string>
     <string name="filename">文件名稱</string>
     <string name="finish">完成</string>
-    <string name="finish_import_memory">匯入回憶已完成，要刪除來源資料夾嗎？</string>
-    <string name="first_analysis_gpx">解析.gpx檔(第一次會花較久時間)</string>
     <string name="food">食</string>
     <string name="fps">Fps</string>
     <string name="from_new_to_old">新 -> 舊</string>
     <string name="from_old_to_new">舊 -> 新</string>
     <string name="generate_video">生成影片(實驗性)</string>
-    <string name="gps_is_disabled">GPS未開啟</string>
     <string name="gpx">Gpx</string>
-    <string name="gpx_doesnt_contain_time_information">gpx檔未包含時間資料</string>
     <string name="has_not_been_installed">未安裝</string>
     <string name="imagebutton_description">imagebutton</string>
     <string name="import_a_audio">匯入一聲音</string>
@@ -307,14 +281,8 @@
     <string name="poi_has_been_saved">已儲存興趣點</string>
     <string name="poi_name">興趣點名稱</string>
     <string name="poi_not_found">找不到興趣點</string>
-    <string name="prepare_audio">準備聲音</string>
-    <string name="prepare_data">準備資料</string>
-    <string name="prepare_diary">準備日記</string>
-    <string name="prepare_pictures">準備照片</string>
-    <string name="prepare_video">準備影片</string>
     <string name="preset">Preset</string>
     <string name="print">列印</string>
-    <string name="record_audio">紀錄聲音</string>
     <string name="record_distance_interval">紀錄距離間隔</string>
     <string name="record_duration">紀錄時間間隔</string>
     <string name="record_setting">紀錄設定</string>
@@ -348,7 +316,6 @@
     <string name="select_the_video_by">選取影片</string>
     <string name="setting_has_been_backed_up">設定已備份</string>
     <string name="setting_has_been_restored">設定已還原</string>
-    <string name="setup_pois">準備興趣點</string>
     <string name="shake_to_add_poi">甩動以新增興趣點</string>
     <string name="shake_to_add_poi_during_recording_trip">紀錄旅程時，甩動手機以新增興趣點(先打開螢幕再甩動)</string>
     <string name="share">分享</string>
@@ -362,8 +329,6 @@
     <string name="sound">聲音</string>
     <string name="spend">花費</string>
     <string name="start_time">起始時間</string>
-    <string name="start_with_gps">開啟GPS</string>
-    <string name="start_without_gps">維持關閉GPS</string>
     <string name="statistics">統計資料</string>
     <string name="stop">停止</string>
     <string name="stop_time">結束時間</string>
@@ -374,7 +339,6 @@
     <string name="take_a_picture">拍照</string>
     <string name="take_a_video">錄影</string>
     <string name="there_is_a_same_poi">有相同的興趣點</string>
-    <string name="there_is_no_data_to_display">沒有資料可以顯示</string>
     <string name="thickness">粗細</string>
     <string name="title_activity_category">類別</string>
     <string name="title_activity_main">旅遊日記</string>

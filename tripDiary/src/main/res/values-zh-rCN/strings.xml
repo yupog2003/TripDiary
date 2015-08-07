@@ -57,22 +57,7 @@
         <item>行</item>
         <item>其他</item>
     </string-array>
-    <string-array name="record_durations">
-        <item>200</item>
-        <item>500</item>
-        <item>1000</item>
-        <item>2000</item>
-        <item>5000</item>
-    </string-array>
-    <string-array name="record_distance_Intervals">
-        <item>0</item>
-        <item>20</item>
-        <item>50</item>
-        <item>100</item>
-        <item>200</item>
-        <item>500</item>
-        <item>1000</item>
-    </string-array>
+
     <string-array name="distance_units">
         <item>公里</item>
         <item>英哩</item>
@@ -93,7 +78,6 @@
 
     <string name="title_activity_category">类别</string>
     <string name="input_the_poi_title">输入兴趣点标题</string>
-    <string name="record_audio">纪录声音</string>
     <string name="finish">完成</string>
     <string name="input_diary">撰写日记</string>
     <string name="enter">确定</string>
@@ -107,20 +91,11 @@
     <string name="cannot_delete_nocategory">无法删除未分类</string>
     <string name="delete">删除</string>
     <string name="are_you_sure_to_delete">确定要删除吗?</string>
-    <string name="gps_is_disabled">GPS未开启</string>
-    <string name="explain_gpx">你可以在没有GPS的状况下进行旅程，当旅程结束后，你必须汇入.gpx档</string>
-    <string name="start_with_gps">开启GPS</string>
-    <string name="start_without_gps">维持关闭GPS</string>
     <string name="input_the_trip_name">输入旅程名称</string>
     <string name="same_trip">相同旅程</string>
     <string name="explain_conflict_trip">有相同的旅程，请使用其他名称</string>
     <string name="explain_same_trip">有相同的旅程，你要继续该旅程吗?</string>
     <string name="add_poi">新增兴趣点</string>
-    <string name="prepare_diary">准备日记</string>
-    <string name="prepare_pictures">准备照片</string>
-    <string name="prepare_video">准备影片</string>
-    <string name="prepare_audio">准备声音</string>
-    <string name="prepare_data">准备资料</string>
     <string name="explain_same_trip_when_import">有相同的旅程，请使用其他名称</string>
     <string name="select_the_gpx">选取.gpx档</string>
     <string name="search_trip">搜寻旅程</string>
@@ -129,16 +104,11 @@
     <string name="be_careful">小心</string>
     <string name="rename">更名</string>
     <string name="edit">编辑</string>
-    <string name="cannot_find_gpx_data">找不到gpx资料</string>
-    <string name="ask_import_gpx_file">你要汇入gpx档吗?(包含时间资讯)</string>
-    <string name="there_is_no_data_to_display">没有资料可以显示</string>
     <string name="search_poi">搜寻兴趣点</string>
     <string name="poi_not_found">找不到兴趣点</string>
     <string name="choose_the_poi">选择兴趣点</string>
 
     <string name="analysis_gpx">解析.gpx档</string>
-    <string name="setup_pois">准备兴趣点</string>
-    <string name="gpx_doesnt_contain_time_information">gpx档未包含时间资料</string>
     <string name="invalid_gpx_file">错误的gpx档</string>
     <string name="start_time">起始时间</string>
     <string name="stop_time">结束时间</string>
@@ -215,7 +185,6 @@
     <string name="has_not_been_installed">未安装</string>
     <string name="do_you_want_to_install">要安装吗？</string>
     <string name="street_view">街景服务</string>
-    <string name="first_analysis_gpx">解析.gpx档（第一次会花较久时间）</string>
     <string name="trip_has_been_stopped">旅程已结束</string>
     <string name="explain_how_to_use_street_view">调整地图使此人站在一条街上，然后点击此人</string>
     <string name="cost">花费</string>
@@ -252,7 +221,6 @@
     <string name="import_memory_explanation">旅游日记可以汇入回忆(图片、影片、声音)，只需要选择一个含有回忆的资料夹，然后它就会根据建立时间(JPEG则根据EXIF时间)自动复制这些档案到适当的POI资料夹，但你应该注意回忆的时区必须与现在时区相同。</string>
     <string name="importing">汇入中</string>
     <string name="select_a_directory">选一个资料夹</string>
-    <string name="finish_import_memory">汇入回忆已完成，要删除来源资料夹吗？</string>
     <string name="update_trip_timezone">更新旅程时区</string>
     <string name="update_all_trips_timezone_by_the_first_location_in_the_track">根据轨迹的第一个位置更新旅程时区</string>
     <string name="explain_update_trip_timezone">原本TripDiary以当前时区显示所有时间资讯，但现在你可以根据轨迹的第一个位置更新旅程时区，如此一來TripDiary就可以根据旅程时区显示正确时区。(需要互连网)</string>
@@ -278,7 +246,6 @@
     <string name="move_to_category">移动至类别</string>
     <string name="choose_a_category">选择一个类别</string>
     <string name="no_data_can_be_displayed">没有资料可以显示</string>
-    <string name="cannot_start_media_recorder_due_to_unknowm_error">不明原因无法启动Media Recorder</string>
     <string name="lifetime_record">生涯纪录</string>
     <string name="max_latitude">最高纬度</string>
     <string name="min_latitude">最低纬度</string>
@@ -334,8 +301,6 @@
     <string name="minimum_distance_between_record_localtions">间隔多少距离纪录一个位置(公尺)</string>
     <string name="unknown_error">不明错误</string>
     <string name="sort_by_time">依时间排序</string>
-    <string name="ascending">升幂</string>
-    <string name="descending">降幂</string>
     <string name="barchart">直方图</string>
     <string name="list">列表</string>
     <string name="piechart">圆饼图</string>

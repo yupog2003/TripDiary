@@ -8,7 +8,7 @@ android {
         applicationId "com.yupog2003.tripdiary"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 173
+        versionCode 176
         versionName "1.2.7"
         multiDexEnabled true
 

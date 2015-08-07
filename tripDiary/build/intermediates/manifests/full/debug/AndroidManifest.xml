@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="173"
+    android:versionCode="176"
     android:versionName="1.2.7" >
 
     <uses-sdk
@@ -110,7 +110,10 @@
         <activity
             android:name="com.yupog2003.tripdiary.ViewTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_view_trip" />
+            android:documentLaunchMode="always"
+            android:label="@string/title_activity_view_trip"
+            android:launchMode="standard"
+            android:maxRecents="3" />
         <activity
             android:name="com.yupog2003.tripdiary.AllRecordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -164,8 +167,22 @@
             android:name="com.yupog2003.tripdiary.ViewGraphAcivity"
             android:label="@string/title_activity_view_graph_acivity" />
         <activity
-            android:name="com.yupog2003.tripdiary.TestActivity"
-            android:label="@string/title_activity_test" >
+            android:name="com.yupog2003.tripdiary.RestoreTripActivity"
+            android:label="@string/restore_trip" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/zip" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/zip" />
+            </intent-filter>
         </activity>
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity

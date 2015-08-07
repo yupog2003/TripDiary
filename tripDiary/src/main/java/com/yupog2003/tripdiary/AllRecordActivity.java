@@ -189,6 +189,9 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                     return false;
                 }
                 DocumentFile tripFile = FileHelper.findfile(tripFiles, tripNames[i]);
+                if (tripFile == null) {
+                    continue;
+                }
                 trips[i] = new Trip(getApplicationContext(), tripFile, false);
                 publishProgress(i);
                 DocumentFile gpxFile = FileHelper.findfile(tripFile, tripNames[i] + ".gpx");

@@ -145,7 +145,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
     @Override
     protected void onResume() {
-
         if (RecordService.instance == null) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
@@ -162,7 +161,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 new RefreshTask(true, true).execute();
             }
         });
-
         super.onResume();
     }
 
@@ -250,13 +248,16 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 if (location == null) {
                     Toast.makeText(RecordActivity.this, getString(R.string.location_not_found), Toast.LENGTH_SHORT).show();
                 } else {
-                    setAddPOIMode(true);
                     String poiNameStr = poiName.getText().toString();
                     DocumentFile poiDir = FileHelper.findfile(RecordService.instance.trip.dir, poiNameStr);
                     if (poiDir == null) {
                         poiDir = RecordService.instance.trip.dir.createDirectory(poiNameStr);
                     }
+                    if (poiDir == null) {
+                        return;
+                    }
                     poi = new POI(RecordActivity.this, poiDir);
+                    setAddPOIMode(true);
                     MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
                     if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
                         POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
@@ -284,9 +285,11 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         } else if (v.equals(refresh)) {
             new RefreshTask(true, false).execute();
         } else if (v.equals(takePicture)) {
+            if (poi == null) return;
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".jpg");
+                if (nowFileForCameraIntent == null) return;
                 i.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
                 i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -295,9 +298,11 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 Toast.makeText(this, R.string.camera_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeVideo)) {
+            if (poi == null) return;
             Intent i = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.videoDir.createFile("", fileName + ".3gp");
+                if (nowFileForCameraIntent == null) return;
                 i.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
                 i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -306,14 +311,17 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 Toast.makeText(this, R.string.camera_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeAudio)) {
+            if (poi == null) return;
             Intent i = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.audioDir.createFile("", fileName + ".mp3");
+                if (nowFileForCameraIntent == null) return;
                 startActivityForResult(i, REQUEST_AUDIO);
             } else {
                 Toast.makeText(this, R.string.audio_recorder_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeText)) {
+            if (poi == null) return;
             final EditText getText = new EditText(this);
             getText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             getText.setText(poi.diary);
@@ -332,12 +340,15 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             ab.setNegativeButton(getString(R.string.cancel), null);
             ab.show();
         } else if (v.equals(takePaint)) {
+            if (poi == null) return;
             nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".png");
+            if (nowFileForCameraIntent == null) return;
             Intent intent = new Intent(this, PaintActivity.class);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
             intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             startActivityForResult(intent, REQUEST_PICTURE);
         } else if (v.equals(takeMoney)) {
+            if (poi == null) return;
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
             ab.setTitle(getString(R.string.cost));
             final LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.take_money, null);
@@ -394,7 +405,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
     @Override
     public void onBackPressed() {
-
         if (addPOIMode) {
             if (cancel.getVisibility() == View.VISIBLE) {
                 cancel.performClick();
@@ -537,7 +547,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                     }
                     br.close();
                     lat = latArray.toArray(new LatLng[latArray.size()]);
-                } catch (IOException | IndexOutOfBoundsException e) {
+                } catch (IOException | IndexOutOfBoundsException | IllegalArgumentException | NullPointerException e) {
                     e.printStackTrace();
                 }
             }
@@ -632,6 +642,13 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     @Override
     public void onMarkerDragStart(Marker marker) {
 
+    }
 
+    @Override
+    protected void onDestroy() {
+        if (gmap != null) {
+            gmap.setMyLocationEnabled(false);
+        }
+        super.onDestroy();
     }
 }

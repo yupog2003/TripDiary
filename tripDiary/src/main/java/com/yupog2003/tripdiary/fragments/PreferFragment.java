@@ -65,12 +65,12 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     private static final int selectdiaryfont = 1;
     private static final int selectrootpath = 2;
     private static DocumentFile backupPreferenceFile;
-    private static final String categorySettingName = "category";
-    private static final String tripSettingName = "trip";
-    private static final String tripTimeSettingName = "tripTime";
-    private static final String tripExpandSettingName = "categoryExpand";
-    private static final String tripTimezoneSettingName = "tripTimezone";
-    private static final String defaultSettingName = "com.yupog2003.tripdiary_preferences";
+    public static final String categorySettingName = "category";
+    public static final String tripSettingName = "trip";
+    public static final String tripTimeSettingName = "tripTime";
+    public static final String tripExpandSettingName = "categoryExpand";
+    public static final String tripTimezoneSettingName = "tripTimezone";
+    public static final String defaultSettingName = "com.yupog2003.tripdiary_preferences";
 
 
     @Override
@@ -408,7 +408,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                         }
                     }
                     br.close();
-                } catch (IOException e) {
+                } catch (IOException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             }

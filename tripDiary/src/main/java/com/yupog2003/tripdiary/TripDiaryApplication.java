@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
@@ -20,11 +21,12 @@ import com.yupog2003.tripdiary.data.MyImageDownloader;
 import com.yupog2003.tripdiary.data.Trip;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class TripDiaryApplication extends Application {
 
     Tracker appTracker;
-    Trip trip;
+    HashMap<String, Trip> trips;
     public static DocumentFile rootDocumentFile;
     public static TripDiaryApplication instance;
     public static final String serverURL = "http://219.85.61.62/TripDiary";
@@ -50,6 +52,7 @@ public class TripDiaryApplication extends Application {
         updateRootPath(PreferenceManager.getDefaultSharedPreferences(this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary"));
         initialImageLoader();
         initialUnit();
+        trips = new HashMap<>();
     }
 
     @Override
@@ -104,11 +107,15 @@ public class TripDiaryApplication extends Application {
         altitude_unit = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(instance).getString("altitude_unit", "0"));
     }
 
-    public void setTrip(Trip trip) {
-        this.trip = trip;
+    public void putTrip(Trip trip) {
+        trips.put(trip.tripName, trip);
     }
 
-    public Trip getTrip() {
-        return trip;
+    public void removeTrip(String tripName) {
+        trips.remove(tripName);
+    }
+
+    public Trip getTrip(String tripName) {
+        return trips.get(tripName);
     }
 }

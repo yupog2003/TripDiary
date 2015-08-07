@@ -10,8 +10,8 @@ public final class R {
 	public static final class dimen {
 		public static final int ambilwarna_hsvHeight = 0x7f080006;
 		public static final int ambilwarna_hsvWidth = 0x7f080007;
-		public static final int ambilwarna_hueWidth = 0x7f08004d;
-		public static final int ambilwarna_spacer = 0x7f08004e;
+		public static final int ambilwarna_hueWidth = 0x7f08004b;
+		public static final int ambilwarna_spacer = 0x7f08004c;
 	}
 	public static final class drawable {
 		public static final int ambilwarna_arrow_down = 0x7f02003d;

@@ -106,13 +106,11 @@ public class PaintActivity extends MyActivity implements OnClickListener {
             AmbilWarnaDialog.OnAmbilWarnaListener listener = new AmbilWarnaDialog.OnAmbilWarnaListener() {
 
                 public void onOk(AmbilWarnaDialog dialog, int color) {
-
                     brushColor = color;
                     paint.setColor(brushColor);
                 }
 
                 public void onCancel(AmbilWarnaDialog dialog) {
-
 
                 }
             };
@@ -235,7 +233,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 setResult(Activity.RESULT_OK, intent);
                 PaintActivity.this.finish();
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }

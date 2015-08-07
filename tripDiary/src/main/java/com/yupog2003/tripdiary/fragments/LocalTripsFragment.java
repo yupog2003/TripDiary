@@ -64,7 +64,6 @@ import com.yupog2003.tripdiary.views.WrapperExpandableListAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -422,7 +421,6 @@ public class LocalTripsFragment extends Fragment {
                 String name = trips.get(groupPosition).get(childPosition).tripName;
                 Intent i = new Intent(getActivity(), ViewTripActivity.class);
                 i.putExtra(ViewTripActivity.tag_tripName, name);
-                DeviceHelper.sendGATrack(getActivity(), "Trip", "view", name, null);
                 getActivity().startActivity(i);
             }
             return true;
@@ -496,7 +494,7 @@ public class LocalTripsFragment extends Fragment {
                         message += s + "\n";
                     }
                     br.close();
-                } catch (IOException e) {
+                } catch (IOException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
                 AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
@@ -777,7 +775,7 @@ public class LocalTripsFragment extends Fragment {
                     DocumentFile outFile = TripDiaryApplication.rootDocumentFile.createDirectory(newTripName).createFile("", newTripName + ".gpx");
                     OutputStream os = getActivity().getContentResolver().openOutputStream(outFile.getUri());
                     FileHelper.copyByStream(is, os);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             } else if (requestCode == REQUEST_RESTORE_TRIP) {
@@ -813,35 +811,31 @@ public class LocalTripsFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             try {
-                final File tempZip = FileHelper.copyFromUriToFile(getActivity(), uri, getActivity().getCacheDir(), "tempZip.zip");
-                if (tempZip != null) {
-                    ZipInputStream zis = new ZipInputStream(new FileInputStream(tempZip));
-                    ZipEntry entry;
-                    String s = "";
-                    if ((entry = zis.getNextEntry()) != null) {
-                        s = entry.getName();
-                    }
-                    zis.close();
-                    if (s.contains("/")) {
-                        s = s.replace("/", "");
-                    }
-                    tripName = s;
-                    if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
-                        finishAsk = false;
-                        replace = false;
-                        publishProgress("ask replace");
-                        while (!finishAsk) {
-                            Thread.sleep(200);
-                        }
-                        if (replace) {
-                            FileHelper.unZip(tempZip, TripDiaryApplication.rootDocumentFile);
-                        }
-                    } else {
-                        FileHelper.unZip(tempZip, TripDiaryApplication.rootDocumentFile);
-                    }
-                    tempZip.delete();
+                ZipInputStream zis = new ZipInputStream(getActivity().getContentResolver().openInputStream(uri));
+                ZipEntry entry;
+                String s = "";
+                if ((entry = zis.getNextEntry()) != null) {
+                    s = entry.getName();
                 }
-            } catch (IOException | NullPointerException | InterruptedException e) {
+                zis.close();
+                if (s.contains("/")) {
+                    s = s.replace("/", "");
+                }
+                tripName = s;
+                if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
+                    finishAsk = false;
+                    replace = false;
+                    publishProgress("ask replace");
+                    while (!finishAsk) {
+                        Thread.sleep(200);
+                    }
+                    if (replace) {
+                        FileHelper.unZip(getActivity().getContentResolver().openInputStream(uri), TripDiaryApplication.rootDocumentFile);
+                    }
+                } else {
+                    FileHelper.unZip(getActivity().getContentResolver().openInputStream(uri), TripDiaryApplication.rootDocumentFile);
+                }
+            } catch (IOException | NullPointerException | InterruptedException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
             return null;
@@ -984,7 +978,7 @@ public class LocalTripsFragment extends Fragment {
                         }
                     }
                     br.close();
-                } catch (IOException e) {
+                } catch (IOException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             }

@@ -50,44 +50,43 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        setVideo();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
         }
     }
-
-    public void setVideo() {
-        if (getView() == null)
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+    public void refresh() {
+        if (getView()==null||getActivity() == null)
             return;
-        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
-            poi = ((ViewPointActivity) getActivity()).poi;
-            layout = (GridView) getView().findViewById(R.id.videogrid);
-            poi.updateAllFields();
-            adapter = new VideoAdapter();
-            layout.setAdapter(adapter);
-            layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-            layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-            layout.setOnItemClickListener(this);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                layout.setNestedScrollingEnabled(true);
-            }
-            int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-            int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-            if (screenWidth > screenHeight) {
-                width = screenWidth / 5;
-                layout.setNumColumns(5);
-            } else {
-                width = screenWidth / 3;
-                layout.setNumColumns(3);
-            }
+        this.poi = ((ViewPointActivity)getActivity()).poi;
+        if (poi == null) {
+            return;
         }
+        layout = (GridView) getView().findViewById(R.id.videogrid);
+        adapter = new VideoAdapter();
+        layout.setAdapter(adapter);
+        layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+        layout.setOnItemClickListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setNestedScrollingEnabled(true);
+        }
+        int screenWidth = DeviceHelper.getScreenWidth(getActivity());
+        int screenHeight = DeviceHelper.getScreenHeight(getActivity());
+        if (screenWidth > screenHeight) {
+            width = screenWidth / 5;
+            layout.setNumColumns(5);
+        } else {
+            width = screenWidth / 3;
+            layout.setNumColumns(3);
+        }
+
     }
 
     class VideoAdapter extends BaseAdapter {
@@ -172,7 +171,6 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                         for (int i = 0; i < checksName.size(); i++) {
                             checksName.get(i).delete();
                         }
-                        setVideo();
                         if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                             ((ViewPointActivity) getActivity()).requestUpdatePOI();
                         }
@@ -195,7 +193,6 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
                             String s = name.getText().toString();
                             checkFile.renameTo(s);
-                            setVideo();
                             if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                 ((ViewPointActivity) getActivity()).requestUpdatePOI();
                             }
@@ -246,7 +243,6 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                             @Override
                             public void onFinish() {
 
-                                setVideo();
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs();
                                 }

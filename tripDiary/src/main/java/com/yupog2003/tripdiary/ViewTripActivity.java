@@ -1,6 +1,7 @@
 package com.yupog2003.tripdiary;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -100,6 +101,10 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             getSupportActionBar().setHomeButtonEnabled(true);
         }
         String tripName = getIntent().getStringExtra(tag_tripName);
+        DeviceHelper.sendGATrack(getActivity(), "Trip", "view", tripName, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setTaskDescription(new ActivityManager.TaskDescription(tripName, null, getResources().getColor(R.color.colorPrimary)));
+        }
         setTitle(tripName);
         trip = null;
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
@@ -306,13 +311,17 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             if (tripName == null) {
                 return false;
             }
-            trip = new Trip(getApplicationContext(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName), false, this);
+            DocumentFile tripDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
+            if (tripDir == null) {
+                return false;
+            }
+            trip = new Trip(getApplicationContext(), tripDir, false, this);
             if (libraryLoadSuccess) {
                 trip.getCacheJNI(handler, this);
             } else {
                 trip.getCacheJava(handler, this);
             }
-            ((TripDiaryApplication)getApplication()).setTrip(trip);
+            ((TripDiaryApplication) getApplication()).putTrip(trip);
             try {
                 if (trip.cache != null) {
                     TrackCache cache = trip.cache;
@@ -324,7 +333,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                         latlngBoundesBuilder.include(lat[i]);
                     }
                     bounds = latlngBoundesBuilder.build();
-                    return lat.length > 0;
+                    return trip != null && lat.length > 0;
                 }
             } catch (Exception e) {
                 trip.cacheFile.delete();
@@ -343,7 +352,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
             if (success) {
-                viewMapFragment.refresh(lat, bounds, pd);
+                viewMapFragment.refresh(trip, lat, bounds, pd);
                 allTextFragment.refresh();
                 allPictureFragment.refresh();
                 allVideoFragment.refresh();
@@ -354,7 +363,11 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 new LoadNavigationHeaderBackgroundTask().execute();
             } else {
                 Toast.makeText(getActivity(), getString(R.string.invalid_gpx_file), Toast.LENGTH_SHORT).show();
-                trip.deleteCache();
+                if (trip == null) {
+                    finish();
+                } else {
+                    trip.deleteCache();
+                }
                 pd.dismiss();
             }
         }
@@ -403,7 +416,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     options.inSampleSize = (int) ratio;
                     options.inPreferredConfig = Bitmap.Config.RGB_565;
                     return BitmapFactory.decodeStream(getContentResolver().openInputStream(pic.getUri()), new Rect(0, 0, 0, 0), options);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             }
@@ -505,8 +518,10 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
     @Override
     protected void onDestroy() {
-        trip = null;
-        ((TripDiaryApplication)getApplication()).setTrip(null);
+        if (trip != null) {
+            ((TripDiaryApplication) getApplication()).removeTrip(trip.tripName);
+            trip = null;
+        }
         ImageView imageView = (ImageView) findViewById(R.id.navigationHeaderBackground);
         imageView.setImageBitmap(null);
         System.gc();

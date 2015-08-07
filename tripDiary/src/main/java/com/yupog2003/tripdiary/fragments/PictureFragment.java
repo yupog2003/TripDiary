@@ -42,6 +42,7 @@ import com.yupog2003.tripdiary.views.CheckableLayout;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PictureFragment extends Fragment implements OnItemClickListener {
     GridView layout;
@@ -51,14 +52,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (GridView) inflater.inflate(R.layout.fragment_picture, container, false);
-        layout.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-        layout.setOnItemClickListener(this);
-        if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
-            poi = ((ViewPointActivity) getActivity()).poi;
-        }
-        adapter = new PictureAdapter();
-        layout.setAdapter(adapter);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             layout.setNestedScrollingEnabled(true);
         }
@@ -66,23 +59,28 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        if (poi == null) return;
-        DocumentFile[] picFiles = FileHelper.listFiles(poi.picDir, FileHelper.list_pics);
-        if (picFiles != null && adapter != null && picFiles.length != adapter.getCount()) {
-            adapter.reFresh();
+        refresh();
+    }
+
+    public void refresh() {
+        if (getActivity() == null) {
+            return;
         }
+        this.poi = ((ViewPointActivity) getActivity()).poi;
+        if (poi == null) {
+            return;
+        }
+        layout.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+        layout.setOnItemClickListener(this);
+        adapter = new PictureAdapter();
+        layout.setAdapter(adapter);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -116,24 +114,26 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                     .displayer(new FadeInBitmapDisplayer(500))
                     .cacheInMemory(false)
                     .cacheOnDisk(false)
-                    .imageScaleType(ImageScaleType.EXACTLY)
+                    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                     .bitmapConfig(Bitmap.Config.RGB_565)
                     .extraForDownloader(poi.picDir)
                     .build();
             bitmaps = new Bitmap[files.length];
             onMultiChoiceMode = false;
-
         }
 
-        public void reFresh() {
-            poi.updateAllFields();
-            files = poi.picFiles;
-            bitmaps = new Bitmap[files.length];
-            notifyDataSetChanged();
+        public void freeBitmaps() {
+            if (bitmaps != null) {
+                for (Bitmap bitmap : bitmaps) {
+                    if (bitmap != null) {
+                        bitmap.recycle();
+                    }
+                }
+                Arrays.fill(bitmaps, null);
+            }
         }
 
         public int getCount() {
-
             return files.length;
         }
 
@@ -205,7 +205,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                         for (int i = 0; i < checksName.size(); i++) {
                             checksName.get(i).delete();
                         }
-                        adapter.reFresh();
                         if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                             ((ViewPointActivity) getActivity()).requestUpdatePOI();
                         }
@@ -228,7 +227,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
                             String s = name.getText().toString();
                             checkFile.renameTo(s);
-                            adapter.reFresh();
                             if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                 ((ViewPointActivity) getActivity()).requestUpdatePOI();
                             }
@@ -261,7 +259,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                         try {
                             bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(picFile.getUri()));
                             photoPrinter.printBitmap(editText.getText().toString(), bitmap);
-                        } catch (FileNotFoundException e) {
+                        } catch (FileNotFoundException | IllegalArgumentException e) {
                             e.printStackTrace();
                         }
 
@@ -305,7 +303,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
                             @Override
                             public void onFinish() {
-                                adapter.reFresh();
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs();
                                 }
@@ -365,4 +362,11 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         getActivity().startActivity(intent);
     }
 
+    @Override
+    public void onLowMemory() {
+        if (adapter != null) {
+            adapter.freeBitmaps();
+        }
+        super.onLowMemory();
+    }
 }
