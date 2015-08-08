@@ -25,458 +25,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10e9bb51-7c4e-4b15-8af3-f6eba668576d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_22_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/color/tab_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-hdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-mdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xhdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_gmap.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable-xxhdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable/btn_cost_selected.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable/btn_cost_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable/btn_view_selected.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable/btn_view_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/drawable/imagebutton_circle_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/layout/classical_progress_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/layout/record_audio.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-w820dp/values-w820dp.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/color/tab_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-hdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-mdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xhdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_gmap.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable-xxhdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable/btn_cost_selected.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable/btn_cost_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable/btn_view_selected.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable/btn_view_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/drawable/imagebutton_circle_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/layout/classical_progress_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/layout/record_audio.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-w820dp/values-w820dp.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/color/tab_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-hdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-mdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xhdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_backup_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_dashboard.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_download.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_font.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_fontsize.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_frequency.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_fullscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_gmap.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_google.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_map.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_musicfile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_number.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_path.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_piechart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable-xxhdpi/ic_restore_category.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable/btn_cost_selected.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable/btn_cost_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable/btn_view_selected.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable/btn_view_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/drawable/imagebutton_circle_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/layout/classical_progress_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/layout/record_audio.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllAudioFragment$AudioAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllAudioFragment$AudioAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllAudioFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllAudioFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$POIAdapter$ViewHolder$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$POIAdapter$ViewHolder$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$POIAdapter$ViewHolder.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$POIAdapter$ViewHolder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$POIAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$POIAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$PictureAdapter$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$PictureAdapter$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$PictureAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment$PictureAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllPictureFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/AllRecordActivity$AnalysisTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/AllRecordActivity$AnalysisTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/AllRecordActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/AllRecordActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllTextFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllTextFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllVideoFragment$VideoAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllVideoFragment$VideoAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllVideoFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AllVideoFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$AudioAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$AudioAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment$MyMultiChoiceModeListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/AudioFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/BuildConfig.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/BuildConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity$CategoryAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/CategoryActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/views/CheckableLayout.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/views/CheckableLayout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostBarChartFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostBarChartFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$CostAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$CostAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$MyMultiChoiceModeListener$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$MyMultiChoiceModeListener$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$MyMultiChoiceModeListener$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$MyMultiChoiceModeListener$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$MyMultiChoiceModeListener.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment$MyMultiChoiceModeListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostListFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostPieChartFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/CostPieChartFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/DownloadTripService$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/DownloadTripService$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/DownloadTripService.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/DownloadTripService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$DirAdapter$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$DirAdapter$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$DirAdapter$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$DirAdapter$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$DirAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$DirAdapter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$MoveFilesTask$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$MoveFilesTask$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$MoveFilesTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper$MoveFilesTask.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/FileHelper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/GenerateVideoService$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/GenerateVideoService$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/GenerateVideoService.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/GenerateVideoService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity$MemoryAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity$MemoryAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/GetContentActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$CompressTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$CompressTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$GetAccessTokenTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$GetAccessTokenTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TimeSort.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TimeSort.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$4.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$5.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$6.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$7.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$8.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$8.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$GroupViewHolder.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$GroupViewHolder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$ViewHolder.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter$ViewHolder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$TripAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$UpdateTripTimeZoneTask$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$UpdateTripTimeZoneTask$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$UpdateTripTimeZoneTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment$UpdateTripTimeZoneTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/LocalTripsFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MainActivity$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MainActivity$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MainActivity$4.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MainActivity$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MainActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MainActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MultiFileChooseActivity$FileAdapter$FileData.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/MultiFileChooseActivity$FileAdapter$FileData.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/MyBackupAgent.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/MyBackupAgent.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/MyCalendar.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/MyCalendar.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/MyImageDecoder.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/MyImageDecoder.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/POI.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/POI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/views/POIInfoWindowAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/views/POIInfoWindowAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/PackageHelper.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/PackageHelper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$4.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$5.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$6.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$7.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$MyPaintView.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity$MyPaintView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PaintActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$4.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$MyMultiChoiceModeListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$PictureAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment$PictureAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PictureFragment.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PlayPointActivity$ImgTag.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PlayPointActivity$ImgTag.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PlayPointActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/PlayPointActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PreferFragment$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PreferFragment$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PreferFragment$UpdateTripTimeZoneTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PreferFragment$UpdateTripTimeZoneTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PreferFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/PreferFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$array.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$array.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$attr.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$attr.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$bool.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$bool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/ads/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/ads/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/analytics/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/analytics/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appindexing/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appindexing/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appinvite/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appinvite/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appstate/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appstate/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/cast/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/cast/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/drive/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/drive/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/fitness/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/fitness/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/games/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/games/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/gcm/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/gcm/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/identity/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/identity/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/location/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/location/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/maps/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/maps/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/nearby/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/nearby/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/panorama/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/panorama/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/plus/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/plus/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/safetynet/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/safetynet/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wallet/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wallet/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wearable/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wearable/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$color.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/cardview/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/cardview/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/recyclerview/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/recyclerview/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/yuku/ambilwarna/R$dimen.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/yuku/ambilwarna/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/ads/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/ads/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/analytics/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/analytics/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appindexing/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appindexing/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appinvite/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appinvite/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appstate/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appstate/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/cast/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/cast/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/drive/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/drive/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/fitness/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/fitness/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/games/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/games/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/gcm/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/gcm/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/identity/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/identity/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/location/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/location/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/maps/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/maps/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/nearby/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/nearby/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/panorama/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/panorama/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/plus/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/plus/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/safetynet/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/safetynet/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wallet/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wallet/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wearable/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wearable/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$drawable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$id.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$id.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$id.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$id.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$integer.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$integer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$layout.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$layout.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$layout.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$layout.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$menu.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$menu.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$raw.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$raw.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/design/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/appcompat/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/android/support/v7/mediarouter/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/ads/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/ads/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/analytics/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/analytics/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appindexing/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appindexing/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appinvite/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appinvite/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appstate/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/appstate/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/cast/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/cast/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/drive/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/drive/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/fitness/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/fitness/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/games/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/games/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/gcm/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/gcm/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/identity/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/identity/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/location/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/location/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/maps/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/maps/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/nearby/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/nearby/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/panorama/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/panorama/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/plus/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/plus/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/safetynet/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/safetynet/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wallet/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wallet/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wearable/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/google/android/gms/wearable/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$string.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$style.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$styleable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$styleable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$xml.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R$xml.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$RefreshTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$RefreshTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$UpdateRunnable$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$UpdateRunnable$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$UpdateRunnable.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity$UpdateRunnable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/RecordActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService$PauseReceiver.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService$PauseReceiver.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService$ScreenOnOffReceiver.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService$ScreenOnOffReceiver.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService$StopTripReceiver.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService$StopTripReceiver.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/RecordService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/RemoteTripsFragment$TripAdapter$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/RemoteTripsFragment$TripAdapter$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/RemoteTripsFragment$TripAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/RemoteTripsFragment$TripAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/RemoteTripsFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/RemoteTripsFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/SendTripService$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/SendTripService$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/SendTripService.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/services/SendTripService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/TextFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/TextFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/Trip.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/data/Trip.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/TripDiaryApplication.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/TripDiaryApplication.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$MyMultiChoiceModeListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$VideoAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment$VideoAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/VideoFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewActivity$MyPagerAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewActivity$MyPagerAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewCostActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewCostActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewCostFragment$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewCostFragment$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewCostFragment$TabsAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewCostFragment$TabsAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewCostFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewCostFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity$AltitudeFormatter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity$AltitudeFormatter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity$MyMarkerView.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity$MyMarkerView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity$SpeedFormatter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity$SpeedFormatter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewGraphAcivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$10$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$10$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$10.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$10.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$2$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$2$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$4$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$4$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$4.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$5.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$5.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$6.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$6.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$7.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$7.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$8.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$8.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$9.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$9.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$GetAccessTokenTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$GetAccessTokenTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$ImportMemoryTask$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$ImportMemoryTask$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$ImportMemoryTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$ImportMemoryTask.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$TripPlayer.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment$TripPlayer.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/fragments/ViewMapFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$2.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$ImportFilesTask.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$ImportFilesTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$MyPagerAdapter.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity$MyPagerAdapter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewPointActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewTripActivity$1.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewTripActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewTripActivity$Mode.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewTripActivity$Mode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewTripActivity.class" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/classes/release/com/yupog2003/tripdiary/ViewTripActivity.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/allclasses.jar" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/allclasses.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ambilWarna/build/outputs/aar/ambilWarna-debug.aar" afterPath="$PROJECT_DIR$/ambilWarna/build/outputs/aar/ambilWarna-debug.aar" />
@@ -485,7 +59,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ambilWarna/build/intermediates/bundles/debug/classes.jar" afterPath="$PROJECT_DIR$/ambilWarna/build/intermediates/bundles/debug/classes.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ambilWarna/build/intermediates/bundles/release/classes.jar" afterPath="$PROJECT_DIR$/ambilWarna/build/intermediates/bundles/release/classes.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/exploded-aar/TripDiary/ambilWarna/unspecified/jars/classes.jar" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/exploded-aar/TripDiary/ambilWarna/unspecified/jars/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/dex/release/classes2.dex" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/dex/release/classes2.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/componentClasses.jar" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/componentClasses.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/gradle_project_sync_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/gradle_project_sync_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ambilWarna/build/intermediates/resources/resources-debug-androidTest.ap_" afterPath="$PROJECT_DIR$/ambilWarna/build/intermediates/resources/resources-debug-androidTest.ap_" />
@@ -494,118 +67,27 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/resources/resources-release.ap_" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/resources/resources-release.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/outputs/apk/tripDiary-release-unaligned.apk" afterPath="$PROJECT_DIR$/tripDiary/build/outputs/apk/tripDiary-release-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/tripDiary-release.apk" afterPath="$PROJECT_DIR$/tripDiary/tripDiary-release.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AllPictureFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AllPictureFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/AllRecordActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/AllRecordActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/manifests/full/release/AndroidManifest.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/manifests/full/release/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AudioFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AudioFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/buildConfig/androidTest/debug/com/yupog2003/tripdiary/test/BuildConfig.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/buildConfig/androidTest/debug/com/yupog2003/tripdiary/test/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/buildConfig/debug/com/yupog2003/tripdiary/BuildConfig.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/buildConfig/debug/com/yupog2003/tripdiary/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/buildConfig/release/com/yupog2003/tripdiary/BuildConfig.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/buildConfig/release/com/yupog2003/tripdiary/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/CostListFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/CostListFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/services/GenerateVideoService.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/services/GenerateVideoService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/GetContentActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/GetContentActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/LocalTripsFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/LocalTripsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/MainActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyBackupAgent.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyBackupAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyCalendar.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyCalendar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzer2.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzer2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzerJava.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzerJava.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDecoder.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDecoder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/POI.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/POI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/PaintActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/PaintActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PictureFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PictureFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/PlayPointActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/PlayPointActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PreferFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PreferFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/design/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/design/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/cardview/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/cardview/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/mediarouter/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/mediarouter/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/recyclerview/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/android/support/v7/recyclerview/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/ads/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/ads/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/analytics/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/analytics/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/appindexing/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/appindexing/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/appinvite/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/appinvite/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/appstate/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/appstate/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/cast/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/cast/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/drive/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/drive/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/fitness/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/fitness/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/games/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/games/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/gcm/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/gcm/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/identity/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/identity/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/location/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/location/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/maps/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/maps/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/nearby/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/nearby/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/panorama/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/panorama/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/plus/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/plus/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/safetynet/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/safetynet/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/wallet/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/wallet/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/wearable/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/google/android/gms/wearable/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/yupog2003/tripdiary/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/com/yupog2003/tripdiary/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/yuku/ambilwarna/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/debug/yuku/ambilwarna/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/design/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/design/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/appcompat/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/cardview/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/cardview/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/mediarouter/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/mediarouter/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/recyclerview/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/android/support/v7/recyclerview/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/ads/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/ads/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/analytics/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/analytics/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/appindexing/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/appindexing/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/appinvite/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/appinvite/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/appstate/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/appstate/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/cast/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/cast/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/drive/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/drive/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/fitness/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/fitness/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/games/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/games/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/gcm/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/gcm/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/identity/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/identity/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/location/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/location/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/maps/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/maps/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/nearby/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/nearby/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/panorama/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/panorama/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/plus/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/plus/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/safetynet/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/safetynet/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/wallet/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/wallet/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/wearable/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/google/android/gms/wearable/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/yupog2003/tripdiary/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/com/yupog2003/tripdiary/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/yuku/ambilwarna/R.java" afterPath="$PROJECT_DIR$/tripDiary/build/generated/source/r/release/yuku/ambilwarna/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/symbols/debug/R.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/symbols/release/R.txt" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/symbols/release/R.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/RecordActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/RecordActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/services/RecordService.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/services/RecordService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/TextFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/TextFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/TripDiaryApplication.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/TripDiaryApplication.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/VideoFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/VideoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewCostFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewCostFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewGraphAcivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewGraphAcivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewMapFragment.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewMapFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewPointActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewPointActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java" afterPath="$PROJECT_DIR$/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build.gradle" afterPath="$PROJECT_DIR$/tripDiary/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/components.flags" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/components.flags" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/values-w820dp/dimens.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/res/values-w820dp/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/maindexlist.txt" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/maindexlist.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/outputs/logs/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/tripDiary/build/outputs/logs/manifest-merger-debug-report.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/outputs/logs/manifest-merger-release-report.txt" afterPath="$PROJECT_DIR$/tripDiary/build/outputs/logs/manifest-merger-release-report.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/manifest_keep.txt" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/multi-dex/release/manifest_keep.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/incremental/mergeResources/debug/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/incremental/mergeResources/release/merger.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/incremental/mergeResources/release/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/values-zh-rCN/strings.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/res/values-zh-rCN/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/values-zh-rHK/strings.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/res/values-zh-rHK/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/src/main/res/values-zh-rTW/strings.xml" afterPath="$PROJECT_DIR$/tripDiary/src/main/res/values-zh-rTW/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-zh-rCN/values-zh-rCN.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-zh-rCN/values-zh-rCN.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-zh-rCN/values-zh-rCN.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-zh-rCN/values-zh-rCN.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-zh-rHK/values-zh-rHK.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-zh-rHK/values-zh-rHK.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-zh-rHK/values-zh-rHK.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-zh-rHK/values-zh-rHK.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-zh-rTW/values-zh-rTW.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values-zh-rTW/values-zh-rTW.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-zh-rTW/values-zh-rTW.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values-zh-rTW/values-zh-rTW.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values/values.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/debug/values/values.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values/values.xml" afterPath="$PROJECT_DIR$/tripDiary/build/intermediates/res/release/values/values.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TripDiary.iws" />
@@ -710,51 +192,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml">
+      <file leaf-file-name="ViewTripActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="86" column="66" selection-start-line="86" selection-start-column="66" selection-end-line="86" selection-end-column="66" />
+              <caret line="336" column="17" selection-start-line="336" selection-start-column="17" selection-end-line="336" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="global_tracker.xml" pinned="false" current-in-tab="false">
-        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/global_tracker.xml">
+      <file leaf-file-name="Trip.java" pinned="false" current-in-tab="true">
+        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="49" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewMapFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewMapFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="18.355263">
-              <caret line="861" column="26" selection-start-line="861" selection-start-column="26" selection-end-line="861" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewGraphAcivity.java" pinned="false" current-in-tab="false">
-        <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewGraphAcivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+            <state vertical-scroll-proportion="-1.0079365">
+              <caret line="142" column="124" selection-start-line="142" selection-start-column="124" selection-end-line="142" selection-end-column="124" />
               <folding />
             </state>
           </provider>
@@ -2820,7 +2272,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5734820260466" />
+        <entry key="$PROJECT_DIR$" value="5734856717881" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -3129,7 +2581,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AllAudioFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AllTextFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AllVideoFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/activity_test.xml" />
@@ -3143,9 +2594,6 @@
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/activity_restore_trip.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewGraphAcivity.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/TextFragment.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/VideoFragment.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AudioFragment.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewPointActivity.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/dimens.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-w820dp/dimens.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rHK/strings.xml" />
@@ -3153,33 +2601,37 @@
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rCN/strings.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/strings.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AllPictureFragment.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDecoder.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/AllRecordActivity.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/TripDiaryApplication.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/GetContentActivity.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/MainActivity.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/PaintActivity.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/PlayPointActivity.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/RecordActivity.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzerJava.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyBackupAgent.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyCalendar.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/POI.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/CostListFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/LocalTripsFragment.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PictureFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PreferFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewCostFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/GenerateVideoService.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/RecordService.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/RestoreTripActivity.java" />
-        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewMapFragment.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/PlayPointActivity.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PictureFragment.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/VideoFragment.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AudioFragment.java" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/global_tracker.xml" />
         <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build.gradle" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/RecordActivity.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/POI.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDecoder.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzer2.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzerJava.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewMapFragment.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/RecordService.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java" />
+        <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewPointActivity.java" />
       </list>
     </option>
   </component>
@@ -3248,6 +2700,38 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="tripDiary" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripDiary" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripDiary" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripdiary" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TripDiary" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tripDiary" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -3583,12 +3067,18 @@
       <option name="project" value="LOCAL" />
       <updated>1438872115350</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="V1.2.7">
+      <created>1438965030849</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1438965030849</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="0" width="1378" height="724" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.63279855" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -3601,10 +3091,11 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19786096" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976827" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3137255" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35115865" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19318181" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19318181" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27450982" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20681818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -3616,7 +3107,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35650623" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38680926" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3667,7 +3157,8 @@
     <MESSAGE value="V1.2.5" />
     <MESSAGE value="V1.2.6" />
     <MESSAGE value="V1.2.7" />
-    <option name="LAST_COMMIT_MESSAGE" value="V1.2.7" />
+    <MESSAGE value="V1.2.8" />
+    <option name="LAST_COMMIT_MESSAGE" value="V1.2.8" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3676,48 +3167,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/color.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-w820dp/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rHK/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28382838">
-          <caret line="299" column="46" selection-start-line="299" selection-start-column="46" selection-end-line="299" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9655173">
-          <caret line="300" column="46" selection-start-line="300" selection-start-column="46" selection-end-line="300" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rCN/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9655173">
-          <caret line="302" column="46" selection-start-line="302" selection-start-column="46" selection-end-line="302" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65346533">
@@ -3755,13 +3204,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="107" column="72" selection-start-line="107" selection-start-column="72" selection-end-line="107" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDecoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="64" selection-start-line="46" selection-start-column="64" selection-end-line="46" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#4294#4295#0" expanded="false" />
+            <element signature="e#4343#4344#0" expanded="false" />
+            <element signature="e#4390#4391#0" expanded="false" />
+            <element signature="e#4429#4430#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3773,13 +3222,6 @@
     <entry file="file://$PROJECT_DIR$/captures/Snapshot_2015.08.07_19.58.20.hprof">
       <provider selected="true" editor-type-id="capture-editor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/VideoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="105" column="53" selection-start-line="105" selection-start-column="53" selection-end-line="105" selection-end-column="53" />
-        </state>
       </provider>
     </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/preference.xml">
@@ -3806,56 +3248,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewPointActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="126" column="47" selection-start-line="126" selection-start-column="47" selection-end-line="126" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/GetContentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="509" column="52" selection-start-line="509" selection-start-column="52" selection-end-line="509" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="265" column="37" selection-start-line="265" selection-start-column="37" selection-end-line="265" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/PlayPointActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="226" column="69" selection-start-line="226" selection-start-column="69" selection-end-line="226" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/RecordActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="533" column="81" selection-start-line="533" selection-start-column="81" selection-end-line="533" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="857" column="158" selection-start-line="857" selection-start-column="158" selection-end-line="857" selection-end-column="158" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzerJava.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="220" column="82" selection-start-line="220" selection-start-column="82" selection-end-line="220" selection-end-column="82" />
           <folding />
         </state>
       </provider>
@@ -3867,48 +3263,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyCalendar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="198" column="78" selection-start-line="198" selection-start-column="78" selection-end-line="198" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDownloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/POI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="144" column="59" selection-start-line="144" selection-start-column="59" selection-end-line="144" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="145" column="64" selection-start-line="145" selection-start-column="64" selection-end-line="145" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/CostListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="336" column="75" selection-start-line="336" selection-start-column="75" selection-end-line="336" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PictureFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="261" column="81" selection-start-line="261" selection-start-column="81" selection-end-line="261" selection-end-column="81" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3917,13 +3276,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="410" column="63" selection-start-line="410" selection-start-column="63" selection-end-line="410" selection-end-column="63" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewCostFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="258" column="55" selection-start-line="258" selection-start-column="55" selection-end-line="258" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -3965,14 +3317,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="519" column="19" selection-start-line="519" selection-start-column="19" selection-end-line="519" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/captures/Snapshot_2015.08.07_22.05.45.hprof">
       <provider selected="true" editor-type-id="capture-editor">
         <state />
@@ -3994,14 +3338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/RecordService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5533708">
-          <caret line="207" column="17" selection-start-line="207" selection-start-column="17" selection-end-line="207" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/RestoreTripActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.3483146">
@@ -4019,6 +3355,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewGraphAcivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.084269665">
+          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/GetContentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="194" column="34" selection-start-line="194" selection-start-column="34" selection-end-line="194" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/PlayPointActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7619048">
+          <caret line="68" column="18" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/DeviceHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2380953">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Android/android-sdk-linux/extras/android/m2repository/com/android/support/support-v4/22.2.1/support-v4-22.2.1-sources.jar!/android/support/v4/provider/DocumentFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7220902">
+          <caret line="175" column="33" selection-start-line="175" selection-start-column="33" selection-end-line="175" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/AudioFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="174" column="95" selection-start-line="174" selection-start-column="95" selection-end-line="174" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/ColorHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyCalendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="165" column="18" selection-start-line="165" selection-start-column="18" selection-end-line="165" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4027,34 +3427,151 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewGraphAcivity.java">
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/RecordService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.46355686">
+          <caret line="96" column="41" selection-start-line="96" selection-start-column="41" selection-end-line="96" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/global_tracker.xml">
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="49" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="66" selection-start-line="86" selection-start-column="66" selection-end-line="86" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.33236152">
+          <caret line="543" column="23" selection-start-line="543" selection-start-column="23" selection-end-line="543" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewMapFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="18.355263">
-          <caret line="861" column="26" selection-start-line="861" selection-start-column="26" selection-end-line="861" selection-end-column="26" />
+        <state vertical-scroll-proportion="-2.8163266">
+          <caret line="1240" column="10" selection-start-line="1240" selection-start-column="10" selection-end-line="1240" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDecoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17492712">
+          <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/MyImageDownloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.212828">
+          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/PictureFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7259475">
+          <caret line="118" column="44" selection-start-line="118" selection-start-column="44" selection-end-line="118" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/global_tracker.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2186589">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04373178">
+          <caret line="86" column="66" selection-start-line="86" selection-start-column="66" selection-end-line="86" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/POI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5952381">
+          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewCostFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.825397">
+          <caret line="258" column="55" selection-start-line="258" selection-start-column="55" selection-end-line="258" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/VideoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="7.2619047">
+          <caret line="246" column="95" selection-start-line="246" selection-start-column="95" selection-end-line="246" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/TextFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.515873">
+          <caret line="108" column="32" selection-start-line="108" selection-start-column="32" selection-end-line="108" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewPointActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.055555556">
+          <caret line="370" column="8" selection-start-line="370" selection-start-column="8" selection-end-line="370" selection-end-column="8" />
+          <folding>
+            <element signature="e#5453#5454#0" expanded="true" />
+            <element signature="e#5485#5486#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/RecordActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="425" column="72" selection-start-line="425" selection-start-column="72" selection-end-line="425" selection-end-column="72" />
+          <folding>
+            <element signature="e#19477#19502#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzer2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06349207">
+          <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/GpxAnalyzerJava.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3015873">
+          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ViewTripActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="336" column="17" selection-start-line="336" selection-start-column="17" selection-end-line="336" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/Trip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0079365">
+          <caret line="142" column="124" selection-start-line="142" selection-start-column="124" selection-end-line="142" selection-end-column="124" />
           <folding />
         </state>
       </provider>

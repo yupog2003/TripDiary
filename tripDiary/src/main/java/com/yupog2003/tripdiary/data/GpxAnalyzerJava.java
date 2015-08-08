@@ -34,10 +34,10 @@ public class GpxAnalyzerJava {
         int timeZoneOffset = 0;
         cache = new TrackCache();
         DocumentFile cacheFile = trip.cacheFile;
-        long cacheFileLength=cacheFile.length();
+        long cacheFileLength = cacheFile.length();
         boolean cacheExsit = cacheFileLength > 0;
         if (cacheExsit) {
-            fileSize=cacheFileLength;
+            fileSize = cacheFileLength;
             int numOfLines = FileHelper.getNumOfLinesInFile(cacheFile);
             int size = (numOfLines - 9) / 4;
             cache.latitudes = new double[size];
@@ -45,7 +45,7 @@ public class GpxAnalyzerJava {
             cache.altitudes = new float[size];
             cache.times = new String[size];
         } else {
-            fileSize=trip.gpxFile.length();
+            fileSize = trip.gpxFile.length();
             String timezone = MyCalendar.getTripTimeZone(context, tripName);
             timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
         }
@@ -101,7 +101,7 @@ public class GpxAnalyzerJava {
 
     public boolean parse(DocumentFile gpxFile, TrackCache cache, int timeZoneOffset) {
         try {
-            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), FileHelper.getFileName(gpxFile)+".cache");
+            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), FileHelper.getFileName(gpxFile) + ".cache");
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(gpxFile.getUri())));
             String s;
             int count = 0;

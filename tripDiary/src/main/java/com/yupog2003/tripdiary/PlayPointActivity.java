@@ -61,7 +61,12 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         }
         String tripName = getIntent().getStringExtra(tag_trip);
         String poiName = getIntent().getStringExtra(tag_poi);
-        poi = new POI(this, FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName));
+        DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
+        if (poiFile == null) {
+            finish();
+            return;
+        }
+        poi = new POI(this, poiFile);
         this.name = poi.title;
         viewFlipper = (ViewFlipper) findViewById(R.id.pointviewflipper);
         viewFlipper.setInAnimation(this, android.R.anim.fade_in);
@@ -85,7 +90,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         getMenuInflater().inflate(R.menu.activity_play_point, menu);
         return true;
     }
-    private void play(){
+
+    private void play() {
         playThread = new Thread(new Runnable() {
 
             public void run() {
@@ -189,6 +195,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         });
         playThread.start();
     }
+
     private void prepareViews() {
         prepareDiary();
         preparePictures();

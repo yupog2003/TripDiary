@@ -353,7 +353,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(outputFile));
                                         getActivity().startActivity(intent);
                                         DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_gpx", trip.tripName, null);
-                                    } catch (IOException | IllegalArgumentException e) {
+                                    } catch (NullPointerException | IOException | IllegalArgumentException e) {
                                         e.printStackTrace();
                                     }
 
@@ -738,6 +738,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         edittime.setIs24HourView(true);
         edittime.setCurrentHour(time.get(Calendar.HOUR_OF_DAY));
         edittime.setCurrentMinute(time.get(Calendar.MINUTE));
+        final int defaultSeconds=time.get(Calendar.SECOND);
         ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
@@ -751,14 +752,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 double altitude = altStr.equals("") ? position.altitude : Double.parseDouble(altStr);
                 LatLng location = new LatLng(lat, lng);
                 MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone(trip.timezone));
-                time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), 0);
+                time.set(editdate.getYear(), editdate.getMonth(), editdate.getDayOfMonth(), edittime.getCurrentHour(), edittime.getCurrentMinute(), defaultSeconds);
                 time.format3339();
                 time.setTimeZone("UTC");
                 if (title.equals("")) {
-                    Toast.makeText(getActivity(), getString(R.string.input_the_poi_title), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.input_the_poi_title), Toast.LENGTH_SHORT).show();
                 } else {
                     if (FileHelper.findfile(trip.dir, title) != null) {
-                        Toast.makeText(getActivity(), getString(R.string.there_is_a_same_poi), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getString(R.string.there_is_a_same_poi), Toast.LENGTH_SHORT).show();
                     } else {
                         addPoint(title, location, altitude, time);
                     }
@@ -770,7 +771,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     private void addPoint(String poiName, LatLng latlng, double altitude, MyCalendar time) {
-        POI poi = new POI(getActivity(), trip.dir.createDirectory(poiName));
+        DocumentFile poiFile = trip.dir.createDirectory(poiName);
+        if (poiFile == null || getActivity() == null) return;
+        POI poi = new POI(getActivity(), poiFile);
         poi.updateBasicInformation(null, time, latlng.latitude, latlng.longitude, altitude);
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
             ((ViewTripActivity) getActivity()).onPOIUpdate(null);
@@ -1365,7 +1368,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 writeEntry(tempKML.getName(), tempKML, zos);
                 zos.close();
                 FileHelper.deletedir(tempDir.getPath());
-            } catch (IOException | IllegalArgumentException e) {
+            } catch (NullPointerException | IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
             return null;

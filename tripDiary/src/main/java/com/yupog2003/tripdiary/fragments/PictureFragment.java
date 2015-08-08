@@ -304,7 +304,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             @Override
                             public void onFinish() {
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
-                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs();
+                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
                                 }
                             }
                         }).execute();

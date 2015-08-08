@@ -285,7 +285,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         } else if (v.equals(refresh)) {
             new RefreshTask(true, false).execute();
         } else if (v.equals(takePicture)) {
-            if (poi == null) return;
+            if (poi == null || poi.picDir == null) return;
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".jpg");
@@ -298,7 +298,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 Toast.makeText(this, R.string.camera_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeVideo)) {
-            if (poi == null) return;
+            if (poi == null || poi.videoDir == null) return;
             Intent i = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.videoDir.createFile("", fileName + ".3gp");
@@ -311,7 +311,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 Toast.makeText(this, R.string.camera_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeAudio)) {
-            if (poi == null) return;
+            if (poi == null || poi.audioDir == null) return;
             Intent i = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.audioDir.createFile("", fileName + ".mp3");
@@ -321,7 +321,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 Toast.makeText(this, R.string.audio_recorder_is_not_available, Toast.LENGTH_SHORT).show();
             }
         } else if (v.equals(takeText)) {
-            if (poi == null) return;
+            if (poi == null || poi.diary == null) return;
             final EditText getText = new EditText(this);
             getText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             getText.setText(poi.diary);
@@ -340,7 +340,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             ab.setNegativeButton(getString(R.string.cancel), null);
             ab.show();
         } else if (v.equals(takePaint)) {
-            if (poi == null) return;
+            if (poi == null || poi.picDir == null) return;
             nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".png");
             if (nowFileForCameraIntent == null) return;
             Intent intent = new Intent(this, PaintActivity.class);
@@ -633,7 +633,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-
         if (poi != null && marker != null && marker.getTitle() != null && marker.getTitle().equals(poi.title)) {
             poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
         }

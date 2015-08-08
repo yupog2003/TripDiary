@@ -30,12 +30,12 @@ public class GpxAnalyzer2 {
         String tripName = trip.tripName;
         cache = new TrackCache();
         DocumentFile cacheFile = trip.cacheFile;
-        long cacheFileLength=cacheFile.length();
+        long cacheFileLength = cacheFile.length();
         boolean cacheExist = cacheFileLength > 0;
         File temp = new File(context.getCacheDir(), "temp");
         boolean success;
         if (cacheExist) {
-            fileSize=cacheFileLength;
+            fileSize = cacheFileLength;
             FileHelper.copyFile(cacheFile, temp);
             int numOfLines = FileHelper.getNumOfLinesInFile(temp);
             int size = (numOfLines - 9) / 4;
@@ -49,7 +49,7 @@ public class GpxAnalyzer2 {
             String timezone = MyCalendar.getTripTimeZone(context, tripName);
             int timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
             FileHelper.copyFile(trip.gpxFile, temp);
-            fileSize=temp.length();
+            fileSize = temp.length();
             success = parse(temp.getPath(), cache, timeZoneOffset);
             FileHelper.copyFile(new File(temp.getPath() + ".cache"), cacheFile);
             new File(temp.getPath() + ".cache").delete();

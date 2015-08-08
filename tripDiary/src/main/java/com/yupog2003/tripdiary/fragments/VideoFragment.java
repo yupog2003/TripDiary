@@ -244,7 +244,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                             public void onFinish() {
 
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
-                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs();
+                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
                                 }
                             }
                         }).execute();

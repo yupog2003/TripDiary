@@ -94,7 +94,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         updateDuration = Math.max(recordDuration, 200);
         recordDistanceInterval = Integer.valueOf(preferences.getString("min_distance_record", "20"));
         setupNotification(name);
-        if (trip.gpxFile.exists()) {
+        if (trip.gpxFile != null || trip.gpxFile.exists()) {
             try {
                 if (trip.gpxFile.length() == 0) {
                     bw = new BufferedWriter(new OutputStreamWriter(getContentResolver().openOutputStream(trip.gpxFile.getUri(), "wa")));
@@ -399,7 +399,9 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                 float z = event.values[2] / SensorManager.GRAVITY_EARTH;
                 float g = (float) Math.sqrt(x * x + y * y + z * z);
                 if (g > SHAKE_THRESHOLD_GRAVITY && lastUpadateSensor - lastAddPOI > min_diffTime_between_add_poi) {
-                    POI poi = new POI(RecordService.this, trip.dir.createDirectory(String.valueOf(System.currentTimeMillis())));
+                    DocumentFile poiFile = trip.dir.createDirectory(String.valueOf(System.currentTimeMillis()));
+                    if (poiFile == null) return;
+                    POI poi = new POI(RecordService.this, poiFile);
                     MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
                     poi.updateBasicInformation(null, time, latitude, longitude, elevation);
                     lastAddPOI = lastUpadateSensor;

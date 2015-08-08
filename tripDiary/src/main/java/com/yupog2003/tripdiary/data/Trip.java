@@ -41,7 +41,7 @@ public class Trip implements Comparable<Trip> {
         this(context, dir, onlyBasic, null);
     }
 
-    public Trip(Context context, DocumentFile dir, boolean onlyBasic, ConstructListener listener)  throws NullPointerException{
+    public Trip(Context context, DocumentFile dir, boolean onlyBasic, ConstructListener listener) throws NullPointerException {
         this.dir = dir;
         this.context = context;
         this.listener = listener;
@@ -96,7 +96,7 @@ public class Trip implements Comparable<Trip> {
             }
             note = sb.toString();
             br.close();
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
         refreshPOIs();
@@ -131,7 +131,9 @@ public class Trip implements Comparable<Trip> {
     }
 
     public void deleteCache() {
-        cacheFile.delete();
+        if (cacheFile!=null){
+            cacheFile.delete();
+        }
         context.getSharedPreferences("tripTime", 0).edit().remove(tripName).commit();
     }
 
@@ -143,7 +145,7 @@ public class Trip implements Comparable<Trip> {
                 bw.flush();
                 bw.close();
                 this.note = note;
-            } catch (IOException | IllegalArgumentException e) {
+            } catch (NullPointerException | IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
@@ -189,6 +191,7 @@ public class Trip implements Comparable<Trip> {
     }
 
     public void renameTrip(String name) {
+        if (dir == null || cacheFile == null || gpxFile == null) return;
         SharedPreferences p = context.getSharedPreferences("trip", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = p.edit();
         editor.remove(tripName);

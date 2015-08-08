@@ -336,7 +336,9 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     return trip != null && lat.length > 0;
                 }
             } catch (Exception e) {
-                trip.cacheFile.delete();
+                if (trip != null || trip.cacheFile != null) {
+                    trip.cacheFile.delete();
+                }
                 e.printStackTrace();
             }
             return false;

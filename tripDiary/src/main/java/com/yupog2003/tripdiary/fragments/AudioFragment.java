@@ -172,7 +172,7 @@ public class AudioFragment extends Fragment {
                             public void onFinish() {
 
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
-                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs();
+                                    ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
                                 }
                             }
                         }).execute();

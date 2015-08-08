@@ -54,7 +54,7 @@ public class MyImageDecoder implements ImageDecoder {
     }
 
     private Bitmap makeVideoThumbnail(DocumentFile dir, int width, int height, String filePath) {
-        if (filePath == null) {
+        if (filePath == null || dir == null) {
             return null;
         }
         try {

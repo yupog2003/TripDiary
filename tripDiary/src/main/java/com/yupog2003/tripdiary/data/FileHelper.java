@@ -67,7 +67,7 @@ public class FileHelper {
     public static void copyFile(File infile, File outfile) {
         try {
             copyByStream(new FileInputStream(infile), new FileOutputStream(outfile));
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -76,7 +76,7 @@ public class FileHelper {
         try {
             InputStream is = TripDiaryApplication.instance.getContentResolver().openInputStream(infile.getUri());
             copyByStream(is, new FileOutputStream(outfile));
-        } catch (FileNotFoundException | IllegalArgumentException e) {
+        } catch (FileNotFoundException | IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -85,7 +85,7 @@ public class FileHelper {
         try {
             OutputStream os = TripDiaryApplication.instance.getContentResolver().openOutputStream(outfile.getUri());
             copyByStream(new FileInputStream(infile), os);
-        } catch (FileNotFoundException | IllegalArgumentException e) {
+        } catch (FileNotFoundException | IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -95,7 +95,7 @@ public class FileHelper {
             InputStream is = TripDiaryApplication.instance.getContentResolver().openInputStream(infile.getUri());
             OutputStream os = TripDiaryApplication.instance.getContentResolver().openOutputStream(outfile.getUri());
             copyByStream(is, os);
-        } catch (FileNotFoundException | IllegalArgumentException e) {
+        } catch (FileNotFoundException | IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -374,9 +374,9 @@ public class FileHelper {
                             e.printStackTrace();
                         } finally {
                             if (c != null) {
-                                try{
+                                try {
                                     c.close();
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -435,6 +435,7 @@ public class FileHelper {
     }
 
     public static DocumentFile findfile(DocumentFile dir, String... name) {
+        if (dir == null) return null;
         return findfile(dir.listFiles(), name);
     }
 
@@ -501,7 +502,7 @@ public class FileHelper {
     }
 
 
-    public static void unZip(InputStream is, DocumentFile target){
+    public static void unZip(InputStream is, DocumentFile target) {
         try {
             ZipInputStream zis = new ZipInputStream(is);
             ZipEntry entry;

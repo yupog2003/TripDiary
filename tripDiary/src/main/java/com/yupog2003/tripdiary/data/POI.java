@@ -37,7 +37,7 @@ public class POI implements Comparable<POI> {
     public double altitude;
     public String diary;
 
-    public POI(Context context, DocumentFile dir) throws NullPointerException{
+    public POI(Context context, DocumentFile dir) throws NullPointerException {
         this.context = context;
         this.dir = dir;
         if (context == null || dir == null) {
@@ -76,13 +76,13 @@ public class POI implements Comparable<POI> {
         this.costFiles = FileHelper.listFiles(costDir, FileHelper.list_all);
         this.title = FileHelper.getFileName(dir);
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(basicInformationFile.getUri())));
-            String s;
             this.time = MyCalendar.getInstance();
             this.latitude = 0;
             this.longitude = 0;
             this.altitude = 0;
             this.diary = "";
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(basicInformationFile.getUri())));
+            String s;
             while ((s = br.readLine()) != null) {
                 if (s.startsWith("Title")) {
                     this.title = s.substring(s.indexOf("=") + 1);
@@ -104,7 +104,7 @@ public class POI implements Comparable<POI> {
             }
             br.close();
             diary = sb.toString();
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -120,6 +120,7 @@ public class POI implements Comparable<POI> {
             this.longitude = longitude;
         if (altitude != null)
             this.altitude = altitude;
+        this.time.setTimeZone("UTC");
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(basicInformationFile.getUri())));
             bw.write("Title=" + this.title + "\n");
@@ -129,7 +130,7 @@ public class POI implements Comparable<POI> {
             bw.write("Altitude=" + String.valueOf(this.altitude) + "\n");
             bw.flush();
             bw.close();
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -142,7 +143,7 @@ public class POI implements Comparable<POI> {
                 bw.write(text);
                 bw.flush();
                 bw.close();
-            } catch (IOException | IllegalArgumentException e) {
+            } catch (NullPointerException | IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
@@ -157,17 +158,17 @@ public class POI implements Comparable<POI> {
             DocumentFile outFile = null;
             if (FileHelper.isPicture(inFile)) {
                 outFile = FileHelper.findfile(picFiles, inFile.getName());
-                if (outFile == null) {
+                if (outFile == null && picDir != null) {
                     outFile = picDir.createFile("", inFile.getName());
                 }
             } else if (FileHelper.isVideo(inFile)) {
                 outFile = FileHelper.findfile(videoFiles, inFile.getName());
-                if (outFile == null) {
+                if (outFile == null && videoDir != null) {
                     outFile = videoDir.createFile("", inFile.getName());
                 }
             } else if (FileHelper.isAudio(inFile)) {
                 outFile = FileHelper.findfile(audioFiles, inFile.getName());
-                if (outFile == null) {
+                if (outFile == null && audioDir != null) {
                     outFile = audioDir.createFile("", inFile.getName());
                 }
             }
@@ -191,17 +192,17 @@ public class POI implements Comparable<POI> {
             DocumentFile outFile = null;
             if (FileHelper.isPicture(fileName)) {
                 outFile = FileHelper.findfile(picFiles, fileName);
-                if (outFile == null) {
+                if (outFile == null && picDir != null) {
                     outFile = picDir.createFile("", fileName);
                 }
             } else if (FileHelper.isVideo(fileName)) {
                 outFile = FileHelper.findfile(videoFiles, fileName);
-                if (outFile == null) {
+                if (outFile == null && videoDir != null) {
                     outFile = videoDir.createFile("", fileName);
                 }
             } else if (FileHelper.isAudio(fileName)) {
                 outFile = FileHelper.findfile(audioFiles, fileName);
-                if (outFile == null) {
+                if (outFile == null && audioDir != null) {
                     outFile = audioDir.createFile("", fileName);
                 }
             }
@@ -234,6 +235,7 @@ public class POI implements Comparable<POI> {
     }
 
     public void addCost(int type, String name, float dollar) {
+        if (costDir == null) return;
         DocumentFile cost = FileHelper.findfile(costDir, name);
         if (cost == null) {
             cost = costDir.createFile("", name);
@@ -246,7 +248,7 @@ public class POI implements Comparable<POI> {
             bw.flush();
             bw.close();
             this.costFiles = costDir.listFiles();
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

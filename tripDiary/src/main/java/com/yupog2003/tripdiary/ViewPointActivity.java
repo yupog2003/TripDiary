@@ -322,7 +322,7 @@ public class ViewPointActivity extends MyActivity {
                             if (!newName.equals(oldName)) {
                                 poi.renamePOI(newName);
                                 setTitle(newName);
-                                requestUpdatePOIs();
+                                requestUpdatePOIs(false);
                             } else {
                                 requestUpdatePOI();
                             }
@@ -347,7 +347,7 @@ public class ViewPointActivity extends MyActivity {
 
                 public void onClick(DialogInterface dialog, int which) {
                     poi.deleteSelf();
-                    requestUpdatePOIs();
+                    requestUpdatePOIs(true);
                     ViewPointActivity.this.finish();
                 }
 
@@ -361,25 +361,29 @@ public class ViewPointActivity extends MyActivity {
     }
 
     public void requestUpdatePOI() {
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ViewTripActivity.tag_request_updatePOI, true);
-        bundle.putString(ViewTripActivity.tag_update_poiNames, poi.title);
-        intent.putExtras(bundle);
-        setResult(Activity.RESULT_OK, intent);
-        poi.updateAllFields();
+        if (poi != null) {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(ViewTripActivity.tag_request_updatePOI, true);
+            bundle.putString(ViewTripActivity.tag_update_poiNames, poi.title);
+            intent.putExtras(bundle);
+            setResult(Activity.RESULT_OK, intent);
+            poi.updateAllFields();
+        }
         updateFragments();
     }
 
-    public void requestUpdatePOIs() {
+    public void requestUpdatePOIs(boolean poiDeleted) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putBoolean(ViewTripActivity.tag_request_updatePOI, true);
         bundle.putString(ViewTripActivity.tag_update_poiNames, null);
         intent.putExtras(bundle);
         setResult(Activity.RESULT_OK, intent);
-        poi.updateAllFields();
-        updateFragments();
+        if (poi != null && !poiDeleted) {
+            poi.updateAllFields();
+            updateFragments();
+        }
     }
 
     private void updateFragments() {
