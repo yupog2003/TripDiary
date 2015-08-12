@@ -16,14 +16,12 @@ public class GpxAnalyzer2 {
     private TrackCache cache;
     Trip trip;
     Context context;
-    Handler contextHandler;
     ProgressChangedListener listener;
     long fileSize;
 
-    public GpxAnalyzer2(Trip trip, Context context, Handler contextHandler) {
+    public GpxAnalyzer2(Trip trip, Context context) {
         this.trip = trip;
         this.context = context;
-        this.contextHandler = contextHandler;
     }
 
     public boolean analyze() {

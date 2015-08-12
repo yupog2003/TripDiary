@@ -1,12 +1,12 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewCostActivity;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.CostData;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
@@ -90,12 +91,18 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
             }
             ArrayList<DocumentFile> costList = new ArrayList<>();
             for (POI poi : trip.pois) {
-                costList.addAll(Arrays.asList(poi.costFiles));
+                if (poi != null) {
+                    costList.addAll(Arrays.asList(poi.costFiles));
+                }
             }
             costFiles = costList.toArray(new DocumentFile[costList.size()]);
         } else if (option == ViewCostActivity.optionPOI) {
             DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs");
-            costFiles = poiFile.listFiles();
+            if (poiFile != null) {
+                costFiles = poiFile.listFiles();
+            } else {
+                costFiles = new DocumentFile[0];
+            }
         }
         adapter = new CostAdapter(option);
         costsList.setAdapter(adapter);
@@ -262,7 +269,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(R.drawable.ic_alert);
+                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {

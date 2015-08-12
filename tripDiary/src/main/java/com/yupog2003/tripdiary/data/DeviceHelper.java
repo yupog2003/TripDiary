@@ -57,6 +57,7 @@ public class DeviceHelper {
 
     public static void sendGATrack(Application app, String category, String action, String label, Long value) {
         Tracker t = ((TripDiaryApplication) app).getTracker();
+        if (t == null) return;
         HitBuilders.EventBuilder builders = new HitBuilders.EventBuilder();
         if (category != null)
             builders.setCategory(category);

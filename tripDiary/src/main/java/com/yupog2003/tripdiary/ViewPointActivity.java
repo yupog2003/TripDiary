@@ -1,7 +1,6 @@
 package com.yupog2003.tripdiary;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
@@ -97,6 +98,7 @@ public class ViewPointActivity extends MyActivity {
         }
         if (poi == null) {
             finish();
+            return;
         }
         setTitle(poiName);
         DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", FileHelper.getFileName(poi.parentTrip) + "-" + poi.title, null);
@@ -125,7 +127,17 @@ public class ViewPointActivity extends MyActivity {
         viewPager.addOnPageChangeListener(adapter);
         viewPager.setOffscreenPageLimit(2);
         pagerTab.setupWithViewPager(viewPager);
-        adapter.onPageSelected(0);
+        if (poi.diary.length() > 0) {
+            adapter.onPageSelected(0);
+        } else if (poi.picFiles.length > 0) {
+            viewPager.setCurrentItem(1);
+        } else if (poi.videoFiles.length > 0) {
+            viewPager.setCurrentItem(2);
+        } else if (poi.audioFiles.length > 0) {
+            viewPager.setCurrentItem(3);
+        } else {
+            adapter.onPageSelected(0);
+        }
     }
 
     @Override
@@ -137,6 +149,10 @@ public class ViewPointActivity extends MyActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (poi == null || !poi.dir.exists()) {
+            requestUpdatePOIs(true);
+            finish();
+        }
     }
 
     private void resetAppBar() {
@@ -354,7 +370,7 @@ public class ViewPointActivity extends MyActivity {
             });
             ab2.setNegativeButton(getString(R.string.cancel), null);
             AlertDialog ad = ab2.create();
-            ad.setIcon(R.drawable.ic_alert);
+            ad.setIcon(ColorHelper.getAlertDrawable(getActivity()));
             ad.show();
         }
         return false;
@@ -466,11 +482,7 @@ public class ViewPointActivity extends MyActivity {
 
         @Override
         protected void onPostExecute(String result) {
-
             pd.dismiss();
-            adapter.pictureFragment.onResume();
-            adapter.videoFragment.onResume();
-            adapter.audioFragment.onResume();
             requestUpdatePOI();
         }
     }

@@ -1,6 +1,7 @@
 package com.yupog2003.tripdiary.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
@@ -33,6 +35,7 @@ public class AllAudioFragment extends Fragment {
     int numColums;
     POIAdapter poiAdapter;
     String timezone;
+    Drawable audioDrawable;
 
     public AllAudioFragment() {
 
@@ -52,6 +55,7 @@ public class AllAudioFragment extends Fragment {
         setHasOptionsMenu(true);
         recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        audioDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
         return recyclerView;
     }
 
@@ -71,7 +75,6 @@ public class AllAudioFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.fragment_all, menu);
     }
 
@@ -108,7 +111,7 @@ public class AllAudioFragment extends Fragment {
             TextView textView = new TextView(getActivity());
             textView.setText(FileHelper.getFileName(audios[position]));
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_DeviceDefault_Medium);
-            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+            textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             return textView;
         }

@@ -1,6 +1,7 @@
 package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,7 +9,11 @@ import android.graphics.EmbossMaskFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.graphics.drawable.DrawableCompat;
+
+import com.yupog2003.tripdiary.R;
 
 public class ColorHelper {
 
@@ -32,4 +37,25 @@ public class ColorHelper {
         Color.colorToHSV(markerColor, hsv);
         return hsv[0];
     }
+
+    public static Drawable getAlertDrawable(Context c) {
+        return getTintDrawable(c, R.drawable.ic_alert, Color.parseColor("#F44336"));
+    }
+
+    public static Drawable getAccentTintDrawable(Context c, int id) {
+        return getTintDrawable(c, id, c.getResources().getColor(R.color.accent));
+    }
+
+    public static Drawable getTintDrawable(Context c, int id, int color) {
+        Drawable drawable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            drawable = c.getDrawable(id);
+        } else {
+            drawable = c.getResources().getDrawable(id);
+        }
+        if (drawable == null) return null;
+        DrawableCompat.setTint(DrawableCompat.wrap(drawable.mutate()), color);
+        return drawable;
+    }
+
 }

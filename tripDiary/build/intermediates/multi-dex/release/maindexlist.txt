@@ -133,6 +133,7 @@ org/apache/http/impl/conn/DefaultClientConnection.class
 com/google/android/gms/internal/zzdh$zzb.class
 com/google/android/gms/internal/zzea.class
 android/support/annotation/BinderThread.class
+com/google/android/gms/analytics/Tracker.class
 org/apache/http/impl/cookie/PublicSuffixListParser.class
 com/google/android/gms/ads/internal/purchase/zzh.class
 com/google/android/gms/ads/internal/client/MobileAdsSettingsParcel.class
@@ -295,6 +296,7 @@ android/support/design/widget/TabLayout$Mode.class
 org/apache/http/annotation/Experimental.class
 android/support/v4/widget/MaterialProgressDrawable$2.class
 android/support/annotation/AnimatorRes.class
+com/google/android/gms/analytics/internal/zzc.class
 android/support/v4/app/ActivityCompatHoneycomb.class
 org/apache/http/impl/auth/SpnegoTokenGenerator.class
 org/apache/http/auth/AuthSchemeFactory.class
@@ -325,6 +327,7 @@ com/google/android/gms/ads/internal/client/zzi.class
 com/google/android/gms/internal/zzds.class
 org/apache/http/client/config/RequestConfig.class
 yuku/ambilwarna/AmbilWarnaDialog.class
+android/support/v7/app/AlertDialog$Builder.class
 org/apache/http/conn/ClientConnectionManagerFactory.class
 com/yupog2003/tripdiary/PlayPointActivity$1.class
 com/yupog2003/tripdiary/RestoreTripActivity$1.class
@@ -350,7 +353,6 @@ android/support/v4/app/NoSaveStateFrameLayout.class
 org/apache/commons/io/CopyUtils.class
 org/apache/http/impl/io/HttpResponseWriter.class
 android/support/design/widget/TabLayout$ViewPagerOnTabSelectedListener.class
-com/yupog2003/tripdiary/R$xml.class
 com/yupog2003/tripdiary/TripDiaryApplication.class
 android/support/v7/app/ActionBar$NavigationMode.class
 org/apache/http/impl/cookie/DateUtils.class
@@ -550,6 +552,7 @@ android/support/annotation/ColorInt.class
 com/yupog2003/tripdiary/fragments/VideoFragment.class
 org/apache/http/impl/pool/BasicConnFactory.class
 android/support/annotation/RawRes.class
+android/support/v7/app/AlertDialog.class
 com/google/android/gms/internal/zzdt.class
 org/apache/http/params/HttpConnectionParamBean.class
 org/apache/http/conn/scheme/SchemeRegistry.class
@@ -569,7 +572,6 @@ com/google/android/gms/internal/zzdj.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 com/google/android/gms/ads/internal/reward/client/RewardedVideoAdRequestParcel.class
 com/google/android/gms/gcm/Task.class
-com/yupog2003/tripdiary/RestoreTripActivity$RestoreTripTask.class
 org/apache/thrift/TException.class
 android/support/v4/widget/MaterialProgressDrawable.class
 android/support/v7/app/ActionBarDrawerToggle$Delegate.class
@@ -719,6 +721,7 @@ com/yupog2003/tripdiary/GetContentActivity$1.class
 android/support/design/widget/CoordinatorLayout$LayoutParams.class
 org/apache/http/impl/auth/RFC2617Scheme.class
 com/google/android/gms/internal/zzbh.class
+com/google/android/gms/analytics/internal/zzd.class
 android/support/annotation/NonNull.class
 android/support/design/widget/CoordinatorLayout$Behavior.class
 org/apache/thrift/transport/THttpClient.class
@@ -750,6 +753,7 @@ org/apache/http/impl/client/DefaultProxyAuthenticationHandler.class
 com/google/android/gms/identity/intents/AddressConstants$Themes.class
 com/yupog2003/tripdiary/ViewTripActivity$Mode.class
 com/yupog2003/tripdiary/data/MyCalendar.class
+android/support/v4/graphics/drawable/DrawableCompat.class
 android/support/multidex/ZipUtil$CentralDirectory.class
 android/support/v7/app/ActionBarDrawerToggle.class
 android/support/v7/app/ActionBar$OnMenuVisibilityListener.class
@@ -761,9 +765,11 @@ android/support/v4/app/FragmentContainer.class
 com/github/mikephil/charting/data/DataSet.class
 org/apache/http/impl/conn/tsccm/ThreadSafeClientConnManager.class
 com/yupog2003/tripdiary/AllRecordActivity.class
+com/yupog2003/tripdiary/services/BackupRestoreTripService.class
 org/apache/http/impl/execchain/ResponseEntityProxy.class
 com/yupog2003/tripdiary/services/RecordService$PauseReceiver.class
 android/support/v4/app/FragmentManagerImpl$5.class
+android/support/v7/app/AppCompatDialog.class
 com/google/android/gms/ads/internal/purchase/zzi.class
 com/google/android/gms/internal/zzbi.class
 com/google/android/gms/internal/zzri.class

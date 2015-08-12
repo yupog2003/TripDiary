@@ -19,6 +19,7 @@
         android:icon="@drawable/ic_backup"
         android:orderInCategory="100"
         app:showAsAction="never"
+        android:showAsAction="never"
         android:title="@string/backup"/>
 
     <item
@@ -26,29 +27,32 @@
         android:icon="@drawable/ic_folder"
         android:orderInCategory="100"
         app:showAsAction="never"
+        android:showAsAction="never"
         android:title="@string/move_to_category"/>
     <item
         android:id="@+id/timezone"
-        android:icon="@drawable/ic_timezone"
         android:orderInCategory="100"
         app:showAsAction="never"
+        android:showAsAction="never"
         android:title="@string/update_trip_timezone"/>
     <item
         android:id="@+id/selectall"
         android:icon="@drawable/ic_select_all"
         android:orderInCategory="100"
         app:showAsAction="never"
+        android:showAsAction="never"
         android:title="@string/select_all"/>
     <item
         android:id="@+id/upload"
-        android:icon="@drawable/ic_upload"
         android:orderInCategory="100"
         app:showAsAction="never"
+        android:showAsAction="never"
         android:title="@string/upload"/>
     <item
         android:id="@+id/viewtogether"
         android:orderInCategory="100"
         app:showAsAction="never"
+        android:showAsAction="never"
         android:title="@string/together_view"/>
 
 </menu>

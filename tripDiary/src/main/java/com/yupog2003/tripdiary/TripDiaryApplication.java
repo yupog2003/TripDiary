@@ -1,6 +1,5 @@
 package com.yupog2003.tripdiary;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
@@ -36,11 +35,16 @@ public class TripDiaryApplication extends Application {
     public static int altitude_unit;
     //public static final int unit_m = 0;
     public static final int unit_ft = 1;
+    public static final boolean enableTracker = true;
 
     synchronized public Tracker getTracker() {
         if (appTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            appTracker = analytics.newTracker(R.xml.global_tracker);
+            analytics.setDryRun(!enableTracker);
+            appTracker = analytics.newTracker("UA-44647804-2");
+            appTracker.enableAutoActivityTracking(true);
+            appTracker.enableExceptionReporting(true);
+            appTracker.enableAdvertisingIdCollection(false);
         }
         return appTracker;
     }
@@ -98,7 +102,10 @@ public class TripDiaryApplication extends Application {
     private void initialImageLoader() {
         MyImageDecoder imageDecoder = new MyImageDecoder(this, new BaseImageDecoder(false));
         MyImageDownloader imageDownloader = new MyImageDownloader(this);
-        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(imageDownloader).imageDecoder(imageDecoder).build();
+        int imageloaderMemoryCachePercentage = PreferenceManager.getDefaultSharedPreferences(this).getInt("imageloaderMemoryCachePercentage", 30);
+        imageloaderMemoryCachePercentage = Math.max(imageloaderMemoryCachePercentage, 1);
+        imageloaderMemoryCachePercentage = Math.min(imageloaderMemoryCachePercentage, 99);
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(imageDownloader).imageDecoder(imageDecoder).memoryCacheSizePercentage(imageloaderMemoryCachePercentage).build();
         ImageLoader.getInstance().init(conf);
     }
 
@@ -108,14 +115,17 @@ public class TripDiaryApplication extends Application {
     }
 
     public void putTrip(Trip trip) {
-        trips.put(trip.tripName, trip);
+        if (trip != null && trip.tripName != null)
+            trips.put(trip.tripName, trip);
     }
 
     public void removeTrip(String tripName) {
-        trips.remove(tripName);
+        if (tripName != null)
+            trips.remove(tripName);
     }
 
     public Trip getTrip(String tripName) {
+        if (tripName == null) return null;
         return trips.get(tripName);
     }
 }

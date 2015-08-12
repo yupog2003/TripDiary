@@ -12,7 +12,6 @@ import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -21,6 +20,7 @@ import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +31,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -253,7 +255,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawers();
         } else if (mode == Mode.map_mode) {
-            finish();
+            super.onBackPressed();
         } else {
             setMode(Mode.map_mode);
         }
@@ -267,6 +269,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
+        if (trip != null && !trip.dir.exists()) { //trip directory has been deleted. Finish this activity
+            finishAndRemoveTask();
+        }
+        if (trip != null) {
+            ((TripDiaryApplication) getApplication()).putTrip(trip);
+        }
     }
 
     private void resetAppBar() {
@@ -278,23 +286,23 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         }
     }
 
+    @Override
+    public void finishAndRemoveTask() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.finishAndRemoveTask();
+        } else {
+            finish();
+        }
+    }
+
     class PrepareTripTask extends AsyncTask<String, Object, Boolean> implements GpxAnalyzerJava.ProgressChangedListener, Trip.ConstructListener {
 
-        Handler handler;
         LatLngBounds bounds;
         LatLng[] lat;
         ProgressDialog pd;
 
-        public void stop() {
-            if (trip != null) {
-                trip.stopGetCache();
-            }
-        }
-
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
-            handler = new Handler();
             pd = new ProgressDialog(ViewTripActivity.this);
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             pd.setMax(1000);
@@ -316,10 +324,11 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 return false;
             }
             trip = new Trip(getApplicationContext(), tripDir, false, this);
+            trip.listener = null;
             if (libraryLoadSuccess) {
-                trip.getCacheJNI(handler, this);
+                trip.getCacheJNI(this);
             } else {
-                trip.getCacheJava(handler, this);
+                trip.getCacheJava(this);
             }
             ((TripDiaryApplication) getApplication()).putTrip(trip);
             try {
@@ -333,15 +342,17 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                         latlngBoundesBuilder.include(lat[i]);
                     }
                     bounds = latlngBoundesBuilder.build();
-                    return trip != null && lat.length > 0;
                 }
             } catch (Exception e) {
                 if (trip != null || trip.cacheFile != null) {
                     trip.cacheFile.delete();
                 }
                 e.printStackTrace();
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), R.string.track_is_too_long, Toast.LENGTH_SHORT).show();
             }
-            return false;
+            return trip != null;
         }
 
         @Override
@@ -352,24 +363,23 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
         @Override
         protected void onPostExecute(Boolean success) {
-            super.onPostExecute(success);
             if (success) {
                 viewMapFragment.refresh(trip, lat, bounds, pd);
-                allTextFragment.refresh();
-                allPictureFragment.refresh();
-                allVideoFragment.refresh();
-                allAudioFragment.refresh();
-                viewCostFragment.refreshData(false);
-                navigationTripName.setText(trip.tripName);
-                navigationTripTime.setText(trip.time.formatInTimezone(trip.timezone));
-                new LoadNavigationHeaderBackgroundTask().execute();
-            } else {
-                Toast.makeText(getActivity(), getString(R.string.invalid_gpx_file), Toast.LENGTH_SHORT).show();
-                if (trip == null) {
-                    finish();
-                } else {
-                    trip.deleteCache();
+                if (trip.pois != null) {
+                    allTextFragment.refresh();
+                    allPictureFragment.refresh();
+                    allVideoFragment.refresh();
+                    allAudioFragment.refresh();
+                    viewCostFragment.refreshData(false);
                 }
+                if (trip.tripName != null && trip.time != null) {
+                    navigationTripName.setText(trip.tripName);
+                    navigationTripTime.setText(trip.time.formatInTimezone(trip.timezone));
+                    new LoadNavigationHeaderBackgroundTask().execute();
+                }
+            } else {
+                Toast.makeText(getActivity(), R.string.invalid_trip_file, Toast.LENGTH_SHORT).show();
+                finishAndRemoveTask();
                 pd.dismiss();
             }
         }
@@ -438,7 +448,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 imageView.setImageBitmap(bitmap);
             }
         }
-
     }
 
     @Override
@@ -515,7 +524,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             e.printStackTrace();
             libraryLoadSuccess = false;
         }
-
     }
 
     @Override

@@ -425,6 +425,10 @@ public class GenerateVideoService extends IntentService {
             options.inSampleSize = (int) Math.max((float) options.outWidth / videoWidth, (float) options.outHeight / videoHeight);
             options.inJustDecodeBounds = false;
             Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(poi.picFiles[i].getUri()), new Rect(0, 0, 0, 0), options);
+            if (bitmap == null) {
+                num_processed_materials += 2;
+                continue;
+            }
             float ratio = Math.min((float) videoWidth / bitmap.getWidth(), (float) videoHeight / bitmap.getHeight());
             int destWidth = (int) (bitmap.getWidth() * ratio);
             int destHeight = (int) (bitmap.getHeight() * ratio);

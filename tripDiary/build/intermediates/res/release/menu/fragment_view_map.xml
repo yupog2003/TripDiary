@@ -5,7 +5,7 @@
         android:id="@+id/spinner"
         android:orderInCategory="1"
         android:title="@string/choose_the_poi"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/searchviewmap"
         android:icon="@android:drawable/ic_menu_search"
@@ -33,5 +33,11 @@
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/import_memory"/>
+
+    <item
+        android:id="@+id/backup"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/backup"/>
 
 </menu><!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_view_map.xml -->

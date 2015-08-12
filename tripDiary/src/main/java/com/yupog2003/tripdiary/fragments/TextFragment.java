@@ -51,6 +51,7 @@ public class TextFragment extends Fragment implements OnClickListener {
         buttomBar = (LinearLayout) view.findViewById(R.id.buttonbar);
         shadow = view.findViewById(R.id.shadow);
         setEditMode(false);
+        refresh();
         return view;
     }
 
@@ -83,7 +84,6 @@ public class TextFragment extends Fragment implements OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
     }
     public void refresh() {
         if (getActivity() == null)
@@ -115,7 +115,7 @@ public class TextFragment extends Fragment implements OnClickListener {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_TEXT, text.getText().toString());
-        getActivity().startActivity(i);
+        startActivity(i);
     }
 
     @Override

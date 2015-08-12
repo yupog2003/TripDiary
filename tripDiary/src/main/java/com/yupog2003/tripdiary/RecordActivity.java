@@ -1,7 +1,6 @@
 package com.yupog2003.tripdiary;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,13 +14,16 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -138,6 +140,13 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         takeMoney.setOnClickListener(this);
         save = (Button) findViewById(R.id.save);
         save.setOnClickListener(this);
+        int accentColor = getResources().getColor(R.color.accent);
+        DrawableCompat.setTint(DrawableCompat.wrap(takePicture.getCompoundDrawables()[1].mutate()), accentColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(takeVideo.getCompoundDrawables()[1].mutate()), accentColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(takeAudio.getCompoundDrawables()[1].mutate()), accentColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(takeText.getCompoundDrawables()[1].mutate()), accentColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(takePaint.getCompoundDrawables()[1].mutate()), accentColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(takeMoney.getCompoundDrawables()[1].mutate()), accentColor);
         refreshProgress = (ProgressBar) findViewById(R.id.refreshProgress);
         new Thread(new UpdateRunnable()).start();
         setAddPOIMode(false);
@@ -177,7 +186,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         if (item.getItemId() == R.id.pause) {
             if (RecordService.instance != null) {
                 if (RecordService.instance.run) {
-                    item.setIcon(R.drawable.ic_resume);
+                    item.setIcon(R.drawable.ic_play);
                     setTitle(tripName + " - " + getString(R.string.pausing));
                 } else {
                     item.setIcon(R.drawable.ic_pause);
@@ -242,46 +251,46 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         if (v.equals(addPOI)) {
             if (poiName.getText().toString().equals("")) {
                 Toast.makeText(RecordActivity.this, R.string.please_input_poi_name, Toast.LENGTH_SHORT).show();
-            } else {
-                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (location == null) {
-                    Toast.makeText(RecordActivity.this, getString(R.string.location_not_found), Toast.LENGTH_SHORT).show();
-                } else {
-                    String poiNameStr = poiName.getText().toString();
-                    DocumentFile poiDir = FileHelper.findfile(RecordService.instance.trip.dir, poiNameStr);
-                    if (poiDir == null) {
-                        poiDir = RecordService.instance.trip.dir.createDirectory(poiNameStr);
-                    }
-                    if (poiDir == null) {
-                        return;
-                    }
-                    poi = new POI(RecordActivity.this, poiDir);
-                    setAddPOIMode(true);
-                    MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
-                    if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
-                        POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                        gmap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-                        poi.updateBasicInformation(null, time, location.getLatitude(), location.getLongitude(), location.getAltitude());
-                    } else { // edit exist poi
-                        location.setAltitude(poi.altitude);
-                        cancel.setVisibility(View.GONE);
-                        if (markers != null) {
-                            for (int i = 0; i < markers.size(); i++) {
-                                if (markers.get(i).getTitle().equals(poi.title)) {
-                                    POIMarker = markers.get(i);
-                                    POIMarker.setDraggable(true);
-                                    POIMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                                    markers.remove(i);
-                                    break;
-                                }
-                            }
+                return;
+            }
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location == null) {
+                Toast.makeText(RecordActivity.this, getString(R.string.location_not_found), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String poiNameStr = poiName.getText().toString();
+            DocumentFile poiDir = FileHelper.findfile(RecordService.instance.trip.dir, poiNameStr);
+            if (poiDir == null) {
+                poiDir = RecordService.instance.trip.dir.createDirectory(poiNameStr);
+            }
+            if (poiDir == null) {
+                return;
+            }
+            poi = new POI(RecordActivity.this, poiDir);
+            setAddPOIMode(true);
+            MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
+            if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
+                POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                gmap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                poi.updateBasicInformation(null, time, location.getLatitude(), location.getLongitude(), location.getAltitude());
+            } else { // edit exist poi
+                location.setAltitude(poi.altitude);
+                cancel.setVisibility(View.GONE);
+                if (markers != null) {
+                    for (int i = 0; i < markers.size(); i++) {
+                        if (markers.get(i).getTitle().equals(poi.title)) {
+                            POIMarker = markers.get(i);
+                            POIMarker.setDraggable(true);
+                            POIMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                            markers.remove(i);
+                            break;
                         }
                     }
-                    preference.edit().putString(pref_tag_onaddpoi, poi.title).commit();
-                    updatePOIStatus();
                 }
             }
+            preference.edit().putString(pref_tag_onaddpoi, poi.title).apply();
+            updatePOIStatus();
         } else if (v.equals(refresh)) {
             new RefreshTask(true, false).execute();
         } else if (v.equals(takePicture)) {
@@ -351,7 +360,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             if (poi == null) return;
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
             ab.setTitle(getString(R.string.cost));
-            final LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.take_money, null);
+            final LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.take_money, (ViewGroup) findViewById(android.R.id.content), false);
             ab.setView(layout);
             ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
@@ -392,14 +401,13 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 poi.deleteSelf();
                 poi = null;
             }
-            preference.edit().remove(pref_tag_onaddpoi).commit();
+            preference.edit().remove(pref_tag_onaddpoi).apply();
             setAddPOIMode(false);
         } else if (v.equals(save)) {
             Toast.makeText(RecordActivity.this, R.string.poi_has_been_saved, Toast.LENGTH_SHORT).show();
             setAddPOIMode(false);
-            preference.edit().remove(pref_tag_onaddpoi).commit();
+            preference.edit().remove(pref_tag_onaddpoi).apply();
             new RefreshTask(false, false).execute();
-
         }
     }
 
@@ -488,7 +496,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                             altitude.setText(GpxAnalyzer2.getAltitudeString((float) elevation, "m"));
                         } else {
                             if (menu != null) {
-                                menu.findItem(R.id.pause).setIcon(R.drawable.ic_resume);
+                                menu.findItem(R.id.pause).setIcon(R.drawable.ic_play);
                             }
                             setTitle(tripName + " - " + getString(R.string.pausing));
                         }
@@ -620,7 +628,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
         poiName.setText(marker.getTitle());
         addPOI.performClick();
     }

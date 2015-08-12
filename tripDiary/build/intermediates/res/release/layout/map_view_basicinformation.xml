@@ -13,6 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_time"
+            android:textColor="@color/textColorDarkPrimary"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold" />
 
@@ -22,12 +23,14 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dip"
             android:text=""
+            android:textColor="@color/textColorDarkSecondary"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/stop_time"
+            android:textColor="@color/textColorDarkPrimary"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold" />
 
@@ -37,6 +40,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dip"
             android:text=""
+            android:textColor="@color/textColorDarkSecondary"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TableLayout
@@ -51,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/total_time"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -59,6 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
@@ -70,6 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/distance"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -78,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
@@ -89,6 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/average_speed"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -97,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
@@ -108,6 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/max_speed"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -116,6 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
@@ -127,6 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/total_ascent"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -135,6 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
@@ -146,6 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/max_altitude"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -154,6 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
@@ -165,6 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/min_altitude"
+                    android:textColor="@color/textColorDarkPrimary"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
 
@@ -173,6 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/textColorDarkSecondary"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
         </TableLayout>

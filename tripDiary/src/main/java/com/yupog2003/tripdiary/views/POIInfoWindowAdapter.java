@@ -5,10 +5,13 @@ import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.provider.DocumentFile;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +35,7 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
     TextView time;
     TextView diary;
     ImageView img;
-    Bitmap poiBitmap;
+    Drawable poiDrawable;
     ContentResolver contentResolver;
     int imageWidth;
     Rect rect;
@@ -42,15 +45,16 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
         this.pois = pois;
         this.trips = trips;
         this.bitmaps = new HashMap<>();
-        this.rootView = activity.getLayoutInflater().inflate(R.layout.poi_infowindow, null);
+        this.rootView = activity.getLayoutInflater().inflate(R.layout.poi_infowindow, (ViewGroup)activity.findViewById(android.R.id.content), false);
         this.name = (TextView) rootView.findViewById(R.id.poiName);
         this.time = (TextView) rootView.findViewById(R.id.poiTime);
         this.diary = (TextView) rootView.findViewById(R.id.poiDiary);
         this.img = (ImageView) rootView.findViewById(R.id.poiImage);
-        this.poiBitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
+        this.poiDrawable = img.getDrawable().mutate();
         this.contentResolver = activity.getContentResolver();
         this.imageWidth = (int) DeviceHelper.pxFromDp(activity, 72);
         this.rect = new Rect(0, 0, 0, 0);
+        DrawableCompat.setTint(DrawableCompat.wrap(poiDrawable), PreferenceManager.getDefaultSharedPreferences(activity).getInt("markercolor", 0xffff0000));
     }
 
     @Override
@@ -104,10 +108,10 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                     img.setImageBitmap(bitmap);
                     bitmaps.put(uri.toString(), bitmap);
                 } else {
-                    img.setImageBitmap(poiBitmap);
+                    img.setImageDrawable(poiDrawable);
                 }
             } else {
-                img.setImageBitmap(poiBitmap);
+                img.setImageDrawable(poiDrawable);
             }
             return rootView;
         } catch (Exception e) {
@@ -125,12 +129,4 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
         this.pois = pois;
     }
 
-    public void destroy(){
-        setPOIs(null);
-        poiBitmap.recycle();
-        for (String key : bitmaps.keySet()){
-            bitmaps.get(key).recycle();
-        }
-        bitmaps.clear();
-    }
 }

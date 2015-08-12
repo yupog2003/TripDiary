@@ -1,12 +1,15 @@
 package com.yupog2003.tripdiary;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,6 +63,9 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         viewHistory = (Button) findViewById(R.id.viewhistory);
         resumeTrip = (Button) findViewById(R.id.resume_trip);
         allRecord = (Button) findViewById(R.id.all_record);
+        int accentColor = getResources().getColor(R.color.accent);
+        DrawableCompat.setTint(DrawableCompat.wrap(startTrip.getCompoundDrawables()[0].mutate()), accentColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(viewHistory.getCompoundDrawables()[0].mutate()), accentColor);
         if (checkPlayService()) {
             startTrip.setOnClickListener(this);
             viewHistory.setOnClickListener(this);
@@ -239,7 +245,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             files = new DocumentFile[0];
         ArrayList<Trip> trips = new ArrayList<>();
         for (DocumentFile file : files) {
-            if (file!=null){
+            if (file != null) {
                 Trip trip = new Trip(getApplicationContext(), file, true);
                 trips.add(trip);
             }

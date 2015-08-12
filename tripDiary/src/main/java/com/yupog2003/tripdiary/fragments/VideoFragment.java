@@ -1,6 +1,5 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +29,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
@@ -46,7 +47,12 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_video, container, false);
+        layout = (GridView) inflater.inflate(R.layout.fragment_video, container, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setNestedScrollingEnabled(true);
+        }
+        refresh();
+        return layout;
     }
 
     @Override
@@ -56,26 +62,18 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
             outState.putBoolean("bug:fix", true);
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
     }
+
     public void refresh() {
-        if (getView()==null||getActivity() == null)
+        if (getActivity() == null)
             return;
-        this.poi = ((ViewPointActivity)getActivity()).poi;
+        this.poi = ((ViewPointActivity) getActivity()).poi;
         if (poi == null) {
             return;
-        }
-        layout = (GridView) getView().findViewById(R.id.videogrid);
-        adapter = new VideoAdapter();
-        layout.setAdapter(adapter);
-        layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
-        layout.setOnItemClickListener(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            layout.setNestedScrollingEnabled(true);
         }
         int screenWidth = DeviceHelper.getScreenWidth(getActivity());
         int screenHeight = DeviceHelper.getScreenHeight(getActivity());
@@ -86,7 +84,11 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
             width = screenWidth / 3;
             layout.setNumColumns(3);
         }
-
+        adapter = new VideoAdapter();
+        layout.setAdapter(adapter);
+        layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
+        layout.setOnItemClickListener(this);
     }
 
     class VideoAdapter extends BaseAdapter {
@@ -98,10 +100,9 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
         public VideoAdapter() {
             videos = poi.videoFiles;
             options = new DisplayImageOptions.Builder()
-                    .displayer(new FadeInBitmapDisplayer(500))
+                    .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                     .showImageOnFail(R.drawable.ic_play)
                     .cacheInMemory(true)
-                    .cacheOnDisk(false)
                     .bitmapConfig(Bitmap.Config.RGB_565)
                     .extraForDownloader(poi.videoDir)
                     .build();
@@ -131,7 +132,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
             image.setMaxWidth(width);
             image.setMaxHeight(width);
             image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.getInstance().displayImage(FileHelper.getFileName(videos[position]), image, options);
+            ImageLoader.getInstance().displayImage("trip://"+videos[position].getUri().getPath(), image, options);
             CheckableLayout l = new CheckableLayout(getActivity());
             l.setLayoutParams(new ListView.LayoutParams(width, width));
             l.setPadding(dp2, dp2, dp2, dp2);
@@ -163,7 +164,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(R.drawable.ic_alert);
+                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {

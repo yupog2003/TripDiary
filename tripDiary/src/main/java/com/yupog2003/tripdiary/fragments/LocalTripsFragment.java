@@ -3,24 +3,26 @@ package com.yupog2003.tripdiary.fragments;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.ActionMode;
@@ -49,6 +51,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.AllRecordActivity;
+import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewTripActivity;
@@ -57,13 +60,13 @@ import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.services.BackupRestoreTripService;
 import com.yupog2003.tripdiary.services.SendTripService;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 import com.yupog2003.tripdiary.views.FloatingGroupExpandableListView;
 import com.yupog2003.tripdiary.views.WrapperExpandableListAdapter;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,8 +78,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class LocalTripsFragment extends Fragment {
     String account;
@@ -93,6 +94,8 @@ public class LocalTripsFragment extends Fragment {
     private static final int REQUEST_IMPORT_TRIP = 2;
     public static final String pref_timesort = "timesort";
     boolean uploadPublic;
+    Drawable expandDrawable;
+    Drawable collpaseDrawable;
 
     public LocalTripsFragment() {
 
@@ -108,6 +111,8 @@ public class LocalTripsFragment extends Fragment {
         categorysp = getActivity().getSharedPreferences("category", Context.MODE_PRIVATE);
         tripsp = getActivity().getSharedPreferences("trip", Context.MODE_PRIVATE);
         categoryExpandSp = getActivity().getSharedPreferences("categoryExpand", Context.MODE_PRIVATE);
+        expandDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_expand2);
+        collpaseDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
         return listView;
     }
 
@@ -217,7 +222,7 @@ public class LocalTripsFragment extends Fragment {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putInt(pref_timesort, which).commit();
+                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putInt(pref_timesort, which).apply();
                     loaddata();
                     dialog.dismiss();
                 }
@@ -277,7 +282,7 @@ public class LocalTripsFragment extends Fragment {
                 try {
                     categoryDrawables.put(categories[i], ColorHelper.getColorDrawable(getActivity(), 40, Integer.valueOf(categorysp.getString(categories[i], String.valueOf(Color.WHITE)))));
                 } catch (NumberFormatException e) {
-                    categorysp.edit().putString(categories[i], String.valueOf(Color.WHITE)).commit();
+                    categorysp.edit().putString(categories[i], String.valueOf(Color.WHITE)).apply();
                     i--;
                     e.printStackTrace();
                 }
@@ -396,7 +401,7 @@ public class LocalTripsFragment extends Fragment {
                 convertView.setTag(holder);
             }
             holder = (GroupViewHolder) convertView.getTag();
-            holder.title.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? R.drawable.indicator_expand2 : R.drawable.indicator_collapse2, 0, 0, 0);
+            holder.title.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? expandDrawable : collpaseDrawable, null, null, null);
             holder.title.setText(categories[groupPosition]);
             holder.count.setText("(" + String.valueOf(getChildrenCount(groupPosition)) + ")");
             return convertView;
@@ -408,20 +413,16 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public boolean isChildSelectable(int groupPosition, int childPosition) {
-
             return true;
         }
 
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
             if (onActionMode) {
                 int position = (int) getChildId(groupPosition, childPosition);
                 listView.setItemChecked(position, !listView.isItemChecked(position));
             } else {
                 String name = trips.get(groupPosition).get(childPosition).tripName;
-                Intent i = new Intent(getActivity(), ViewTripActivity.class);
-                i.putExtra(ViewTripActivity.tag_tripName, name);
-                getActivity().startActivity(i);
+                viewTrip(name);
             }
             return true;
         }
@@ -441,14 +442,14 @@ public class LocalTripsFragment extends Fragment {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(R.drawable.ic_alert);
+                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
 
                         for (int i = 0; i < checksName.size(); i++) {
                             FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(i)).delete();
-                            tripsp.edit().remove(checksName.get(i)).commit();
+                            tripsp.edit().remove(checksName.get(i)).apply();
                         }
                         loaddata();
                     }
@@ -456,34 +457,10 @@ public class LocalTripsFragment extends Fragment {
                 ab.setNegativeButton(getString(R.string.cancel), null);
                 ab.show();
             } else if (item.getItemId() == R.id.backup) {
-                AlertDialog.Builder ab3 = new AlertDialog.Builder(getActivity());
-                ab3.setTitle(getString(R.string.backup_path));
-                final EditText editBackupPath = new EditText(getActivity());
-                editBackupPath.setText(Environment.getExternalStorageDirectory().getPath());
-                ab3.setView(editBackupPath);
-                ab3.setPositiveButton(getString(R.string.enter), new OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        final String backupPath = editBackupPath.getText().toString();
-                        File file = new File(backupPath);
-                        if (file.exists() && file.isFile()) {
-                            Toast.makeText(getActivity(), getString(R.string.error_please_use_another_path), Toast.LENGTH_LONG).show();
-                        } else {
-                            file.mkdirs();
-                            ArrayList<DocumentFile> froms = new ArrayList<>();
-                            ArrayList<DocumentFile> tos = new ArrayList<>();
-                            for (int i = 0; i < checksName.size(); i++) {
-                                froms.add(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(i)));
-                                tos.add(DocumentFile.fromFile(new File(backupPath + "/" + checksName.get(i) + ".zip")));
-                            }
-                            new CompressTask(froms, tos).execute("");
-                        }
-
-                    }
-                });
-                ab3.setNegativeButton(getString(R.string.cancel), null);
-                ab3.show();
+                Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
+                intent.setAction(BackupRestoreTripService.ACTION_BACKUP);
+                intent.putStringArrayListExtra(BackupRestoreTripService.tag_tripnames, checksName);
+                getActivity().startService(intent);
             } else if (item.getItemId() == R.id.edit) {
                 String message = "";
                 String s;
@@ -589,7 +566,7 @@ public class LocalTripsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         for (String checkName : checksName) {
-                            tripsp.edit().putString(checkName, categories[which]).commit();
+                            tripsp.edit().putString(checkName, categories[which]).apply();
                         }
                         dialog.dismiss();
                         loaddata();
@@ -708,59 +685,19 @@ public class LocalTripsFragment extends Fragment {
         }
     }
 
-    class CompressTask extends AsyncTask<String, String, ArrayList<DocumentFile>> {
-        ProgressDialog pd;
-        ArrayList<DocumentFile> froms, tos;
-
-        public CompressTask(ArrayList<DocumentFile> froms, ArrayList<DocumentFile> tos) {
-            if (froms.size() == tos.size()) {
-                this.froms = froms;
-                this.tos = tos;
+    private void viewTrip(String tripName) {
+        Activity activity = getActivity();
+        if (activity == null) return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager.AppTask task = MyActivity.findViewTripActivityTask(activity, tripName);
+            if (task != null) {
+                task.moveToFront();
+                return;
             }
         }
-
-        @Override
-        protected void onPreExecute() {
-            pd = new ProgressDialog(getActivity());
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setTitle(getString(R.string.backup));
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(String... progress) {
-            pd.setMessage(progress[0]);
-        }
-
-        @Override
-        protected ArrayList<DocumentFile> doInBackground(String... params) {
-
-            if (froms != null && tos != null) {
-                for (int i = 0; i < froms.size(); i++) {
-                    DocumentFile from = froms.get(i);
-                    publishProgress(getString(R.string.compressing) + ":" + FileHelper.getFileName(from) + "...");
-                    DocumentFile to = tos.get(i);
-                    if (to.exists())
-                        to.delete();
-                    FileHelper.zip(from, to);
-                }
-            }
-            return tos;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<DocumentFile> result) {
-            pd.dismiss();
-            Toast.makeText(getActivity(), getString(R.string.backed_up_file), Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-            intent.setType("application/zip");
-            ArrayList<Uri> uris = new ArrayList<>();
-            for (int i = 0; i < tos.size(); i++)
-                uris.add(tos.get(i).getUri());
-            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-            startActivity(Intent.createChooser(intent, getString(R.string.backup_to)));
-        }
+        Intent i = new Intent(activity, ViewTripActivity.class);
+        i.putExtra(ViewTripActivity.tag_tripName, tripName);
+        startActivity(i);
     }
 
     @Override
@@ -781,103 +718,17 @@ public class LocalTripsFragment extends Fragment {
             } else if (requestCode == REQUEST_RESTORE_TRIP) {
                 if (uri == null)
                     return;
-                new RestoreTripTask(uri).execute();
+                Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
+                intent.setAction(BackupRestoreTripService.ACTION_RESTORE);
+                ArrayList<Uri> uris = new ArrayList<>();
+                uris.add(uri);
+                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                getActivity().startService(intent);
             } else if (requestCode == REQUEST_GET_TOKEN) {
                 if (resultCode == Activity.RESULT_OK) {
                     new GetAccessTokenTask().execute();
                 }
             }
-        }
-    }
-
-    class RestoreTripTask extends AsyncTask<String, String, String> {
-
-        Uri uri;
-        ProgressDialog pd;
-        String tripName;
-
-        public RestoreTripTask(Uri uri) {
-            this.uri = uri;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            pd = new ProgressDialog(getActivity());
-            pd.setMessage(getString(R.string.unzipping));
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                ZipInputStream zis = new ZipInputStream(getActivity().getContentResolver().openInputStream(uri));
-                ZipEntry entry;
-                String s = "";
-                if ((entry = zis.getNextEntry()) != null) {
-                    s = entry.getName();
-                }
-                zis.close();
-                if (s.contains("/")) {
-                    s = s.replace("/", "");
-                }
-                tripName = s;
-                if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
-                    finishAsk = false;
-                    replace = false;
-                    publishProgress("ask replace");
-                    while (!finishAsk) {
-                        Thread.sleep(200);
-                    }
-                    if (replace) {
-                        FileHelper.unZip(getActivity().getContentResolver().openInputStream(uri), TripDiaryApplication.rootDocumentFile);
-                    }
-                } else {
-                    FileHelper.unZip(getActivity().getContentResolver().openInputStream(uri), TripDiaryApplication.rootDocumentFile);
-                }
-            } catch (IOException | NullPointerException | InterruptedException | IllegalArgumentException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        boolean finishAsk;
-        boolean replace;
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-            ab.setTitle(getString(R.string.same_trip));
-            ab.setMessage(getString(R.string.ask_for_replace_trip));
-            ab.setCancelable(false);
-            ab.setPositiveButton(getString(R.string.yes), new OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int which) {
-                    FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName).delete();
-                    replace = true;
-                    finishAsk = true;
-                    dialog.dismiss();
-                    pd.show();
-                }
-            });
-            ab.setNegativeButton(getString(R.string.no), new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    replace = false;
-                    finishAsk = true;
-                    dialog.dismiss();
-                    pd.show();
-                }
-            });
-            pd.dismiss();
-            ab.show();
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            pd.dismiss();
-            loaddata();
         }
     }
 

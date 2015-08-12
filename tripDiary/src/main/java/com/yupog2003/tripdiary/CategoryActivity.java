@@ -1,11 +1,11 @@
 package com.yupog2003.tripdiary;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -76,7 +76,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
         if (v.equals(add)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.edit_category));
-            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, null);
+            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, (ViewGroup)findViewById(android.R.id.content), false);
             final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
@@ -113,7 +113,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                         Toast.makeText(CategoryActivity.this, getString(R.string.cannot_add_nocategory), Toast.LENGTH_SHORT).show();
                     } else {
                         int color = (Integer) colorImage.getTag();
-                        categorysp.edit().putString(nameStr, String.valueOf(color)).commit();
+                        categorysp.edit().putString(nameStr, String.valueOf(color)).apply();
                         loaddata();
                     }
                 }
@@ -151,12 +151,11 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             return textView;
         }
 
-        public void onItemClick(AdapterView<?> adapterView, View view, final int position,
-                                long id) {
+        public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
 
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.edit_category));
-            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, null);
+            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, (ViewGroup)findViewById(android.R.id.content), false);
             final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
@@ -193,11 +192,11 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                     int color = (Integer) colorImage.getTag();
                     for (String trip : trips) {
                         if (tripsp.getString(trip, getString(R.string.nocategory)).equals(categories[position])) {
-                            tripsp.edit().putString(trip, nameStr).commit();
+                            tripsp.edit().putString(trip, nameStr).apply();
                         }
                     }
-                    categorysp.edit().remove(categories[position]).commit();
-                    categorysp.edit().putString(nameStr, String.valueOf(color)).commit();
+                    categorysp.edit().remove(categories[position]).apply();
+                    categorysp.edit().putString(nameStr, String.valueOf(color)).apply();
                     loaddata();
                 }
             });
@@ -211,7 +210,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.delete));
             ab.setMessage(getString(R.string.are_you_sure_to_delete));
-            ab.setIcon(R.drawable.ic_alert);
+            ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
             ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
@@ -222,10 +221,10 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                         for (String trip : trips) {
                             String category = tripsp.getString(trip, getString(R.string.nocategory));
                             if (category.equals(categories[position])) {
-                                tripsp.edit().putString(trip, getString(R.string.nocategory)).commit();
+                                tripsp.edit().putString(trip, getString(R.string.nocategory)).apply();
                             }
                         }
-                        categorysp.edit().remove(categories[position]).commit();
+                        categorysp.edit().remove(categories[position]).apply();
                         loaddata();
                     }
                 }

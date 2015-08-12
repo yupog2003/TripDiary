@@ -16,16 +16,14 @@ public class GpxAnalyzerJava {
     TrackCache cache;
     Trip trip;
     Context context;
-    Handler contextHandler;
     ProgressChangedListener listener;
     public static final double earthRadius = 6378.1 * 1000;
     public static final int altitudeDifferThreshold = 20;
     long fileSize;
 
-    public GpxAnalyzerJava(Trip trip, Context context, Handler contextHandler) {
+    public GpxAnalyzerJava(Trip trip, Context context) {
         this.trip = trip;
         this.context = context;
-        this.contextHandler = contextHandler;
         stop = false;
     }
 

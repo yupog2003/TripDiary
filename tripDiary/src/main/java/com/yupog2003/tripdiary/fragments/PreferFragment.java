@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +21,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -140,7 +140,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                             File resultFile = FileHelper.copyFromUriToFile(getActivity(), uri1, getActivity().getFilesDir(), null);
                             if (resultFile != null) {
                                 editor.putString("musicpath", resultFile.getName());
-                                editor.commit();
+                                editor.apply();
                                 musicpath.setSummary(resultFile.getName());
                             }
                         }
@@ -153,7 +153,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                             File resultFile = FileHelper.copyFromUriToFile(getActivity(), uri1, getActivity().getFilesDir(), null);
                             if (resultFile != null) {
                                 editor.putString("diaryfont", resultFile.getName());
-                                editor.commit();
+                                editor.apply();
                                 diaryfont.setSummary(resultFile.getName());
                             }
                         }
@@ -292,7 +292,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
                     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                     editor.putString("account", names[which]);
-                    editor.commit();
+                    editor.apply();
                     account.setSummary(names[which]);
                     dialog.dismiss();
                 }
@@ -317,7 +317,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 rootpath.setSummary(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("rootpath", Environment.getExternalStorageDirectory().getPath()));
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                 editor.putString("rootpath", newPath);
-                editor.commit();
+                editor.apply();
                 TripDiaryApplication.updateRootPath(newPath);
             } else {
                 Toast.makeText(getActivity(), newPath + " " + getString(R.string.is_not_a_valid_directory), Toast.LENGTH_SHORT).show();
@@ -337,7 +337,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     private void setNewRootPath(String newRootPath) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
         editor.putString("rootpath", newRootPath);
-        editor.commit();
+        editor.apply();
         rootpath.setSummary(newRootPath);
         TripDiaryApplication.updateRootPath(newRootPath);
         backupPreferenceFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, ".settings");

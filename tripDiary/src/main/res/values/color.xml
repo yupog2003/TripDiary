@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="actionbar_background">#fff3f3f3</color>
     <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#1a237e</color>
-    <color name="textColorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="textColorLightPrimary">#ffffff</color>
+    <color name="textColorLightSecondary">#B2ffffff</color>
+    <color name="textColorDarkPrimary">#DE000000</color>
+    <color name="textColorDarkSecondary">#8A000000</color>
     <color name="tabsScrollColor">#C5CAE9</color>
-    <color name="accent">#33b5e5</color>
-    
+    <color name="accent">#009688</color>
 </resources>

@@ -72,8 +72,8 @@ public class AllVideoFragment extends Fragment {
 
     public void refresh() {
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
-            this.pois = ((ViewTripActivity)getActivity()).trip.pois;
-            this.timezone = ((ViewTripActivity)getActivity()).trip.timezone;
+            this.pois = ((ViewTripActivity) getActivity()).trip.pois;
+            this.timezone = ((ViewTripActivity) getActivity()).trip.timezone;
             poiAdapter = new POIAdapter();
             recyclerView.setAdapter(poiAdapter);
         }
@@ -100,10 +100,9 @@ public class AllVideoFragment extends Fragment {
             this.videos = videos;
             if (videos.length > 0) {
                 options = new DisplayImageOptions.Builder()
-                        .displayer(new FadeInBitmapDisplayer(500))
+                        .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                         .showImageOnFail(R.drawable.ic_play)
                         .cacheInMemory(true)
-                        .cacheOnDisk(false)
                         .bitmapConfig(Bitmap.Config.RGB_565)
                         .extraForDownloader(videos[0].getParentFile())
                         .build();
@@ -133,7 +132,7 @@ public class AllVideoFragment extends Fragment {
             image.setMaxWidth(width);
             image.setMaxHeight(width);
             image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.getInstance().displayImage(FileHelper.getFileName(videos[position]), image, options);
+            ImageLoader.getInstance().displayImage("trip://" + videos[position].getUri().getPath(), image, options);
             return image;
         }
 
@@ -143,7 +142,6 @@ public class AllVideoFragment extends Fragment {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             getActivity().startActivity(intent);
         }
-
     }
 
     class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {

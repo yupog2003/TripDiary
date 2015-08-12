@@ -155,14 +155,8 @@
     <string name="select_diary_font">Select dairy font</string>
     <string name="select_poi">Select POI</string>
     <string name="backup">Back up</string>
-    <string name="compressing">Compressing</string>
-    <string name="backup_to">Back up to</string>
     <string name="restore_trip">Restore trip</string>
     <string name="select_the_file_to_restore">Select the file to restore(.zip)</string>
-    <string name="backed_up_file">Backed up file</string>
-    <string name="ask_for_replace_trip">There is a same trip.Do you want to replace it?</string>
-    <string name="backup_path">Back up path</string>
-    <string name="error_please_use_another_path">Error!Please use another path.</string>
     <string name="there_is_a_same_poi">There is a same POI</string>
     <string name="play_setting">Play Setting</string>
     <string name="playing_trip_mode">Playing Trip Mode</string>
@@ -322,5 +316,12 @@
     <string name="from_old_to_new">Old -> New</string>
     <string name="open_with_browser">Open with browser</string>
     <string name="audio_recorder_is_not_available">Audio recorder is not available</string>
+    <string name="backup_complete">Backup complete</string>
+    <string name="restore_complete">Restore complete</string>
+    <string name="image_loader_cache_size">Image loader cache size</string>
+    <string name="image_loader_cache_size_explanation">Percentage of heap size for image loader cache. Increase it to achieve better performance but may produce out of memory error.</string>
+    <string name="setting">Setting</string>
+    <string name="invalid_trip_file">Invalid trip file</string>
+    <string name="track_is_too_long">Track_is_too_long (Out of memory)</string>
 
 </resources>

@@ -191,7 +191,7 @@ public class MyCalendar extends GregorianCalendar{
             BufferedReader br = new BufferedReader(new InputStreamReader(c.openInputStream(gpxFile.getUri())));
             while ((s = br.readLine()) != null) {
                 if (s.contains("<time>")) {
-                    tripTimePreference.edit().putString(tripName, s).commit();
+                    tripTimePreference.edit().putString(tripName, s).apply();
                     return getTime(s, type_gpx);
                 }
             }
@@ -238,8 +238,8 @@ public class MyCalendar extends GregorianCalendar{
     public static void updateTripTimeZone(Context context, String tripName, String timezone) {
         if (context == null)
             return;
-        context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE).edit().putString(tripName, timezone).commit();
-        context.getSharedPreferences("tripTime", Context.MODE_PRIVATE).edit().remove(tripName).commit();
+        context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE).edit().putString(tripName, timezone).apply();
+        context.getSharedPreferences("tripTime", Context.MODE_PRIVATE).edit().remove(tripName).apply();
     }
 
     @Override

@@ -1,8 +1,13 @@
 package com.yupog2003.tripdiary;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 
 import java.io.File;
@@ -32,6 +38,10 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
     public Button cancel;
     public Button selectAll;
     public Button upDir;
+    Drawable folderDrawable;
+    Drawable pictureDrawable;
+    Drawable videoDrawable;
+    Drawable audioDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,10 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
         currentDir = (TextView) findViewById(R.id.currentDir);
         listView = (ListView) findViewById(R.id.listView);
         choosedFiles = new ArrayList<>();
+        folderDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_folder);
+        pictureDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_picture);
+        videoDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_takevideo);
+        audioDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_music);
         adapter = new FileAdapter(new File(getIntent().getStringExtra("root")), FileHelper.getNoStartWithDotFilter());
         currentDir.setText(adapter.dir.getPath());
         listView.setAdapter(adapter);
@@ -147,15 +161,15 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
                 checkBox.setOnCheckedChangeListener(this);
                 textView.setText(file.getName());
                 if (file.isDirectory()) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_folder, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(folderDrawable, null, null, null);
                 } else if (FileHelper.isPicture(file)) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_picture, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(pictureDrawable, null, null, null);
                 } else if (FileHelper.isVideo(file)) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_takevideo, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(videoDrawable, null, null, null);
                 } else if (FileHelper.isAudio(file)) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_takeaudio, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
                 } else {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_file, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(folderDrawable, null, null, null);
                     checkBox.setVisibility(View.GONE);
                 }
                 textView.setOnClickListener(this);

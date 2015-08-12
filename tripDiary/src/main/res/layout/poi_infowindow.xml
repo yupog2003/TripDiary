@@ -8,6 +8,7 @@
         android:id="@+id/poiImage"
         android:layout_width="72dp"
         android:layout_height="72dp"
+        android:scaleType="center"
         android:contentDescription="@string/imagebutton_description"
         android:src="@drawable/poi" />
 
@@ -24,6 +25,7 @@
             android:layout_height="28dp"
             android:singleLine="true"
             android:text=""
+            android:textColor="@color/textColorDarkPrimary"
             android:maxWidth="150dp"
             android:gravity="center_vertical"
             android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -35,6 +37,7 @@
             android:singleLine="true"
             android:gravity="center_vertical"
             android:maxWidth="150dp"
+            android:textColor="@color/textColorDarkSecondary"
             android:text="" />
 
         <TextView
@@ -44,6 +47,7 @@
             android:singleLine="true"
             android:gravity="center_vertical"
             android:maxWidth="150dp"
+            android:textColor="@color/textColorDarkSecondary"
             android:text="" />
     </LinearLayout>
 

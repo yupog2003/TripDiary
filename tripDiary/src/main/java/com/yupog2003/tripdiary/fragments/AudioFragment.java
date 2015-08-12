@@ -1,14 +1,15 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
 import com.yupog2003.tripdiary.data.POI;
@@ -35,10 +37,17 @@ public class AudioFragment extends Fragment {
     ListView layout;
     AudioAdapter adapter;
     POI poi;
+    Drawable audioDrawable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_audio, container, false);
+        layout = (ListView) inflater.inflate(R.layout.fragment_audio, container, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setNestedScrollingEnabled(true);
+        }
+        audioDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
+        refresh();
+        return layout;
     }
 
     @Override
@@ -48,27 +57,24 @@ public class AudioFragment extends Fragment {
             outState.putBoolean("bug:fix", true);
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
     }
+
     public void refresh() {
-        if (getView()==null||getActivity()==null)
+        if (getActivity() == null)
             return;
-        this.poi =((ViewPointActivity)getActivity()).poi;
+        this.poi = ((ViewPointActivity) getActivity()).poi;
         if (poi == null) {
             return;
         }
-        layout = (ListView) getView().findViewById(R.id.audiolistview);
         adapter = new AudioAdapter();
         layout.setAdapter(adapter);
         layout.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
         layout.setOnItemClickListener(adapter);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            layout.setNestedScrollingEnabled(true);
-        }
     }
 
     class MyMultiChoiceModeListener implements ListView.MultiChoiceModeListener {
@@ -91,7 +97,7 @@ public class AudioFragment extends Fragment {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(R.drawable.ic_alert);
+                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -239,19 +245,17 @@ public class AudioFragment extends Fragment {
         }
 
         public Object getItem(int position) {
-
             return audios[position];
         }
 
         public long getItemId(int position) {
-
             return position;
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView textView = new TextView(getActivity());
             textView.setTextSize(30);
-            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+            textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
             textView.setText(FileHelper.getFileName(audios[position]));
             CheckableLayout l = new CheckableLayout(getActivity());
             l.addView(textView);

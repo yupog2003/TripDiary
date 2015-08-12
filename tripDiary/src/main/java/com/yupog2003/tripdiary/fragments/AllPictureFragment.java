@@ -24,7 +24,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
@@ -33,8 +32,6 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
-
-import java.util.Arrays;
 
 public class AllPictureFragment extends Fragment {
     POI[] pois;
@@ -93,18 +90,15 @@ public class AllPictureFragment extends Fragment {
 
     class PictureAdapter extends BaseAdapter implements OnItemClickListener {
         DocumentFile[] pictures;
-        Bitmap[] bitmaps;
         DisplayImageOptions options;
 
         public PictureAdapter(DocumentFile[] pictures) {
             this.pictures = pictures;
-            this.bitmaps = new Bitmap[pictures.length];
             if (pictures.length > 0)
                 options = new DisplayImageOptions.Builder()
-                        .displayer(new FadeInBitmapDisplayer(500))
-                        .cacheInMemory(false)
-                        .cacheOnDisk(false)
+                        .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                         .bitmapConfig(Bitmap.Config.RGB_565)
+                        .cacheInMemory(true)
                         .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                         .extraForDownloader(pictures[0].getParentFile())
                         .build();
@@ -125,19 +119,7 @@ public class AllPictureFragment extends Fragment {
             return position;
         }
 
-        public void freeBitmaps() {
-            if (bitmaps != null) {
-                for (Bitmap bitmap : bitmaps) {
-                    if (bitmap != null) {
-                        bitmap.recycle();
-                    }
-                }
-                Arrays.fill(bitmaps, null);
-            }
-        }
-
         public View getView(final int position, View convertView, ViewGroup parent) {
-
             if (convertView == null) {
                 SquareImageView imageView = new SquareImageView(getActivity());
                 imageView.setMaxWidth(width);
@@ -145,21 +127,7 @@ public class AllPictureFragment extends Fragment {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 convertView = imageView;
             }
-            if (bitmaps[position] == null) {
-                ImageLoader.getInstance().displayImage(FileHelper.getFileName(pictures[position]), (ImageView) convertView, options, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        try {
-                            bitmaps[position] = loadedImage;
-                        } catch (OutOfMemoryError e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                });
-            } else {
-                ((ImageView) convertView).setImageBitmap(bitmaps[position]);
-            }
+            ImageLoader.getInstance().displayImage("trip://" + pictures[position].getUri().getPath(), (ImageView) convertView, options);
             return convertView;
         }
 
@@ -213,16 +181,6 @@ public class AllPictureFragment extends Fragment {
             }
         }
 
-        public void freeBitmaps() {
-            if (pictureAdapters != null) {
-                for (PictureAdapter adapter : pictureAdapters) {
-                    if (adapter != null) {
-                        adapter.freeBitmaps();
-                    }
-                }
-            }
-        }
-
         @Override
         public POIAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             CardView v = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.card_pictures, parent, false);
@@ -245,11 +203,4 @@ public class AllPictureFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onLowMemory() {
-        if (poiAdapter != null) {
-            poiAdapter.freeBitmaps();
-        }
-        super.onLowMemory();
-    }
 }

@@ -3,7 +3,6 @@ package com.yupog2003.tripdiary.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.provider.DocumentFile;
 
@@ -15,6 +14,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TimeZone;
 
@@ -31,8 +31,6 @@ public class Trip implements Comparable<Trip> {
     public String tripName;
     public String category;
     public String timezone;
-    public GpxAnalyzerJava analyzer;
-    public GpxAnalyzer2 analyzer2;
     public MyCalendar time; //in UTC
     public Drawable drawable;
     public ConstructListener listener;
@@ -86,7 +84,8 @@ public class Trip implements Comparable<Trip> {
         if (noteFile == null) {
             this.noteFile = dir.createFile("", "note");
         }
-        timezone = MyCalendar.getTripTimeZone(context, tripName);
+        this.timezone = MyCalendar.getTripTimeZone(context, tripName);
+        this.note = "";
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(noteFile.getUri())));
             String s;
@@ -102,39 +101,35 @@ public class Trip implements Comparable<Trip> {
         refreshPOIs();
     }
 
-    public void getCacheJava(Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
-        analyzer = new GpxAnalyzerJava(this, context, handler);
-        analyzer.setOnProgressChangedListener(listener);
-        if (analyzer.analyze()) {
-            cache = analyzer.getCache();
-        }
-        analyzer = null;
-    }
-
-    public void getCacheJNI(Handler handler, GpxAnalyzerJava.ProgressChangedListener listener) {
+    public void getCacheJava(GpxAnalyzerJava.ProgressChangedListener listener) {
         try {
-            analyzer2 = new GpxAnalyzer2(this, context, handler);
-            analyzer2.setOnProgressChangedListener(listener);
-            if (analyzer2.analyze()) {
-                cache = analyzer2.getCache();
+            GpxAnalyzerJava analyzer = new GpxAnalyzerJava(this, context);
+            analyzer.setOnProgressChangedListener(listener);
+            if (analyzer.analyze()) {
+                cache = analyzer.getCache();
             }
-            analyzer = null;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void stopGetCache() {
-        if (analyzer != null) {
-            analyzer.stop();
+    public void getCacheJNI(GpxAnalyzerJava.ProgressChangedListener listener) {
+        try {
+            GpxAnalyzer2 analyzer2 = new GpxAnalyzer2(this, context);
+            analyzer2.setOnProgressChangedListener(listener);
+            if (analyzer2.analyze()) {
+                cache = analyzer2.getCache();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void deleteCache() {
-        if (cacheFile!=null){
+        if (cacheFile != null) {
             cacheFile.delete();
         }
-        context.getSharedPreferences("tripTime", 0).edit().remove(tripName).commit();
+        context.getSharedPreferences("tripTime", 0).edit().remove(tripName).apply();
     }
 
     public void updateNote(String note) {
@@ -163,13 +158,21 @@ public class Trip implements Comparable<Trip> {
     }
 
     public void refreshPOI(String poiName) {
-        if (dir == null || pois == null) return;
-        for (int j = 0; j < pois.length; j++) {
-            if (poiName.equals(pois[j].title)) {
-                pois[j] = new POI(context, dir.findFile(poiName));
-                break;
+        if (dir == null || pois == null || poiName == null) return;
+        ArrayList<POI> tempPOIs = new ArrayList<>();
+        for (POI poi : pois) {
+            if (poi != null) {
+                if (poiName.equals(poi.title)) {
+                    DocumentFile poiFile = dir.findFile(poiName);
+                    if (poiFile != null) {
+                        tempPOIs.add(new POI(context, poiFile));
+                    }
+                } else {
+                    tempPOIs.add(poi);
+                }
             }
         }
+        this.pois = tempPOIs.toArray(new POI[tempPOIs.size()]);
     }
 
     public void refreshPOIs() {
@@ -183,11 +186,11 @@ public class Trip implements Comparable<Trip> {
                         listener.onPOICreated(i, pois.length, pois[i].title);
                     }
                 }
-            } else {
-                this.pois = new POI[0];
+                Arrays.sort(pois);
+                return;
             }
-            Arrays.sort(pois);
         }
+        this.pois = new POI[0];
     }
 
     public void renameTrip(String name) {

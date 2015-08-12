@@ -1,6 +1,5 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.print.PrintHelper;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,9 +31,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
@@ -42,12 +42,12 @@ import com.yupog2003.tripdiary.views.CheckableLayout;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PictureFragment extends Fragment implements OnItemClickListener {
     GridView layout;
     PictureAdapter adapter;
     POI poi;
+    int width;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,13 +55,13 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             layout.setNestedScrollingEnabled(true);
         }
+        refresh();
         return layout;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
     }
 
     public void refresh() {
@@ -71,6 +71,15 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         this.poi = ((ViewPointActivity) getActivity()).poi;
         if (poi == null) {
             return;
+        }
+        int screenWidth = DeviceHelper.getScreenWidth(getActivity());
+        int screenHeight = DeviceHelper.getScreenHeight(getActivity());
+        if (screenWidth > screenHeight) {
+            width = screenWidth / 5;
+            layout.setNumColumns(5);
+        } else {
+            width = screenWidth / 3;
+            layout.setNumColumns(3);
         }
         layout.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
@@ -89,48 +98,24 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
     class PictureAdapter extends BaseAdapter {
         DocumentFile[] files;
-        int width;
         DisplayImageOptions options;
-        Bitmap[] bitmaps;
         int dp2;
         boolean onMultiChoiceMode;
 
         public PictureAdapter() {
-            int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-            int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-            if (screenWidth > screenHeight) {
-                width = screenWidth / 5;
-                layout.setNumColumns(5);
-            } else {
-                width = screenWidth / 3;
-                layout.setNumColumns(3);
-            }
             dp2 = (int) DeviceHelper.pxFromDp(getActivity(), 2);
             files = poi.picFiles;
             if (files == null) {
                 files = new DocumentFile[0];
             }
             options = new DisplayImageOptions.Builder()
-                    .displayer(new FadeInBitmapDisplayer(500))
-                    .cacheInMemory(false)
-                    .cacheOnDisk(false)
+                    .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                     .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                     .bitmapConfig(Bitmap.Config.RGB_565)
+                    .cacheInMemory(true)
                     .extraForDownloader(poi.picDir)
                     .build();
-            bitmaps = new Bitmap[files.length];
             onMultiChoiceMode = false;
-        }
-
-        public void freeBitmaps() {
-            if (bitmaps != null) {
-                for (Bitmap bitmap : bitmaps) {
-                    if (bitmap != null) {
-                        bitmap.recycle();
-                    }
-                }
-                Arrays.fill(bitmaps, null);
-            }
         }
 
         public int getCount() {
@@ -161,16 +146,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 convertView = l;
                 convertView.setTag(i);
             }
-            if (bitmaps[position] == null) {
-                ImageLoader.getInstance().displayImage(FileHelper.getFileName(files[position]), (ImageView) convertView.getTag(), options, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        bitmaps[position] = loadedImage;
-                    }
-                });
-            } else {
-                ((ImageView) convertView.getTag()).setImageBitmap(bitmaps[position]);
-            }
+            ImageLoader.getInstance().displayImage("trip://" + files[position].getUri().getPath(), (ImageView) convertView.getTag(), options);
             ((CheckableLayout) convertView).setOnMultiChoiceMode(onMultiChoiceMode);
             return convertView;
         }
@@ -197,7 +173,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(R.drawable.ic_alert);
+                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -362,11 +338,4 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         getActivity().startActivity(intent);
     }
 
-    @Override
-    public void onLowMemory() {
-        if (adapter != null) {
-            adapter.freeBitmaps();
-        }
-        super.onLowMemory();
-    }
 }

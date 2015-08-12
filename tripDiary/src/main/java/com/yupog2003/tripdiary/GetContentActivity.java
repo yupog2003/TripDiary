@@ -1,15 +1,20 @@
 package com.yupog2003.tripdiary;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -30,6 +35,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -58,6 +64,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
     private Button save;
     private int gridWidth;
     private MemoryAdapter adapter;
+    Drawable folderDrawable;
+    Drawable pictureDrawable;
+    Drawable videoDrawable;
+    Drawable audioDrawable;
+    Drawable poiDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +98,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         } else {
             type = Type.other;
         }
-
+        folderDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_folder);
+        pictureDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_picture);
+        videoDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_takevideo);
+        audioDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_music);
+        poiDrawable=ColorHelper.getAccentTintDrawable(this, R.drawable.poi);
         save = (Button) findViewById(R.id.save);
         if (action == Action.get_content) {
             save.setVisibility(View.GONE);
@@ -116,13 +131,15 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         Type type;
         String nowDir; // /category/trip/poi
         int nowLevel;
-        ArrayList<String> files;
+        ArrayList<String> displayNames;
         SharedPreferences categorysp;
         SharedPreferences tripsp;
         POI[] pois;
+        DocumentFile nowDirFile;
         int lastPictureIndex;
         int lastVideoIndex;
         int lastAudioIndex;
+        DisplayImageOptions options;
 
         public MemoryAdapter(Type type) {
             this.type = type;
@@ -132,7 +149,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             }
             this.categorysp = getSharedPreferences("category", MODE_PRIVATE);
             this.tripsp = getSharedPreferences("trip", MODE_PRIVATE);
-            this.files = new ArrayList<>();
+            this.displayNames = new ArrayList<>();
             this.lastPictureIndex = -1;
             this.lastVideoIndex = -1;
             this.lastAudioIndex = -1;
@@ -140,17 +157,16 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         }
 
         public void setDir(String dir) {
-            files.clear();
+            displayNames.clear();
             lastPictureIndex = -1;
             lastVideoIndex = -1;
             lastAudioIndex = -1;
             nowDir = dir;
             setTitle(dir);
             String[] levels = dir.split("/");
-            int levelLength = levels.length;
-            if (levelLength > 1) levelLength--;
-            nowLevel = levelLength;
-            if (levelLength == 0) { //root
+            nowLevel = levels.length;
+            if (nowLevel > 1) nowLevel--;
+            if (nowLevel == 0) { //root
                 setGridView(false);
                 save.setEnabled(false);
                 Set<String> categorySet = categorysp.getAll().keySet();
@@ -158,19 +174,21 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 if (categories.length < 2) {
                     setDir("/" + getString(R.string.nocategory));
                 } else {
-                    files.addAll(Arrays.asList(categories));
+                    displayNames.addAll(Arrays.asList(categories));
                     nowDir = "/";
                 }
-            } else if (levelLength == 1) { //category
+                nowDirFile = TripDiaryApplication.rootDocumentFile;
+            } else if (nowLevel == 1) { //category
                 save.setEnabled(false);
-                String[] tripNames = FileHelper.listFileNames(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
+                nowDirFile = TripDiaryApplication.rootDocumentFile;
+                String[] tripNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_dirs);
                 String category = levels[1];
                 for (String tripName : tripNames) {
                     if (tripsp.getString(tripName, getString(R.string.nocategory)).equals(category)) {
-                        files.add(tripName);
+                        displayNames.add(tripName);
                     }
                 }
-                Collections.sort(files, new Comparator<String>() {
+                Collections.sort(displayNames, new Comparator<String>() {
                     @Override
                     public int compare(String lhs, String rhs) {
                         MyCalendar time1 = MyCalendar.getTripTime(lhs);
@@ -185,11 +203,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                             return 0;
                     }
                 });
-            } else if (levelLength == 2) {//trip
+            } else if (nowLevel == 2) {//trip
                 save.setEnabled(false);
                 setGridView(false);
                 String tripName = levels[2];
-                DocumentFile[] poiFiles = FileHelper.listFiles(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName), FileHelper.list_dirs);
+                nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
+                DocumentFile[] poiFiles = FileHelper.listFiles(nowDirFile, FileHelper.list_dirs);
                 pois = new POI[poiFiles.length];
                 for (int i = 0; i < pois.length; i++) {
                     pois[i] = new POI(GetContentActivity.this, poiFiles[i]);
@@ -206,42 +225,60 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         }
                     }
                 });
-                String[] poiNames = new String[pois.length];
-                for (int i = 0; i < poiNames.length; i++) {
-                    poiNames[i] = pois[i].title;
+                for (POI poi : pois) {
+                    displayNames.add(poi.title);
                 }
-                files.addAll(Arrays.asList(poiNames));
-            } else if (levelLength == 3) {//poi
+            } else if (nowLevel == 3) {//poi
                 save.setEnabled(true);
                 String tripName = levels[2];
                 String poiName = levels[3];
                 switch (type) {
                     case picture:
                         setGridView(true);
-                        String[] pictureNames = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures"), FileHelper.list_pics);
-                        files.addAll(Arrays.asList(pictureNames));
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures");
+                        String[] pictureNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_pics);
+                        displayNames.addAll(Arrays.asList(pictureNames));
+                        options = new DisplayImageOptions.Builder()
+                                .displayer(new FadeInBitmapDisplayer(500))
+                                .cacheInMemory(true)
+                                .cacheOnDisk(false)
+                                .bitmapConfig(Bitmap.Config.RGB_565)
+                                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                                .extraForDownloader(nowDirFile)
+                                .build();
                         break;
                     case video:
                         setGridView(true);
-                        String[] videoNames = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos"), FileHelper.list_videos);
-                        files.addAll(Arrays.asList(videoNames));
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos");
+                        String[] videoNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_videos);
+                        displayNames.addAll(Arrays.asList(videoNames));
+                        options = new DisplayImageOptions.Builder()
+                                .displayer(new FadeInBitmapDisplayer(500))
+                                .cacheInMemory(true)
+                                .cacheOnDisk(false)
+                                .bitmapConfig(Bitmap.Config.RGB_565)
+                                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                                .extraForDownloader(nowDirFile)
+                                .build();
                         break;
                     case audio:
                         setGridView(false);
-                        String[] audioNames = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios"), FileHelper.list_audios);
-                        files.addAll(Arrays.asList(audioNames));
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios");
+                        String[] audioNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_audios);
+                        displayNames.addAll(Arrays.asList(audioNames));
                         break;
                     case other:
                         setGridView(false);
-                        String[] pictureNames2 = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures"), FileHelper.list_pics);
-                        files.addAll(Arrays.asList(pictureNames2));
-                        lastPictureIndex = files.size();
-                        String[] videoNames2 = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos"), FileHelper.list_videos);
-                        files.addAll(Arrays.asList(videoNames2));
-                        lastVideoIndex = files.size();
-                        String[] audioNames2 = FileHelper.listFileNames(FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios"), FileHelper.list_audios);
-                        files.addAll(Arrays.asList(audioNames2));
-                        lastAudioIndex = files.size();
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
+                        String[] pictureNames2 = FileHelper.listFileNames(FileHelper.findfile(nowDirFile, "pictures"), FileHelper.list_pics);
+                        displayNames.addAll(Arrays.asList(pictureNames2));
+                        lastPictureIndex = displayNames.size();
+                        String[] videoNames2 = FileHelper.listFileNames(FileHelper.findfile(nowDirFile, "videos"), FileHelper.list_videos);
+                        displayNames.addAll(Arrays.asList(videoNames2));
+                        lastVideoIndex = displayNames.size();
+                        String[] audioNames2 = FileHelper.listFileNames(FileHelper.findfile(nowDirFile, "audios"), FileHelper.list_audios);
+                        displayNames.addAll(Arrays.asList(audioNames2));
+                        lastAudioIndex = displayNames.size();
                         break;
                 }
             }
@@ -268,42 +305,39 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
 
         @Override
         public int getCount() {
-            return files.size();
+            return displayNames.size();
         }
 
         @Override
         public Object getItem(int position) {
             switch (nowLevel) {
                 case 0:
-                    return files.get(position);//category name
+                    return displayNames.get(position);//category name
                 case 1:
-                    String tripName = files.get(position);
-                    return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName); // trip file
+                    String tripName = displayNames.get(position);
+                    return FileHelper.findfile(nowDirFile, tripName); // trip file
                 case 2:
-                    String poiName = files.get(position);
-                    String tripName2 = nowDir.split("/")[2];
-                    return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName2, poiName);//poi file
+                    String poiName = displayNames.get(position);
+                    return FileHelper.findfile(nowDirFile, poiName);//poi file
                 case 3:
-                    String poiName2 = nowDir.split("/")[3];
-                    String tripName3 = nowDir.split("/")[2];
-                    String memoryName = files.get(position);
+                    String memoryName = displayNames.get(position);
                     if (type == Type.picture) {
-                        return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "pictures", memoryName); //picture file
+                        return FileHelper.findfile(nowDirFile, memoryName); //picture file
                     } else if (type == Type.video) {
-                        return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "videos", memoryName); //video file
+                        return FileHelper.findfile(nowDirFile, memoryName); //video file
                     } else if (type == Type.audio) {
-                        return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "audios", memoryName); //audio file
+                        return FileHelper.findfile(nowDirFile, memoryName); //audio file
                     } else if (type == Type.other) {
                         if (position >= 0 && position < lastPictureIndex) { //is picture
-                            return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "pictures", memoryName);
+                            return FileHelper.findfile(nowDirFile, "pictures", memoryName);
                         } else if (position >= lastPictureIndex && position < lastVideoIndex) { //is video
-                            return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "videos", memoryName);
+                            return FileHelper.findfile(nowDirFile, "videos", memoryName);
                         } else if (position >= lastVideoIndex && position < lastAudioIndex) { //is audio
-                            return FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName3, poiName2, "audios", memoryName);
+                            return FileHelper.findfile(nowDirFile, "audios", memoryName);
                         }
                     }
             }
-            return files.get(position);
+            return displayNames.get(position);
         }
 
         @Override
@@ -319,34 +353,25 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 imageView.setMaxHeight(gridWidth);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 convertView = imageView;
-                DocumentFile picFile = (DocumentFile) getItem(position);
-                DisplayImageOptions options = new DisplayImageOptions.Builder()
-                        .displayer(new FadeInBitmapDisplayer(500))
-                        .cacheInMemory(true)
-                        .cacheOnDisk(false)
-                        .bitmapConfig(Bitmap.Config.RGB_565)
-                        .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                        .extraForDownloader(picFile.getParentFile())
-                        .build();
-                ImageLoader.getInstance().displayImage(FileHelper.getFileName(picFile), (ImageView) convertView, options);
+                ImageLoader.getInstance().displayImage(displayNames.get(position), (ImageView) convertView, options);
             } else {
                 TextView textView = new TextView(GetContentActivity.this);
                 if (nowLevel == 3 && type == Type.audio) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
                 } else if (nowLevel == 3 && type == Type.other) {
                     if (position >= 0 && position < lastPictureIndex) { //is picture
-                        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_picture, 0, 0, 0);
+                        textView.setCompoundDrawablesWithIntrinsicBounds(pictureDrawable, null, null, null);
                     } else if (position >= lastPictureIndex && position < lastVideoIndex) { //is video
-                        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_takevideo, 0, 0, 0);
+                        textView.setCompoundDrawablesWithIntrinsicBounds(videoDrawable, null, null, null);
                     } else if (position >= lastVideoIndex && position < lastAudioIndex) { //is audio
-                        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_music, 0, 0, 0);
+                        textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
                     }
                 } else if (nowLevel == 2) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.poi, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(poiDrawable, null, null, null);
                 } else if (nowLevel == 1) {
                     textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_launcher, 0, 0, 0);
                 } else if (nowLevel == 0) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_folder, 0, 0, 0);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(folderDrawable, null, null, null);
                 }
                 textView.setTextAppearance(GetContentActivity.this, android.R.style.TextAppearance_Large);
                 textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -367,9 +392,9 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                             num_files = pois[position].picFiles.length + pois[position].videoFiles.length + pois[position].audioFiles.length;
                             break;
                     }
-                    textView.setText(files.get(position) + "(" + String.valueOf(num_files) + ")");
+                    textView.setText(displayNames.get(position) + "(" + String.valueOf(num_files) + ")");
                 } else {
-                    textView.setText(files.get(position));
+                    textView.setText(displayNames.get(position));
                 }
                 convertView = textView;
             }
@@ -386,9 +411,9 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                     finish();
                 }
             } else if (nowLevel == 0) {
-                setDir(nowDir + files.get(position));
+                setDir(nowDir + displayNames.get(position));
             } else {
-                setDir(nowDir + "/" + files.get(position));
+                setDir(nowDir + "/" + displayNames.get(position));
             }
         }
     }
@@ -477,7 +502,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         protected void onPreExecute() {
             AlertDialog.Builder ab = new AlertDialog.Builder(activity);
             ab.setTitle(activity.getString(R.string.move_to));
-            LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, (ViewGroup)findViewById(android.R.id.content), false);
+            LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, (ViewGroup) findViewById(android.R.id.content), false);
             message = (TextView) layout.findViewById(R.id.message);
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);
@@ -532,7 +557,6 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
 
         @Override
         protected void onPostExecute(String result) {
-
             dialog.dismiss();
             GetContentActivity.this.finish();
         }

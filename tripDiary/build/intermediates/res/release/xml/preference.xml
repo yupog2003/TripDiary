@@ -40,6 +40,12 @@
             android:key="altitude_unit"
             android:summary="@string/meter_or_ft"
             android:title="@string/altitude_unit" />
+        <com.yupog2003.tripdiary.preferences.SeekBarPreference
+            android:defaultValue="30"
+            android:key="imageloaderMemoryCachePercentage"
+            android:max="99"
+            android:summary="@string/image_loader_cache_size_explanation"
+            android:title="@string/image_loader_cache_size" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/record_setting">
         <EditTextPreference

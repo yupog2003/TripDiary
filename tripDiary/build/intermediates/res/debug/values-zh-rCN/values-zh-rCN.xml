@@ -93,16 +93,13 @@
     <string name="app_name">旅游日记</string>
     <string name="are_you_sure_to_delete">确定要删除吗?</string>
     <string name="are_you_sure_to_delete_this_poi">确定要删除这个兴趣点吗?</string>
-    <string name="ask_for_replace_trip">有相同的旅程，请问要取代吗？</string>
     <string name="audio_codec">声音编码</string>
     <string name="audio_recorder_is_not_available">无录音机</string>
     <string name="average_speed">平均速度</string>
     <string name="back_up_setting">备份设定</string>
-    <string name="backed_up_file">备份档</string>
     <string name="background_music">背景音乐</string>
     <string name="backup">备份</string>
-    <string name="backup_path">备份路径</string>
-    <string name="backup_to">备份到</string>
+    <string name="backup_complete">备份完成</string>
     <string name="barchart">直方图</string>
     <string name="be_careful">小心</string>
     <string name="blur">模糊</string>
@@ -154,7 +151,6 @@
     <string msgid="2429381841831957106" name="common_signin_button_text_long">"使用Google帐户登录"</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rCN/strings.xml -->
     <eat-comment/>
-    <string name="compressing">压缩中</string>
     <string name="cost">花费</string>
     <string name="cost_type">花费种类</string>
     <string name="delete">删除</string>
@@ -177,7 +173,6 @@
     <string name="encoding">编码中</string>
     <string name="enter">确定</string>
     <string name="eraser_mode">橡皮擦模式</string>
-    <string name="error_please_use_another_path">错误！请使用其他路径</string>
     <string name="explain_conflict_trip">有相同的旅程，请使用其他名称</string>
     <string name="explain_how_to_use_street_view">调整地图使此人站在一条街上，然后点击此人</string>
     <string name="explain_same_trip">有相同的旅程，你要继续该旅程吗?</string>
@@ -193,6 +188,8 @@
     <string name="generate_video">生成影片(实验性)</string>
     <string name="gpx">Gpx</string>
     <string name="has_not_been_installed">未安装</string>
+    <string name="image_loader_cache_size">图片加载器缓存大小</string>
+    <string name="image_loader_cache_size_explanation">图片加载器快取占heap大小百分比, 增加可取得较好的效能但有可能造成内存不足</string>
     <string name="imagebutton_description">imagebutton</string>
     <string name="import_a_audio">汇入一声音</string>
     <string name="import_a_picture">汇入一照片</string>
@@ -207,6 +204,7 @@
     <string name="input_the_trip_name">输入旅程名称</string>
     <string name="invalid_font">无效的字型</string>
     <string name="invalid_gpx_file">错误的gpx档</string>
+    <string name="invalid_trip_file">错误的旅程档</string>
     <string name="is_not_a_valid_directory">不是一个正确的目录</string>
     <string name="kilometer_or_mile">公里或英哩</string>
     <string name="kml">KML</string>
@@ -291,6 +289,7 @@
     <string name="remote_public_trips">云端公开旅程</string>
     <string name="rename">更名</string>
     <string name="resolution">解析度</string>
+    <string name="restore_complete">还原完成</string>
     <string name="restore_setting">还原设定</string>
     <string name="restore_trip">还原旅程</string>
     <string name="resume">继续</string>
@@ -314,6 +313,7 @@
     <string name="select_the_gpx">选取.gpx档</string>
     <string name="select_the_picture_by">选取图片</string>
     <string name="select_the_video_by">选取影片</string>
+    <string name="setting">设定</string>
     <string name="setting_has_been_backed_up">设定已备份</string>
     <string name="setting_has_been_restored">设定已还原</string>
     <string name="shake_to_add_poi">甩动以新增兴趣点</string>
@@ -354,6 +354,7 @@
     <string name="total_cost">总花费</string>
     <string name="total_time">总时间</string>
     <string name="track_color">轨迹颜色</string>
+    <string name="track_is_too_long">轨迹过长 (内存不足)</string>
     <string name="transportation">行</string>
     <string name="trip_category">旅程类别</string>
     <string name="trip_has_been_stopped">旅程已结束</string>

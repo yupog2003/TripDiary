@@ -3,7 +3,6 @@ package com.yupog2003.tripdiary.fragments;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.ActionMode;
@@ -41,6 +41,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.services.DownloadTripService;
@@ -436,7 +437,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
                     ab2.setTitle(getString(R.string.be_careful));
                     ab2.setMessage(getString(R.string.are_you_sure_to_delete));
-                    ab2.setIcon(R.drawable.ic_alert);
+                    ab2.setIcon(ColorHelper.getAlertDrawable(getActivity()));
                     ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {

@@ -1,11 +1,11 @@
 package com.yupog2003.tripdiary.data;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 
 import com.yupog2003.tripdiary.R;
 

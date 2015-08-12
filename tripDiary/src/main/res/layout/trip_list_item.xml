@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text=""
+            android:textColor="@color/textColorDarkPrimary"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -21,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColor="@color/textColorDarkSecondary"
             android:text="" />
     </LinearLayout>
 

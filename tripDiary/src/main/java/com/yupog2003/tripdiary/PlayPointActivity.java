@@ -37,7 +37,6 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     ImageButton pause;
     ImageButton skip;
     ImageButton next;
-    String name;
     boolean threadpause = false;
     boolean mediafinish = false;
     boolean stop = false;
@@ -67,7 +66,6 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             return;
         }
         poi = new POI(this, poiFile);
-        this.name = poi.title;
         viewFlipper = (ViewFlipper) findViewById(R.id.pointviewflipper);
         viewFlipper.setInAnimation(this, android.R.anim.fade_in);
         viewFlipper.setOutAnimation(this, android.R.anim.fade_out);
@@ -79,7 +77,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         next.setOnClickListener(this);
         handler = new Handler();
         interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(PlayPointActivity.this).getString("playpoispeed", "1000"));
-        setTitle(name + poi.time.formatInTimezone(MyCalendar.getTripTimeZone(this, poi.dir.getParentFile().getName())));
+        setTitle(poi.title + poi.time.formatInTimezone(MyCalendar.getTripTimeZone(this, poi.dir.getParentFile().getName())));
         prepareViews();
         play();
     }
@@ -290,7 +288,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                 pause.setImageResource(R.drawable.ic_pause);
                 threadpause = false;
             } else {
-                pause.setImageResource(R.drawable.ic_resume);
+                pause.setImageResource(R.drawable.ic_play);
                 threadpause = true;
             }
 

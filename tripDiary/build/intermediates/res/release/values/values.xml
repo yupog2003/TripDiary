@@ -110,16 +110,11 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/color.xml -->
     <eat-comment/>
-    <color name="accent">#33b5e5</color>
+    <color name="accent">#009688</color>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/color.xml -->
-    <eat-comment/>
-    <color name="actionbar_background">#fff3f3f3</color>
-    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
-    <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
     <color name="background_material_dark">#ff303030</color>
@@ -141,7 +136,7 @@
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#1a237e</color>
+    <color name="colorPrimaryDark">#303F9F</color>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/common_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
@@ -209,7 +204,10 @@
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="tabsScrollColor">#C5CAE9</color>
-    <color name="textColorPrimary">#ffffff</color>
+    <color name="textColorDarkPrimary">#DE000000</color>
+    <color name="textColorDarkSecondary">#8A000000</color>
+    <color name="textColorLightPrimary">#ffffff</color>
+    <color name="textColorLightSecondary">#B2ffffff</color>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_colors.xml -->
     <eat-comment/>
     <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
@@ -501,7 +499,6 @@
     <eat-comment/>
     <string name="are_you_sure_to_delete">Are you sure to delete?</string>
     <string name="are_you_sure_to_delete_this_poi">Are you sure to delete this POI?</string>
-    <string name="ask_for_replace_trip">There is a same trip.Do you want to replace it?</string>
     <string name="audio_codec">Audio codec</string>
     <string name="audio_recorder_is_not_available">Audio recorder is not available</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
@@ -512,11 +509,9 @@
     <eat-comment/>
     <string name="average_speed">Average Speed</string>
     <string name="back_up_setting">Back up setting</string>
-    <string name="backed_up_file">Backed up file</string>
     <string name="background_music">Bg music</string>
     <string name="backup">Back up</string>
-    <string name="backup_path">Back up path</string>
-    <string name="backup_to">Back up to</string>
+    <string name="backup_complete">Backup complete</string>
     <string name="barchart">Bar Chart</string>
     <string name="be_careful">Be careful</string>
     <string name="blur">Blur</string>
@@ -575,7 +570,6 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="compressing">Compressing</string>
     <string name="cost">Cost</string>
     <string name="cost_type">Cost Type</string>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
@@ -605,7 +599,6 @@
     <string name="encoding">Encoding</string>
     <string name="enter">Enter</string>
     <string name="eraser_mode">Eraser Mode</string>
-    <string name="error_please_use_another_path">Error!Please use another path.</string>
     <string name="explain_conflict_trip">There is a same trip.Please use another name.</string>
     <string name="explain_how_to_use_street_view">Adjust map to let the man stand on a street and click the man.</string>
     <string name="explain_same_trip">There is a same trip in history.Do you want to continue that trip?</string>
@@ -626,6 +619,8 @@
     <string name="generate_video">Generate Video(experimental)</string>
     <string name="gpx">Gpx</string>
     <string name="has_not_been_installed">has not been installed</string>
+    <string name="image_loader_cache_size">Image loader cache size</string>
+    <string name="image_loader_cache_size_explanation">Percentage of heap size for image loader cache. Increase it to achieve better performance but may produce out of memory error.</string>
     <string name="imagebutton_description">imagebutton</string>
     <string name="import_a_audio">Import a audio</string>
     <string name="import_a_picture">Import a picture</string>
@@ -640,6 +635,7 @@
     <string name="input_the_trip_name">Input the Trip Name</string>
     <string name="invalid_font">Invalid font</string>
     <string name="invalid_gpx_file">Invalid gpx file</string>
+    <string name="invalid_trip_file">Invalid trip file</string>
     <string name="is_not_a_valid_directory">is not a valid directory</string>
     <string name="kilometer_or_mile">Kilometer or Mile</string>
     <string name="kml">KML</string>
@@ -724,6 +720,7 @@
     <string name="remote_public_trips">Cloud Public Trips</string>
     <string name="rename">Rename</string>
     <string name="resolution">Resolution</string>
+    <string name="restore_complete">Restore complete</string>
     <string name="restore_setting">Restore setting</string>
     <string name="restore_trip">Restore trip</string>
     <string name="resume">Resume</string>
@@ -747,6 +744,7 @@
     <string name="select_the_gpx">Select the .gpx</string>
     <string name="select_the_picture_by">Select the picture by</string>
     <string name="select_the_video_by">Select the video by</string>
+    <string name="setting">Setting</string>
     <string name="setting_has_been_backed_up">Setting has been backed up</string>
     <string name="setting_has_been_restored">Setting has been restored</string>
     <string name="shake_to_add_poi">Shake to add POI</string>
@@ -799,6 +797,7 @@
     <string name="total_cost">Total Cost</string>
     <string name="total_time">Total Time</string>
     <string name="track_color">Track Color</string>
+    <string name="track_is_too_long">Track_is_too_long (Out of memory)</string>
     <string name="transportation">Transportation</string>
     <string name="trip_category">Trip Category</string>
     <string name="trip_has_been_stopped">Trip has been stopped</string>
@@ -839,6 +838,10 @@
         <item name="colorAccent">@color/accent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+    </style>
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
     </style>
     <style name="AppTheme" parent="AppBaseTheme"/>
     <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
@@ -2038,6 +2041,17 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="Theme.AppCompat.Light.Translucent" parent="@style/AppBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
+    <eat-comment/>
     <style name="Theme.AppCompat.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

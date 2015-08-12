@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/currentDir"
@@ -9,31 +9,27 @@
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical"
-        android:textAppearance="@android:style/TextAppearance.Large" >
-    </TextView>
+        android:textAppearance="@android:style/TextAppearance.Large" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dip"
         android:layout_below="@+id/currentDir"
         android:background="@drawable/actionbar_shadow"
-        android:rotation="180" >
-    </View>
+        android:rotation="180" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/buttonbar"
-        android:layout_below="@+id/currentDir" >
-    </ListView>
+        android:layout_below="@+id/currentDir" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dip"
         android:layout_above="@+id/buttonbar"
-        android:background="@drawable/actionbar_shadow" >
-    </View>
+        android:background="@drawable/actionbar_shadow" />
 
     <LinearLayout
         android:id="@+id/buttonbar"
@@ -41,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/cancel"
@@ -50,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/ok"
@@ -59,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/enter"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/up"
@@ -68,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/up_dir"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/selectall"
@@ -77,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/select_all"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
 </RelativeLayout>

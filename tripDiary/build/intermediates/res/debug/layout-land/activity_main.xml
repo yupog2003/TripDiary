@@ -25,7 +25,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableLeft="@drawable/ic_starttrip"
+                android:drawableLeft="@drawable/ic_play"
+                android:drawableStart="@drawable/ic_play"
+                android:textColor="@color/textColorDarkPrimary"
                 android:text="@string/Start_Trip"
                 android:textSize="50sp" />
 
@@ -35,6 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textColor="@color/textColorDarkSecondary"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:text="@string/resume_trip" />
         </RelativeLayout>
@@ -49,7 +53,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableLeft="@drawable/ic_view"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawableStart="@drawable/ic_search"
+                android:textColor="@color/textColorDarkPrimary"
                 android:text="@string/History"
                 android:textSize="50sp" />
 
@@ -59,7 +65,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
+                android:textColor="@color/textColorDarkSecondary"
                 android:text="@string/lifetime_record" />
         </RelativeLayout>
     </LinearLayout>

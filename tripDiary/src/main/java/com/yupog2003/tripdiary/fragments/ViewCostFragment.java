@@ -1,6 +1,5 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,10 +78,13 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
     public void refreshData(boolean updatePOI) {
         if (option == ViewCostActivity.optionTrip) {
-            Trip trip = ((ViewTripActivity)getActivity()).trip;
+            if (getActivity() == null) return;
+            Trip trip = ((ViewTripActivity) getActivity()).trip;
+            if (trip == null || trip.pois == null) return;
             ArrayList<DocumentFile> costList = new ArrayList<>();
             for (POI poi : trip.pois) {
-                costList.addAll(Arrays.asList(poi.costFiles));
+                if (poi != null)
+                    costList.addAll(Arrays.asList(poi.costFiles));
             }
             costFiles = costList.toArray(new DocumentFile[costList.size()]);
         } else if (option == ViewCostActivity.optionPOI) {
@@ -91,7 +94,11 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                 }
             }
             DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "costs");
-            costFiles = poiFile.listFiles();
+            if (poiFile != null) {
+                costFiles = poiFile.listFiles();
+            } else {
+                costFiles = new DocumentFile[0];
+            }
         }
         TypedArray array = getActivity().getResources().obtainTypedArray(R.array.cost_type_colors);
         totals = new float[array.length()];
@@ -159,7 +166,6 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             bw.close();
                             refreshData(true);
                         } catch (IOException | IllegalArgumentException e) {
-
                             e.printStackTrace();
                         }
                     }

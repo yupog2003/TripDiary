@@ -25,15 +25,16 @@
                 android:singleLine="true"
                 android:text="name"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/textColorDarkPrimary" />
 
             <TextView
                 android:id="@+id/poiTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:singleLine="true"
                 android:text="2015-25-14T12:30:56"
+                android:textColor="@color/textColorDarkSecondary"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 

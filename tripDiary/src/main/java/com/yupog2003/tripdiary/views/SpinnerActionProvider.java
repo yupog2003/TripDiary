@@ -18,13 +18,10 @@ public class SpinnerActionProvider extends ActionProvider {
         super(context);
         this.context = context;
         this.spinner = new Spinner(context);
-
-
     }
 
     @Override
     public View onCreateActionView() {
-
         return spinner;
     }
 

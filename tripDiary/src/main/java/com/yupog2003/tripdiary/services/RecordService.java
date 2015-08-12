@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary.services;
 
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -16,6 +17,7 @@ import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
@@ -24,6 +26,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.provider.DocumentFile;
 import android.widget.Toast;
 
+import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.RecordActivity;
 import com.yupog2003.tripdiary.TripDiaryApplication;
@@ -94,7 +97,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         updateDuration = Math.max(recordDuration, 200);
         recordDistanceInterval = Integer.valueOf(preferences.getString("min_distance_record", "20"));
         setupNotification(name);
-        if (trip.gpxFile != null || trip.gpxFile.exists()) {
+        if (trip.gpxFile != null && trip.gpxFile.exists()) {
             try {
                 if (trip.gpxFile.length() == 0) {
                     bw = new BufferedWriter(new OutputStreamWriter(getContentResolver().openOutputStream(trip.gpxFile.getUri(), "wa")));
@@ -226,7 +229,14 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             stopForeground(true);
             Toast.makeText(getApplicationContext(), getString(R.string.trip_has_been_stopped), Toast.LENGTH_SHORT).show();
             DeviceHelper.sendGATrack(RecordService.this, "Trip", "stop", name, null);
+            PreferenceManager.getDefaultSharedPreferences(RecordService.this).edit().remove(RecordActivity.pref_tag_onaddpoi).apply();
             instance = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityManager.AppTask task = MyActivity.findViewTripActivityTask(RecordService.this, name);
+                if (task != null) {
+                    task.finishAndRemoveTask();
+                }
+            }
             Intent i = new Intent(RecordService.this, ViewTripActivity.class);
             i.putExtra(ViewTripActivity.tag_tripName, name);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -260,7 +270,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                 nb.setSmallIcon(R.drawable.ic_pause);
                 Intent pauseIntent = new Intent(actionPauseTrip);
                 PendingIntent pausePendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                nb.addAction(R.drawable.ic_resume, getString(R.string.resume), pausePendingIntent);
+                nb.addAction(R.drawable.ic_play, getString(R.string.resume), pausePendingIntent);
             }
             Intent stopIntent = new Intent(actionStopTrip);
             PendingIntent stopPendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -364,14 +374,14 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             case GpsStatus.GPS_EVENT_FIRST_FIX:
                 if (run) {
                     ((Vibrator) getSystemService(Service.VIBRATOR_SERVICE)).vibrate(200);
-                    nb.setSmallIcon(R.drawable.ic_resume);
+                    nb.setSmallIcon(R.drawable.ic_play);
                     startForeground(1, nb.build());
                 }
                 break;
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
                 if (screenOn && run) {
                     boolean isGpsFix = System.currentTimeMillis() - lastFixTime < recordDuration + 2000;
-                    nb.setSmallIcon(isGpsFix ? R.drawable.ic_resume : R.drawable.ic_satellite);
+                    nb.setSmallIcon(isGpsFix ? R.drawable.ic_play : R.drawable.ic_satellite);
                     accuracy = isGpsFix ? accuracy : -1;
                     startForeground(1, nb.build());
                 }

@@ -96,6 +96,10 @@
     <init>();
 }
 
+-keep class com.yupog2003.tripdiary.services.BackupRestoreTripService {
+    <init>();
+}
+
 -keep class com.google.android.gms.ads.AdActivity {
     <init>();
 }

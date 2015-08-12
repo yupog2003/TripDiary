@@ -1,6 +1,5 @@
 package com.yupog2003.tripdiary;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.provider.DocumentFile;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,7 +89,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
     @Override
     protected void onResume() {
-
         super.onResume();
         if (gmap == null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -185,12 +184,12 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             boolean success = true;
             DocumentFile[] tripFiles = TripDiaryApplication.rootDocumentFile.listFiles();
             for (int i = 0; i < tripNames.length; i++) {
-                if (trips == null) {
-                    return false;
-                }
                 DocumentFile tripFile = FileHelper.findfile(tripFiles, tripNames[i]);
                 if (tripFile == null) {
                     continue;
+                }
+                if (trips == null) {
+                    return false;
                 }
                 trips[i] = new Trip(getApplicationContext(), tripFile, false);
                 publishProgress(i);
@@ -306,20 +305,22 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
     public native void stop();
 
     public void onInfoWindowClick(Marker marker) {
-
-        String pointtitle = marker.getTitle();
-        String tripName = pointtitle.split("/")[0];
-        String poiName = pointtitle.split("/")[1];
-        Intent intent = new Intent(AllRecordActivity.this, ViewPointActivity.class);
-        intent.putExtra(ViewPointActivity.tag_tripname, tripName);
-        intent.putExtra(ViewPointActivity.tag_poiname, poiName);
-        intent.putExtra(ViewPointActivity.tag_fromActivity, AllRecordActivity.class.getSimpleName());
-        startActivity(intent);
-
+        String pointTitle = marker.getTitle();
+        String tripName = pointTitle.split("/")[0];
+        String poiName = pointTitle.split("/")[1];
+        if (getPOI(tripName, poiName) != null) {
+            Intent intent = new Intent(AllRecordActivity.this, ViewPointActivity.class);
+            intent.putExtra(ViewPointActivity.tag_tripname, tripName);
+            intent.putExtra(ViewPointActivity.tag_poiname, poiName);
+            intent.putExtra(ViewPointActivity.tag_fromActivity, AllRecordActivity.class.getSimpleName());
+            startActivity(intent);
+        }
     }
 
     public static POI getPOI(String tripName, String poiName) {
+        if (trips == null || tripName == null || poiName == null) return null;
         for (Trip trip : trips) {
+            if (trip == null || trip.tripName == null) continue;
             if (tripName.equals(trip.tripName)) {
                 return trip.getPOI(poiName);
             }
@@ -329,7 +330,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-
         super.onConfigurationChanged(newConfig);
     }
 
@@ -347,7 +347,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         long totalSeconds = 0;
         String s;
         MyLatLng2 latlng = new MyLatLng2();
-
         try {
             if (stop)
                 return false;

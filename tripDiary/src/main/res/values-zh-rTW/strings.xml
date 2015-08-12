@@ -147,14 +147,8 @@
     <string name="select_diary_font">選擇日記字體</string>
     <string name="select_poi">選擇興趣點</string>
     <string name="backup">備份</string>
-    <string name="compressing">壓縮中</string>
-    <string name="backup_to">備份到</string>
     <string name="restore_trip">還原旅程</string>
     <string name="select_the_file_to_restore">選擇檔案以還原(.zip)</string>
-    <string name="backed_up_file">備份檔</string>
-    <string name="ask_for_replace_trip">有相同的旅程，請問要取代嗎？</string>
-    <string name="backup_path">備份路徑</string>
-    <string name="error_please_use_another_path">錯誤！請使用其他路徑</string>
     <string name="there_is_a_same_poi">有相同的興趣點</string>
     <string name="play_setting">播放設定</string>
     <string name="playing_trip_mode">旅程播放模式</string>
@@ -313,5 +307,12 @@
     <string name="from_old_to_new">舊 -> 新</string>
     <string name="open_with_browser">以瀏覽器開啟</string>
     <string name="audio_recorder_is_not_available">無錄音機</string>
+    <string name="backup_complete">備份完成</string>
+    <string name="restore_complete">還原完成</string>
+    <string name="image_loader_cache_size">圖片加載器快取大小</string>
+    <string name="image_loader_cache_size_explanation">圖片加載器快取佔heap大小百分比, 增加可取得較好的效能但有可能造成記憶體不足</string>
+    <string name="setting">設定</string>
+    <string name="invalid_trip_file">錯誤的旅程檔</string>
+    <string name="track_is_too_long">軌跡過長 (記憶體不足)</string>
 
 </resources>
