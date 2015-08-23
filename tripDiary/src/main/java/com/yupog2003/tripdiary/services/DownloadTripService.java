@@ -30,7 +30,7 @@ public class DownloadTripService extends IntentService {
     public DownloadTripService() {
         super("DownloadTripService");
         nb = new NotificationCompat.Builder(this);
-        handler=new Handler();
+        handler = new Handler();
     }
 
     @Override
@@ -42,12 +42,12 @@ public class DownloadTripService extends IntentService {
         final String tripName = tripPath.substring(tripPath.lastIndexOf("/") + 1);
         updateNotification(tripName, getString(R.string.zipping) + "...", 0);
         try {
-            tripPath=URLEncoder.encode(tripPath, "UTF-8");
+            tripPath = URLEncoder.encode(tripPath, "UTF-8");
             String url = phpURL + "?tripPath=" + tripPath;
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             String tripLink = IOUtils.toString(connection.getInputStream(), "UTF-8");
-            String zipFileName=tripLink.substring(tripLink.lastIndexOf("/") + 1);
-            tripLink=tripLink.replace(zipFileName, URLEncoder.encode(zipFileName, "UTF-8").replace("+", "%20"));
+            String zipFileName = tripLink.substring(tripLink.lastIndexOf("/") + 1);
+            tripLink = tripLink.replace(zipFileName, URLEncoder.encode(zipFileName, "UTF-8").replace("+", "%20"));
             tripLink = TripDiaryApplication.serverURL + "/" + tripLink;
             URL tripURL = new URL(tripLink);
             connection = (HttpURLConnection) tripURL.openConnection();

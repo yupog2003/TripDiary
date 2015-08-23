@@ -1,13 +1,15 @@
 package com.yupog2003.tripdiary;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
-import android.support.v4.provider.DocumentFile;
+import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -18,6 +20,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyImageDecoder;
 import com.yupog2003.tripdiary.data.MyImageDownloader;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,19 +31,20 @@ public class TripDiaryApplication extends Application {
     HashMap<String, Trip> trips;
     public static DocumentFile rootDocumentFile;
     public static TripDiaryApplication instance;
-    public static final String serverURL = "http://219.85.61.62/TripDiary";
+    public static final String serverHost = "yupog2003.idv.tw";
+    public static final String serverIP = "219.85.61.62";
+    public static final String serverURL = "http://" + serverHost + "/TripDiary";
     public static int distance_unit;
     //public static final int unit_km = 0;
     public static final int unit_mile = 1;
     public static int altitude_unit;
     //public static final int unit_m = 0;
     public static final int unit_ft = 1;
-    public static final boolean enableTracker = true;
 
     synchronized public Tracker getTracker() {
         if (appTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            analytics.setDryRun(!enableTracker);
+            analytics.setDryRun(false);
             appTracker = analytics.newTracker("UA-44647804-2");
             appTracker.enableAutoActivityTracking(true);
             appTracker.enableExceptionReporting(true);
@@ -53,7 +57,9 @@ public class TripDiaryApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        updateRootPath(PreferenceManager.getDefaultSharedPreferences(this).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary"));
+        if (ContextCompat.checkSelfPermission(instance, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            updateRootPath();
+        }
         initialImageLoader();
         initialUnit();
         trips = new HashMap<>();
@@ -65,30 +71,33 @@ public class TripDiaryApplication extends Application {
         MultiDex.install(this);
     }
 
-    public static void updateRootPath(String rootPath) {
+    public static void updateRootPath() {
+        String rootPath = PreferenceManager.getDefaultSharedPreferences(instance).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             try {
-                rootDocumentFile = DocumentFile.fromTreeUri(instance, Uri.parse(rootPath));
+                rootDocumentFile = DocumentFile.fromTreeUri(Uri.parse(rootPath));
             } catch (Exception e) {
-                creatRootDir(rootPath);
+                createRootDir(rootPath);
                 rootDocumentFile = DocumentFile.fromFile(new File(rootPath));
             }
         } else {
-            creatRootDir(rootPath);
+            createRootDir(rootPath);
             rootDocumentFile = DocumentFile.fromFile(new File(rootPath));
         }
-        DocumentFile[] files = rootDocumentFile.listFiles();
-        DocumentFile settings = FileHelper.findfile(files, ".settings");
-        if (settings == null) {
-            rootDocumentFile.createDirectory(".settings");
-        }
-        DocumentFile nomedia = FileHelper.findfile(files, ".nomedia");
-        if (nomedia == null) {
-            rootDocumentFile.createFile("", ".nomedia");
+        if (rootDocumentFile != null) {
+            DocumentFile[] files = rootDocumentFile.listFiles();
+            DocumentFile settings = FileHelper.findfile(files, ".settings");
+            if (settings == null) {
+                rootDocumentFile.createDirectory(".settings");
+            }
+            DocumentFile nomedia = FileHelper.findfile(files, ".nomedia");
+            if (nomedia == null) {
+                rootDocumentFile.createFile("", ".nomedia");
+            }
         }
     }
 
-    private static boolean creatRootDir(String rootPath) {
+    private static boolean createRootDir(String rootPath) {
         File file = new File(rootPath);
         if (!file.exists()) {
             return file.mkdirs();

@@ -1,11 +1,10 @@
 package com.yupog2003.tripdiary.data;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.provider.DocumentFile;
 
 import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import org.apache.commons.io.IOUtils;
 
@@ -20,14 +19,14 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MyCalendar extends GregorianCalendar{
+public class MyCalendar extends GregorianCalendar {
     public static final int type_gpx = 0;
     public static final int type_time_format3399 = 1;
     public static final int type_self = 2;
     public static final int type_exif = 3;
 
-    public static long getMinusTimeInSecond(Calendar starttime, Calendar stoptime) {
-        return (stoptime.getTimeInMillis() - starttime.getTimeInMillis()) / 1000;
+    public static long getMinusTimeInSecond(Calendar startTime, Calendar stopTime) {
+        return (stopTime.getTimeInMillis() - startTime.getTimeInMillis()) / 1000;
     }
 
     public static synchronized MyCalendar getInstance() {
@@ -187,8 +186,7 @@ public class MyCalendar extends GregorianCalendar{
                 return getTime(s, type_gpx);
             }
             DocumentFile gpxFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, tripName + ".gpx");
-            ContentResolver c = TripDiaryApplication.instance.getContentResolver();
-            BufferedReader br = new BufferedReader(new InputStreamReader(c.openInputStream(gpxFile.getUri())));
+            BufferedReader br = new BufferedReader(new InputStreamReader(gpxFile.getInputStream()));
             while ((s = br.readLine()) != null) {
                 if (s.contains("<time>")) {
                     tripTimePreference.edit().putString(tripName, s).apply();

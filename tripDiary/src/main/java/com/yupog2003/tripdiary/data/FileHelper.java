@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,6 +30,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.Marker;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -74,7 +73,7 @@ public class FileHelper {
 
     public static void copyFile(DocumentFile infile, File outfile) {
         try {
-            InputStream is = TripDiaryApplication.instance.getContentResolver().openInputStream(infile.getUri());
+            InputStream is = infile.getInputStream();
             copyByStream(is, new FileOutputStream(outfile));
         } catch (FileNotFoundException | IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
@@ -83,7 +82,7 @@ public class FileHelper {
 
     public static void copyFile(File infile, DocumentFile outfile) {
         try {
-            OutputStream os = TripDiaryApplication.instance.getContentResolver().openOutputStream(outfile.getUri());
+            OutputStream os = outfile.getOutputStream();
             copyByStream(new FileInputStream(infile), os);
         } catch (FileNotFoundException | IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
@@ -92,10 +91,10 @@ public class FileHelper {
 
     public static void copyFile(DocumentFile infile, DocumentFile outfile) {
         try {
-            InputStream is = TripDiaryApplication.instance.getContentResolver().openInputStream(infile.getUri());
-            OutputStream os = TripDiaryApplication.instance.getContentResolver().openOutputStream(outfile.getUri());
+            InputStream is = infile.getInputStream();
+            OutputStream os = outfile.getOutputStream();
             copyByStream(is, os);
-        } catch (FileNotFoundException | IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -143,11 +142,11 @@ public class FileHelper {
         File file = new File(path);
         File[] files = file.listFiles();
         if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) {
-                    deletedir(files[i].getPath());
+            for (File file1 : files) {
+                if (file1.isDirectory()) {
+                    deletedir(file1.getPath());
                 }
-                files[i].delete();
+                file1.delete();
             }
         }
         file.delete();
@@ -255,37 +254,6 @@ public class FileHelper {
     }
 
 
-    public static FileFilter getPictureFileFilter() {
-        return new FileFilter() {
-
-            public boolean accept(File pathname) {
-
-                return isPicture(pathname);
-            }
-        };
-    }
-
-    public static FileFilter getVideoFileFilter() {
-        return new FileFilter() {
-
-            public boolean accept(File pathname) {
-
-                return isVideo(pathname);
-            }
-        };
-    }
-
-    public static FileFilter getAudioFileFilter() {
-        return new FileFilter() {
-
-            public boolean accept(File pathname) {
-
-                return isAudio(pathname);
-            }
-        };
-    }
-
-
     public static FileFilter getNoStartWithDotFilter() {
         return new FileFilter() {
 
@@ -301,137 +269,9 @@ public class FileHelper {
 
             @Override
             public boolean accept(File pathname) {
-
                 return isMemory(pathname);
             }
         };
-    }
-
-    public static final int list_all = -1;
-    public static final int list_pics = 0;
-    public static final int list_videos = 1;
-    public static final int list_audios = 2;
-    public static final int list_dirs = 3;
-    public static final int list_withoutdots = 4;
-    public static final int list_memory = 5;
-
-    public static DocumentFile[] listFiles(DocumentFile dir, int list_type) {
-        try {
-            DocumentFile[] result = dir.listFiles();
-            ArrayList<DocumentFile> temp = new ArrayList<>(Arrays.asList(result));
-            int size = temp.size();
-            switch (list_type) {
-                case list_pics:
-                    for (int i = 0; i < size; i++) {
-                        if (!isPicture(temp.get(i))) {
-                            temp.remove(i);
-                            size--;
-                            i--;
-                        }
-                    }
-                    break;
-                case list_videos:
-                    for (int i = 0; i < size; i++) {
-                        if (!isVideo(temp.get(i))) {
-                            temp.remove(i);
-                            size--;
-                            i--;
-                        }
-                    }
-                    break;
-                case list_audios:
-                    for (int i = 0; i < size; i++) {
-                        if (!isAudio(temp.get(i))) {
-                            temp.remove(i);
-                            size--;
-                            i--;
-                        }
-                    }
-                    break;
-                case list_dirs:
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && DocumentFile.isDocumentUri(TripDiaryApplication.instance, dir.getUri())) {
-                        Cursor c = null;
-                        final ContentResolver contentResolver = TripDiaryApplication.instance.getContentResolver();
-                        try {
-                            Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(dir.getUri(), DocumentsContract.getDocumentId(dir.getUri()));
-                            String[] columns = new String[]{DocumentsContract.Document.COLUMN_MIME_TYPE};
-                            c = contentResolver.query(childrenUri, columns, null, null, null);
-                            int i = 0;
-                            while (c.moveToNext()) {
-                                if (i >= temp.size()) break;
-                                if (getFileName(temp.get(i)).startsWith(".")) {
-                                    temp.remove(i);
-                                    continue;
-                                }
-                                String mimeType = c.getString(0);
-                                if (!DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType)) {
-                                    temp.remove(i);
-                                    i--;
-                                }
-                                i++;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            if (c != null) {
-                                try {
-                                    c.close();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < size; i++) {
-                            if (getFileName(temp.get(i)).startsWith(".") || !temp.get(i).isDirectory()) {
-                                temp.remove(i);
-                                size--;
-                                i--;
-                            }
-                        }
-                    }
-                    break;
-                case list_withoutdots:
-                    for (int i = 0; i < size; i++) {
-                        if (getFileName(temp.get(i)).startsWith(".")) {
-                            temp.remove(i);
-                            size--;
-                            i--;
-                        }
-                    }
-                    break;
-                case list_memory:
-                    for (int i = 0; i < size; i++) {
-                        if (!isMemory(temp.get(i))) {
-                            temp.remove(i);
-                            size--;
-                            i--;
-                        }
-                    }
-                    break;
-                default:
-                    return result;
-            }
-            return temp.toArray(new DocumentFile[temp.size()]);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new DocumentFile[0];
-    }
-
-    public static String[] listFileNames(DocumentFile dir, int list_type) {
-        DocumentFile[] files = listFiles(dir, list_type);
-        String[] names = new String[files.length];
-        for (int i = 0; i < names.length; i++) {
-            names[i] = getFileName(files[i]);
-        }
-        return names;
-    }
-
-    public static String getFileName(DocumentFile file) {
-        if (file == null) return "";
-        String path = Uri.decode(file.getUri().toString());
-        return path.substring(path.lastIndexOf("/") + 1);
     }
 
     public static DocumentFile findfile(DocumentFile dir, String... name) {
@@ -442,10 +282,11 @@ public class FileHelper {
     public static DocumentFile findfile(DocumentFile[] files, String... names) {
         if (files == null || names == null) return null;
         for (int i = 0; i < names.length; i++) {
+            if (names[i] == null) continue;
             int filesLength = files.length;
             for (int j = 0; j < filesLength; j++) {
-                String path = Uri.decode(files[j].getUri().toString());
-                if (path.endsWith("/" + names[i])) {
+                if (files[j] == null) continue;
+                if (names[i].equals(files[j].getName())) {
                     if (i == names.length - 1) {
                         return files[j];
                     } else {
@@ -460,7 +301,7 @@ public class FileHelper {
 
     public static void zip(DocumentFile source, DocumentFile zip) {
         try {
-            ZipOutputStream zos = new ZipOutputStream(TripDiaryApplication.instance.getContentResolver().openOutputStream(zip.getUri()));
+            ZipOutputStream zos = new ZipOutputStream(zip.getOutputStream());
             dozip(source, zos, source.getName());
             zos.close();
         } catch (IOException | IllegalArgumentException e) {
@@ -475,20 +316,20 @@ public class FileHelper {
                 zos.closeEntry();
                 DocumentFile[] files = from.listFiles();
                 for (DocumentFile file : files) {
-                    dozip(file, zos, entry + "/" + FileHelper.getFileName(file));
+                    dozip(file, zos, entry + "/" + file.getName());
                 }
             } else {
                 zos.putNextEntry(new ZipEntry(entry));
                 byte[] buffer = new byte[4096];
                 int count;
-                BufferedInputStream bis = new BufferedInputStream(TripDiaryApplication.instance.getContentResolver().openInputStream(from.getUri()));
+                BufferedInputStream bis = new BufferedInputStream(from.getInputStream());
                 while ((count = bis.read(buffer, 0, 4096)) != -1) {
                     zos.write(buffer, 0, count);
                 }
                 bis.close();
                 zos.closeEntry();
             }
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -519,7 +360,7 @@ public class FileHelper {
                         } else {
                             entryFile = entryFile.createFile("", dirs[i]);
                             byte[] data = new byte[4096];
-                            BufferedOutputStream bos = new BufferedOutputStream(TripDiaryApplication.instance.getContentResolver().openOutputStream(entryFile.getUri()), 4096);
+                            BufferedOutputStream bos = new BufferedOutputStream(entryFile.getOutputStream(), 4096);
                             while ((count = zis.read(data, 0, 4096)) != -1) {
                                 bos.write(data, 0, count);
                             }
@@ -551,7 +392,7 @@ public class FileHelper {
         int iconColor = PreferenceManager.getDefaultSharedPreferences(TripDiaryApplication.instance).getInt("markercolor", 0xffff0000);
         String iconColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(iconColor), Color.blue(iconColor), Color.green(iconColor), Color.red(iconColor));
         try {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(TripDiaryApplication.instance.getContentResolver().openOutputStream(kmlFile.getUri())));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(kmlFile.getOutputStream()));
             bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             bw.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n");
             bw.write("<Document>\n");
@@ -634,37 +475,25 @@ public class FileHelper {
 
     public static int getNumOfLinesInFile(File file) {
         try {
-            InputStream is = new BufferedInputStream(new FileInputStream(file));
-            byte[] c = new byte[1024];
-            int count = 0;
-            int readChars;
-            boolean empty = true;
-            while ((readChars = is.read(c)) != -1) {
-                empty = false;
-                for (int i = 0; i < readChars; ++i) {
-                    if (c[i] == '\n') {
-                        ++count;
-                    }
-                }
-            }
-            is.close();
-            return count == 0 && !empty ? 1 : count;
-        } catch (IOException e) {
-
+            return getNumOfLinesInStream(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return 0;
     }
 
     public static int getNumOfLinesInFile(DocumentFile file) {
+        return getNumOfLinesInStream(file.getInputStream());
+    }
+
+    public static int getNumOfLinesInStream(InputStream is) {
         try {
-            ContentResolver cs = TripDiaryApplication.instance.getContentResolver();
-            InputStream is = new BufferedInputStream(cs.openInputStream(file.getUri()));
-            byte[] c = new byte[1024];
+            BufferedInputStream bis = new BufferedInputStream(is);
+            byte[] c = new byte[4096];
             int count = 0;
             int readChars;
             boolean empty = true;
-            while ((readChars = is.read(c)) != -1) {
+            while ((readChars = bis.read(c)) != -1) {
                 empty = false;
                 for (int i = 0; i < readChars; ++i) {
                     if (c[i] == '\n') {
@@ -672,25 +501,12 @@ public class FileHelper {
                     }
                 }
             }
-            is.close();
+            bis.close();
             return count == 0 && !empty ? 1 : count;
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public static void maintenDir(File dir) {
-        if (dir == null) {
-            return;
-        }
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        if (dir.isFile() || !dir.isDirectory()) {
-            dir.delete();
-            dir.mkdirs();
-        }
     }
 
     public static boolean checkHasWritePermission(Activity a, String path) {
@@ -717,10 +533,12 @@ public class FileHelper {
         File[] dirs;
         Context context;
         boolean showHideDir;
+        Drawable dirDrawable;
 
         public DirAdapter(Context context, boolean showHideDir, File root) {
             this.context = context;
             this.showHideDir = showHideDir;
+            this.dirDrawable = ColorHelper.getAccentTintDrawable(context, R.drawable.ic_folder);
             setDir(root);
         }
 
@@ -733,7 +551,6 @@ public class FileHelper {
             File[] dirss = root.listFiles(new FileFilter() {
 
                 public boolean accept(File pathname) {
-
                     if (!showHideDir && pathname.getName().startsWith("."))
                         return false;
                     return pathname.isDirectory();
@@ -777,7 +594,7 @@ public class FileHelper {
 
             TextView textView = new TextView(context);
             textView.setTextAppearance(context, android.R.style.TextAppearance_Large);
-            textView.setCompoundDrawablesWithIntrinsicBounds(position > 1 ? R.drawable.ic_folder : 0, 0, 0, 0);
+            textView.setCompoundDrawablesWithIntrinsicBounds(position > 1 ? dirDrawable : null, null, null, null);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             if (position == 0)
                 textView.setText(root.getPath());
@@ -856,8 +673,8 @@ public class FileHelper {
                     if (fromFiles[i].getUri().toString().equals(toFiles[i].getUri().toString()))
                         continue;
                     try {
-                        copyByStream(TripDiaryApplication.instance.getContentResolver().openInputStream(fromFiles[i].getUri()), TripDiaryApplication.instance.getContentResolver().openOutputStream(toFiles[i].getUri()));
-                    } catch (FileNotFoundException | IllegalArgumentException e) {
+                        copyByStream(fromFiles[i].getInputStream(), toFiles[i].getOutputStream());
+                    } catch (IllegalArgumentException e) {
                         e.printStackTrace();
                     }
                     fromFiles[i].delete();

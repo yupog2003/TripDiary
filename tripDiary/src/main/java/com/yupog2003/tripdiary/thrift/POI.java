@@ -56,7 +56,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
     public List<String> videos; // required
     public List<String> audios; // required
 
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    /**
+     * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+     */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
         PATH((short) 1, "path"),
         NAME((short) 2, "name"),
@@ -276,7 +278,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.path = null;
     }
 
-    /** Returns true if field path is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field path is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetPath() {
         return this.path != null;
     }
@@ -300,7 +304,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.name = null;
     }
 
-    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field name is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetName() {
         return this.name != null;
     }
@@ -325,7 +331,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LAT_ISSET_ID);
     }
 
-    /** Returns true if field lat is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field lat is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetLat() {
         return EncodingUtils.testBit(__isset_bitfield, __LAT_ISSET_ID);
     }
@@ -348,7 +356,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LNG_ISSET_ID);
     }
 
-    /** Returns true if field lng is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field lng is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetLng() {
         return EncodingUtils.testBit(__isset_bitfield, __LNG_ISSET_ID);
     }
@@ -370,7 +380,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.time = null;
     }
 
-    /** Returns true if field time is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field time is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetTime() {
         return this.time != null;
     }
@@ -395,7 +407,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ALTITUDE_ISSET_ID);
     }
 
-    /** Returns true if field altitude is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field altitude is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetAltitude() {
         return EncodingUtils.testBit(__isset_bitfield, __ALTITUDE_ISSET_ID);
     }
@@ -417,7 +431,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.diaryStr = null;
     }
 
-    /** Returns true if field diaryStr is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field diaryStr is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetDiaryStr() {
         return this.diaryStr != null;
     }
@@ -456,7 +472,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.pictures = null;
     }
 
-    /** Returns true if field pictures is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field pictures is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetPictures() {
         return this.pictures != null;
     }
@@ -495,7 +513,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.videos = null;
     }
 
-    /** Returns true if field videos is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field videos is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetVideos() {
         return this.videos != null;
     }
@@ -534,7 +554,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         this.audios = null;
     }
 
-    /** Returns true if field audios is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field audios is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetAudios() {
         return this.audios != null;
     }
@@ -666,7 +688,9 @@ public class POI implements org.apache.thrift.TBase<POI, POI._Fields>, java.io.S
         throw new IllegalStateException();
     }
 
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+     */
     public boolean isSet(_Fields field) {
         if (field == null) {
             throw new IllegalArgumentException();

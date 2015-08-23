@@ -1,7 +1,5 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,9 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.SearchView;
@@ -76,6 +72,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.PlayPointActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewGraphAcivity;
@@ -93,6 +90,7 @@ import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.PackageHelper;
 import com.yupog2003.tripdiary.data.TrackCache;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.BackupRestoreTripService;
 import com.yupog2003.tripdiary.services.GenerateVideoService;
 import com.yupog2003.tripdiary.services.SendTripService;
@@ -180,7 +178,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         altitude = (TextView) rootView.findViewById(R.id.altitude);
         distance = (TextView) rootView.findViewById(R.id.distance);
         speed = (TextView) rootView.findViewById(R.id.speed);
-        time = (TextView) rootView.findViewById(R.id.time);
+        time = (TextView) rootView.findViewById(R.id.elapsedTime);
         processSeekBar = (SeekBar) rootView.findViewById(R.id.playProcess);
         return rootView;
     }
@@ -334,7 +332,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
                                     try {
                                         File outputFile = new File(filepath0.getText().toString());
-                                        BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(trip.gpxFile.getUri())));
+                                        BufferedReader br = new BufferedReader(new InputStreamReader(trip.gpxFile.getInputStream()));
                                         String s;
                                         BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
                                         while ((s = br.readLine()) != null) {
@@ -408,30 +406,13 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                             ab2.show();
                             break;
                         case 3:
-                            Account[] accounts = AccountManager.get(getActivity()).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-                            if (accounts != null && accounts.length > 0) {
-                                account = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("account", accounts[0].name);
-                                AlertDialog.Builder ab3 = new AlertDialog.Builder(getActivity());
-                                ab3.setTitle(getString(R.string.make_it_public));
-                                ab3.setMessage(getString(R.string.make_it_public_to_share));
-                                ab3.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        uploadPublic = true;
-                                        new GetAccessTokenTask().execute();
-                                    }
-                                });
-                                ab3.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        uploadPublic = false;
-                                        new GetAccessTokenTask().execute();
-                                    }
-                                });
-                                ab3.show();
-                            }
+                            ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                                @Override
+                                public void onAccountPicked(String accountName) {
+                                    account = accountName;
+                                    askUploadPublic();
+                                }
+                            }, false);
                             break;
                     }
                     dialog.dismiss();
@@ -484,6 +465,29 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             getActivity().startService(intent);
         }
         return true;
+    }
+
+    private void askUploadPublic() {
+        AlertDialog.Builder ab3 = new AlertDialog.Builder(getActivity());
+        ab3.setTitle(getString(R.string.make_it_public));
+        ab3.setMessage(getString(R.string.make_it_public_to_share));
+        ab3.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+                uploadPublic = true;
+                new GetAccessTokenTask().execute();
+            }
+        });
+        ab3.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+                uploadPublic = false;
+                new GetAccessTokenTask().execute();
+            }
+        });
+        ab3.show();
     }
 
     class ImportMemoryTask extends AsyncTask<File, String, String> {
@@ -685,18 +689,15 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     public void onInfoWindowClick(Marker marker) {
-        String pointtitle = marker.getTitle();
-        viewPOI(pointtitle);
+        viewPOI(marker.getTitle());
     }
 
     private void viewPOI(String poiName) {
-        if (FileHelper.findfile(trip.dir, poiName) != null) {
-            Intent intent = new Intent(getActivity(), ViewPointActivity.class);
-            intent.putExtra(ViewPointActivity.tag_tripname, trip.tripName);
-            intent.putExtra(ViewPointActivity.tag_poiname, poiName);
-            intent.putExtra(ViewPointActivity.tag_fromActivity, ViewTripActivity.class.getSimpleName());
-            getActivity().startActivityForResult(intent, ViewTripActivity.REQUEST_VIEW_POI);
-        }
+        Intent intent = new Intent(getActivity(), ViewPointActivity.class);
+        intent.putExtra(ViewPointActivity.tag_tripname, trip.tripName);
+        intent.putExtra(ViewPointActivity.tag_poiname, poiName);
+        intent.putExtra(ViewPointActivity.tag_fromActivity, ViewTripActivity.class.getSimpleName());
+        getActivity().startActivityForResult(intent, ViewTripActivity.REQUEST_VIEW_POI);
     }
 
     @Override
@@ -731,6 +732,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     break;
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onMapLongClick(final LatLng latlng) {
@@ -787,11 +789,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     private void addPoint(String poiName, LatLng latlng, double altitude, MyCalendar time) {
-        DocumentFile poiFile = trip.dir.createDirectory(poiName);
-        if (poiFile == null || getActivity() == null) return;
-        POI poi = new POI(getActivity(), poiFile);
-        poi.updateBasicInformation(null, time, latlng.latitude, latlng.longitude, altitude);
-        if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
+        if (getActivity() == null || trip == null) return;
+        POI poi = trip.createPOI(poiName, time, latlng.latitude, latlng.longitude, altitude);
+        if (poi != null) {
             ((ViewTripActivity) getActivity()).onPOIUpdate(null);
         }
     }
@@ -823,7 +823,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     public void onMarkerDragEnd(Marker marker) {
+        if (trip == null) return;
         POI poi = trip.getPOI(marker.getTitle());
+        if (poi == null) return;
         poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
             ((ViewTripActivity) getActivity()).onPOIUpdate(poi.title);
@@ -996,7 +998,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         int interval;
         public static final int fast = 0;
         public static final int slow = 1;
-        SparseArray<String> markersMap;
+        SparseArray<POI> markersMap;
         float[] distances;
 
         public TripPlayer() {
@@ -1009,7 +1011,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             }
             if (latlength > 0)
                 processSeekBar.setMax(latlength - 1);
-            markersMap = getMarkersMap();
+            markersMap = getPOIsMap();
             processSeekBar.setOnSeekBarChangeListener(this);
             mapLayout = (RelativeLayout) rootView.findViewById(R.id.maplayout);
             if (playMode == playtriptype_skyview) {
@@ -1128,7 +1130,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                         pause();
                         Intent intent = new Intent(activity, PlayPointActivity.class);
                         intent.putExtra(PlayPointActivity.tag_trip, trip.tripName);
-                        intent.putExtra(PlayPointActivity.tag_poi, markersMap.get(i));
+                        intent.putExtra(PlayPointActivity.tag_poi, markersMap.get(i).title);
                         activity.startActivity(intent);
                     }
                     break;
@@ -1198,31 +1200,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
     }
 
-    private SparseArray<String> getMarkersMap() {
-        SparseArray<String> markersMap = new SparseArray<>();
-        if (trip == null || trip.pois == null || cache == null || cache.times == null || trip.timezone == null) {
-            return markersMap;
+    private SparseArray<POI> getPOIsMap() {
+        if (trip != null) {
+            return trip.getPOIsInTrackMap();
+        } else {
+            return new SparseArray<>();
         }
-        POI[] pois = trip.pois.clone();
-        String timezone = trip.timezone;
-        for (POI poi : pois) {
-            int start = 0, end = cache.times.length - 1, middle;
-            MyCalendar poiTime = poi.time;
-            if (poiTime == null)
-                continue;
-            poiTime.setTimeZone(timezone);
-            while (Math.abs(start - end) > 1) {
-                middle = (start + end) / 2;
-                MyCalendar time = MyCalendar.getTime(timezone, cache.times[middle], MyCalendar.type_self);
-                if (poiTime.after(time)) {
-                    start = middle;
-                } else {
-                    end = middle;
-                }
-            }
-            markersMap.put(start, poi.title);
-        }
-        return markersMap;
     }
 
     class GetAccessTokenTask extends AsyncTask<String, String, String> {
@@ -1337,15 +1320,15 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     StringBuilder descriptionBuilder = new StringBuilder();
                     descriptionBuilder.append(poi.time.formatInTimezone(timeZone)).append("<br/>").append(poi.diary).append("<br/>");
                     for (int j = 0; j < picSize; j++) {
-                        InputStream is = getActivity().getContentResolver().openInputStream(poi.picFiles[j].getUri());
+                        InputStream is = poi.picFiles[j].getInputStream();
                         BitmapFactory.Options op = new BitmapFactory.Options();
                         op.inJustDecodeBounds = true;
                         BitmapFactory.decodeStream(is, new Rect(0, 0, 0, 0), op);
                         op.inSampleSize = (int) Math.ceil(op.outWidth / targetPicWidth);
                         op.inJustDecodeBounds = false;
-                        is = getActivity().getContentResolver().openInputStream(poi.picFiles[j].getUri());
+                        is = poi.picFiles[j].getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(is, new Rect(0, 0, 0, 0), op);
-                        String fileName = FileHelper.getFileName(poi.picFiles[j]);
+                        String fileName = poi.picFiles[j].getName();
                         zos.putNextEntry(new ZipEntry(fileName));
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zos);
                         bitmap.recycle();
@@ -1422,14 +1405,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     public static Bitmap gmapBitmap;
     public static Point[] trackPoints;
+    public static SparseArray<POI> poisMap;
     public String videoBackgroundMusic;
     public Button backgroundMusicButton;
 
     private void generateVideo() {
         DeviceHelper.sendGATrack(getActivity(), "Trip", "generate_video", trip.tripName, null);
-        File tempDir = new File(getActivity().getCacheDir(), GenerateVideoService.cacheDirName);
-        FileHelper.deletedir(tempDir.getPath());
-        tempDir.mkdirs();
         videoBackgroundMusic = null;
         trackPoints = null;
         gmapBitmap = null;
@@ -1459,7 +1440,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 String resolutionStr = resolution.getSelectedItem().toString();
                 final int videoWidth = Integer.valueOf(resolutionStr.split("x")[0]);
                 final int videoHeight = Integer.valueOf(resolutionStr.split("x")[1]);
-                final int secondsPerTrack = GenerateVideoService.secondsPerTrack;
                 final int fpsValue = Integer.valueOf(fps.getSelectedItem().toString());
                 final String videoNameStr = videoName.getText().toString() + ".mp4";
                 dialog.dismiss();
@@ -1483,8 +1463,10 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                         googleMap.addPolyline(new PolylineOptions().add(lat).color(trackColor).width(5));
                         float hue = ColorHelper.getMarkerColorHue(getActivity());
                         BitmapDescriptor bd = BitmapDescriptorFactory.defaultMarker(hue);
-                        for (int i = 0; i < trip.pois.length; i++) {
-                            POI poi = trip.pois[i];
+                        poisMap = getPOIsMap();
+                        if (poisMap == null) return;
+                        for (int i = 0; i < poisMap.size(); i++) {
+                            POI poi = poisMap.valueAt(i);
                             LatLng position = new LatLng(poi.latitude, poi.longitude);
                             googleMap.addMarker(new MarkerOptions().position(position).icon(bd));
                         }
@@ -1505,27 +1487,26 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                                                 googleMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
                                                     @Override
                                                     public void onSnapshotReady(Bitmap bitmap) {
-                                                        SparseArray<String> markersMap = getMarkersMap();
                                                         Projection projection = googleMap.getProjection();
-                                                        int[] markersIndexes = new int[markersMap.size()];
+                                                        int[] markersIndexes = new int[poisMap.size()]; //indexes in track
                                                         for (int i = 0; i < markersIndexes.length; i++) {
-                                                            markersIndexes[i] = markersMap.keyAt(i);
+                                                            markersIndexes[i] = poisMap.keyAt(i);
                                                         }
                                                         Arrays.sort(markersIndexes);
-                                                        int num_tracks = markersMap.size() + 1;
-                                                        int frames_per_track = secondsPerTrack * fpsValue;
+                                                        int num_tracks = poisMap.size() + 1;
+                                                        int frames_per_track = GenerateVideoService.secondsPerTrack * fpsValue;
                                                         Point[] trackPoints = new Point[num_tracks * frames_per_track];
                                                         for (int i = 0; i < num_tracks; i++) {
                                                             int start, end, length;
                                                             if (i == 0) {
                                                                 start = 0;
                                                             } else {
-                                                                start = markersIndexes[i - 1] + 1;
+                                                                start = markersIndexes[i - 1];
                                                             }
                                                             if (i == num_tracks - 1) {
                                                                 end = lat.length - 1;
                                                             } else {
-                                                                end = markersIndexes[i] - 1;
+                                                                end = markersIndexes[i];
                                                             }
                                                             length = end - start;
                                                             for (int j = 0; j < frames_per_track; j++) {
@@ -1535,7 +1516,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                                                         }
                                                         ViewMapFragment.gmapBitmap = bitmap;
                                                         ViewMapFragment.trackPoints = trackPoints;
-                                                        alertDialog.cancel();
+                                                        googleMap.clear();
+                                                        alertDialog.dismiss();
                                                         Intent intent = new Intent(getActivity(), GenerateVideoService.class);
                                                         intent.putExtra(GenerateVideoService.tag_background_music_path, videoBackgroundMusic);
                                                         intent.putExtra(GenerateVideoService.tag_video_width, videoWidth);

@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -29,6 +28,7 @@ import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 
 import java.util.ArrayList;
@@ -119,7 +119,7 @@ public class AudioFragment extends Fragment {
                     AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
                     ab2.setTitle(getString(R.string.filename));
                     final EditText name = new EditText(getActivity());
-                    name.setText(FileHelper.getFileName(checkFile));
+                    name.setText(checkFile.getName());
                     ab2.setView(name);
                     ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
@@ -153,7 +153,7 @@ public class AudioFragment extends Fragment {
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
                 final DocumentFile tripFile = poi.dir.getParentFile();
-                final String[] pois = FileHelper.listFileNames(tripFile, FileHelper.list_dirs);
+                final String[] pois = tripFile.listFileNames(DocumentFile.list_dirs);
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);
                 ab.setItems(pois, new OnClickListener() {
@@ -164,11 +164,12 @@ public class AudioFragment extends Fragment {
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
                         DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "audios");
+                        if (toDir == null) return;
                         DocumentFile[] filesIntoDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
-                            toFiles[i] = FileHelper.findfile(filesIntoDir, FileHelper.getFileName(checksName.get(i)));
+                            toFiles[i] = FileHelper.findfile(filesIntoDir, checksName.get(i).getName());
                             if (toFiles[i] == null) {
-                                toFiles[i] = toDir.createFile("", FileHelper.getFileName(checksName.get(i)));
+                                toFiles[i] = toDir.createFile("", checksName.get(i).getName());
                             }
                             fromFiles[i] = checksName.get(i);
                         }
@@ -192,7 +193,6 @@ public class AudioFragment extends Fragment {
         }
 
         public boolean onCreateActionMode(final ActionMode mode, Menu menu) {
-
             mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
             menu.findItem(R.id.print).setVisible(false);
             checks = new boolean[adapter.getCount()];
@@ -256,7 +256,7 @@ public class AudioFragment extends Fragment {
             TextView textView = new TextView(getActivity());
             textView.setTextSize(30);
             textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
-            textView.setText(FileHelper.getFileName(audios[position]));
+            textView.setText(audios[position].getName());
             CheckableLayout l = new CheckableLayout(getActivity());
             l.addView(textView);
             l.setOnMultiChoiceMode(onMultiChoiceMode);

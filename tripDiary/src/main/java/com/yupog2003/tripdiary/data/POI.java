@@ -3,7 +3,8 @@ package com.yupog2003.tripdiary.data;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.provider.DocumentFile;
+
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -70,18 +71,34 @@ public class POI implements Comparable<POI> {
         if (basicInformationFile == null) {
             this.basicInformationFile = dir.createFile("", "basicinformation");
         }
-        this.picFiles = FileHelper.listFiles(picDir, FileHelper.list_pics);
-        this.audioFiles = FileHelper.listFiles(audioDir, FileHelper.list_audios);
-        this.videoFiles = FileHelper.listFiles(videoDir, FileHelper.list_videos);
-        this.costFiles = FileHelper.listFiles(costDir, FileHelper.list_all);
-        this.title = FileHelper.getFileName(dir);
+        if (picDir != null) {
+            this.picFiles = picDir.listFiles(DocumentFile.list_pics);
+        } else {
+            this.picFiles = new DocumentFile[0];
+        }
+        if (audioDir != null) {
+            this.audioFiles = audioDir.listFiles(DocumentFile.list_audios);
+        } else {
+            this.audioFiles = new DocumentFile[0];
+        }
+        if (videoDir != null) {
+            this.videoFiles = videoDir.listFiles(DocumentFile.list_videos);
+        } else {
+            this.videoFiles = new DocumentFile[0];
+        }
+        if (costDir != null) {
+            this.costFiles = costDir.listFiles(DocumentFile.list_all);
+        } else {
+            this.costFiles = new DocumentFile[0];
+        }
+        this.title = dir.getName();
         try {
             this.time = MyCalendar.getInstance();
             this.latitude = 0;
             this.longitude = 0;
             this.altitude = 0;
             this.diary = "";
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(basicInformationFile.getUri())));
+            BufferedReader br = new BufferedReader(new InputStreamReader(basicInformationFile.getInputStream()));
             String s;
             while ((s = br.readLine()) != null) {
                 if (s.startsWith("Title")) {
@@ -97,13 +114,16 @@ public class POI implements Comparable<POI> {
                 }
             }
             br.close();
-            br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(diaryFile.getUri())));
+            br = new BufferedReader(new InputStreamReader(diaryFile.getInputStream()));
             StringBuilder sb = new StringBuilder();
             while ((s = br.readLine()) != null) {
                 sb.append(s).append("\n");
             }
             br.close();
             diary = sb.toString();
+            if (diary.endsWith("\n")) {
+                diary = diary.substring(0, diary.lastIndexOf("\n"));
+            }
         } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -122,7 +142,7 @@ public class POI implements Comparable<POI> {
             this.altitude = altitude;
         this.time.setTimeZone("UTC");
         try {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(basicInformationFile.getUri())));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(basicInformationFile.getOutputStream()));
             bw.write("Title=" + this.title + "\n");
             bw.write("Time=" + this.time.format3339() + "\n");
             bw.write("Latitude=" + String.valueOf(this.latitude) + "\n");
@@ -136,10 +156,10 @@ public class POI implements Comparable<POI> {
     }
 
     public void updateDiary(String text) {
-        if (text != null) {
+        if (text != null && diaryFile != null && context != null) {
             this.diary = text;
             try {
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(diaryFile.getUri())));
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(diaryFile.getOutputStream()));
                 bw.write(text);
                 bw.flush();
                 bw.close();
@@ -209,7 +229,7 @@ public class POI implements Comparable<POI> {
             if (outFile != null) {
                 try {
                     InputStream is = context.getContentResolver().openInputStream(inUri);
-                    OutputStream os = context.getContentResolver().openOutputStream(outFile.getUri());
+                    OutputStream os = outFile.getOutputStream();
                     FileHelper.copyByStream(is, os);
                 } catch (FileNotFoundException | IllegalArgumentException e) {
                     e.printStackTrace();
@@ -242,7 +262,7 @@ public class POI implements Comparable<POI> {
         }
         BufferedWriter bw;
         try {
-            bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(cost.getUri())));
+            bw = new BufferedWriter(new OutputStreamWriter(cost.getOutputStream()));
             bw.write("type=" + String.valueOf(type) + "\n");
             bw.write("dollar=" + String.valueOf(dollar));
             bw.flush();

@@ -1,8 +1,8 @@
 package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
-import android.os.Handler;
-import android.support.v4.provider.DocumentFile;
+
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,9 +32,9 @@ public class GpxAnalyzerJava {
         int timeZoneOffset = 0;
         cache = new TrackCache();
         DocumentFile cacheFile = trip.cacheFile;
-        long cacheFileLength = cacheFile.length();
-        boolean cacheExsit = cacheFileLength > 0;
-        if (cacheExsit) {
+        long cacheFileLength = cacheFile != null ? cacheFile.length() : 0;
+        boolean cacheExist = cacheFileLength > 0;
+        if (cacheExist) {
             fileSize = cacheFileLength;
             int numOfLines = FileHelper.getNumOfLinesInFile(cacheFile);
             int size = (numOfLines - 9) / 4;
@@ -47,7 +47,7 @@ public class GpxAnalyzerJava {
             String timezone = MyCalendar.getTripTimeZone(context, tripName);
             timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
         }
-        return cacheExsit ? getCache(cacheFile, cache) : parse(trip.gpxFile, cache, timeZoneOffset);
+        return cacheExist ? getCache(cacheFile, cache) : parse(trip.gpxFile, cache, timeZoneOffset);
     }
 
     public TrackCache getCache() {
@@ -56,7 +56,7 @@ public class GpxAnalyzerJava {
 
     public boolean getCache(DocumentFile cacheFile, TrackCache cache) {
         try {
-            InputStream fis = context.getContentResolver().openInputStream(cacheFile.getUri());
+            InputStream fis = cacheFile.getInputStream();
             InputStreamReader is = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(is);
             String s;
@@ -99,8 +99,8 @@ public class GpxAnalyzerJava {
 
     public boolean parse(DocumentFile gpxFile, TrackCache cache, int timeZoneOffset) {
         try {
-            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), FileHelper.getFileName(gpxFile) + ".cache");
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(gpxFile.getUri())));
+            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), gpxFile.getName() + ".cache");
+            BufferedReader br = new BufferedReader(new InputStreamReader(gpxFile.getInputStream()));
             String s;
             int count = 0;
             long byteCount = 0;
@@ -216,7 +216,7 @@ public class GpxAnalyzerJava {
                 cache.altitudes[i] = track.get(i).altitude;
                 cache.times[i] = track.get(i).time;
             }
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(cacheFile.getUri())));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(cacheFile.getOutputStream()));
             bw.write(cache.startTime + "\n");
             bw.write(cache.endTime + "\n");
             bw.write(cache.totalTime + "\n");

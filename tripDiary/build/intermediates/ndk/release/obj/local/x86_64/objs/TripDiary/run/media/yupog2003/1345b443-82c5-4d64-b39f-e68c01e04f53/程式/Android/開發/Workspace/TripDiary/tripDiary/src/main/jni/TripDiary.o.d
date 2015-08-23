@@ -29,7 +29,7 @@
  /home/yupog2003/Android/android-ndk-r10e/platforms/android-21/arch-x86_64/usr/include/memory.h \
  /home/yupog2003/Android/android-ndk-r10e/platforms/android-21/arch-x86_64/usr/include/stdio.h \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/fstream \
- /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream \
+ /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cfloat \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/vector \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdlib \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cmath \
@@ -95,7 +95,7 @@
 
 /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/fstream:
 
-/home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream:
+/home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/cfloat:
 
 /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include/vector:
 

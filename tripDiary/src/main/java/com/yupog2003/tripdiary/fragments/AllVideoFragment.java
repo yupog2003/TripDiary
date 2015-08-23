@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +26,8 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
-import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
 
@@ -104,26 +103,23 @@ public class AllVideoFragment extends Fragment {
                         .showImageOnFail(R.drawable.ic_play)
                         .cacheInMemory(true)
                         .bitmapConfig(Bitmap.Config.RGB_565)
-                        .extraForDownloader(videos[0].getParentFile())
+                        .extraForDownloader(videos)
                         .build();
             }
 
         }
 
         public int getCount() {
-
             if (videos == null)
                 return 0;
             return videos.length;
         }
 
         public Object getItem(int position) {
-
             return videos[position];
         }
 
         public long getItemId(int position) {
-
             return position;
         }
 
@@ -167,8 +163,8 @@ public class AllVideoFragment extends Fragment {
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String tripName = FileHelper.getFileName(pois[index].dir.getParentFile());
-                        String poiName = FileHelper.getFileName(pois[index].dir);
+                        String tripName = pois[index].dir.getParentFile().getName();
+                        String poiName = pois[index].dir.getName();
                         Intent intent = new Intent(getActivity(), ViewPointActivity.class);
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);

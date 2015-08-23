@@ -1,11 +1,10 @@
 package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
-import android.os.Handler;
-import android.support.v4.provider.DocumentFile;
 
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava.ProgressChangedListener;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -28,7 +27,7 @@ public class GpxAnalyzer2 {
         String tripName = trip.tripName;
         cache = new TrackCache();
         DocumentFile cacheFile = trip.cacheFile;
-        long cacheFileLength = cacheFile.length();
+        long cacheFileLength = cacheFile != null ? cacheFile.length() : 0;
         boolean cacheExist = cacheFileLength > 0;
         File temp = new File(context.getCacheDir(), "temp");
         boolean success;

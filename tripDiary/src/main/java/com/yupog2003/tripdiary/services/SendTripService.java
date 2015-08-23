@@ -3,12 +3,12 @@ package com.yupog2003.tripdiary.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.provider.DocumentFile;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.thrift.TripDiary;
 
 import org.apache.thrift.TException;
@@ -60,11 +60,11 @@ public class SendTripService extends IntentService {
         if (tripP == null || account == null || token == null)
             return;
         tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripP);
-        final String tripName = FileHelper.getFileName(tripFile);
+        final String tripName = tripFile.getName();
         try {
             updateNotification(tripName, getString(R.string.zipping) + "...", 0);
-            DocumentFile zipFile=FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName+".zip");
-            if (zipFile != null){
+            DocumentFile zipFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName + ".zip");
+            if (zipFile != null) {
                 zipFile.delete();
             }
             zipFile = TripDiaryApplication.rootDocumentFile.createFile("", tripName + ".zip");
@@ -201,7 +201,7 @@ public class SendTripService extends IntentService {
          */
         public void addFilePart(String fieldName, DocumentFile uploadFile)
                 throws IOException {
-            String fileName = FileHelper.getFileName(uploadFile);
+            String fileName = uploadFile.getName();
             writer.append("--" + boundary).append(LINE_FEED);
             writer.append(
                     "Content-Disposition: form-data; name=\"" + fieldName
@@ -215,7 +215,7 @@ public class SendTripService extends IntentService {
             writer.append(LINE_FEED);
             writer.flush();
 
-            InputStream inputStream = getContentResolver().openInputStream(uploadFile.getUri());
+            InputStream inputStream = uploadFile.getInputStream();
             byte[] buffer = new byte[4096];
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(buffer)) != -1) {

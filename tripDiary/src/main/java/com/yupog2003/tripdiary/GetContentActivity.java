@@ -4,16 +4,11 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -41,6 +36,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.MyImageDownloader;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.SquareImageView;
 
 import java.io.FileNotFoundException;
@@ -102,7 +98,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         pictureDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_picture);
         videoDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_takevideo);
         audioDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_music);
-        poiDrawable=ColorHelper.getAccentTintDrawable(this, R.drawable.poi);
+        poiDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.poi);
         save = (Button) findViewById(R.id.save);
         if (action == Action.get_content) {
             save.setVisibility(View.GONE);
@@ -181,7 +177,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             } else if (nowLevel == 1) { //category
                 save.setEnabled(false);
                 nowDirFile = TripDiaryApplication.rootDocumentFile;
-                String[] tripNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_dirs);
+                String[] tripNames = nowDirFile.listFileNames(DocumentFile.list_dirs);
                 String category = levels[1];
                 for (String tripName : tripNames) {
                     if (tripsp.getString(tripName, getString(R.string.nocategory)).equals(category)) {
@@ -208,7 +204,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 setGridView(false);
                 String tripName = levels[2];
                 nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
-                DocumentFile[] poiFiles = FileHelper.listFiles(nowDirFile, FileHelper.list_dirs);
+                DocumentFile[] poiFiles = nowDirFile.listFiles(DocumentFile.list_dirs);
                 pois = new POI[poiFiles.length];
                 for (int i = 0; i < pois.length; i++) {
                     pois[i] = new POI(GetContentActivity.this, poiFiles[i]);
@@ -236,7 +232,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                     case picture:
                         setGridView(true);
                         nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures");
-                        String[] pictureNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_pics);
+                        String[] pictureNames = nowDirFile.listFileNames(DocumentFile.list_pics);
                         displayNames.addAll(Arrays.asList(pictureNames));
                         options = new DisplayImageOptions.Builder()
                                 .displayer(new FadeInBitmapDisplayer(500))
@@ -244,13 +240,13 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                                 .cacheOnDisk(false)
                                 .bitmapConfig(Bitmap.Config.RGB_565)
                                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                                .extraForDownloader(nowDirFile)
+                                .extraForDownloader(nowDirFile.listFiles(DocumentFile.list_pics))
                                 .build();
                         break;
                     case video:
                         setGridView(true);
                         nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos");
-                        String[] videoNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_videos);
+                        String[] videoNames = nowDirFile.listFileNames(DocumentFile.list_videos);
                         displayNames.addAll(Arrays.asList(videoNames));
                         options = new DisplayImageOptions.Builder()
                                 .displayer(new FadeInBitmapDisplayer(500))
@@ -258,25 +254,25 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                                 .cacheOnDisk(false)
                                 .bitmapConfig(Bitmap.Config.RGB_565)
                                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                                .extraForDownloader(nowDirFile)
+                                .extraForDownloader(nowDirFile.listFiles(DocumentFile.list_videos))
                                 .build();
                         break;
                     case audio:
                         setGridView(false);
                         nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios");
-                        String[] audioNames = FileHelper.listFileNames(nowDirFile, FileHelper.list_audios);
+                        String[] audioNames = nowDirFile.listFileNames(DocumentFile.list_audios);
                         displayNames.addAll(Arrays.asList(audioNames));
                         break;
                     case other:
                         setGridView(false);
                         nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
-                        String[] pictureNames2 = FileHelper.listFileNames(FileHelper.findfile(nowDirFile, "pictures"), FileHelper.list_pics);
+                        String[] pictureNames2 = FileHelper.findfile(nowDirFile, "pictures").listFileNames(DocumentFile.list_pics);
                         displayNames.addAll(Arrays.asList(pictureNames2));
                         lastPictureIndex = displayNames.size();
-                        String[] videoNames2 = FileHelper.listFileNames(FileHelper.findfile(nowDirFile, "videos"), FileHelper.list_videos);
+                        String[] videoNames2 = FileHelper.findfile(nowDirFile, "videos").listFileNames(DocumentFile.list_videos);
                         displayNames.addAll(Arrays.asList(videoNames2));
                         lastVideoIndex = displayNames.size();
-                        String[] audioNames2 = FileHelper.listFileNames(FileHelper.findfile(nowDirFile, "audios"), FileHelper.list_audios);
+                        String[] audioNames2 = FileHelper.findfile(nowDirFile, "audios").listFileNames(DocumentFile.list_audios);
                         displayNames.addAll(Arrays.asList(audioNames2));
                         lastAudioIndex = displayNames.size();
                         break;
@@ -527,12 +523,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         break;
                     if (fromUris[i] == null || toFiles[i] == null)
                         continue;
-                    publishProgress(FileHelper.getFileName(toFiles[i]), String.valueOf(i));
+                    publishProgress(toFiles[i].getName(), String.valueOf(i));
                     if (fromUris[i].getPath().equals(toFiles[i].getUri().getPath()))
                         continue;
                     try {
                         InputStream inputStream = getContentResolver().openInputStream(fromUris[i]);
-                        OutputStream outputStream = getContentResolver().openOutputStream(toFiles[i].getUri());
+                        OutputStream outputStream = toFiles[i].getOutputStream();
                         FileHelper.copyByStream(inputStream, outputStream);
                     } catch (FileNotFoundException | NullPointerException | IllegalArgumentException e) {
                         e.printStackTrace();

@@ -1,7 +1,5 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +8,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -39,6 +36,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.ColorHelper;
@@ -112,13 +110,15 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
     }
 
-    public void loaddata() {
+    public void loadData() {
         if (trip_option == option_personal) {
-            Account[] accounts = AccountManager.get(getActivity()).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-            if (accounts != null && accounts.length > 0) {
-                account = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("account", accounts[0].name);
-                new GetAccessTokenTask().execute();
-            }
+            ((MyActivity)getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                @Override
+                public void onAccountPicked(String accountName) {
+                    account = accountName;
+                    new GetAccessTokenTask().execute();
+                }
+            }, false);
         } else {
             account = "public";
             new GetTripsTask().execute();
@@ -244,7 +244,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             adapter = null;
-            loaddata();
+            loadData();
         }
 
     }
@@ -353,7 +353,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
             TextView textView = new TextView(getActivity());
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Large);
             textView.setText(trips.get(position).name);
@@ -365,7 +364,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
-            String[] selections = new String[]{getString(R.string.download), getString(R.string.open_with_browser)};
+            String[] selections = new String[]{getString(R.string.download), getString(R.string.open)};
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setSingleChoiceItems(selections, -1, new DialogInterface.OnClickListener() {
                 @Override
@@ -620,7 +619,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     @Override
     public void onRefresh() {
-        loaddata();
+        loadData();
     }
 
 }

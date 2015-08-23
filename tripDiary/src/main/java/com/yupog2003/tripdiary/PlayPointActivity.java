@@ -9,7 +9,6 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -26,9 +25,9 @@ import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 public class PlayPointActivity extends MyActivity implements View.OnClickListener {
     POI poi;
@@ -60,12 +59,17 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
         }
         String tripName = getIntent().getStringExtra(tag_trip);
         String poiName = getIntent().getStringExtra(tag_poi);
-        DocumentFile poiFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
-        if (poiFile == null) {
+        try {
+            poi = ((TripDiaryApplication) getApplication()).getTrip(tripName).getPOI(poiName);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             finish();
             return;
         }
-        poi = new POI(this, poiFile);
+        if (poi == null) {
+            finish();
+            return;
+        }
         viewFlipper = (ViewFlipper) findViewById(R.id.pointviewflipper);
         viewFlipper.setInAnimation(this, android.R.anim.fade_in);
         viewFlipper.setOutAnimation(this, android.R.anim.fade_out);
@@ -101,12 +105,12 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                         Bitmap bitmap;
                         while (true) {
                             try {
-                                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(tag.file.getUri()), new Rect(0, 0, 0, 0), tag.option);
+                                bitmap = BitmapFactory.decodeStream(tag.file.getInputStream(), new Rect(0, 0, 0, 0), tag.option);
                                 break;
                             } catch (OutOfMemoryError e) {
                                 e.printStackTrace();
                                 System.gc();
-                            } catch (FileNotFoundException | IllegalArgumentException e) {
+                            } catch (IllegalArgumentException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -228,8 +232,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             DocumentFile file = poi.picFiles[i];
             final ImageView img = new ImageView(PlayPointActivity.this);
             try {
-                BitmapFactory.decodeStream(getContentResolver().openInputStream(file.getUri()), new Rect(0, 0, 0, 0), option);
-            } catch (FileNotFoundException | IllegalArgumentException e) {
+                BitmapFactory.decodeStream(file.getInputStream(), new Rect(0, 0, 0, 0), option);
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
             if (option.outWidth / width > option.outHeight / height) {
@@ -255,7 +259,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     private void prepareAudios() {
         for (int i = 0; i < poi.audioFiles.length; i++) {
             TextView audiotext = new TextView(PlayPointActivity.this);
-            audiotext.setText(FileHelper.getFileName(poi.audioFiles[i]));
+            audiotext.setText(poi.audioFiles[i].getName());
             audiotext.setTextSize(30);
             viewFlipper.addView(audiotext);
         }

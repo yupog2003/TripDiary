@@ -2378,7 +2378,9 @@ public class TripDiary {
         public String author; // required
         public int section; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             IS_PUBLIC((short) 2, "isPublic"),
@@ -2525,7 +2527,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -2550,7 +2554,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ISPUBLIC_ISSET_ID);
         }
 
-        /** Returns true if field isPublic is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field isPublic is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetIsPublic() {
             return EncodingUtils.testBit(__isset_bitfield, __ISPUBLIC_ISSET_ID);
         }
@@ -2572,7 +2578,9 @@ public class TripDiary {
             this.author = null;
         }
 
-        /** Returns true if field author is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field author is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetAuthor() {
             return this.author != null;
         }
@@ -2597,7 +2605,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SECTION_ISSET_ID);
         }
 
-        /** Returns true if field section is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field section is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSection() {
             return EncodingUtils.testBit(__isset_bitfield, __SECTION_ISSET_ID);
         }
@@ -2661,7 +2671,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -3041,7 +3053,9 @@ public class TripDiary {
 
         public List<Trip> success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -3171,7 +3185,9 @@ public class TripDiary {
             this.success = null;
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return this.success != null;
         }
@@ -3204,7 +3220,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -3455,7 +3473,9 @@ public class TripDiary {
         public String token; // required
         public String tripPath; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath");
@@ -3576,7 +3596,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -3600,7 +3622,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -3644,7 +3668,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -3920,7 +3946,9 @@ public class TripDiary {
 
         public Trip success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -4030,7 +4058,9 @@ public class TripDiary {
             this.success = null;
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return this.success != null;
         }
@@ -4063,7 +4093,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -4289,7 +4321,9 @@ public class TripDiary {
         public String token; // required
         public String tripPath; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath");
@@ -4410,7 +4444,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -4434,7 +4470,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -4478,7 +4516,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -4754,7 +4794,9 @@ public class TripDiary {
 
         public String success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -4864,7 +4906,9 @@ public class TripDiary {
             this.success = null;
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return this.success != null;
         }
@@ -4897,7 +4941,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -5118,7 +5164,9 @@ public class TripDiary {
         public String token; // required
         public String tripPath; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath");
@@ -5239,7 +5287,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -5263,7 +5313,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -5307,7 +5359,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -5583,7 +5637,9 @@ public class TripDiary {
 
         public String success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -5693,7 +5749,9 @@ public class TripDiary {
             this.success = null;
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return this.success != null;
         }
@@ -5726,7 +5784,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -5949,7 +6009,9 @@ public class TripDiary {
         public String tripPath; // required
         public String note; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -6081,7 +6143,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -6105,7 +6169,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -6129,7 +6195,9 @@ public class TripDiary {
             this.note = null;
         }
 
-        /** Returns true if field note is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field note is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetNote() {
             return this.note != null;
         }
@@ -6184,7 +6252,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -6517,7 +6587,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -6631,7 +6703,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -6662,7 +6736,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -6885,7 +6961,9 @@ public class TripDiary {
         public String poiName; // required
         public String diary; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -7028,7 +7106,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -7052,7 +7132,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -7076,7 +7158,9 @@ public class TripDiary {
             this.poiName = null;
         }
 
-        /** Returns true if field poiName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field poiName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPoiName() {
             return this.poiName != null;
         }
@@ -7100,7 +7184,9 @@ public class TripDiary {
             this.diary = null;
         }
 
-        /** Returns true if field diary is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field diary is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetDiary() {
             return this.diary != null;
         }
@@ -7166,7 +7252,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -7556,7 +7644,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -7670,7 +7760,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -7701,7 +7793,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -7924,7 +8018,9 @@ public class TripDiary {
         public String poiName; // required
         public String content; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -8067,7 +8163,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -8091,7 +8189,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -8115,7 +8215,9 @@ public class TripDiary {
             this.poiName = null;
         }
 
-        /** Returns true if field poiName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field poiName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPoiName() {
             return this.poiName != null;
         }
@@ -8139,7 +8241,9 @@ public class TripDiary {
             this.content = null;
         }
 
-        /** Returns true if field content is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field content is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetContent() {
             return this.content != null;
         }
@@ -8205,7 +8309,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -8595,7 +8701,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -8709,7 +8817,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -8740,7 +8850,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -8959,7 +9071,9 @@ public class TripDiary {
         public String token; // required
         public String tripPath; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath");
@@ -9080,7 +9194,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -9104,7 +9220,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -9148,7 +9266,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -9424,7 +9544,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -9538,7 +9660,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -9569,7 +9693,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -9790,7 +9916,9 @@ public class TripDiary {
         public String tripPath; // required
         public String poiName; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -9922,7 +10050,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -9946,7 +10076,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -9970,7 +10102,9 @@ public class TripDiary {
             this.poiName = null;
         }
 
-        /** Returns true if field poiName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field poiName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPoiName() {
             return this.poiName != null;
         }
@@ -10025,7 +10159,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -10358,7 +10494,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -10472,7 +10610,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -10503,7 +10643,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -10722,7 +10864,9 @@ public class TripDiary {
         public String token; // required
         public String path; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             PATH((short) 2, "path");
@@ -10843,7 +10987,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -10867,7 +11013,9 @@ public class TripDiary {
             this.path = null;
         }
 
-        /** Returns true if field path is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field path is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPath() {
             return this.path != null;
         }
@@ -10911,7 +11059,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -11187,7 +11337,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -11301,7 +11453,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -11332,7 +11486,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -11553,7 +11709,9 @@ public class TripDiary {
         public String path; // required
         public String newName; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             PATH((short) 2, "path"),
@@ -11685,7 +11843,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -11709,7 +11869,9 @@ public class TripDiary {
             this.path = null;
         }
 
-        /** Returns true if field path is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field path is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPath() {
             return this.path != null;
         }
@@ -11733,7 +11895,9 @@ public class TripDiary {
             this.newName = null;
         }
 
-        /** Returns true if field newName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field newName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetNewName() {
             return this.newName != null;
         }
@@ -11788,7 +11952,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -12121,7 +12287,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -12235,7 +12403,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -12266,7 +12436,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -12489,7 +12661,9 @@ public class TripDiary {
         public String poiName; // required
         public String newPOIName; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -12632,7 +12806,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -12656,7 +12832,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -12680,7 +12858,9 @@ public class TripDiary {
             this.poiName = null;
         }
 
-        /** Returns true if field poiName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field poiName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPoiName() {
             return this.poiName != null;
         }
@@ -12704,7 +12884,9 @@ public class TripDiary {
             this.newPOIName = null;
         }
 
-        /** Returns true if field newPOIName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field newPOIName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetNewPOIName() {
             return this.newPOIName != null;
         }
@@ -12770,7 +12952,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -13160,7 +13344,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -13274,7 +13460,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -13305,7 +13493,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -13526,7 +13716,9 @@ public class TripDiary {
         public String trippath; // required
         public String newTripPath; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIPPATH((short) 2, "trippath"),
@@ -13658,7 +13850,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -13682,7 +13876,9 @@ public class TripDiary {
             this.trippath = null;
         }
 
-        /** Returns true if field trippath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field trippath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTrippath() {
             return this.trippath != null;
         }
@@ -13706,7 +13902,9 @@ public class TripDiary {
             this.newTripPath = null;
         }
 
-        /** Returns true if field newTripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field newTripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetNewTripPath() {
             return this.newTripPath != null;
         }
@@ -13761,7 +13959,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -14094,7 +14294,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -14208,7 +14410,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -14239,7 +14443,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -14462,7 +14668,9 @@ public class TripDiary {
         public String poiName; // required
         public String basicinformation; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -14605,7 +14813,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -14629,7 +14839,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -14653,7 +14865,9 @@ public class TripDiary {
             this.poiName = null;
         }
 
-        /** Returns true if field poiName is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field poiName is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetPoiName() {
             return this.poiName != null;
         }
@@ -14677,7 +14891,9 @@ public class TripDiary {
             this.basicinformation = null;
         }
 
-        /** Returns true if field basicinformation is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field basicinformation is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetBasicinformation() {
             return this.basicinformation != null;
         }
@@ -14743,7 +14959,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -15133,7 +15351,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -15247,7 +15467,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -15278,7 +15500,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -15499,7 +15723,9 @@ public class TripDiary {
         public String tripPath; // required
         public String option; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TOKEN((short) 1, "token"),
             TRIP_PATH((short) 2, "tripPath"),
@@ -15631,7 +15857,9 @@ public class TripDiary {
             this.token = null;
         }
 
-        /** Returns true if field token is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field token is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetToken() {
             return this.token != null;
         }
@@ -15655,7 +15883,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -15679,7 +15909,9 @@ public class TripDiary {
             this.option = null;
         }
 
-        /** Returns true if field option is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field option is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetOption() {
             return this.option != null;
         }
@@ -15734,7 +15966,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -16067,7 +16301,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -16181,7 +16417,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -16212,7 +16450,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -16429,7 +16669,9 @@ public class TripDiary {
 
         public String tripPath; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             TRIP_PATH((short) 1, "tripPath");
 
@@ -16539,7 +16781,9 @@ public class TripDiary {
             this.tripPath = null;
         }
 
-        /** Returns true if field tripPath is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field tripPath is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetTripPath() {
             return this.tripPath != null;
         }
@@ -16572,7 +16816,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();
@@ -16791,7 +17037,9 @@ public class TripDiary {
 
         public boolean success; // required
 
-        /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+        /**
+         * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+         */
         public enum _Fields implements org.apache.thrift.TFieldIdEnum {
             SUCCESS((short) 0, "success");
 
@@ -16905,7 +17153,9 @@ public class TripDiary {
             __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
 
-        /** Returns true if field success is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field success is set (has been assigned a value) and false otherwise
+         */
         public boolean isSetSuccess() {
             return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
         }
@@ -16936,7 +17186,9 @@ public class TripDiary {
             throw new IllegalStateException();
         }
 
-        /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+        /**
+         * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+         */
         public boolean isSet(_Fields field) {
             if (field == null) {
                 throw new IllegalArgumentException();

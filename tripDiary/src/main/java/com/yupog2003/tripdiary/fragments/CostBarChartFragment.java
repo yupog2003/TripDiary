@@ -25,7 +25,7 @@ public class CostBarChartFragment extends Fragment {
     public String tripName;
     public String poiName;
 
-    public CostBarChartFragment(){
+    public CostBarChartFragment() {
 
     }
 
@@ -39,13 +39,13 @@ public class CostBarChartFragment extends Fragment {
         return barChart;
     }
 
-    public void refresh(){
+    public void refresh() {
         TypedArray array = getActivity().getResources().obtainTypedArray(R.array.cost_type_colors);
         colors = new int[array.length()];
         for (int i = 0; i < colors.length; i++)
             colors[i] = array.getColor(i, 0);
         array.recycle();
-        totals=getArguments().getFloatArray(ViewCostActivity.tag_totals);
+        totals = getArguments().getFloatArray(ViewCostActivity.tag_totals);
         String[] titles = getActivity().getResources().getStringArray(R.array.cost_types);
         ArrayList<BarEntry> values = new ArrayList<>();
         for (int i = 0; i < totals.length; i++) {

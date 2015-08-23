@@ -101,7 +101,7 @@ public class ViewPointActivity extends MyActivity {
             return;
         }
         setTitle(poiName);
-        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", FileHelper.getFileName(poi.parentTrip) + "-" + poi.title, null);
+        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTrip.getName() + "-" + poi.title, null);
         appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -266,7 +266,7 @@ public class ViewPointActivity extends MyActivity {
             startActivityForResult(intent, pick_multi_file);
         } else if (item.getItemId() == R.id.playpoint) {
             Intent intent = new Intent(ViewPointActivity.this, PlayPointActivity.class);
-            intent.putExtra(PlayPointActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
+            intent.putExtra(PlayPointActivity.tag_trip, poi.dir.getParentFile().getName());
             intent.putExtra(PlayPointActivity.tag_poi, poi.title);
             ViewPointActivity.this.startActivity(intent);
         } else if (item.getItemId() == android.R.id.home) {
@@ -336,9 +336,13 @@ public class ViewPointActivity extends MyActivity {
                             poi.updateBasicInformation(null, time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude);
                             String newName = edittitle.getText().toString();
                             if (!newName.equals(oldName)) {
-                                poi.renamePOI(newName);
-                                setTitle(newName);
-                                requestUpdatePOIs(false);
+                                if (FileHelper.findfile(poi.dir.getParentFile(), newName) == null) {
+                                    poi.renamePOI(newName);
+                                    setTitle(newName);
+                                    requestUpdatePOIs(false);
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.there_is_a_same_poi, Toast.LENGTH_SHORT).show();
+                                }
                             } else {
                                 requestUpdatePOI();
                             }
@@ -351,8 +355,8 @@ public class ViewPointActivity extends MyActivity {
             ab.show();
         } else if (item.getItemId() == R.id.viewcost) {
             Intent intent2 = new Intent(ViewPointActivity.this, ViewCostActivity.class);
-            intent2.putExtra(ViewCostActivity.tag_trip, FileHelper.getFileName(poi.dir.getParentFile()));
-            intent2.putExtra(ViewCostActivity.tag_poi, FileHelper.getFileName(poi.dir));
+            intent2.putExtra(ViewCostActivity.tag_trip, poi.dir.getParentFile().getName());
+            intent2.putExtra(ViewCostActivity.tag_poi, poi.dir.getName());
             intent2.putExtra(ViewCostActivity.tag_option, ViewCostActivity.optionPOI);
             startActivityForResult(intent2, REQUEST_VIEW_COST);
         } else if (item.getItemId() == R.id.delete) {

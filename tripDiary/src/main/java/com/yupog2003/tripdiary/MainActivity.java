@@ -1,14 +1,13 @@
 package com.yupog2003.tripdiary;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,6 +29,7 @@ import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.RecordService;
 
 import java.io.BufferedReader;
@@ -63,14 +63,34 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         viewHistory = (Button) findViewById(R.id.viewhistory);
         resumeTrip = (Button) findViewById(R.id.resume_trip);
         allRecord = (Button) findViewById(R.id.all_record);
-        int accentColor = getResources().getColor(R.color.accent);
+        int accentColor = ContextCompat.getColor(this, R.color.accent);
         DrawableCompat.setTint(DrawableCompat.wrap(startTrip.getCompoundDrawables()[0].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(viewHistory.getCompoundDrawables()[0].mutate()), accentColor);
+        if (TripDiaryApplication.rootDocumentFile != null) {
+            checkPlayServiceAndSetListeners();
+        } else {
+            checkHasPermission(new OnGrantPermissionCompletedListener() {
+                @Override
+                public void onGranted() {
+                    TripDiaryApplication.updateRootPath();
+                    checkPlayServiceAndSetListeners();
+                }
+
+                @Override
+                public void onFailed() {
+                    finishAndRemoveTask();
+                }
+            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
+    }
+
+    private void checkPlayServiceAndSetListeners() {
         if (checkPlayService()) {
-            startTrip.setOnClickListener(this);
-            viewHistory.setOnClickListener(this);
-            resumeTrip.setOnClickListener(this);
-            allRecord.setOnClickListener(this);
+            startTrip.setOnClickListener(MainActivity.this);
+            viewHistory.setOnClickListener(MainActivity.this);
+            resumeTrip.setOnClickListener(MainActivity.this);
+            allRecord.setOnClickListener(MainActivity.this);
         }
     }
 
@@ -107,7 +127,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     @Override
     protected void onResume() {
-
         super.onResume();
         checkPlayService();
     }
@@ -138,7 +157,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 String color = categorysp.getString(categories[checkedId], "Gray");
                 category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);
             }
@@ -180,14 +198,13 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                         AlertDialog.Builder ab2 = new AlertDialog.Builder(MainActivity.this);
                         ab2.setTitle(getString(R.string.same_trip));
                         ab2.setMessage(getString(R.string.explain_same_trip));
-                        ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+                        ab2.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {
-
                                 startTrip(name, note, category);
                             }
                         });
-                        ab2.setNegativeButton(getString(R.string.cancel), null);
+                        ab2.setNegativeButton(getString(R.string.no), null);
                         ab2.show();
                     }
                 } else {
@@ -202,36 +219,49 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     }
 
-    private void startTrip(String name, String note, String category) {
-        DocumentFile dir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name);
-        if (dir == null) {
-            dir = TripDiaryApplication.rootDocumentFile.createDirectory(name);
-        }
-        Trip trip = new Trip(getApplicationContext(), dir, false);
-        if (category != null) {
-            trip.setCategory(category);
-        }
-        if (note != null) {
-            trip.updateNote(note);
-        }
-        if (DeviceHelper.isGpsEnabled(this)) {
-            if (RecordService.instance == null) {
-                Intent i = new Intent(MainActivity.this, RecordService.class);
-                i.putExtra(RecordService.tag_tripName, name);
-                startService(i);
-                DeviceHelper.sendGATrack(MainActivity.this, "Trip", "start", name, null);
-                MainActivity.this.finish();
-            } else {
-                Toast.makeText(MainActivity.this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
+    private void startTrip(final String name, final String note, final String category) {
+        checkHasPermission(new OnGrantPermissionCompletedListener() {
+            @Override
+            public void onGranted() {
+                DocumentFile dir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name);
+                if (dir == null) {
+                    dir = TripDiaryApplication.rootDocumentFile.createDirectory(name);
+                }
+                if (dir == null) {
+                    Toast.makeText(getActivity(), R.string.storage_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Trip trip = new Trip(MainActivity.this, dir, false);
+                if (category != null) {
+                    trip.setCategory(category);
+                }
+                if (note != null) {
+                    trip.updateNote(note);
+                }
+                if (DeviceHelper.isGpsEnabled(MainActivity.this)) {
+                    if (RecordService.instance == null) {
+                        Intent i = new Intent(MainActivity.this, RecordService.class);
+                        i.putExtra(RecordService.tag_tripName, name);
+                        startService(i);
+                        DeviceHelper.sendGATrack(MainActivity.this, "Trip", "start", name, null);
+                        MainActivity.this.finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
+                }
             }
-        } else {
-            Toast.makeText(getBaseContext(), getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
-        }
 
+            @Override
+            public void onFailed() {
+
+            }
+        }, Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.setting) {
+        if (item.getItemId() == R.id.setting && TripDiaryApplication.rootDocumentFile != null) {
             Intent intent = new Intent(MainActivity.this, PreferActivity.class);
             startActivity(intent);
         }
@@ -240,30 +270,31 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     private void resumeTripDialog() {
         AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
-        DocumentFile[] files = FileHelper.listFiles(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
+        DocumentFile[] files = TripDiaryApplication.rootDocumentFile.listFiles(DocumentFile.list_dirs);
         if (files == null)
             files = new DocumentFile[0];
         ArrayList<Trip> trips = new ArrayList<>();
         for (DocumentFile file : files) {
             if (file != null) {
-                Trip trip = new Trip(getApplicationContext(), file, true);
+                Trip trip = new Trip(MainActivity.this, file, true);
                 trips.add(trip);
             }
         }
         Collections.sort(trips, Collections.reverseOrder());
-        final String[] strs = new String[trips.size()];
-        for (int i = 0; i < strs.length; i++) {
-            strs[i] = trips.get(i).tripName;
+        final String[] tripNames = new String[trips.size()];
+        for (int i = 0; i < tripNames.length; i++) {
+            tripNames[i] = trips.get(i).tripName;
         }
-        ab.setSingleChoiceItems(strs, -1, new DialogInterface.OnClickListener() {
+        ab.setSingleChoiceItems(tripNames, -1, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
                 StringBuilder sb = new StringBuilder();
+                String tripName = tripNames[which];
                 try {
-                    DocumentFile noteFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, strs[which], "note");
-                    BufferedReader br = new BufferedReader(new InputStreamReader(getContentResolver().openInputStream(noteFile.getUri())));
+                    DocumentFile noteFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, "note");
+                    BufferedReader br = new BufferedReader(new InputStreamReader(noteFile.getInputStream()));
                     String s;
                     while ((s = br.readLine()) != null) {
                         sb.append(s).append("\n");
@@ -276,8 +307,8 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 if (noteStr.endsWith("\n")) {
                     noteStr = noteStr.substring(0, noteStr.length() - 1);
                 }
-                DeviceHelper.sendGATrack(MainActivity.this, "Trip", "resume", strs[which], null);
-                startTrip(strs[which], noteStr, null);
+                DeviceHelper.sendGATrack(MainActivity.this, "Trip", "resume", tripName, null);
+                startTrip(tripName, noteStr, null);
             }
         });
         ab.setTitle(getString(R.string.resume_trip));
@@ -290,7 +321,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             if (DeviceHelper.isGpsEnabled(this)) {
                 startTripDialog();
             } else {
-                Toast.makeText(getBaseContext(), getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
             }
         } else if (v.equals(viewHistory)) {
@@ -299,12 +330,12 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             if (DeviceHelper.isGpsEnabled(this)) {
                 resumeTripDialog();
             } else {
-                Toast.makeText(getBaseContext(), getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
             }
         } else if (v.equals(allRecord)) {
             Intent i = new Intent(MainActivity.this, AllRecordActivity.class);
-            String[] tripNames = FileHelper.listFileNames(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
+            String[] tripNames = TripDiaryApplication.rootDocumentFile.listFileNames(DocumentFile.list_dirs);
             i.putExtra(AllRecordActivity.tag_trip_names, tripNames);
             startActivity(i);
         }

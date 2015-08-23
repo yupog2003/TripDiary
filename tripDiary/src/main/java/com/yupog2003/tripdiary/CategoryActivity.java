@@ -76,7 +76,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
         if (v.equals(add)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.edit_category));
-            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, (ViewGroup)findViewById(android.R.id.content), false);
+            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, (ViewGroup) findViewById(android.R.id.content), false);
             final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
@@ -155,7 +155,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
 
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.edit_category));
-            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, (ViewGroup)findViewById(android.R.id.content), false);
+            LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.add_category, (ViewGroup) findViewById(android.R.id.content), false);
             final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
@@ -211,7 +211,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             ab.setTitle(getString(R.string.delete));
             ab.setMessage(getString(R.string.are_you_sure_to_delete));
             ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
-            ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+            ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -229,7 +229,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                     }
                 }
             });
-            ab.setNegativeButton(getString(R.string.cancel), null);
+            ab.setNegativeButton(getString(R.string.no), null);
             ab.show();
             return true;
         }

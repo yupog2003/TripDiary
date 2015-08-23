@@ -81,14 +81,16 @@ public class TextFragment extends Fragment implements OnClickListener {
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
     }
+
     public void refresh() {
         if (getActivity() == null)
             return;
-        this.poi = ((ViewPointActivity)getActivity()).poi;
+        this.poi = ((ViewPointActivity) getActivity()).poi;
         if (poi == null) {
             return;
         }
@@ -111,11 +113,10 @@ public class TextFragment extends Fragment implements OnClickListener {
     }
 
     public void shareDiary() {
-        Toast.makeText(getActivity(), getString(R.string.share_diary), Toast.LENGTH_LONG).show();
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_TEXT, text.getText().toString());
-        startActivity(i);
+        startActivity(Intent.createChooser(i, getString(R.string.share_diary)));
     }
 
     @Override

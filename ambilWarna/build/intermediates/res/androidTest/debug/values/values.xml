@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/ambilWarna/build/intermediates/bundles/debug/res/values/values.xml -->
-    <eat-comment/>
-    <dimen name="ambilwarna_hsvHeight">240dp</dimen>
-    <dimen name="ambilwarna_hsvWidth">240dp</dimen>
-    <dimen name="ambilwarna_hueWidth">30dp</dimen>
-    <dimen name="ambilwarna_spacer">8dp</dimen>
-</resources>

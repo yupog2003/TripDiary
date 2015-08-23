@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,8 +23,8 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
-import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.UnScrollableListView;
 
 public class AllAudioFragment extends Fragment {
@@ -66,8 +65,8 @@ public class AllAudioFragment extends Fragment {
 
     public void refresh() {
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
-            this.pois = ((ViewTripActivity)getActivity()).trip.pois;
-            this.timezone = ((ViewTripActivity)getActivity()).trip.timezone;
+            this.pois = ((ViewTripActivity) getActivity()).trip.pois;
+            this.timezone = ((ViewTripActivity) getActivity()).trip.timezone;
             poiAdapter = new POIAdapter();
             recyclerView.setAdapter(poiAdapter);
         }
@@ -109,7 +108,7 @@ public class AllAudioFragment extends Fragment {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView textView = new TextView(getActivity());
-            textView.setText(FileHelper.getFileName(audios[position]));
+            textView.setText(audios[position].getName());
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_DeviceDefault_Medium);
             textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
             textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -146,8 +145,8 @@ public class AllAudioFragment extends Fragment {
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String tripName = FileHelper.getFileName(pois[index].dir.getParentFile());
-                        String poiName = FileHelper.getFileName(pois[index].dir);
+                        String tripName = pois[index].dir.getParentFile().getName();
+                        String poiName = pois[index].dir.getName();
                         Intent intent = new Intent(getActivity(), ViewPointActivity.class);
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);

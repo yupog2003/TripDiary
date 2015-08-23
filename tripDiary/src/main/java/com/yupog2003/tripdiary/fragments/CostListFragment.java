@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -29,6 +28,7 @@ import com.yupog2003.tripdiary.data.CostData;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.CheckableLinearLayout;
 
 import java.io.BufferedReader;
@@ -139,7 +139,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                     break;
                 case ViewCostActivity.optionTrip:
                     for (DocumentFile costFile : costFiles) {
-                        costDatas.add(readCostData(costFile, FileHelper.getFileName(costFile.getParentFile().getParentFile())));
+                        costDatas.add(readCostData(costFile, costFile.getParentFile().getParentFile().getName()));
                     }
                     break;
             }
@@ -151,12 +151,12 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
         }
 
         private CostData readCostData(DocumentFile file, String POI) {
-            String costName = FileHelper.getFileName(file);
+            String costName = file.getName();
             int costType = -1;
             float costDollar = -1;
             CostData data = null;
             try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(file.getUri())));
+                BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 String s;
                 while ((s = br.readLine()) != null) {
                     if (s.startsWith("type=")) {
@@ -273,7 +273,6 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                 ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-
                         for (int i = 0; i < checkedItems.size(); i++) {
                             checkedItems.get(i).file.delete();
                         }
@@ -336,7 +335,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                                 if (outFile == null) {
                                     outFile = dataParent.createFile("", name);
                                 }
-                                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(outFile.getUri())));
+                                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outFile.getOutputStream()));
                                 bw.write("type=" + String.valueOf(type) + "\n");
                                 bw.write("dollar=" + dollar);
                                 bw.flush();

@@ -1,8 +1,11 @@
 package com.yupog2003.tripdiary.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class TrackCache implements Serializable {
+public class TrackCache implements Serializable, Parcelable {
 
     private static final long serialVersionUID = 7483356498452412154L;
 
@@ -19,4 +22,59 @@ public class TrackCache implements Serializable {
     public float climb;      // meters
     public float maxAltitude;// meters
     public float minAltitude;// meters
+
+
+    public TrackCache() {
+
+    }
+
+    protected TrackCache(Parcel in) {
+        latitudes = in.createDoubleArray();
+        longitudes = in.createDoubleArray();
+        altitudes = in.createFloatArray();
+        times = in.createStringArray();
+        startTime = in.readString();
+        endTime = in.readString();
+        totalTime = in.readString();
+        distance = in.readFloat();
+        avgSpeed = in.readFloat();
+        maxSpeed = in.readFloat();
+        climb = in.readFloat();
+        maxAltitude = in.readFloat();
+        minAltitude = in.readFloat();
+    }
+
+    public static final Creator<TrackCache> CREATOR = new Creator<TrackCache>() {
+        @Override
+        public TrackCache createFromParcel(Parcel in) {
+            return new TrackCache(in);
+        }
+
+        @Override
+        public TrackCache[] newArray(int size) {
+            return new TrackCache[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDoubleArray(latitudes);
+        dest.writeDoubleArray(longitudes);
+        dest.writeFloatArray(altitudes);
+        dest.writeStringArray(times);
+        dest.writeString(startTime);
+        dest.writeString(endTime);
+        dest.writeString(totalTime);
+        dest.writeFloat(distance);
+        dest.writeFloat(avgSpeed);
+        dest.writeFloat(maxSpeed);
+        dest.writeFloat(climb);
+        dest.writeFloat(maxAltitude);
+        dest.writeFloat(minAltitude);
+    }
 }

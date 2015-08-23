@@ -56,7 +56,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
     public List<POI> pois; // required
     public String noteStr; // required
 
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    /**
+     * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+     */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
         PATH((short) 1, "path"),
         NAME((short) 2, "name"),
@@ -275,7 +277,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.path = null;
     }
 
-    /** Returns true if field path is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field path is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetPath() {
         return this.path != null;
     }
@@ -299,7 +303,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.name = null;
     }
 
-    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field name is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetName() {
         return this.name != null;
     }
@@ -323,7 +329,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.author = null;
     }
 
-    /** Returns true if field author is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field author is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetAuthor() {
         return this.author != null;
     }
@@ -348,7 +356,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LAT_ISSET_ID);
     }
 
-    /** Returns true if field lat is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field lat is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetLat() {
         return EncodingUtils.testBit(__isset_bitfield, __LAT_ISSET_ID);
     }
@@ -371,7 +381,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LNG_ISSET_ID);
     }
 
-    /** Returns true if field lng is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field lng is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetLng() {
         return EncodingUtils.testBit(__isset_bitfield, __LNG_ISSET_ID);
     }
@@ -393,7 +405,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.time = null;
     }
 
-    /** Returns true if field time is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field time is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetTime() {
         return this.time != null;
     }
@@ -417,7 +431,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.uploadTime = null;
     }
 
-    /** Returns true if field uploadTime is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field uploadTime is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetUploadTime() {
         return this.uploadTime != null;
     }
@@ -442,7 +458,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ISPUBLIC_ISSET_ID);
     }
 
-    /** Returns true if field isPublic is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field isPublic is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetIsPublic() {
         return EncodingUtils.testBit(__isset_bitfield, __ISPUBLIC_ISSET_ID);
     }
@@ -479,7 +497,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.pois = null;
     }
 
-    /** Returns true if field pois is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field pois is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetPois() {
         return this.pois != null;
     }
@@ -503,7 +523,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         this.noteStr = null;
     }
 
-    /** Returns true if field noteStr is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field noteStr is set (has been assigned a value) and false otherwise
+     */
     public boolean isSetNoteStr() {
         return this.noteStr != null;
     }
@@ -635,7 +657,9 @@ public class Trip implements org.apache.thrift.TBase<Trip, Trip._Fields>, java.i
         throw new IllegalStateException();
     }
 
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    /**
+     * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+     */
     public boolean isSet(_Fields field) {
         if (field == null) {
             throw new IllegalArgumentException();

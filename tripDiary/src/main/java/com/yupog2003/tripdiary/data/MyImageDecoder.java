@@ -5,12 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.media.MediaMetadataRetriever;
-import android.support.v4.provider.DocumentFile;
 import android.text.TextUtils;
 
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.IOException;
 
@@ -37,18 +37,18 @@ public class MyImageDecoder implements ImageDecoder {
         }
         String cleanedUriString = info.getImageUri();
         if (FileHelper.isVideo(cleanedUriString)) {
-            return makeVideoThumbnail((DocumentFile) info.getExtraForDownloader(), info.getTargetSize().getWidth(), info.getTargetSize().getHeight(), cleanedUriString);
+            return makeVideoThumbnail((DocumentFile[]) info.getExtraForDownloader(), info.getTargetSize().getWidth(), info.getTargetSize().getHeight(), cleanedUriString);
         } else {
             return centerCrop(m_imageUriDecoder.decode(info), info.getTargetSize().getWidth(), info.getTargetSize().getHeight());
         }
     }
 
-    private Bitmap makeVideoThumbnail(DocumentFile dir, int targetWidth, int targetHeight, String filePath) {
-        if (filePath == null || dir == null) {
+    private Bitmap makeVideoThumbnail(DocumentFile[] files, int targetWidth, int targetHeight, String filePath) {
+        if (filePath == null || files == null) {
             return null;
         }
         try {
-            DocumentFile videoFile = FileHelper.findfile(dir, filePath.substring(filePath.lastIndexOf("/") + 1));
+            DocumentFile videoFile = FileHelper.findfile(files, filePath.substring(filePath.lastIndexOf("/") + 1));
             if (videoFile == null) return null;
             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
             mmr.setDataSource(context, videoFile.getUri());
@@ -87,9 +87,9 @@ public class MyImageDecoder implements ImageDecoder {
             int decodedHeight = bitmap.getHeight();
             Bitmap result;
             if (decodedWidth > decodedHeight) {
-                result = Bitmap.createBitmap(bitmap, (decodedWidth - targetWidth) / 2, 0, targetWidth, targetHeight);
+                result = Bitmap.createBitmap(bitmap, (decodedWidth - targetWidth) / 2, 0, targetWidth, decodedHeight);
             } else {
-                result = Bitmap.createBitmap(bitmap, 0, (decodedHeight - targetHeight) / 2, targetWidth, targetHeight);
+                result = Bitmap.createBitmap(bitmap, 0, (decodedHeight - targetHeight) / 2, decodedWidth, targetHeight);
             }
             bitmap.recycle();
             return result;

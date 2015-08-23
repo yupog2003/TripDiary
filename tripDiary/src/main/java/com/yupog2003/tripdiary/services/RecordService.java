@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary.services;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,7 +25,7 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.provider.DocumentFile;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.MyActivity;
@@ -36,6 +38,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -77,30 +80,57 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
     public static final DecimalFormat doubleFormat = new DecimalFormat("#.#");
     public static final String tag_tripName = "tag_tripName";
+    public static final String tag_lastRecordTrip = "tag_lastRecordTrip";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         instance = this;
-        name = intent.getStringExtra(tag_tripName);
+        if (intent != null) {
+            name = intent.getStringExtra(tag_tripName);
+        } else {
+            name = PreferenceManager.getDefaultSharedPreferences(this).getString(tag_lastRecordTrip, "");
+        }
         DocumentFile tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name);
         if (tripFile == null) {
+            Toast.makeText(this, R.string.storage_error, Toast.LENGTH_SHORT).show();
             stopSelf();
+            return START_NOT_STICKY;
         }
-        trip = new Trip(getApplicationContext(), tripFile, false);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            stopSelf();
+            return START_NOT_STICKY;
+        }
+        trip = new Trip(RecordService.this, tripFile, false);
         trip.deleteCache();
         run = true;
         screenOn = true;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RecordService.this);
-        recordDuration = Integer.valueOf(preferences.getString("record_duration", "1000"));
-        recordDuration = Math.max(recordDuration, 200);
-        updateDuration = Integer.valueOf(preferences.getString("update_duration", "1000"));
-        updateDuration = Math.max(recordDuration, 200);
-        recordDistanceInterval = Integer.valueOf(preferences.getString("min_distance_record", "20"));
+        try {
+            recordDuration = (int)Double.parseDouble(preferences.getString("record_duration", "1000"));
+            recordDuration = Math.max(recordDuration, 200);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            recordDuration = 1000;
+        }
+        try {
+            updateDuration = (int)Double.parseDouble(preferences.getString("update_duration", "1000"));
+            updateDuration = Math.max(recordDuration, 200);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            updateDuration = 1000;
+        }
+        try {
+            recordDistanceInterval = (int)Double.parseDouble(preferences.getString("min_distance_record", "20"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            recordDistanceInterval = 20;
+        }
+        preferences.edit().putString(tag_lastRecordTrip, name).apply();
         setupNotification(name);
         if (trip.gpxFile != null && trip.gpxFile.exists()) {
             try {
                 if (trip.gpxFile.length() == 0) {
-                    bw = new BufferedWriter(new OutputStreamWriter(getContentResolver().openOutputStream(trip.gpxFile.getUri(), "wa")));
+                    bw = new BufferedWriter(new OutputStreamWriter(trip.gpxFile.getOutputStream()));
                     bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n");
                     bw.write("	<gpx>\n");
                     bw.write("	<trk>\n");
@@ -110,7 +140,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                     File temp = new File(getCacheDir(), "temp");
                     FileHelper.copyFile(trip.gpxFile, temp);
                     BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(temp)));
-                    bw = new BufferedWriter(new OutputStreamWriter(getContentResolver().openOutputStream(trip.gpxFile.getUri())));
+                    bw = new BufferedWriter(new OutputStreamWriter(trip.gpxFile.getOutputStream()));
                     String s;
                     while ((s = br.readLine()) != null) {
                         if (s.contains("<?xml") || s.contains("<gpx") || s.contains("<trk>") || s.contains("<trkseg") || s.contains("<trkpt") || s.contains("<ele>") || s.contains("<time>") || s.contains("</trkpt")) {
@@ -125,7 +155,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                     temp.delete();
                 }
             } catch (IOException | IllegalArgumentException e) {
-
                 e.printStackTrace();
             }
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -145,7 +174,7 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(RecordActivity.tag_tripname, name);
         startActivity(i);
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     private void setupNotification(String name) {
@@ -190,20 +219,22 @@ public class RecordService extends Service implements LocationListener, GpsStatu
     }
 
     @Override
-    public IBinder onBind(Intent arg0) {
-
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
     @Override
     public void onDestroy() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.removeUpdates(RecordService.this);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            lm.removeUpdates(RecordService.this);
+        }
         unregisterReceiver(stopTripReceiver);
         unregisterReceiver(pauseReceiver);
         unregisterReceiver(screenOnOffReceiver);
         SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sm.unregisterListener(RecordService.this);
+        run = false;
         instance = null;
         super.onDestroy();
     }
@@ -212,7 +243,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             run = false;
             try {
                 if (bw != null) {
@@ -249,7 +279,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             run = !run;
             nb = new NotificationCompat.Builder(RecordService.this);
             nb.setContentTitle(name);
@@ -258,7 +287,9 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             nb.setTicker(getString(R.string.Start_Trip));
             if (run) {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, RecordService.this);
+                if (ContextCompat.checkSelfPermission(RecordService.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, RecordService.this);
+                }
                 new Thread(RecordService.this).start();
                 nb.setSmallIcon(R.drawable.ic_satellite);
                 Intent pauseIntent = new Intent(actionPauseTrip);
@@ -266,7 +297,9 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                 nb.addAction(R.drawable.ic_pause, getString(R.string.pause), pausePendingIntent);
             } else {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                lm.removeUpdates(RecordService.this);
+                if (ContextCompat.checkSelfPermission(RecordService.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    lm.removeUpdates(RecordService.this);
+                }
                 nb.setSmallIcon(R.drawable.ic_pause);
                 Intent pauseIntent = new Intent(actionPauseTrip);
                 PendingIntent pausePendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -310,6 +343,11 @@ public class RecordService extends Service implements LocationListener, GpsStatu
             return;
         lastFixTime = System.currentTimeMillis();
         float locationDifference;
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        elevation = location.getAltitude();
+        nowSpeed = location.getSpeed();
+        accuracy = location.getAccuracy();
         if (previousLocation == null) {
             previousLocation = location;
             locationDifference = -1;
@@ -321,11 +359,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
         if (locationDifference > 0)
             totaldistance += locationDifference;
         previousLocation = location;
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        elevation = location.getAltitude();
-        nowSpeed = location.getSpeed();
-        accuracy = location.getAccuracy();
         time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
         try {
             if (run) {
@@ -357,7 +390,6 @@ public class RecordService extends Service implements LocationListener, GpsStatu
 
 
     public void run() {
-
         while (run && screenOn) {
             try {
                 Thread.sleep(updateDuration);
@@ -409,11 +441,10 @@ public class RecordService extends Service implements LocationListener, GpsStatu
                 float z = event.values[2] / SensorManager.GRAVITY_EARTH;
                 float g = (float) Math.sqrt(x * x + y * y + z * z);
                 if (g > SHAKE_THRESHOLD_GRAVITY && lastUpadateSensor - lastAddPOI > min_diffTime_between_add_poi) {
-                    DocumentFile poiFile = trip.dir.createDirectory(String.valueOf(System.currentTimeMillis()));
-                    if (poiFile == null) return;
-                    POI poi = new POI(RecordService.this, poiFile);
+                    if (trip == null) return;
                     MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
-                    poi.updateBasicInformation(null, time, latitude, longitude, elevation);
+                    POI poi = trip.createPOI(String.valueOf(System.currentTimeMillis()), time, latitude, longitude, elevation);
+                    if (poi == null) return;
                     lastAddPOI = lastUpadateSensor;
                     ((Vibrator) getSystemService(Service.VIBRATOR_SERVICE)).vibrate(200);
                 }

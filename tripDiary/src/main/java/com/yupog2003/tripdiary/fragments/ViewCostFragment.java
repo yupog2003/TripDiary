@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +28,7 @@ import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -159,7 +159,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             if (outFile == null) {
                                 outFile = outDir.createFile("", name);
                             }
-                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(getActivity().getContentResolver().openOutputStream(outFile.getUri())));
+                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outFile.getOutputStream()));
                             bw.write("type=" + String.valueOf(type) + "\n");
                             bw.write("dollar=" + dollar);
                             bw.flush();
@@ -214,7 +214,6 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public int getCount() {
-
             return 3;
         }
 
@@ -250,7 +249,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
     private void readData(DocumentFile file) {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(file.getUri())));
+            BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
             String s;
             int type = -1;
             while ((s = br.readLine()) != null) {
@@ -263,7 +262,6 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
             }
             br.close();
         } catch (IOException | IllegalArgumentException e) {
-
             e.printStackTrace();
         }
     }

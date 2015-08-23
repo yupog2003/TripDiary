@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,6 +38,7 @@ import com.yupog2003.tripdiary.data.MyLatLng2;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Record;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.POIInfoWindowAdapter;
 
 import java.io.BufferedReader;
@@ -191,7 +191,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                 if (trips == null) {
                     return false;
                 }
-                trips[i] = new Trip(getApplicationContext(), tripFile, false);
+                trips[i] = new Trip(AllRecordActivity.this, tripFile, false);
                 publishProgress(i);
                 DocumentFile gpxFile = FileHelper.findfile(tripFile, tripNames[i] + ".gpx");
                 File tempFile = new File(getCacheDir(), tripNames[i] + ".gpx");

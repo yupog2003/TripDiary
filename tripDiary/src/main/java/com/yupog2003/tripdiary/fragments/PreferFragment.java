@@ -1,7 +1,5 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -20,16 +18,16 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AlertDialog;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.yupog2003.tripdiary.CategoryActivity;
+import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -37,6 +35,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.MyBackupAgent;
 import com.yupog2003.tripdiary.data.MyCalendar;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.preferences.SeekBarPreference;
 
 import java.io.BufferedReader;
@@ -102,7 +101,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         restoresetting = findPreference("restoresetting");
         restoresetting.setOnPreferenceClickListener(this);
         rootpath = findPreference("rootpath");
-        rootpath.setSummary(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("rootpath", Environment.getExternalStorageDirectory().getPath()));
+        rootpath.setSummary(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("rootpath", Environment.getExternalStorageDirectory() + "/TripDiary"));
         rootpath.setOnPreferenceChangeListener(this);
         rootpath.setOnPreferenceClickListener(this);
         tripTimeZone = findPreference("triptimezone");
@@ -189,6 +188,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
             i.setType("file/*");
             startActivityForResult(Intent.createChooser(i, getString(R.string.diary_font)), selectdiaryfont);
         } else if (preference.equals(backupsetting)) {
+            if (backupPreferenceFile == null) return true;
             DocumentFile[] settingFiles = backupPreferenceFile.listFiles();
             DocumentFile file = FileHelper.findfile(settingFiles, defaultSettingName);
             if (file == null) {
@@ -279,25 +279,12 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
             ab.setNegativeButton(getString(R.string.cancel), null);
             ab.show();
         } else if (preference.equals(account)) {
-            Account[] accounts = AccountManager.get(getActivity()).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-            final String[] names = new String[accounts.length];
-            for (int i = 0; i < names.length; i++) {
-                names[i] = accounts[i].name;
-            }
-            AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
-            ab2.setTitle(getString(R.string.choose_a_account));
-            ab2.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int which) {
-
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-                    editor.putString("account", names[which]);
-                    editor.apply();
-                    account.setSummary(names[which]);
-                    dialog.dismiss();
+            ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                @Override
+                public void onAccountPicked(String accountName) {
+                    account.setSummary(accountName);
                 }
-            });
-            ab2.show();
+            }, true);
         }
         return false;
     }
@@ -318,7 +305,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                 editor.putString("rootpath", newPath);
                 editor.apply();
-                TripDiaryApplication.updateRootPath(newPath);
+                TripDiaryApplication.updateRootPath();
             } else {
                 Toast.makeText(getActivity(), newPath + " " + getString(R.string.is_not_a_valid_directory), Toast.LENGTH_SHORT).show();
             }
@@ -339,7 +326,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         editor.putString("rootpath", newRootPath);
         editor.apply();
         rootpath.setSummary(newRootPath);
-        TripDiaryApplication.updateRootPath(newRootPath);
+        TripDiaryApplication.updateRootPath();
         backupPreferenceFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, ".settings");
         if (backupPreferenceFile == null) {
             backupPreferenceFile = TripDiaryApplication.rootDocumentFile.createDirectory(".settings");
@@ -358,7 +345,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setTitle(getString(R.string.updating));
-            LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
+            LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.progressdialog_import_memory, (ViewGroup) getView(), false);
             message = (TextView) layout.findViewById(R.id.message);
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);
@@ -378,15 +365,15 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         @Override
         protected String doInBackground(String... params) {
 
-            DocumentFile[] trips = FileHelper.listFiles(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
+            DocumentFile[] trips = TripDiaryApplication.rootDocumentFile.listFiles(DocumentFile.list_dirs);
             publishProgress("setMax", String.valueOf(trips.length));
             for (int i = 0; i < trips.length; i++) {
                 if (cancel)
                     break;
-                String tripName = FileHelper.getFileName(trips[i]);
+                String tripName = trips[i].getName();
                 publishProgress(tripName, String.valueOf(i));
                 try {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(FileHelper.findfile(trips[i], tripName + ".gpx").getUri())));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(FileHelper.findfile(trips[i], tripName + ".gpx").getInputStream()));
                     String s;
                     while ((s = br.readLine()) != null) {
                         if (s.contains("<trkpt ")) {

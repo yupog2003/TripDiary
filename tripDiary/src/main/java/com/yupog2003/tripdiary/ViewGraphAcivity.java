@@ -15,6 +15,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.ValueFormatter;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
@@ -144,7 +145,7 @@ public class ViewGraphAcivity extends MyActivity {
         }
 
         @Override
-        public void refreshContent(Entry entry, int i) {
+        public void refreshContent(Entry entry, Highlight highlight) {
             int index = entry.getXIndex();
             altitude.setText(getString(R.string.Altitude) + ":" + GpxAnalyzer2.getAltitudeString(altitudeEntries.get(index).getVal(), "m"));
             speed.setText(getString(R.string.velocity) + ":" + GpxAnalyzer2.getDistanceString(speedEntries.get(index).getVal(), "km/hr"));

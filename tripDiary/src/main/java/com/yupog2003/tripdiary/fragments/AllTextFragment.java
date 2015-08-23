@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
-import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 
 import java.io.File;
@@ -51,8 +50,8 @@ public class AllTextFragment extends Fragment {
 
     public void refresh() {
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
-            this.pois = ((ViewTripActivity)getActivity()).trip.pois;
-            this.timezone = ((ViewTripActivity)getActivity()).trip.timezone;
+            this.pois = ((ViewTripActivity) getActivity()).trip.pois;
+            this.timezone = ((ViewTripActivity) getActivity()).trip.timezone;
             poiAdapter = new POIAdapter();
             recyclerView.setAdapter(poiAdapter);
             File fontFile = new File(getActivity().getFilesDir(), PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", ""));
@@ -101,8 +100,8 @@ public class AllTextFragment extends Fragment {
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String tripName = FileHelper.getFileName(pois[index].dir.getParentFile());
-                        String poiName = FileHelper.getFileName(pois[index].dir);
+                        String tripName = pois[index].dir.getParentFile().getName();
+                        String poiName = pois[index].dir.getName();
                         Intent intent = new Intent(getActivity(), ViewPointActivity.class);
                         intent.putExtra(ViewPointActivity.tag_tripname, tripName);
                         intent.putExtra(ViewPointActivity.tag_poiname, poiName);
@@ -121,11 +120,7 @@ public class AllTextFragment extends Fragment {
                 if (diarys[i] == null) {
                     diarys[i] = "";
                 }
-                if (diarys[i].length() > 0) {
-                    diarys[i] = diarys[i].substring(0, diarys[i].length() - 1);
-                }
             }
-
         }
 
         public void setTypeFace(Typeface typeFace) {

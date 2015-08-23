@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,11 +17,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.provider.DocumentFile;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +31,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -44,6 +44,8 @@ import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TrackCache;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
+import com.yupog2003.tripdiary.data.documentfile.WebDocumentFile;
 import com.yupog2003.tripdiary.fragments.AllAudioFragment;
 import com.yupog2003.tripdiary.fragments.AllPictureFragment;
 import com.yupog2003.tripdiary.fragments.AllTextFragment;
@@ -51,7 +53,8 @@ import com.yupog2003.tripdiary.fragments.AllVideoFragment;
 import com.yupog2003.tripdiary.fragments.ViewCostFragment;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
-import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -59,6 +62,9 @@ import java.util.Random;
 public class ViewTripActivity extends MyActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     public Trip trip;
+    String token;
+    String email;
+    String tripName;
     ViewMapFragment viewMapFragment;
     AllAudioFragment allAudioFragment;
     AllTextFragment allTextFragment;
@@ -76,8 +82,10 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     CoordinatorLayout coordinatorLayout;
     Mode mode = Mode.map_mode;
     int appBarLayoutDefaultHeight;
+    boolean fromWeb;
 
     public static final int REQUEST_VIEW_POI = 1;
+    public static final int REQUEST_GET_TOKEN = 2;
     public static final String tag_request_updatePOI = "request_update_poi";
     public static final String tag_update_poiNames = "update_poiNames";
     public static final String tag_tripName = "tag_tripname";
@@ -102,10 +110,46 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-        String tripName = getIntent().getStringExtra(tag_tripName);
+        Intent intent = getIntent();
+        if (intent == null) {
+            finishAndRemoveTask();
+            return;
+        }
+        boolean isPublic = false;
+        if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_VIEW)) {
+            Uri uri = intent.getData();
+            if (uri == null) {
+                finishAndRemoveTask();
+                return;
+            }
+            String scheme = uri.getScheme();
+            String host = uri.getHost();
+            if (scheme.equals("http") && (host.equals(TripDiaryApplication.serverHost) || host.equals(TripDiaryApplication.serverIP))) {
+                try {
+                    fromWeb = true;
+                    String uriStr = URLDecoder.decode(uri.toString(), "UTF-8");
+                    String tripPath = uriStr.substring(uriStr.indexOf("trippath=") + 9, uriStr.lastIndexOf("&"));
+                    String[] pathSegments = tripPath.split("/");
+                    email = pathSegments[1];
+                    tripName = pathSegments[2];
+                    isPublic = uriStr.substring(uriStr.lastIndexOf("&public=")).contains("yes");
+                    if (isPublic) {
+                        token = "abc";
+                    }
+                } catch (UnsupportedEncodingException | RuntimeException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                finishAndRemoveTask();
+                return;
+            }
+        } else {
+            fromWeb = false;
+            tripName = intent.getStringExtra(tag_tripName);
+        }
         DeviceHelper.sendGATrack(getActivity(), "Trip", "view", tripName, null);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setTaskDescription(new ActivityManager.TaskDescription(tripName, null, getResources().getColor(R.color.colorPrimary)));
+            setTaskDescription(new ActivityManager.TaskDescription(tripName, null, ContextCompat.getColor(this, R.color.colorPrimary)));
         }
         setTitle(tripName);
         trip = null;
@@ -113,7 +157,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
-        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(this);
         navigationTripName = (TextView) findViewById(R.id.navigationTripName);
@@ -154,7 +198,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             }
         });
         setMode(Mode.map_mode);
-        new PrepareTripTask().execute(tripName);
+        if (fromWeb && !isPublic) {
+            new GetAccessTokenTask().execute();
+        } else {
+            new PrepareTripTask().execute();
+        }
+
     }
 
     @Override
@@ -191,6 +240,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     }
 
     private void setMode(Mode mode) {
+        resetAppBar();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.hide(viewMapFragment);
         ft.hide(allTextFragment);
@@ -200,7 +250,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         ft.hide(viewCostFragment);
         ft.commit();
         ft = getSupportFragmentManager().beginTransaction();
-        resetAppBar();
         this.mode = mode;
         switch (mode) {
             case map_mode:
@@ -286,12 +335,32 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         }
     }
 
-    @Override
-    public void finishAndRemoveTask() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.finishAndRemoveTask();
-        } else {
-            finish();
+    class GetAccessTokenTask extends AsyncTask<String, String, String> {
+
+        Intent loginIntent;
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                token = GoogleAuthUtil.getToken(getActivity(), email, "oauth2:https://www.googleapis.com/auth/userinfo.email");
+            } catch (UserRecoverableAuthException e) {
+                e.printStackTrace();
+                loginIntent = e.getIntent();
+                token = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                token = "abc";
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (token != null && email != null && tripName != null) {
+                new PrepareTripTask().execute();
+            } else if (loginIntent != null) {
+                startActivityForResult(loginIntent, REQUEST_GET_TOKEN);
+            }
         }
     }
 
@@ -315,15 +384,16 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
         @Override
         protected Boolean doInBackground(String... params) {
-            String tripName = params[0];
-            if (tripName == null) {
+            DocumentFile tripFile;
+            if (fromWeb) {
+                tripFile = DocumentFile.fromWeb(email, tripName, token);
+            } else {
+                tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
+            }
+            if (tripFile == null) {
                 return false;
             }
-            DocumentFile tripDir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
-            if (tripDir == null) {
-                return false;
-            }
-            trip = new Trip(getApplicationContext(), tripDir, false, this);
+            trip = new Trip(ViewTripActivity.this, tripFile, false, this);
             trip.listener = null;
             if (libraryLoadSuccess) {
                 trip.getCacheJNI(this);
@@ -421,14 +491,14 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     DocumentFile pic = pics.get(new Random().nextInt(pics.size()));
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
-                    BitmapFactory.decodeStream(getContentResolver().openInputStream(pic.getUri()), new Rect(0, 0, 0, 0), options);
+                    BitmapFactory.decodeStream(pic.getInputStream(), new Rect(0, 0, 0, 0), options);
                     float ratio = Math.min(options.outWidth / targetWidth, options.outHeight / targetHeight);
                     if (ratio < 1) ratio = 1;
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = (int) ratio;
                     options.inPreferredConfig = Bitmap.Config.RGB_565;
-                    return BitmapFactory.decodeStream(getContentResolver().openInputStream(pic.getUri()), new Rect(0, 0, 0, 0), options);
-                } catch (FileNotFoundException | IllegalArgumentException e) {
+                    return BitmapFactory.decodeStream(pic.getInputStream(), new Rect(0, 0, 0, 0), options);
+                } catch (IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             }
@@ -474,6 +544,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (bundle.getBoolean(tag_request_updatePOI, false)) {
                     onPOIUpdate(bundle.getString(tag_update_poiNames, null));
                 }
+            } else if (requestCode == REQUEST_GET_TOKEN) {
+                new GetAccessTokenTask().execute();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -511,7 +583,44 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         if (viewCostFragment != null) {
             viewCostFragment.refreshData(false);
         }
+    }
 
+    public void deleteLocalCache() {
+        if (trip == null) return;
+        tryDeleteLocalCache(trip.cacheFile);
+        tryDeleteLocalCache(trip.gpxFile);
+        tryDeleteLocalCache(trip.noteFile);
+        if (trip.pois == null) return;
+        for (POI poi : trip.pois) {
+            tryDeleteLocalCache(poi.diaryFile);
+            tryDeleteLocalCache(poi.basicInformationFile);
+            if (poi.picFiles != null) {
+                for (DocumentFile file : poi.picFiles) {
+                    tryDeleteLocalCache(file);
+                }
+            }
+            if (poi.videoFiles != null) {
+                for (DocumentFile file : poi.videoFiles) {
+                    tryDeleteLocalCache(file);
+                }
+            }
+            if (poi.audioFiles != null) {
+                for (DocumentFile file : poi.audioFiles) {
+                    tryDeleteLocalCache(file);
+                }
+            }
+            if (poi.costFiles!=null){
+                for (DocumentFile file : poi.costFiles){
+                    tryDeleteLocalCache(file);
+                }
+            }
+        }
+    }
+
+    private static void tryDeleteLocalCache(DocumentFile file) {
+        if (file != null && file instanceof WebDocumentFile) {
+            ((WebDocumentFile) file).deleteLocalCache();
+        }
     }
 
     public static boolean libraryLoadSuccess = false;
@@ -520,7 +629,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         try {
             System.loadLibrary("TripDiary");
             libraryLoadSuccess = true;
-        } catch (Exception | UnsatisfiedLinkError e) {
+        } catch (Exception | Error e) {
             e.printStackTrace();
             libraryLoadSuccess = false;
         }
@@ -529,6 +638,9 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         if (trip != null) {
+            if (fromWeb) {
+                deleteLocalCache();
+            }
             ((TripDiaryApplication) getApplication()).removeTrip(trip.tripName);
             trip = null;
         }

@@ -6,7 +6,8 @@ import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.support.v4.provider.DocumentFile;
+
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -38,7 +39,7 @@ public class MyBackupAgent extends BackupAgentHelper {
         ObjectOutputStream output = null;
         if (dst == null) return false;
         try {
-            output = new ObjectOutputStream(context.getContentResolver().openOutputStream(dst.getUri()));
+            output = new ObjectOutputStream(dst.getOutputStream());
             SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
             output.writeObject(pref.getAll());
             res = true;
@@ -64,7 +65,7 @@ public class MyBackupAgent extends BackupAgentHelper {
         if (src == null)
             return false;
         try {
-            input = new ObjectInputStream(context.getContentResolver().openInputStream(src.getUri()));
+            input = new ObjectInputStream(src.getInputStream());
             Editor prefEdit = context.getSharedPreferences(prefName, Context.MODE_PRIVATE).edit();
             prefEdit.clear();
             Map<String, ?> entries = (Map<String, ?>) input.readObject();
@@ -82,7 +83,7 @@ public class MyBackupAgent extends BackupAgentHelper {
                 else if (v instanceof String)
                     prefEdit.putString(key, (String) v);
             }
-            prefEdit.commit();
+            prefEdit.apply();
             res = true;
         } catch (IOException | ClassNotFoundException | IllegalArgumentException e) {
             e.printStackTrace();

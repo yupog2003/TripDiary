@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.provider.DocumentFile;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +20,8 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
+import com.yupog2003.tripdiary.data.documentfile.WebDocumentFile;
 
 import java.util.HashMap;
 
@@ -45,7 +46,7 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
         this.pois = pois;
         this.trips = trips;
         this.bitmaps = new HashMap<>();
-        this.rootView = activity.getLayoutInflater().inflate(R.layout.poi_infowindow, (ViewGroup)activity.findViewById(android.R.id.content), false);
+        this.rootView = activity.getLayoutInflater().inflate(R.layout.poi_infowindow, (ViewGroup) activity.findViewById(android.R.id.content), false);
         this.name = (TextView) rootView.findViewById(R.id.poiName);
         this.time = (TextView) rootView.findViewById(R.id.poiTime);
         this.diary = (TextView) rootView.findViewById(R.id.poiDiary);
@@ -91,19 +92,29 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                 }
             }
             if (imgs != null && imgs.length > 0) {
-                Uri uri = imgs[0].getUri();
+                DocumentFile imgFile = imgs[0];
+                Uri uri = imgFile.getUri();
                 if (bitmaps.get(uri.toString()) != null) {
                     img.setImageBitmap(bitmaps.get(uri.toString()));
                     return rootView;
                 }
                 BitmapFactory.Options op = new BitmapFactory.Options();
                 op.inJustDecodeBounds = true;
-                BitmapFactory.decodeStream(contentResolver.openInputStream(uri), rect, op);
+                if (imgFile instanceof WebDocumentFile) {
+                    BitmapFactory.decodeStream(((WebDocumentFile) imgFile).getThumbInputStream(), rect, op);
+                } else {
+                    BitmapFactory.decodeStream(imgFile.getInputStream(), rect, op);
+                }
                 op.inJustDecodeBounds = false;
                 op.inPreferredConfig = Bitmap.Config.RGB_565;
                 op.inPreferQualityOverSpeed = false;
                 op.inSampleSize = (int) Math.max((float) op.outWidth / imageWidth, (float) op.outHeight / imageWidth);
-                Bitmap bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri), rect, op);
+                Bitmap bitmap;
+                if (imgFile instanceof WebDocumentFile) {
+                    bitmap = BitmapFactory.decodeStream(((WebDocumentFile) imgFile).getThumbInputStream(), rect, op);
+                } else {
+                    bitmap = BitmapFactory.decodeStream(imgFile.getInputStream(), rect, op);
+                }
                 if (bitmap != null) {
                     img.setImageBitmap(bitmap);
                     bitmaps.put(uri.toString(), bitmap);

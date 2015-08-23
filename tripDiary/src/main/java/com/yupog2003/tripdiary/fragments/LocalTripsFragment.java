@@ -1,17 +1,12 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -19,8 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.provider.DocumentFile;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -60,6 +53,7 @@ import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.BackupRestoreTripService;
 import com.yupog2003.tripdiary.services.SendTripService;
 import com.yupog2003.tripdiary.views.CheckableLayout;
@@ -118,7 +112,6 @@ public class LocalTripsFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         if (outState.isEmpty()) {
             outState.putBoolean("bug:fix", true);
@@ -129,7 +122,7 @@ public class LocalTripsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (adapter == null) {
-            loaddata();
+            loadData();
             setHasOptionsMenu(true);
         }
     }
@@ -195,9 +188,10 @@ public class LocalTripsFragment extends Fragment {
                         } else {
                             newTripName = name;
                             Trip trip = Trip.createTrip(getActivity().getApplicationContext(), newTripName);
+                            if (trip == null) return;
                             trip.setCategory(category);
                             trip.updateNote(note);
-                            loaddata();
+                            loadData();
                             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                             i.setType("application/gpx+xml");
                             startActivityForResult(Intent.createChooser(i, getString(R.string.select_the_gpx)), REQUEST_IMPORT_TRIP);
@@ -223,7 +217,7 @@ public class LocalTripsFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putInt(pref_timesort, which).apply();
-                    loaddata();
+                    loadData();
                     dialog.dismiss();
                 }
             });
@@ -232,7 +226,7 @@ public class LocalTripsFragment extends Fragment {
         return false;
     }
 
-    public void loaddata() {
+    public void loadData() {
         adapter = new TripAdapter();
         WrapperExpandableListAdapter adapter2 = new WrapperExpandableListAdapter(adapter);
         listView.setAdapter(adapter2);
@@ -264,6 +258,27 @@ public class LocalTripsFragment extends Fragment {
         }
     }
 
+    private void askUploadPublic() {
+        AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+        ab.setTitle(getString(R.string.make_it_public));
+        ab.setMessage(getString(R.string.make_it_public_to_share));
+        ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                uploadPublic = true;
+                new GetAccessTokenTask().execute();
+            }
+        });
+        ab.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                uploadPublic = false;
+                new GetAccessTokenTask().execute();
+            }
+        });
+        ab.show();
+    }
+
     class TripAdapter extends BaseExpandableListAdapter implements OnChildClickListener, ExpandableListView.MultiChoiceModeListener, OnQueryTextListener, OnGroupCollapseListener, OnGroupExpandListener {
 
         String[] categories;
@@ -288,12 +303,14 @@ public class LocalTripsFragment extends Fragment {
                 }
             }
             trips = new ArrayList<>();
-            DocumentFile[] files = FileHelper.listFiles(TripDiaryApplication.rootDocumentFile, FileHelper.list_dirs);
+            DocumentFile[] files = TripDiaryApplication.rootDocumentFile.listFiles(DocumentFile.list_dirs);
             ArrayList<Trip> list = new ArrayList<>();
             for (DocumentFile file : files) {
-                Trip trip = new Trip(getActivity().getApplicationContext(), file, true);
-                trip.setDrawable(categoryDrawables.get(trip.category));
-                list.add(trip);
+                if (file != null) {
+                    Trip trip = new Trip(getActivity(), file, true);
+                    trip.setDrawable(categoryDrawables.get(trip.category));
+                    list.add(trip);
+                }
             }
             final TimeSort timeSort = TimeSort.fromInteger(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(pref_timesort, 0));
             if (timeSort == TimeSort.ascending) {
@@ -356,10 +373,10 @@ public class LocalTripsFragment extends Fragment {
             }
             holder = (ViewHolder) convertView.getTag();
             Trip trip = trips.get(groupPosition).get(childPosition);
-            String tripname = trip.tripName;
-            holder.item.setText(tripname);
+            String tripName = trip.tripName;
+            holder.item.setText(tripName);
             holder.item.setCompoundDrawablesWithIntrinsicBounds(trip.drawable, null, null, null);
-            holder.itemextra.setText("-" + trip.time.formatInTimezone(MyCalendar.getTripTimeZone(getActivity(), tripname)));
+            holder.itemextra.setText("-" + trip.time.formatInTimezone(MyCalendar.getTripTimeZone(getActivity(), tripName)));
             ((CheckableLayout) convertView).setOnMultiChoiceMode(onActionMode);
             return convertView;
         }
@@ -390,7 +407,6 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
             GroupViewHolder holder;
             if (convertView == null) {
                 holder = new GroupViewHolder();
@@ -451,7 +467,7 @@ public class LocalTripsFragment extends Fragment {
                             FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(i)).delete();
                             tripsp.edit().remove(checksName.get(i)).apply();
                         }
-                        loaddata();
+                        loadData();
                     }
                 });
                 ab.setNegativeButton(getString(R.string.cancel), null);
@@ -466,7 +482,7 @@ public class LocalTripsFragment extends Fragment {
                 String s;
                 try {
                     DocumentFile noteFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(0), "note");
-                    BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(noteFile.getUri())));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(noteFile.getInputStream()));
                     while ((s = br.readLine()) != null) {
                         message += s + "\n";
                     }
@@ -479,9 +495,9 @@ public class LocalTripsFragment extends Fragment {
                 final RadioGroup rg = (RadioGroup) layout.findViewById(R.id.categories);
                 String originalcategory = tripsp.getString(checksName.get(0), getString(R.string.nocategory));
                 Map<String, ?> map = categorysp.getAll();
-                Set<String> keyset = map.keySet();
+                Set<String> keySet = map.keySet();
                 final TextView category = (TextView) layout.findViewById(R.id.category);
-                final String[] categories = keyset.toArray(new String[keyset.size()]);
+                final String[] categories = keySet.toArray(new String[keySet.size()]);
                 for (int i = 0; i < categories.length; i++) {
                     RadioButton rb = new RadioButton(getActivity());
                     rb.setText(categories[i]);
@@ -513,11 +529,16 @@ public class LocalTripsFragment extends Fragment {
 
                         String s = name.getText().toString();
                         if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, s) == null || s.equals(checksName.get(0))) {
-                            Trip trip = new Trip(getActivity().getApplicationContext(), FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(0)), false);
+                            DocumentFile tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(0));
+                            if (tripFile == null){
+                                Toast.makeText(getActivity(), R.string.storage_error, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Trip trip = new Trip(getActivity(), tripFile, false);
                             trip.renameTrip(s);
                             trip.updateNote(note.getText().toString());
                             trip.setCategory(categories[rg.getCheckedRadioButtonId()]);
-                            loaddata();
+                            loadData();
                         } else {
                             Toast.makeText(getActivity(), getString(R.string.explain_conflict_trip), Toast.LENGTH_SHORT).show();
                         }
@@ -534,30 +555,13 @@ public class LocalTripsFragment extends Fragment {
                 }
                 checkAll = !checkAll;
             } else if (item.getItemId() == R.id.upload) {
-                Account[] accounts = AccountManager.get(getActivity()).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-                if (accounts != null && accounts.length > 0) {
-                    account = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("account", accounts[0].name);
-                    AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-                    ab.setTitle(getString(R.string.make_it_public));
-                    ab.setMessage(getString(R.string.make_it_public_to_share));
-                    ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            uploadPublic = true;
-                            new GetAccessTokenTask().execute();
-                        }
-                    });
-                    ab.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            uploadPublic = false;
-                            new GetAccessTokenTask().execute();
-                        }
-                    });
-                    ab.show();
-                }
+                ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                    @Override
+                    public void onAccountPicked(String accountName) {
+                        account = accountName;
+                        askUploadPublic();
+                    }
+                }, false);
             } else if (item.getItemId() == R.id.category) {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.choose_a_category));
@@ -569,12 +573,16 @@ public class LocalTripsFragment extends Fragment {
                             tripsp.edit().putString(checkName, categories[which]).apply();
                         }
                         dialog.dismiss();
-                        loaddata();
+                        loadData();
                     }
                 });
                 ab.show();
             } else if (item.getItemId() == R.id.timezone) {
-                new UpdateTripTimeZoneTask(checksName).execute();
+                if (DeviceHelper.isMobileNetworkAvailable(getActivity())) {
+                    new UpdateTripTimeZoneTask(checksName).execute();
+                } else {
+                    Toast.makeText(getActivity(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
             } else if (item.getItemId() == R.id.viewtogether) {
                 Intent intent = new Intent(getActivity(), AllRecordActivity.class);
                 String[] tripNames = checksName.toArray(new String[checksName.size()]);
@@ -710,7 +718,7 @@ public class LocalTripsFragment extends Fragment {
                 try {
                     InputStream is = getActivity().getContentResolver().openInputStream(uri);
                     DocumentFile outFile = TripDiaryApplication.rootDocumentFile.createDirectory(newTripName).createFile("", newTripName + ".gpx");
-                    OutputStream os = getActivity().getContentResolver().openOutputStream(outFile.getUri());
+                    OutputStream os = outFile.getOutputStream();
                     FileHelper.copyByStream(is, os);
                 } catch (FileNotFoundException | IllegalArgumentException e) {
                     e.printStackTrace();
@@ -807,7 +815,7 @@ public class LocalTripsFragment extends Fragment {
                 publishProgress(tripName, String.valueOf(i));
                 try {
                     DocumentFile gpxFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, tripName + ".gpx");
-                    BufferedReader br = new BufferedReader(new InputStreamReader(getActivity().getContentResolver().openInputStream(gpxFile.getUri())));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(gpxFile.getInputStream()));
                     String s;
                     while ((s = br.readLine()) != null) {
                         if (s.contains("<trkpt ")) {
@@ -852,7 +860,6 @@ public class LocalTripsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-
             dialog.dismiss();
             super.onPostExecute(result);
         }

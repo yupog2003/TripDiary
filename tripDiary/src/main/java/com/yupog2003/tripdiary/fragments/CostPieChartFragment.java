@@ -24,7 +24,7 @@ public class CostPieChartFragment extends Fragment {
     public String tripName;
     public String poiName;
 
-    public CostPieChartFragment(){
+    public CostPieChartFragment() {
 
     }
 
@@ -38,7 +38,7 @@ public class CostPieChartFragment extends Fragment {
         return pieChart;
     }
 
-    public void refresh(){
+    public void refresh() {
         TypedArray array = getActivity().getResources().obtainTypedArray(R.array.cost_type_colors);
         colors = new int[array.length()];
         for (int i = 0; i < colors.length; i++)

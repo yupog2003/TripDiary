@@ -46,6 +46,7 @@
             android:max="99"
             android:summary="@string/image_loader_cache_size_explanation"
             android:title="@string/image_loader_cache_size" />
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/record_setting">
         <EditTextPreference

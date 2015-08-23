@@ -239,7 +239,6 @@
     <string name="login">Login</string>
     <string name="account">Account</string>
     <string name="upload">Upload</string>
-    <string name="title_activity_view_trip">ViewTripActivity</string>
     <string name="map">Map</string>
     <string name="make_it_public">Make it public?</string>
     <string name="make_it_public_to_share">Would you like to make the trip public in order to share with your friend?</string>
@@ -301,7 +300,6 @@
     <string name="minimum_distance_between_record_localtions">Minimum distance between record locations (in meters)</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="sort_by_time">Sort by time</string>
-    <string name="title_activity_view_graph_acivity">ViewGraphAcivity</string>
     <string name="list">List</string>
     <string name="piechart">Pie Chart</string>
     <string name="barchart">Bar Chart</string>
@@ -314,7 +312,6 @@
     <string name="please_stop_previous_trip_first">Please stop previous trip first</string>
     <string name="from_new_to_old">New -> Old</string>
     <string name="from_old_to_new">Old -> New</string>
-    <string name="open_with_browser">Open with browser</string>
     <string name="audio_recorder_is_not_available">Audio recorder is not available</string>
     <string name="backup_complete">Backup complete</string>
     <string name="restore_complete">Restore complete</string>
@@ -323,5 +320,11 @@
     <string name="setting">Setting</string>
     <string name="invalid_trip_file">Invalid trip file</string>
     <string name="track_is_too_long">Track_is_too_long (Out of memory)</string>
+    <string name="view_trip">View trip</string>
+    <string name="open">Open</string>
+    <string name="permission_explanation_location">TripDiary needs location permission to record track.</string>
+    <string name="permission_explanation_accounts">TripDiary needs account permission to know your email address for interacting with TripDiary website</string>
+    <string name="permission_explanation_write_external_storage">TripDiary needs storage permission to store trips in either internal storage or external storage</string>
+    <string name="storage_error">Storage_error</string>
 
 </resources>

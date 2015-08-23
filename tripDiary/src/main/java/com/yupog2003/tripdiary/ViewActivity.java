@@ -91,7 +91,7 @@ public class ViewActivity extends MyActivity {
         public void onPageSelected(int position) {
             Fragment f = getItem(position);
             if (f instanceof RemoteTripsFragment) {
-                ((RemoteTripsFragment) f).loaddata();
+                ((RemoteTripsFragment) f).loadData();
             }
         }
 

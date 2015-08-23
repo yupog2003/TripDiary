@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.provider.DocumentFile;
+import android.util.SparseArray;
+import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -55,12 +57,16 @@ public class Trip implements Comparable<Trip> {
 
     public static Trip createTrip(Context context, String tripName) {
         DocumentFile dir = TripDiaryApplication.rootDocumentFile.createDirectory(tripName);
+        if (dir == null){
+            Toast.makeText(context, R.string.storage_error, Toast.LENGTH_SHORT).show();
+            return null;
+        }
         MyCalendar.updateTripTimeZone(context, tripName, TimeZone.getDefault().getID());
         return new Trip(context, dir, false);
     }
 
     public void refreshBasic() {
-        this.tripName = FileHelper.getFileName(dir);
+        this.tripName = dir.getName();
         this.time = MyCalendar.getTripTime(tripName);
         this.category = context.getSharedPreferences("trip", Context.MODE_PRIVATE).getString(tripName, context.getString(R.string.nocategory));
     }
@@ -87,7 +93,7 @@ public class Trip implements Comparable<Trip> {
         this.timezone = MyCalendar.getTripTimeZone(context, tripName);
         this.note = "";
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.getContentResolver().openInputStream(noteFile.getUri())));
+            BufferedReader br = new BufferedReader(new InputStreamReader(noteFile.getInputStream()));
             String s;
             StringBuilder sb = new StringBuilder();
             while ((s = br.readLine()) != null) {
@@ -135,7 +141,7 @@ public class Trip implements Comparable<Trip> {
     public void updateNote(String note) {
         if (note != null) {
             try {
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(context.getContentResolver().openOutputStream(noteFile.getUri())));
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(noteFile.getOutputStream()));
                 bw.write(note);
                 bw.flush();
                 bw.close();
@@ -147,8 +153,9 @@ public class Trip implements Comparable<Trip> {
     }
 
     public POI getPOI(String poiName) {
-        if (pois != null) {
+        if (pois != null && poiName != null) {
             for (POI poi : pois) {
+                if (poi == null) continue;
                 if (poiName.equals(poi.title)) {
                     return poi;
                 }
@@ -157,27 +164,56 @@ public class Trip implements Comparable<Trip> {
         return null;
     }
 
-    public void refreshPOI(String poiName) {
-        if (dir == null || pois == null || poiName == null) return;
-        ArrayList<POI> tempPOIs = new ArrayList<>();
-        for (POI poi : pois) {
-            if (poi != null) {
-                if (poiName.equals(poi.title)) {
-                    DocumentFile poiFile = dir.findFile(poiName);
-                    if (poiFile != null) {
-                        tempPOIs.add(new POI(context, poiFile));
-                    }
-                } else {
-                    tempPOIs.add(poi);
-                }
+    //If exists, return it. If not, create it.
+    public POI createPOI(String poiName, MyCalendar time, double latitude, double longitude, double altitude) {
+        POI poi;
+        if ((poi = getPOI(poiName)) != null) {
+            return poi;
+        }
+        DocumentFile poiFile = FileHelper.findfile(dir, poiName);
+        if (poiFile == null) {
+            poiFile = dir.createDirectory(poiName);
+        }
+        if (poiFile == null) {
+            return null;
+        }
+        poi = new POI(context, poiFile);
+        poi.updateBasicInformation(null, time, latitude, longitude, altitude);
+        ArrayList<POI> poiList = new ArrayList<>(Arrays.asList(pois));
+        poiList.add(poi);
+        this.pois = poiList.toArray(new POI[poiList.size()]);
+        Arrays.sort(pois);
+        return getPOI(poiName);
+    }
+
+    public void deletePOI(String poiName) {
+        if (poiName == null || pois == null) return;
+        ArrayList<POI> poiList = new ArrayList<>(Arrays.asList(pois));
+        for (POI poi : poiList) {
+            if (poi == null) continue;
+            if (poiName.equals(poi.title)) {
+                poi.deleteSelf();
+                poiList.remove(poi);
+                break;
             }
         }
-        this.pois = tempPOIs.toArray(new POI[tempPOIs.size()]);
+        this.pois = poiList.toArray(new POI[poiList.size()]);
+        Arrays.sort(pois);
+    }
+
+    public void refreshPOI(String poiName) {
+        if (dir == null || pois == null || poiName == null) return;
+        for (POI poi : pois) {
+            if (poi != null && poiName.equals(poi.title)) {
+                poi.updateAllFields();
+            }
+        }
+        Arrays.sort(pois);
     }
 
     public void refreshPOIs() {
         if (dir != null) {
-            DocumentFile[] poiFiles = FileHelper.listFiles(dir, FileHelper.list_dirs);
+            DocumentFile[] poiFiles = dir.listFiles(DocumentFile.list_dirs);
             if (poiFiles != null) {
                 this.pois = new POI[poiFiles.length];
                 for (int i = 0; i < pois.length; i++) {
@@ -193,18 +229,47 @@ public class Trip implements Comparable<Trip> {
         this.pois = new POI[0];
     }
 
+    public SparseArray<POI> getPOIsInTrackMap() {
+        SparseArray<POI> markersMap = new SparseArray<>();
+        if (pois == null || cache == null || cache.times == null || timezone == null) {
+            return markersMap;
+        }
+        for (POI poi : pois) {
+            int start = 0, end = cache.times.length - 1, middle;
+            MyCalendar poiTime = poi.time;
+            if (poiTime == null)
+                continue;
+            poiTime.setTimeZone(timezone);
+            while (Math.abs(start - end) > 1) {
+                middle = (start + end) / 2;
+                MyCalendar time = MyCalendar.getTime(timezone, cache.times[middle], MyCalendar.type_self);
+                if (poiTime.after(time)) {
+                    start = middle;
+                } else {
+                    end = middle;
+                }
+            }
+            while (markersMap.get(start) != null) {
+                start++;
+            }
+            start = Math.min(start, cache.times.length - 1);
+            markersMap.put(start, poi);
+        }
+        return markersMap;
+    }
+
     public void renameTrip(String name) {
         if (dir == null || cacheFile == null || gpxFile == null) return;
         SharedPreferences p = context.getSharedPreferences("trip", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = p.edit();
         editor.remove(tripName);
         editor.putString(name, category);
-        editor.commit();
+        editor.apply();
         p = context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE);
         editor = p.edit();
         editor.remove(tripName);
         editor.putString(name, timezone);
-        editor.commit();
+        editor.apply();
         gpxFile.renameTo(name + ".gpx");
         cacheFile.renameTo(name + ".gpx.cache");
         dir.renameTo(name);
@@ -215,11 +280,13 @@ public class Trip implements Comparable<Trip> {
         this.category = category;
         SharedPreferences.Editor editor = context.getSharedPreferences("trip", Context.MODE_PRIVATE).edit();
         editor.putString(tripName, category);
-        editor.commit();
+        editor.apply();
     }
 
     public void deleteSelf() {
         dir.delete();
+        context.getSharedPreferences("trip", Context.MODE_PRIVATE).edit().remove(tripName).apply();
+        context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE).edit().remove(tripName).apply();
     }
 
     @Override
