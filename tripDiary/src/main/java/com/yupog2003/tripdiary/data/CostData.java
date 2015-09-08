@@ -4,7 +4,7 @@ import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.util.Comparator;
 
-public class CostData {
+public class CostData{
     public String POI;
     public int costType;
     public String costName;

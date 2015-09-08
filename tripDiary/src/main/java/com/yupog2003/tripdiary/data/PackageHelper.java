@@ -29,7 +29,7 @@ public class PackageHelper {
         AlertDialog.Builder ab = new AlertDialog.Builder(context);
         ab.setTitle(appName + " " + context.getString(R.string.has_not_been_installed));
         ab.setMessage(context.getString(R.string.do_you_want_to_install));
-        ab.setPositiveButton(context.getString(R.string.enter), new DialogInterface.OnClickListener() {
+        ab.setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
 
@@ -40,7 +40,7 @@ public class PackageHelper {
                 }
             }
         });
-        ab.setNegativeButton(context.getString(R.string.cancel), null);
+        ab.setNegativeButton(context.getString(R.string.no), null);
         ab.show();
     }
 

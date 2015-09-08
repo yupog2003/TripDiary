@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -30,7 +31,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +63,6 @@ import java.util.TimeZone;
 
 public class RecordActivity extends MyActivity implements OnClickListener, OnInfoWindowClickListener, OnMarkerDragListener {
 
-    Toolbar toolBar;
     String tripName;
     public static final String tag_tripname = "tripname";
     public static final String pref_tag_onaddpoi = "on_add_poi";
@@ -85,7 +84,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     FloatingActionButton refresh;
     ProgressBar refreshProgress;
     Handler handler;
-    RelativeLayout maplayout;
     LinearLayout addMemoryLayout;
     LinearLayout informationLayout;
     SupportMapFragment mapFragment;
@@ -95,12 +93,17 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     Menu menu;
     SharedPreferences preference;
     DocumentFile nowFileForCameraIntent;
+    boolean activityVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (RecordService.instance == null) {
+            finishAndRemoveTask();
+            return;
+        }
         setContentView(R.layout.activity_record);
-        toolBar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         tripName = getIntent().getStringExtra(tag_tripname);
         if (tripName == null) {
@@ -111,7 +114,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         getSupportFragmentManager().beginTransaction().replace(R.id.maplayout, mapFragment, "mapFragment").commit();
         preference = PreferenceManager.getDefaultSharedPreferences(this);
         handler = new Handler();
-        maplayout = (RelativeLayout) findViewById(R.id.maplayout);
         addMemoryLayout = (LinearLayout) findViewById(R.id.addMemoryLayout);
         informationLayout = (LinearLayout) findViewById(R.id.informationLayout);
         distance = (TextView) findViewById(R.id.distance);
@@ -148,12 +150,18 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         DrawableCompat.setTint(DrawableCompat.wrap(takeText.getCompoundDrawables()[1].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(takePaint.getCompoundDrawables()[1].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(takeMoney.getCompoundDrawables()[1].mutate()), accentColor);
-        new Thread(new UpdateRunnable()).start();
         setAddPOIMode(false);
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
+        if (RecordService.instance == null) {
+            finishAndRemoveTask();
+            return;
+        }
+        activityVisible = true;
+        new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
 
             @Override
@@ -166,7 +174,12 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 new RefreshTask(true, true, false).execute();
             }
         });
-        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityVisible = false;
     }
 
     @Override
@@ -189,6 +202,9 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 }
             }
             Intent i = new Intent(RecordService.actionPauseTrip);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            }
             sendBroadcast(i);
         } else if (item.getItemId() == R.id.stop) {
             Intent i = new Intent(RecordService.actionStopTrip);
@@ -244,7 +260,8 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         fileName = fileName.replace("T", "");
         fileName = fileName.replace(":", "");
         if (v.equals(addPOI)) {
-            if (poiName.getText().toString().equals("")) {
+            String poiNameStr = poiName.getText().toString();
+            if (poiNameStr.equals("")) {
                 Toast.makeText(RecordActivity.this, R.string.please_input_poi_name, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -260,17 +277,22 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             if (RecordService.instance == null || RecordService.instance.trip == null) {
                 return;
             }
-            String poiNameStr = poiName.getText().toString();
             MyCalendar time = MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
             poi = RecordService.instance.trip.createPOI(poiNameStr, time, 0, 0, 0);
-            if (poi == null) return;
+            if (poi == null) {
+                Toast.makeText(this, R.string.storage_error, Toast.LENGTH_SHORT).show();
+                return;
+            }
             setAddPOIMode(true);
             if (poi.latitude == 0 && poi.longitude == 0) { // new_poi
-                POIMarker = gmap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                gmap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-                poi.updateBasicInformation(null, time, location.getLatitude(), location.getLongitude(), location.getAltitude());
+                final double latitude = location.getLatitude();
+                final double longitude = location.getLongitude();
+                final double altitude = location.getAltitude();
+                LatLng latLng = new LatLng(latitude, longitude);
+                POIMarker = gmap.addMarker(new MarkerOptions().position(latLng).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                gmap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                poi.updateBasicInformation(null, time, latitude, longitude, altitude);
             } else { // edit exist poi
-                location.setAltitude(poi.altitude);
                 cancel.setVisibility(View.GONE);
                 if (markers != null) {
                     for (int i = 0; i < markers.size(); i++) {
@@ -293,7 +315,10 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".jpg");
-                if (nowFileForCameraIntent == null) return;
+                if (nowFileForCameraIntent == null) {
+                    Toast.makeText(this, R.string.storage_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 i.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
                 i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -306,7 +331,10 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             Intent i = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.videoDir.createFile("", fileName + ".3gp");
-                if (nowFileForCameraIntent == null) return;
+                if (nowFileForCameraIntent == null) {
+                    Toast.makeText(this, R.string.storage_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 i.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
                 i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 i.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -319,7 +347,10 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             Intent i = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
             if (i.resolveActivity(getPackageManager()) != null) {
                 nowFileForCameraIntent = poi.audioDir.createFile("", fileName + ".mp3");
-                if (nowFileForCameraIntent == null) return;
+                if (nowFileForCameraIntent == null) {
+                    Toast.makeText(this, R.string.storage_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivityForResult(i, REQUEST_AUDIO);
             } else {
                 Toast.makeText(this, R.string.audio_recorder_is_not_available, Toast.LENGTH_SHORT).show();
@@ -346,7 +377,10 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         } else if (v.equals(takePaint)) {
             if (poi == null || poi.picDir == null) return;
             nowFileForCameraIntent = poi.picDir.createFile("", fileName + ".png");
-            if (nowFileForCameraIntent == null) return;
+            if (nowFileForCameraIntent == null) {
+                Toast.makeText(this, R.string.storage_error, Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = new Intent(this, PaintActivity.class);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, nowFileForCameraIntent.getUri());
             intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -460,51 +494,62 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         }
     }
 
-    class UpdateRunnable implements Runnable {
+    class UpdateTask extends AsyncTask<String, String, String> {
 
         @Override
-        public void run() {
-            while (RecordService.instance != null) {
+        protected String doInBackground(String... params) {
+            while (RecordService.instance != null && activityVisible) {
                 final long totalTime = RecordService.instance.totalTime;
-                final double totalDistance = RecordService.instance.totaldistance;
+                final double totalDistance = RecordService.instance.totalDistance;
                 final double nowSpeed = RecordService.instance.nowSpeed;
                 final float faccuracy = RecordService.instance.accuracy;
                 final double elevation = RecordService.instance.elevation;
-                final String timeExpression = String.valueOf(totalTime / 3600) + ":" + String.valueOf(totalTime % 3600 / 60) + ":" + String.valueOf(totalTime % 3600 % 60);
-
-                handler.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        if (RecordService.instance != null && RecordService.instance.run) {
-                            if (menu != null) {
-                                menu.findItem(R.id.pause).setIcon(R.drawable.ic_pause);
-                            }
-                            setTitle(tripName + " - " + (faccuracy == -1 ? getString(R.string.searching_for_satellite) : getString(R.string.recording)));
-                            distance.setText(GpxAnalyzer2.getDistanceString((float) totalDistance / 1000, "km"));
-                            RecordActivity.this.totalTime.setText(timeExpression);
-                            velocity.setText(GpxAnalyzer2.getDistanceString((float) nowSpeed * 18 / 5, "km/hr"));
-                            accuracy.setText((faccuracy == -1 ? "∞" : (GpxAnalyzer2.getAltitudeString(faccuracy, "m"))));
-                            altitude.setText(GpxAnalyzer2.getAltitudeString((float) elevation, "m"));
-                        } else {
-                            if (menu != null) {
-                                menu.findItem(R.id.pause).setIcon(R.drawable.ic_play);
-                            }
-                            setTitle(tripName + " - " + getString(R.string.pausing));
-                        }
-                    }
-                });
                 try {
+                    if (RecordService.instance != null && RecordService.instance.run) {
+                        String title = tripName + " - " + (faccuracy == -1 ? getString(R.string.searching_for_satellite) : getString(R.string.recording));
+                        String distance = GpxAnalyzer2.getDistanceString((float) totalDistance / 1000, "km");
+                        String timeExpression = String.valueOf(totalTime / 3600) + ":" + String.valueOf(totalTime % 3600 / 60) + ":" + String.valueOf(totalTime % 3600 % 60);
+                        String velocity = GpxAnalyzer2.getDistanceString((float) nowSpeed * 18 / 5, "km/hr");
+                        String altitude = GpxAnalyzer2.getAltitudeString((float) elevation, "m");
+                        String accuracy = (faccuracy == -1 ? "∞" : GpxAnalyzer2.getAltitudeString(faccuracy, "m"));
+                        publishProgress(title, distance, timeExpression, velocity, accuracy, altitude);
+                    } else {
+                        publishProgress();
+                    }
                     Thread.sleep(RecordService.instance.updateDuration);
-                } catch (InterruptedException e) {
+                } catch (NullPointerException | InterruptedException e) {
                     e.printStackTrace();
                     break;
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
                 }
             }
-            RecordActivity.this.finishAndRemoveTask();
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            if (values != null && values.length == 6) {
+                setTitle(values[0]);
+                distance.setText(values[1]);
+                totalTime.setText(values[2]);
+                velocity.setText(values[3]);
+                accuracy.setText(values[4]);
+                altitude.setText(values[5]);
+                if (menu != null) {
+                    menu.findItem(R.id.pause).setIcon(R.drawable.ic_pause);
+                }
+            } else {
+                if (menu != null) {
+                    menu.findItem(R.id.pause).setIcon(R.drawable.ic_play);
+                }
+                setTitle(tripName + " - " + getString(R.string.pausing));
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (RecordService.instance == null) {
+                finishAndRemoveTask();
+            }
         }
     }
 
@@ -648,6 +693,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     protected void onDestroy() {
         if (gmap != null) {
             gmap.setMyLocationEnabled(false);
+            gmap.clear();
         }
         super.onDestroy();
     }

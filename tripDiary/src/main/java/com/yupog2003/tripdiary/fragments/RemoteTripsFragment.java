@@ -1,15 +1,15 @@
 package com.yupog2003.tripdiary.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.app.AlertDialog;
@@ -34,8 +34,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
@@ -62,7 +60,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     public static final int option_public = 0;
     public static final int option_personal = 1;
     public static final String tag_option = "optionTag";
-    private static final int REQUEST_GET_TOKEN = 0;
 
     private enum Task {
         rename_trip, delete_trip, toggle_public
@@ -74,7 +71,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     TripAdapter adapter;
     String account;
     String token;
-    Intent loginIntent;
     SearchView searchView;
     TripDiary.Client client;
 
@@ -86,9 +82,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_remotetrips, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            listView.setNestedScrollingEnabled(true);
-        }
+        ViewCompat.setNestedScrollingEnabled(listView, true);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -112,15 +106,23 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     public void loadData() {
         if (trip_option == option_personal) {
-            ((MyActivity)getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+            ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
                 @Override
-                public void onAccountPicked(String accountName) {
+                public void onAccountPicked(@NonNull String accountName) {
                     account = accountName;
-                    new GetAccessTokenTask().execute();
+                    ((MyActivity) getActivity()).getAccessToken(account, new MyActivity.OnAccessTokenGotListener() {
+                        @Override
+                        public void onAccessTokenGot(@NonNull String token) {
+                            setHasOptionsMenu(true);
+                            RemoteTripsFragment.this.token = token;
+                            new GetTripsTask().execute();
+                        }
+                    });
                 }
             }, false);
         } else {
             account = "public";
+            token = "abc";
             new GetTripsTask().execute();
         }
     }
@@ -159,15 +161,13 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                 if (tripList == null)
                     return null;
                 ArrayList<Trip> trips = new ArrayList<>();
-                for (int i = 0; i < tripList.size(); i++) {
-                    com.yupog2003.tripdiary.thrift.Trip trip = tripList.get(i);
+                for (com.yupog2003.tripdiary.thrift.Trip trip : tripList) {
                     if (trip != null && trip.getPath() != null && trip.getName() != null) {
                         trips.add(new Trip(trip.getPath(), trip.getName()));
                     }
                 }
                 return trips.toArray(new Trip[trips.size()]);
             } catch (TException e) {
-
                 e.printStackTrace();
             }
             return null;
@@ -247,32 +247,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             loadData();
         }
 
-    }
-
-    class GetAccessTokenTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
-            } catch (UserRecoverableAuthException e) {
-                e.printStackTrace();
-                loginIntent = e.getIntent();
-                token = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                token = null;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            setHasOptionsMenu(true);
-            if (token != null) {
-                new GetTripsTask().execute();
-            }
-        }
     }
 
     class LoadMoreTripTask extends AsyncTask<String, String, ArrayList<Trip>> {
@@ -377,6 +351,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                         } else {
                             Intent intent = new Intent(getActivity(), DownloadTripService.class);
                             intent.putExtra("path", tripPath);
+                            intent.putExtra("token", token);
                             getActivity().startService(intent);
                         }
                     } else if (which == 1) {
@@ -437,7 +412,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     ab2.setTitle(getString(R.string.be_careful));
                     ab2.setMessage(getString(R.string.are_you_sure_to_delete));
                     ab2.setIcon(ColorHelper.getAlertDrawable(getActivity()));
-                    ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+                    ab2.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
                             for (int i = 0; i < checksName.size(); i++) {
@@ -446,7 +421,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                             }
                         }
                     });
-                    ab2.setNegativeButton(getString(R.string.cancel), null);
+                    ab2.setNegativeButton(getString(R.string.no), null);
                     ab2.show();
                     break;
                 case R.id.togglepublic:
@@ -587,9 +562,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_remote_trip, menu);
-        if (account != null && account.equals("public") || token != null) {
-            menu.removeItem(R.id.login);
-        }
         MenuItem searchItem = menu.findItem(R.id.searchview);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint(getString(R.string.search_trip));
@@ -598,23 +570,12 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.login:
-                if (loginIntent != null) {
-                    startActivityForResult(loginIntent, REQUEST_GET_TOKEN);
-                }
-                break;
-        }
         return true;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == REQUEST_GET_TOKEN && resultCode == Activity.RESULT_OK) {
-            new GetAccessTokenTask().execute();
-        }
     }
 
     @Override

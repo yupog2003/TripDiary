@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -38,6 +39,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 public class GenerateVideoService extends IntentService {
 
@@ -72,6 +74,10 @@ public class GenerateVideoService extends IntentService {
     public static final String tag_tripName = "tag_tripName";
     public static final String tag_timeZone = "tag_timezone";
 
+    public static final String url_ffmpeg_android_armv7 = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YbnAyMVM3NVhjX2s";
+    public static final String url_ffmpeg_android_armv7_neon = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YSzFVRjlVYUktZHc";
+    public static final String url_ffmpeg_android_x86 = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YdVhmOWh4Z2pMNzQ";
+
     public GenerateVideoService() {
         super("GenerateVideoService");
     }
@@ -84,6 +90,7 @@ public class GenerateVideoService extends IntentService {
         if (trip == null || ViewMapFragment.gmapBitmap == null || ViewMapFragment.trackPoints == null || ViewMapFragment.poisMap == null) {
             return;
         }
+        DeviceHelper.sendGATrack(GenerateVideoService.this, "Trip", "generate_video", trip.tripName, null);
         String noteStr = trip.note;
         Bitmap gmapBitmap = ViewMapFragment.gmapBitmap.copy(Bitmap.Config.RGB_565, true);
         Point[] trackPoints = ViewMapFragment.trackPoints.clone();
@@ -98,10 +105,6 @@ public class GenerateVideoService extends IntentService {
         tempDir = new File(getCacheDir(), cacheDirName);
         FileHelper.deletedir(tempDir.getPath());
         tempDir.mkdirs();
-        ffmpegFile = new File(getFilesDir().getParent(), "ffmpeg");
-        if (!ffmpegFile.exists()) {
-            copyFFmpeg();
-        }
         String backgroundMusicPath = intent.getStringExtra(tag_background_music_path);
         fps = intent.getIntExtra(tag_fps, 25);
         fpsStr = "fps=" + String.valueOf(fps);
@@ -120,9 +123,14 @@ public class GenerateVideoService extends IntentService {
         nb.setProgress(100, 0, false);
         nb.setOngoing(true);
         startForeground(1, nb.build());
+        ffmpegFile = new File(getCacheDir(), "ffmpeg");
+        if (!ffmpegFile.exists() && !copyFFmpeg()) {
+            stopForeground(false);
+            return;
+        }
         String resultVideoPath = generateTripVideo(tripName, noteStr, poisMap, gmapBitmap, trackPoints, backgroundMusicPath);
         if (resultVideoPath != null) {
-            DeviceHelper.sendGATrack(GenerateVideoService.this, "Trip", "generate_video_sucess", tripName, null);
+            DeviceHelper.sendGATrack(GenerateVideoService.this, "Trip", "generate_video_success", tripName, null);
             nb.setContentTitle(getString(R.string.finish));
             nb.setContentText(resultVideoPath);
             nb.setOngoing(false);
@@ -579,7 +587,7 @@ public class GenerateVideoService extends IntentService {
                 fos.close();
                 bitmap.recycle();
                 if (i == num_tracks - 1 && j == frames_per_track - 1) {
-                    for (int k = 0; k < 1 * fps; k++) {
+                    for (int k = 0; k < secondsPerTrack * fps; k++) {
                         FileHelper.copyFile(new File(tempDir, fileName), new File(tempDir, "track_" + String.valueOf(i) + "_" + String.valueOf(j + k + 1) + ".jpg"));
                     }
                 }
@@ -602,7 +610,7 @@ public class GenerateVideoService extends IntentService {
                 new File(tempDir, fileName).delete();
             }
             if (i == num_tracks - 1) {
-                for (int j = 0; j < 1 * fps; j++) {
+                for (int j = 0; j < secondsPerTrack * fps; j++) {
                     new File(tempDir, "track_" + String.valueOf(i) + "_" + String.valueOf(frames_per_track + j) + ".jpg").delete();
                 }
             }
@@ -644,8 +652,7 @@ public class GenerateVideoService extends IntentService {
                             if (!s.contains("buffer underflow") && !s.contains("packet too large"))
                                 Log.i("trip", s);
                             if (possibleTotalTime != null) {
-                                String[] toks = s.split(" ");
-                                for (String tok : toks) {
+                                for (String tok : s.split(" ")) {
                                     if (tok.contains("time=")) {
                                         String timeStr = tok.substring(tok.indexOf("time=") + 5);
                                         String[] timeToks = timeStr.split(":");
@@ -672,8 +679,46 @@ public class GenerateVideoService extends IntentService {
         return false;
     }
 
-    private void copyFFmpeg() {
+    private boolean copyFFmpeg() {
+        if (!DeviceHelper.isMobileNetworkAvailable(GenerateVideoService.this)) {
+            nb.setContentText(getString(R.string.no_internet_connection));
+            startForeground(1, nb.build());
+            return false;
+        }
+        String[] abis;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            abis = Build.SUPPORTED_ABIS;
+        } else {
+            abis = new String[2];
+            abis[0] = Build.CPU_ABI;
+            abis[1] = Build.CPU_ABI2;
+        }
+        String ffmpegUrl = url_ffmpeg_android_armv7_neon;
+        String downloadDescription = getString(R.string.downloading_ffmpeg_binary_file_for_armv7_neon);
+        for (String abi : abis) {
+            if (abi == null) continue;
+            if (abi.contains("x86")) {
+                ffmpegUrl = url_ffmpeg_android_x86;
+                downloadDescription = downloadDescription.replace("armv7-neon", "x86");
+                break;
+            }
+        }
+        nb.setContentText(downloadDescription);
+        startForeground(1, nb.build());
         try {
+            InputStream inputStream = new URL(ffmpegUrl).openConnection().getInputStream();
+            FileOutputStream fileOutputStream = new FileOutputStream(ffmpegFile);
+            FileHelper.copyByStream(inputStream, fileOutputStream);
+            ProcessBuilder processBuilder = new ProcessBuilder("chmod", "777", ffmpegFile.getPath());
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+            process.waitFor();
+            return true;
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+        /*try {
             InputStream inputStream = getAssets().open("ffmpeg");
             FileOutputStream fileOutputStream = new FileOutputStream(ffmpegFile);
             FileHelper.copyByStream(inputStream, fileOutputStream);
@@ -685,10 +730,9 @@ public class GenerateVideoService extends IntentService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private int getNum_total_materials(SparseArray<POI> pois) {

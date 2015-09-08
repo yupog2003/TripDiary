@@ -18,7 +18,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,6 +65,7 @@ public class ViewPointActivity extends MyActivity {
     public static final String tag_poiname = "tag_poiname";
     public static final String tag_fromActivity = "tag_activity";
     public static final int REQUEST_VIEW_COST = 4;
+    static final boolean preLollipop = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +101,7 @@ public class ViewPointActivity extends MyActivity {
             return;
         }
         setTitle(poiName);
+        getSupportActionBar().setSubtitle(poi.time.formatInTimezone(timezone));
         DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTrip.getName() + "-" + poi.title, null);
         appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -158,7 +159,9 @@ public class ViewPointActivity extends MyActivity {
     private void resetAppBar() {
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-        behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
+        if (behavior != null) {
+            behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
+        }
     }
 
     class MyPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
@@ -229,13 +232,13 @@ public class ViewPointActivity extends MyActivity {
                     viewPager.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
                     break;
                 case 1:
-                    viewPager.setPadding(0, 0, 0, 0);
+                    viewPager.setPadding(0, 0, 0, preLollipop ? appBarLayoutDefaultHeight : 0);
                     break;
                 case 2:
-                    viewPager.setPadding(0, 0, 0, 0);
+                    viewPager.setPadding(0, 0, 0, preLollipop ? appBarLayoutDefaultHeight : 0);
                     break;
                 case 3:
-                    viewPager.setPadding(0, 0, 0, 0);
+                    viewPager.setPadding(0, 0, 0, preLollipop ? appBarLayoutDefaultHeight : 0);
                     break;
             }
         }
@@ -274,8 +277,7 @@ public class ViewPointActivity extends MyActivity {
         } else if (item.getItemId() == R.id.viewbasicinformation) {
             AlertDialog.Builder ab = new AlertDialog.Builder(ViewPointActivity.this);
             ab.setTitle(poi.title);
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.view_basicinformation, (ViewGroup) findViewById(android.R.id.content), false);
+            View layout = getLayoutInflater().inflate(R.layout.view_basicinformation, (ViewGroup) findViewById(android.R.id.content), false);
             TextView location = (TextView) layout.findViewById(R.id.location);
             location.setText("(" + latlngFormat.format(poi.latitude) + "," + latlngFormat.format(poi.longitude) + ")");
             TextView altitude = (TextView) layout.findViewById(R.id.altitude);
@@ -339,12 +341,18 @@ public class ViewPointActivity extends MyActivity {
                                 if (FileHelper.findfile(poi.dir.getParentFile(), newName) == null) {
                                     poi.renamePOI(newName);
                                     setTitle(newName);
+                                    if (getSupportActionBar() != null) {
+                                        getSupportActionBar().setSubtitle(poi.time.formatInTimezone(timezone));
+                                    }
                                     requestUpdatePOIs(false);
                                 } else {
                                     Toast.makeText(getActivity(), R.string.there_is_a_same_poi, Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 requestUpdatePOI();
+                                if (getSupportActionBar() != null) {
+                                    getSupportActionBar().setSubtitle(poi.time.formatInTimezone(timezone));
+                                }
                             }
                         }
                     });
@@ -363,7 +371,7 @@ public class ViewPointActivity extends MyActivity {
             AlertDialog.Builder ab2 = new AlertDialog.Builder(ViewPointActivity.this);
             ab2.setMessage(getString(R.string.are_you_sure_to_delete_this_poi));
             ab2.setTitle(getString(R.string.be_careful));
-            ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+            ab2.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
                     poi.deleteSelf();
@@ -372,7 +380,7 @@ public class ViewPointActivity extends MyActivity {
                 }
 
             });
-            ab2.setNegativeButton(getString(R.string.cancel), null);
+            ab2.setNegativeButton(getString(R.string.no), null);
             AlertDialog ad = ab2.create();
             ad.setIcon(ColorHelper.getAlertDrawable(getActivity()));
             ad.show();

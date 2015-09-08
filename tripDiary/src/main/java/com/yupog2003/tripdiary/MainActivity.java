@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -28,18 +30,16 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.RecordService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class MainActivity extends MyActivity implements Button.OnClickListener {
 
@@ -66,32 +66,25 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         int accentColor = ContextCompat.getColor(this, R.color.accent);
         DrawableCompat.setTint(DrawableCompat.wrap(startTrip.getCompoundDrawables()[0].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(viewHistory.getCompoundDrawables()[0].mutate()), accentColor);
-        if (TripDiaryApplication.rootDocumentFile != null) {
-            checkPlayServiceAndSetListeners();
-        } else {
-            checkHasPermission(new OnGrantPermissionCompletedListener() {
-                @Override
-                public void onGranted() {
+        checkHasPermission(new OnGrantPermissionCompletedListener() {
+            @Override
+            public void onGranted() {
+                if (TripDiaryApplication.rootDocumentFile == null) {
                     TripDiaryApplication.updateRootPath();
-                    checkPlayServiceAndSetListeners();
                 }
-
-                @Override
-                public void onFailed() {
-                    finishAndRemoveTask();
+                if (checkPlayService()) {
+                    startTrip.setOnClickListener(MainActivity.this);
+                    viewHistory.setOnClickListener(MainActivity.this);
+                    resumeTrip.setOnClickListener(MainActivity.this);
+                    allRecord.setOnClickListener(MainActivity.this);
                 }
-            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
+            }
 
-    }
-
-    private void checkPlayServiceAndSetListeners() {
-        if (checkPlayService()) {
-            startTrip.setOnClickListener(MainActivity.this);
-            viewHistory.setOnClickListener(MainActivity.this);
-            resumeTrip.setOnClickListener(MainActivity.this);
-            allRecord.setOnClickListener(MainActivity.this);
-        }
+            @Override
+            public void onFailed() {
+                finishAndRemoveTask();
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -118,7 +111,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 GooglePlayServicesUtil.getErrorDialog(resultCode, MainActivity.this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
                 Toast.makeText(MainActivity.this, "This device is not supported by Google Play Serivce", Toast.LENGTH_SHORT).show();
-                MainActivity.this.finish();
+                finishAndRemoveTask();
             }
             return false;
         }
@@ -136,9 +129,8 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     private void startTripDialog() {
         tripNameClicked = false;
         final SharedPreferences categorysp = getSharedPreferences("category", MODE_PRIVATE);
-        Map<String, ?> map = categorysp.getAll();
-        Set<String> keyset = map.keySet();
-        final String[] categories = keyset.toArray(new String[keyset.size()]);
+        Set<String> keySet = categorysp.getAll().keySet();
+        final String[] categories = keySet.toArray(new String[keySet.size()]);
         AlertDialog.Builder ab2 = new AlertDialog.Builder(MainActivity.this);
         View layout = getLayoutInflater().inflate(R.layout.edit_trip, (ViewGroup) findViewById(android.R.id.content), false);
         final RadioGroup rg = (RadioGroup) layout.findViewById(R.id.categories);
@@ -219,13 +211,22 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     }
 
-    private void startTrip(final String name, final String note, final String category) {
+    private void startTrip(@NonNull final String name, @Nullable final String note, @Nullable final String category) {
         checkHasPermission(new OnGrantPermissionCompletedListener() {
             @Override
             public void onGranted() {
+                if (isServiceRunning(RecordService.class)) {
+                    Toast.makeText(MainActivity.this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!DeviceHelper.isGpsEnabled(MainActivity.this)) {
+                    Toast.makeText(MainActivity.this, R.string.please_enable_the_gps_provider, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 DocumentFile dir = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, name);
-                if (dir == null) {
+                if (dir == null) { //new trip
                     dir = TripDiaryApplication.rootDocumentFile.createDirectory(name);
+                    MyCalendar.updateTripTimeZone(MainActivity.this, name, TimeZone.getDefault().getID());
                 }
                 if (dir == null) {
                     Toast.makeText(getActivity(), R.string.storage_error, Toast.LENGTH_SHORT).show();
@@ -238,19 +239,11 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
                 if (note != null) {
                     trip.updateNote(note);
                 }
-                if (DeviceHelper.isGpsEnabled(MainActivity.this)) {
-                    if (RecordService.instance == null) {
-                        Intent i = new Intent(MainActivity.this, RecordService.class);
-                        i.putExtra(RecordService.tag_tripName, name);
-                        startService(i);
-                        DeviceHelper.sendGATrack(MainActivity.this, "Trip", "start", name, null);
-                        MainActivity.this.finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
-                }
+                Intent i = new Intent(MainActivity.this, RecordService.class);
+                i.putExtra(RecordService.tag_tripName, name);
+                startService(i);
+                DeviceHelper.sendGATrack(MainActivity.this, "Trip", "start", name, null);
+                MainActivity.this.finish();
             }
 
             @Override
@@ -271,8 +264,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     private void resumeTripDialog() {
         AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
         DocumentFile[] files = TripDiaryApplication.rootDocumentFile.listFiles(DocumentFile.list_dirs);
-        if (files == null)
-            files = new DocumentFile[0];
         ArrayList<Trip> trips = new ArrayList<>();
         for (DocumentFile file : files) {
             if (file != null) {
@@ -288,27 +279,10 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         ab.setSingleChoiceItems(tripNames, -1, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-
                 dialog.dismiss();
-                StringBuilder sb = new StringBuilder();
                 String tripName = tripNames[which];
-                try {
-                    DocumentFile noteFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, "note");
-                    BufferedReader br = new BufferedReader(new InputStreamReader(noteFile.getInputStream()));
-                    String s;
-                    while ((s = br.readLine()) != null) {
-                        sb.append(s).append("\n");
-                    }
-                    br.close();
-                } catch (IOException | IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
-                String noteStr = sb.toString();
-                if (noteStr.endsWith("\n")) {
-                    noteStr = noteStr.substring(0, noteStr.length() - 1);
-                }
                 DeviceHelper.sendGATrack(MainActivity.this, "Trip", "resume", tripName, null);
-                startTrip(tripName, noteStr, null);
+                startTrip(tripName, null, null);
             }
         });
         ab.setTitle(getString(R.string.resume_trip));
@@ -318,21 +292,29 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     public void onClick(View v) {
         if (v.equals(startTrip)) {
-            if (DeviceHelper.isGpsEnabled(this)) {
-                startTripDialog();
-            } else {
+            if (isServiceRunning(RecordService.class)) {
+                Toast.makeText(this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!DeviceHelper.isGpsEnabled(this)) {
                 Toast.makeText(this, getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+                return;
             }
+            startTripDialog();
         } else if (v.equals(viewHistory)) {
             startActivity(new Intent(MainActivity.this, ViewActivity.class));
         } else if (v.equals(resumeTrip)) {
-            if (DeviceHelper.isGpsEnabled(this)) {
-                resumeTripDialog();
-            } else {
+            if (isServiceRunning(RecordService.class)) {
+                Toast.makeText(this, R.string.please_stop_previous_trip_first, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!DeviceHelper.isGpsEnabled(this)) {
                 Toast.makeText(this, getString(R.string.please_enable_the_gps_provider), Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
+                return;
             }
+            resumeTripDialog();
         } else if (v.equals(allRecord)) {
             Intent i = new Intent(MainActivity.this, AllRecordActivity.class);
             String[] tripNames = TripDiaryApplication.rootDocumentFile.listFileNames(DocumentFile.list_dirs);

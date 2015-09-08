@@ -102,8 +102,7 @@ public class TripDiaryApplication extends Application {
         if (!file.exists()) {
             return file.mkdirs();
         } else if (file.isFile()) {
-            boolean b = file.delete();
-            return b & file.mkdirs();
+            return  file.delete() && file.mkdirs();
         }
         return true;
     }

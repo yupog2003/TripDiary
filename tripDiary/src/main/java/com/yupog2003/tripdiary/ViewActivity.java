@@ -1,6 +1,9 @@
 package com.yupog2003.tripdiary;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,15 +12,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 
 import com.yupog2003.tripdiary.fragments.LocalTripsFragment;
 import com.yupog2003.tripdiary.fragments.RemoteTripsFragment;
 
 public class ViewActivity extends MyActivity {
 
-    MyPagerAdapter pagerAdaper;
+    MyPagerAdapter pagerAdapter;
     ViewPager viewPager;
     TabLayout tabs;
+    AppBarLayout appBarLayout;
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +35,28 @@ public class ViewActivity extends MyActivity {
             assert getSupportActionBar() != null;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabs = (TabLayout) findViewById(R.id.tabs);
-        pagerAdaper = new MyPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdaper);
-        viewPager.addOnPageChangeListener(pagerAdaper);
-        tabs.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);
+        appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    appBarLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    appBarLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+                pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+                viewPager.setAdapter(pagerAdapter);
+                viewPager.addOnPageChangeListener(pagerAdapter);
+                tabs.setupWithViewPager(viewPager);
+                viewPager.setCurrentItem(1);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){ //pre lollipop can not nested scroll
+                    viewPager.setPadding(0, 0, 0, appBarLayout.getHeight());
+                }
+            }
+        });
     }
 
     class MyPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
@@ -89,6 +110,7 @@ public class ViewActivity extends MyActivity {
 
         @Override
         public void onPageSelected(int position) {
+            resetAppBar();
             Fragment f = getItem(position);
             if (f instanceof RemoteTripsFragment) {
                 ((RemoteTripsFragment) f).loadData();
@@ -109,7 +131,6 @@ public class ViewActivity extends MyActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
@@ -117,4 +138,11 @@ public class ViewActivity extends MyActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void resetAppBar() {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
+        }
+    }
 }

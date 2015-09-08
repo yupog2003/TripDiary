@@ -8,7 +8,6 @@ import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.TimeZone;
 
 public class GpxAnalyzer2 {
 
@@ -24,7 +23,6 @@ public class GpxAnalyzer2 {
     }
 
     public boolean analyze() {
-        String tripName = trip.tripName;
         cache = new TrackCache();
         DocumentFile cacheFile = trip.cacheFile;
         long cacheFileLength = cacheFile != null ? cacheFile.length() : 0;
@@ -43,8 +41,7 @@ public class GpxAnalyzer2 {
             success = getCache(temp.getPath(), cache);
             temp.delete();
         } else {
-            String timezone = MyCalendar.getTripTimeZone(context, tripName);
-            int timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
+            int timeZoneOffset = MyCalendar.getOffset(trip.timezone, trip.gpxFile) / 1000;
             FileHelper.copyFile(trip.gpxFile, temp);
             fileSize = temp.length();
             success = parse(temp.getPath(), cache, timeZoneOffset);
@@ -73,7 +70,7 @@ public class GpxAnalyzer2 {
 
     public static String getDistanceString(float kmNumber, String unit) {
         if (TripDiaryApplication.distance_unit == TripDiaryApplication.unit_mile) {
-            kmNumber /= 1.6;
+            kmNumber /= 1.60934;
             if (unit.equals("km"))
                 unit = "mi";
             else if (unit.equals("km/hr"))

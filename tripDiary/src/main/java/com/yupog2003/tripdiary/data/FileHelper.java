@@ -6,11 +6,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v7.app.AlertDialog;
@@ -27,14 +25,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.Marker;
 import com.yupog2003.tripdiary.R;
-import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -44,8 +39,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.zip.ZipEntry;
@@ -165,6 +160,22 @@ public class FileHelper {
 
     public static String getMimeFromFile(File file) {
         return getMIMEtype(file.getName());
+    }
+
+    public static final NumberFormat sizeFormat = new DecimalFormat("#.##");
+
+    public static String getSizeString(int bytes) {
+        if (bytes < 1024) {
+            return String.valueOf(bytes) + "bytes";
+        } else if (bytes < 1024 * 1024) {
+            return sizeFormat.format(bytes / 1024f) + "KB";
+        } else {
+            return sizeFormat.format(bytes / 1024 / 1024) + "MB";
+        }
+    }
+
+    public static String getSizeProgressString(int bytes, int total) {
+        return getSizeString(bytes) + "/" + getSizeString(total);
     }
 
     public static String getRealNameFromURI(Context context, Uri contentUri) {
@@ -342,8 +353,8 @@ public class FileHelper {
         }
     }
 
-
     public static void unZip(InputStream is, DocumentFile target) {
+        if (target == null) return;
         try {
             ZipInputStream zis = new ZipInputStream(is);
             ZipEntry entry;
@@ -353,122 +364,35 @@ public class FileHelper {
                 strEntry = entry.getName();
                 String[] dirs = strEntry.split("/");
                 DocumentFile entryFile = target;
-                for (int i = 0; i < dirs.length; i++) {
-                    if (i == dirs.length - 1) {  //file
-                        if (entry.isDirectory()) {
-                            entryFile.createDirectory(dirs[i]);
-                        } else {
-                            entryFile = entryFile.createFile("", dirs[i]);
-                            byte[] data = new byte[4096];
-                            BufferedOutputStream bos = new BufferedOutputStream(entryFile.getOutputStream(), 4096);
-                            while ((count = zis.read(data, 0, 4096)) != -1) {
-                                bos.write(data, 0, count);
-                            }
-                            bos.flush();
-                            bos.close();
-                        }
-                    } else {
-                        DocumentFile temp = FileHelper.findfile(entryFile, dirs[i]);
-                        if (temp == null) {
-                            temp = entryFile.createDirectory(dirs[i]);
-                        }
-                        entryFile = temp;
+                for (int i = 0; i < dirs.length - 1; i++) { //find dir
+                    DocumentFile temp = FileHelper.findfile(entryFile, dirs[i]);
+                    if (temp == null) {
+                        temp = entryFile.createDirectory(dirs[i]);
                     }
+                    if (temp == null){
+                        return;
+                    }
+                    entryFile = temp;
+                }
+                final String entryFileName = dirs[dirs.length - 1];
+                if (entry.isDirectory()) {
+                    entryFile.createDirectory(entryFileName);
+                } else {
+                    entryFile = entryFile.createFile("", entryFileName);
+                    if (entryFile == null){
+                        return;
+                    }
+                    byte[] data = new byte[4096];
+                    BufferedOutputStream bos = new BufferedOutputStream(entryFile.getOutputStream(), 4096);
+                    while ((count = zis.read(data, 0, 4096)) != -1) {
+                        bos.write(data, 0, count);
+                    }
+                    bos.flush();
+                    bos.close();
                 }
             }
             zis.close();
         } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void convertToKml(ArrayList<Marker> POIs, TrackCache track, DocumentFile kmlFile, String note) {
-        if (POIs == null || track == null || kmlFile == null || note == null)
-            return;
-        String name = kmlFile.getName();
-        name = name.substring(0, name.lastIndexOf("."));
-        int lineColor = PreferenceManager.getDefaultSharedPreferences(TripDiaryApplication.instance).getInt("trackcolor", 0xff6699cc);
-        String lineColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(lineColor), Color.blue(lineColor), Color.green(lineColor), Color.red(lineColor));
-        int iconColor = PreferenceManager.getDefaultSharedPreferences(TripDiaryApplication.instance).getInt("markercolor", 0xffff0000);
-        String iconColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(iconColor), Color.blue(iconColor), Color.green(iconColor), Color.red(iconColor));
-        try {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(kmlFile.getOutputStream()));
-            bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            bw.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n");
-            bw.write("<Document>\n");
-            bw.write("<name>" + name + "</name>\n");
-            bw.write("<description>" + note + "</description>\n");
-            bw.write("<Style id=\"lineColor\">\n");
-            bw.write("<LineStyle>\n");
-            bw.write("<color>" + lineColorInKML + "</color>\n");
-            bw.write("<width>4</width>\n");
-            bw.write("</LineStyle>\n");
-            bw.write("</Style>\n");
-            bw.write("<Style id=\"iconColor\">\n");
-            bw.write("<IconStyle>\n");
-            bw.write("<color>" + iconColorInKML + "</color>\n");
-            bw.write("</IconStyle>\n");
-            bw.write("</Style>\n");
-            bw.write("<Folder>\n");
-            bw.write("<Placemark>\n");
-            bw.write("<name>" + name + "</name>\n");
-            bw.write("<description>Generated by TripDiary</description>\n");
-            bw.write("<styleUrl>#lineColor</styleUrl>\n");
-            bw.write("<LineString>\n");
-            bw.write("<coordinates>");
-            int length = Math.min(track.latitudes.length, track.longitudes.length);
-            length = Math.min(length, track.altitudes.length);
-            double maxLatitude = -Double.MAX_VALUE;
-            double minLatitude = Double.MAX_VALUE;
-            double maxLongitude = -Double.MAX_VALUE;
-            double minLongitude = Double.MAX_VALUE;
-            for (int i = 0; i < length; i++) {
-                double longitude = track.longitudes[i];
-                double latitude = track.latitudes[i];
-                if (maxLatitude < latitude) {
-                    maxLatitude = latitude;
-                }
-                if (minLatitude > latitude) {
-                    minLatitude = latitude;
-                }
-                if (maxLongitude < longitude) {
-                    maxLongitude = longitude;
-                }
-                if (minLongitude > longitude) {
-                    minLongitude = longitude;
-                }
-                bw.write(String.format(" %f,%f,%f\n", longitude, latitude, track.altitudes[i]));
-            }
-            bw.write("</coordinates>\n");
-            bw.write("</LineString>\n");
-            bw.write("</Placemark>\n");
-            final int POIsSize = POIs.size();
-            for (int i = 0; i < POIsSize; i++) {
-                bw.write("<Placemark>\n");
-                bw.write("<name>" + POIs.get(i).getTitle() + "</name>\n");
-                bw.write("<styleUrl>#iconColor</styleUrl>\n");
-                bw.write("<description>" + POIs.get(i).getSnippet() + "</description>\n");
-                bw.write("<Point>\n");
-                bw.write("<coordinates>" + String.valueOf(POIs.get(i).getPosition().longitude) + "," + String.valueOf(POIs.get(i).getPosition().latitude) + ",0</coordinates>\n");
-                bw.write("</Point>\n");
-                bw.write("</Placemark>\n");
-            }
-            bw.write("</Folder>\n");
-            bw.write("<LookAt>\n");
-            bw.write("<longitude>" + String.valueOf((maxLongitude + minLongitude) / 2) + "</longitude>\n");
-            bw.write("<latitude>" + String.valueOf((maxLatitude + minLatitude) / 2) + "</latitude>\n");
-            bw.write("<altitude>0</altitude>\n");
-            bw.write("<heading>0</heading>\n");
-            bw.write("<tilt>45</tilt>\n");
-            bw.write("<range>20000</range>\n");
-            bw.write("<altitudeMode>clampToGround</altitudeMode>\n");
-            bw.write("</LookAt>\n");
-            bw.write("</Document>\n");
-            bw.write("</kml>");
-            bw.flush();
-            bw.close();
-        } catch (IOException | IllegalArgumentException e) {
-
             e.printStackTrace();
         }
     }

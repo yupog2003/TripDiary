@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -98,31 +100,26 @@ public class POI implements Comparable<POI> {
             this.longitude = 0;
             this.altitude = 0;
             this.diary = "";
-            BufferedReader br = new BufferedReader(new InputStreamReader(basicInformationFile.getInputStream()));
-            String s;
-            while ((s = br.readLine()) != null) {
-                if (s.startsWith("Title")) {
-                    this.title = s.substring(s.indexOf("=") + 1);
-                } else if (s.startsWith("Time")) {
-                    this.time = MyCalendar.getTime(s, MyCalendar.type_time_format3399);
-                } else if (s.startsWith("Latitude")) {
-                    this.latitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
-                } else if (s.startsWith("Longitude")) {
-                    this.longitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
-                } else if (s.startsWith("Altitude")) {
-                    this.altitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
+            if (basicInformationFile != null) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(basicInformationFile.getInputStream()));
+                String s;
+                while ((s = br.readLine()) != null) {
+                    if (s.startsWith("Title")) {
+                        this.title = s.substring(s.indexOf("=") + 1);
+                    } else if (s.startsWith("Time")) {
+                        this.time = MyCalendar.getTime(s, MyCalendar.type_time_format3399);
+                    } else if (s.startsWith("Latitude")) {
+                        this.latitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
+                    } else if (s.startsWith("Longitude")) {
+                        this.longitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
+                    } else if (s.startsWith("Altitude")) {
+                        this.altitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
+                    }
                 }
+                br.close();
             }
-            br.close();
-            br = new BufferedReader(new InputStreamReader(diaryFile.getInputStream()));
-            StringBuilder sb = new StringBuilder();
-            while ((s = br.readLine()) != null) {
-                sb.append(s).append("\n");
-            }
-            br.close();
-            diary = sb.toString();
-            if (diary.endsWith("\n")) {
-                diary = diary.substring(0, diary.lastIndexOf("\n"));
+            if (diaryFile != null) {
+                diary = IOUtils.toString(diaryFile.getInputStream(), "UTF-8");
             }
         } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
@@ -156,7 +153,7 @@ public class POI implements Comparable<POI> {
     }
 
     public void updateDiary(String text) {
-        if (text != null && diaryFile != null && context != null) {
+        if (text != null && diaryFile != null) {
             this.diary = text;
             try {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(diaryFile.getOutputStream()));
@@ -262,11 +259,13 @@ public class POI implements Comparable<POI> {
         }
         BufferedWriter bw;
         try {
-            bw = new BufferedWriter(new OutputStreamWriter(cost.getOutputStream()));
-            bw.write("type=" + String.valueOf(type) + "\n");
-            bw.write("dollar=" + String.valueOf(dollar));
-            bw.flush();
-            bw.close();
+            if (cost != null) {
+                bw = new BufferedWriter(new OutputStreamWriter(cost.getOutputStream()));
+                bw.write("type=" + String.valueOf(type) + "\n");
+                bw.write("dollar=" + String.valueOf(dollar));
+                bw.flush();
+                bw.close();
+            }
             this.costFiles = costDir.listFiles();
         } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();

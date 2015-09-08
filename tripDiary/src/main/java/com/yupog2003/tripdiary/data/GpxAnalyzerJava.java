@@ -28,7 +28,6 @@ public class GpxAnalyzerJava {
     }
 
     public boolean analyze() {
-        String tripName = trip.tripName;
         int timeZoneOffset = 0;
         cache = new TrackCache();
         DocumentFile cacheFile = trip.cacheFile;
@@ -44,8 +43,7 @@ public class GpxAnalyzerJava {
             cache.times = new String[size];
         } else {
             fileSize = trip.gpxFile.length();
-            String timezone = MyCalendar.getTripTimeZone(context, tripName);
-            timeZoneOffset = TimeZone.getTimeZone(timezone).getRawOffset() / 1000;
+            timeZoneOffset = MyCalendar.getOffset(trip.timezone, trip.gpxFile) / 1000;
         }
         return cacheExist ? getCache(cacheFile, cache) : parse(trip.gpxFile, cache, timeZoneOffset);
     }
@@ -198,7 +196,7 @@ public class GpxAnalyzerJava {
             totalTime += String.valueOf(hour) + ":" + String.valueOf(min) + ":" + String.valueOf(sec);
             float avgSpeed = distance / totalSeconds * 18 / 5;
             cache.startTime = track.get(0).time;
-            cache.endTime = track.get(track.size() - 1).time;
+            cache.endTime = track.get(trackSize - 1).time;
             cache.totalTime = totalTime;
             cache.distance = distance;
             cache.avgSpeed = avgSpeed;
@@ -206,11 +204,11 @@ public class GpxAnalyzerJava {
             cache.climb = totalAltitude;
             cache.maxAltitude = maxAltitude;
             cache.minAltitude = minAltitude;
-            cache.latitudes = new double[track.size()];
-            cache.longitudes = new double[track.size()];
-            cache.altitudes = new float[track.size()];
-            cache.times = new String[track.size()];
-            for (int i = 0; i < track.size(); i++) {
+            cache.latitudes = new double[trackSize];
+            cache.longitudes = new double[trackSize];
+            cache.altitudes = new float[trackSize];
+            cache.times = new String[trackSize];
+            for (int i = 0; i < trackSize; i++) {
                 cache.latitudes[i] = track.get(i).latitude;
                 cache.longitudes[i] = track.get(i).longitude;
                 cache.altitudes[i] = track.get(i).altitude;

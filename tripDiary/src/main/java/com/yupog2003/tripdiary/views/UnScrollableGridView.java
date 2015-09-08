@@ -15,8 +15,7 @@ public class UnScrollableGridView extends GridView {
 
     }
 
-    public UnScrollableGridView(Context context, AttributeSet attrs,
-                                int defStyle) {
+    public UnScrollableGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
     }

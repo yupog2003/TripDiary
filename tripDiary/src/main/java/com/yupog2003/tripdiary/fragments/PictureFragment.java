@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.print.PrintHelper;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -51,9 +51,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (GridView) inflater.inflate(R.layout.fragment_picture, container, false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            layout.setNestedScrollingEnabled(true);
-        }
+        ViewCompat.setNestedScrollingEnabled(layout, true);
         refresh();
         return layout;
     }
@@ -71,15 +69,10 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         if (poi == null) {
             return;
         }
-        int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-        int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-        if (screenWidth > screenHeight) {
-            width = screenWidth / 5;
-            layout.setNumColumns(5);
-        } else {
-            width = screenWidth / 3;
-            layout.setNumColumns(3);
-        }
+        int[] numColumnsAndWidth = new int[2];
+        DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
+        width = numColumnsAndWidth[1];
+        layout.setNumColumns(numColumnsAndWidth[0]);
         layout.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
         layout.setOnItemClickListener(this);
@@ -172,7 +165,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
                 ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
-                ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+                ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -184,7 +177,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                         }
                     }
                 });
-                ab.setNegativeButton(getString(R.string.cancel), null);
+                ab.setNegativeButton(getString(R.string.no), null);
                 ab.show();
                 mode.finish();
             } else if (item.getItemId() == R.id.rename) {
@@ -313,7 +306,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         }
 
         public void onItemCheckedStateChanged(final ActionMode mode, int position, long id, boolean checked) {
-
             checks[position] = checked;
             int selects = 0;
             for (boolean check : checks) {
@@ -321,8 +313,8 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                     selects++;
                 }
             }
-            mode.getMenu().findItem(R.id.rename).setVisible(!(selects > 1));
-            mode.getMenu().findItem(R.id.print).setVisible(!(selects > 1));
+            mode.getMenu().findItem(R.id.rename).setVisible(selects == 1);
+            mode.getMenu().findItem(R.id.print).setVisible(selects == 1);
 
         }
 

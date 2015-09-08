@@ -7,14 +7,19 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
+import com.yupog2003.tripdiary.services.RecordService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +28,18 @@ public class MyActivity extends AppCompatActivity {
 
     public static final int REQUEST_PERMISSION = 8000;
     public static final int REQUEST_ACCOUNT = 8001;
+    public static final int REQUEST_GET_TOKEN = 8002;
 
-    public Activity getActivity() {
+    public MyActivity getActivity() {
         return this;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (RecordService.instance != null) {
+            RecordService.instance.hasTask = true;
+        }
     }
 
     public static List<ActivityManager.AppTask> getMyTasks(Context context) {
@@ -47,6 +61,16 @@ public class MyActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    public boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -111,7 +135,7 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public interface OnAccountPickedListener {
-        void onAccountPicked(String account);
+        void onAccountPicked(@NonNull String account);
     }
 
     private OnAccountPickedListener onAccountPickedListener;
@@ -145,6 +169,52 @@ public class MyActivity extends AppCompatActivity {
                 }
             }
             onAccountPickedListener = null;
+        } else if (requestCode == REQUEST_GET_TOKEN && resultCode == Activity.RESULT_OK) {
+            new GetAccessTokenTask().execute();
+        }
+    }
+
+    public void getAccessToken(String account, OnAccessTokenGotListener listener) {
+        if (account == null) return;
+        this.account = account;
+        this.onAccessTokenGotListener = listener;
+        new GetAccessTokenTask().execute();
+    }
+
+    public interface OnAccessTokenGotListener {
+        void onAccessTokenGot(@NonNull String token);
+    }
+
+    private OnAccessTokenGotListener onAccessTokenGotListener;
+    private String account;
+
+    private class GetAccessTokenTask extends AsyncTask<String, String, String> {
+
+        Intent loginIntent;
+        String token;
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
+            } catch (UserRecoverableAuthException e) {
+                e.printStackTrace();
+                loginIntent = e.getIntent();
+                token = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                token = null;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (token != null && onAccessTokenGotListener != null) {
+                onAccessTokenGotListener.onAccessTokenGot(token);
+            } else if (loginIntent != null) {
+                startActivityForResult(loginIntent, REQUEST_GET_TOKEN);
+            }
         }
     }
 }

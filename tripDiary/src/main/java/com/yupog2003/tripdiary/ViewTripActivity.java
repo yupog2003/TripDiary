@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -20,7 +21,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +37,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TrackCache;
 import com.yupog2003.tripdiary.data.Trip;
@@ -58,6 +60,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class ViewTripActivity extends MyActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -80,12 +83,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     AppBarLayout appBarLayout;
     FrameLayout fragmentLayout;
     CoordinatorLayout coordinatorLayout;
+    public AppCompatSpinner spinner;
     Mode mode = Mode.map_mode;
     int appBarLayoutDefaultHeight;
     boolean fromWeb;
 
     public static final int REQUEST_VIEW_POI = 1;
-    public static final int REQUEST_GET_TOKEN = 2;
     public static final String tag_request_updatePOI = "request_update_poi";
     public static final String tag_update_poiNames = "update_poiNames";
     public static final String tag_tripName = "tag_tripname";
@@ -106,9 +109,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         if (toolBar != null) {
             setSupportActionBar(toolBar);
-            assert getSupportActionBar() != null;
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
         }
         Intent intent = getIntent();
         if (intent == null) {
@@ -138,6 +138,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     }
                 } catch (UnsupportedEncodingException | RuntimeException e) {
                     e.printStackTrace();
+                    finishAndRemoveTask();
+                    return;
                 }
             } else {
                 finishAndRemoveTask();
@@ -167,6 +169,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        spinner = (AppCompatSpinner) findViewById(R.id.spinner);
         allAudioFragment = new AllAudioFragment();
         allVideoFragment = new AllVideoFragment();
         allPictureFragment = new AllPictureFragment();
@@ -199,11 +202,18 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         });
         setMode(Mode.map_mode);
         if (fromWeb && !isPublic) {
-            new GetAccessTokenTask().execute();
+            getAccessToken(email, new OnAccessTokenGotListener() {
+                @Override
+                public void onAccessTokenGot(@NonNull String token) {
+                    if (email != null && tripName != null) {
+                        ViewTripActivity.this.token = token;
+                        new PrepareTripTask().execute();
+                    }
+                }
+            });
         } else {
             new PrepareTripTask().execute();
         }
-
     }
 
     @Override
@@ -258,6 +268,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 ft.show(viewMapFragment);
                 navigationView.getMenu().findItem(R.id.map).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
+                spinner.setVisibility(View.VISIBLE);
                 break;
             case text_mode:
                 if (trip != null)
@@ -265,6 +276,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 ft.show(allTextFragment);
                 navigationView.getMenu().findItem(R.id.diary).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
+                spinner.setVisibility(View.GONE);
                 break;
             case photo_mode:
                 if (trip != null)
@@ -272,6 +284,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 ft.show(allPictureFragment);
                 navigationView.getMenu().findItem(R.id.photo).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
+                spinner.setVisibility(View.GONE);
                 break;
             case video_mode:
                 if (trip != null)
@@ -279,6 +292,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 ft.show(allVideoFragment);
                 navigationView.getMenu().findItem(R.id.video).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
+                spinner.setVisibility(View.GONE);
                 break;
             case audio_mode:
                 if (trip != null)
@@ -286,6 +300,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 ft.show(allAudioFragment);
                 navigationView.getMenu().findItem(R.id.audio).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
+                spinner.setVisibility(View.GONE);
                 break;
             case money_mode:
                 if (trip != null)
@@ -293,6 +308,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 ft.show(viewCostFragment);
                 navigationView.getMenu().findItem(R.id.money).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
+                spinner.setVisibility(View.GONE);
                 break;
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -332,35 +348,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
         if (behavior != null) {
             behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
-        }
-    }
-
-    class GetAccessTokenTask extends AsyncTask<String, String, String> {
-
-        Intent loginIntent;
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                token = GoogleAuthUtil.getToken(getActivity(), email, "oauth2:https://www.googleapis.com/auth/userinfo.email");
-            } catch (UserRecoverableAuthException e) {
-                e.printStackTrace();
-                loginIntent = e.getIntent();
-                token = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                token = "abc";
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if (token != null && email != null && tripName != null) {
-                new PrepareTripTask().execute();
-            } else if (loginIntent != null) {
-                startActivityForResult(loginIntent, REQUEST_GET_TOKEN);
-            }
         }
     }
 
@@ -408,10 +395,16 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     lat = new LatLng[latsSize];
                     LatLngBounds.Builder latlngBoundesBuilder = new LatLngBounds.Builder();
                     for (int i = 0; i < latsSize; i++) {
-                        lat[i] = new LatLng(cache.latitudes[i], cache.longitudes[i]);
-                        latlngBoundesBuilder.include(lat[i]);
+                        LatLng latLng = new LatLng(cache.latitudes[i], cache.longitudes[i]);
+                        lat[i] = latLng;
+                        latlngBoundesBuilder.include(latLng);
                     }
                     bounds = latlngBoundesBuilder.build();
+                    if (trip.dir instanceof WebDocumentFile && latsSize > 0) {
+                        String timeZone = MyCalendar.getTimezoneFromLatLng(lat[0].latitude, lat[0].longitude);
+                        if (timeZone == null) timeZone = TimeZone.getDefault().getID();
+                        trip.timezone = timeZone;
+                    }
                 }
             } catch (Exception e) {
                 if (trip != null || trip.cacheFile != null) {
@@ -444,7 +437,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 }
                 if (trip.tripName != null && trip.time != null) {
                     navigationTripName.setText(trip.tripName);
-                    navigationTripTime.setText(trip.time.formatInTimezone(trip.timezone));
+                    String dateDuration = trip.getDateDurationString();
+                    navigationTripTime.setText(dateDuration);
+                    ActionBar actionBar = getSupportActionBar();
+                    if (actionBar != null) {
+                        actionBar.setSubtitle(dateDuration);
+                    }
                     new LoadNavigationHeaderBackgroundTask().execute();
                 }
             } else {
@@ -544,8 +542,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (bundle.getBoolean(tag_request_updatePOI, false)) {
                     onPOIUpdate(bundle.getString(tag_update_poiNames, null));
                 }
-            } else if (requestCode == REQUEST_GET_TOKEN) {
-                new GetAccessTokenTask().execute();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -609,8 +605,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     tryDeleteLocalCache(file);
                 }
             }
-            if (poi.costFiles!=null){
-                for (DocumentFile file : poi.costFiles){
+            if (poi.costFiles != null) {
+                for (DocumentFile file : poi.costFiles) {
                     tryDeleteLocalCache(file);
                 }
             }

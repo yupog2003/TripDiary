@@ -270,7 +270,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
                 ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
-                ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+                ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         for (int i = 0; i < checkedItems.size(); i++) {
@@ -279,7 +279,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                         viewCostFragment.refreshData(true);
                     }
                 });
-                ab.setNegativeButton(getString(R.string.cancel), null);
+                ab.setNegativeButton(getString(R.string.no), null);
                 ab.show();
             } else if (item.getItemId() == R.id.edit) {
                 final CostData data = checkedItems.get(0);
@@ -341,7 +341,6 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                                 bw.flush();
                                 bw.close();
                             } catch (IOException | IllegalArgumentException e) {
-
                                 e.printStackTrace();
                             }
                             viewCostFragment.refreshData(true);

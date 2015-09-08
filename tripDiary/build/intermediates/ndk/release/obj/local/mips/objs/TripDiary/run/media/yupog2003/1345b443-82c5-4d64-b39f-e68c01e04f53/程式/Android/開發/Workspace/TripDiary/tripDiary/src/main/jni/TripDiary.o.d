@@ -30,11 +30,9 @@
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/fstream \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/cfloat \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/vector \
- /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/cstdlib \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/cmath \
  /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/sstream \
- /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime \
- /home/yupog2003/Android/android-ndk-r10e/platforms/android-21/arch-mips/usr/include/android/log.h
+ /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime
 
 /home/yupog2003/Android/android-ndk-r10e/platforms/android-21/arch-mips/usr/include/jni.h:
 
@@ -96,12 +94,8 @@
 
 /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/vector:
 
-/home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/cstdlib:
-
 /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/cmath:
 
 /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/sstream:
 
 /home/yupog2003/Android/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime:
-
-/home/yupog2003/Android/android-ndk-r10e/platforms/android-21/arch-mips/usr/include/android/log.h:

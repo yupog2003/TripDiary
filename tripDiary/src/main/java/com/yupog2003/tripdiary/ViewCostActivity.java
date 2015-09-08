@@ -53,7 +53,6 @@ public class ViewCostActivity extends MyActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 ViewCostActivity.this.finish();

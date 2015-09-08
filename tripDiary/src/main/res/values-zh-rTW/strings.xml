@@ -74,6 +74,16 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="habit_of_adding_poi">
+        <item>在瀏覽興趣點之前新增它</item>
+        <item>在瀏覽興趣點時新增它</item>
+        <item>在瀏覽興趣點之後前增它</item>
+    </string-array>
+    <string-array name="habit_of_adding_poi_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
     <string name="title_activity_category">類別</string>
 
@@ -170,7 +180,7 @@
     <string name="select_the_audio_by">選取聲音</string>
     <string name="max_speed">最高速</string>
     <string name="total_ascent">總爬昇</string>
-    <string name="max_altitude">最大高度</string>
+    <string name="max_altitude">最高高度</string>
     <string name="min_altitude">最低高度</string>
     <string name="velocity">速率</string>
     <string name="share_track_kml">分享軌跡(KML)</string>
@@ -218,7 +228,6 @@
     <string name="explain_update_trip_timezone">原本TripDiary以當前時區顯示所有時間資訊，但現在你可以根據軌跡的第一個位置更新旅程時區，如此一來TripDiary就可以根據旅程時區顯示正確時間。(需要網際網路)</string>
     <string name="no_internet_connection">沒有網路連線</string>
     <string name="updating">更新中</string>
-    <string name="choose_a_account">選擇一個帳戶</string>
     <string name="zipping">壓縮中</string>
     <string name="uploading">上傳中</string>
     <string name="local_trips">本機旅程</string>
@@ -275,7 +284,7 @@
     <string name="searching_for_satellite">定位中</string>
     <string name="please_input_poi_name">請輸入興趣點名稱</string>
     <string name="poi_has_been_saved">已儲存興趣點</string>
-    <string name="generate_video">生成影片(實驗性)</string>
+    <string name="generate_video">生成影片</string>
     <string name="encoding">編碼中</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">請連線至網路以下載Google Map背景</string>
     <string name="add_background_music">加入背景音樂</string>
@@ -314,9 +323,17 @@
     <string name="track_is_too_long">軌跡過長 (記憶體不足)</string>
     <string name="view_trip">觀看旅程</string>
     <string name="open">開啟</string>
-    <string name="permission_explanation_accounts">旅遊日記需要帳戶權限以得知您的電子郵件地址，電子郵件地址被用來與網頁版互動</string>
     <string name="permission_explanation_location">旅遊日記需要位置權限以紀錄軌跡</string>
     <string name="permission_explanation_write_external_storage">旅遊日記需要儲存裝置權限以儲存旅程在內部儲存裝置或外部儲存裝置</string>
     <string name="storage_error">儲存裝置錯誤</string>
+    <string name="no_poi">沒有興趣點</string>
+    <string name="Keep_in_memory">常駐記憶體</string>
+    <string name="Keep_in_memory_explanation">紀錄軌跡時旅遊日記會盡可能常駐記憶體，也許可以改善斷斷續續的軌跡紀錄</string>
+    <string name="downloading_ffmpeg_binary_file_for_armv7_neon">為armv7-neon下載ffmpeg二進位檔中</string>
+    <string name="num_of_images_in_a_row_in_landscape_mode">橫向模式中一列有幾張圖片</string>
+    <string name="num_of_images_in_a_row_in_portrait_mode">縱向模式中一列有幾張圖片</string>
+    <string name="habit_of_adding_poi">新增興趣點習慣</string>
+    <string name="when_do_you_usually_add_a_poi">你新增興趣點的習慣，這會影響到匯入回憶的行為</string>
+    <string name="measurementUnit_image">張圖片</string>
 
 </resources>

@@ -13,8 +13,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
@@ -41,8 +43,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.yupog2003.tripdiary.AllRecordActivity;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
@@ -65,7 +65,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,8 +73,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class LocalTripsFragment extends Fragment {
-    String account;
-    String token;
+
     ExpandableListView listView;
     public String newTripName;
     TripAdapter adapter;
@@ -83,13 +81,11 @@ public class LocalTripsFragment extends Fragment {
     SharedPreferences categorysp;
     SharedPreferences tripsp;
     SharedPreferences categoryExpandSp;
-    private static final int REQUEST_GET_TOKEN = 0;
     private static final int REQUEST_RESTORE_TRIP = 1;
     private static final int REQUEST_IMPORT_TRIP = 2;
     public static final String pref_timesort = "timesort";
-    boolean uploadPublic;
     Drawable expandDrawable;
-    Drawable collpaseDrawable;
+    Drawable collapaseDrawable;
 
     public LocalTripsFragment() {
 
@@ -99,14 +95,12 @@ public class LocalTripsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         listView = new FloatingGroupExpandableListView(getActivity());
         listView.setGroupIndicator(null);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            listView.setNestedScrollingEnabled(true);
-        }
+        ViewCompat.setNestedScrollingEnabled(listView, true);
         categorysp = getActivity().getSharedPreferences("category", Context.MODE_PRIVATE);
         tripsp = getActivity().getSharedPreferences("trip", Context.MODE_PRIVATE);
         categoryExpandSp = getActivity().getSharedPreferences("categoryExpand", Context.MODE_PRIVATE);
         expandDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_expand2);
-        collpaseDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
+        collapaseDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
         return listView;
     }
 
@@ -258,25 +252,43 @@ public class LocalTripsFragment extends Fragment {
         }
     }
 
-    private void askUploadPublic() {
+    private void askUploadPublic(final String account) {
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
         ab.setTitle(getString(R.string.make_it_public));
         ab.setMessage(getString(R.string.make_it_public_to_share));
         ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                uploadPublic = true;
-                new GetAccessTokenTask().execute();
+                shareTrackByTripDiary(account, true);
             }
         });
         ab.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                uploadPublic = false;
-                new GetAccessTokenTask().execute();
+                shareTrackByTripDiary(account, false);
             }
         });
         ab.show();
+    }
+
+    private void shareTrackByTripDiary(final String account, final boolean uploadPublic) {
+        if (getActivity() == null || account == null) return;
+        ((MyActivity) getActivity()).getAccessToken(account, new MyActivity.OnAccessTokenGotListener() {
+            @Override
+            public void onAccessTokenGot(@NonNull String token) {
+                if (adapter.checksName != null && getActivity() != null) {
+                    for (int i = 0; i < adapter.checksName.size(); i++) {
+                        Intent intent = new Intent(getActivity(), SendTripService.class);
+                        intent.putExtra(SendTripService.tripNameTag, adapter.checksName.get(i));
+                        intent.putExtra(SendTripService.accountTag, account);
+                        intent.putExtra(SendTripService.tokenTag, token);
+                        intent.putExtra(SendTripService.publicTag, uploadPublic);
+                        getActivity().startService(intent);
+                        DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_tripdiary", adapter.checksName.get(i), null);
+                    }
+                }
+            }
+        });
     }
 
     class TripAdapter extends BaseExpandableListAdapter implements OnChildClickListener, ExpandableListView.MultiChoiceModeListener, OnQueryTextListener, OnGroupCollapseListener, OnGroupExpandListener {
@@ -334,12 +346,10 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public Object getChild(int groupPosition, int childPosition) {
-
             return trips.get(groupPosition).get(childPosition);
         }
 
         public long getChildId(int groupPosition, int childPosition) {
-
             if (!listView.isGroupExpanded(groupPosition))
                 return -1;
             int count = 0;
@@ -360,7 +370,6 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
@@ -376,28 +385,24 @@ public class LocalTripsFragment extends Fragment {
             String tripName = trip.tripName;
             holder.item.setText(tripName);
             holder.item.setCompoundDrawablesWithIntrinsicBounds(trip.drawable, null, null, null);
-            holder.itemextra.setText("-" + trip.time.formatInTimezone(MyCalendar.getTripTimeZone(getActivity(), tripName)));
+            holder.itemextra.setText("-" + trip.time.formatInTimezone(trip.timezone));
             ((CheckableLayout) convertView).setOnMultiChoiceMode(onActionMode);
             return convertView;
         }
 
         public int getChildrenCount(int groupPosition) {
-
             return trips.get(groupPosition).size();
         }
 
         public Object getGroup(int groupPosition) {
-
             return categories[groupPosition];
         }
 
         public int getGroupCount() {
-
             return categories.length;
         }
 
         public long getGroupId(int groupPosition) {
-
             return groupPosition;
         }
 
@@ -417,14 +422,13 @@ public class LocalTripsFragment extends Fragment {
                 convertView.setTag(holder);
             }
             holder = (GroupViewHolder) convertView.getTag();
-            holder.title.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? expandDrawable : collpaseDrawable, null, null, null);
+            holder.title.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? expandDrawable : collapaseDrawable, null, null, null);
             holder.title.setText(categories[groupPosition]);
             holder.count.setText("(" + String.valueOf(getChildrenCount(groupPosition)) + ")");
             return convertView;
         }
 
         public boolean hasStableIds() {
-
             return true;
         }
 
@@ -459,18 +463,20 @@ public class LocalTripsFragment extends Fragment {
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
                 ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
-                ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+                ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
 
-                        for (int i = 0; i < checksName.size(); i++) {
-                            FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(i)).delete();
-                            tripsp.edit().remove(checksName.get(i)).apply();
+                        for (String tripName : checksName) {
+                            DocumentFile tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
+                            if (getActivity() == null || tripFile == null) continue;
+                            Trip trip = new Trip(getActivity(), tripFile, true);
+                            trip.deleteSelf();
                         }
                         loadData();
                     }
                 });
-                ab.setNegativeButton(getString(R.string.cancel), null);
+                ab.setNegativeButton(getString(R.string.no), null);
                 ab.show();
             } else if (item.getItemId() == R.id.backup) {
                 Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
@@ -530,7 +536,7 @@ public class LocalTripsFragment extends Fragment {
                         String s = name.getText().toString();
                         if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, s) == null || s.equals(checksName.get(0))) {
                             DocumentFile tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, checksName.get(0));
-                            if (tripFile == null){
+                            if (tripFile == null) {
                                 Toast.makeText(getActivity(), R.string.storage_error, Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -557,9 +563,8 @@ public class LocalTripsFragment extends Fragment {
             } else if (item.getItemId() == R.id.upload) {
                 ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
                     @Override
-                    public void onAccountPicked(String accountName) {
-                        account = accountName;
-                        askUploadPublic();
+                    public void onAccountPicked(@NonNull String accountName) {
+                        askUploadPublic(accountName);
                     }
                 }, false);
             } else if (item.getItemId() == R.id.category) {
@@ -717,9 +722,23 @@ public class LocalTripsFragment extends Fragment {
                     return;
                 try {
                     InputStream is = getActivity().getContentResolver().openInputStream(uri);
-                    DocumentFile outFile = TripDiaryApplication.rootDocumentFile.createDirectory(newTripName).createFile("", newTripName + ".gpx");
-                    OutputStream os = outFile.getOutputStream();
-                    FileHelper.copyByStream(is, os);
+                    DocumentFile tripFile = TripDiaryApplication.rootDocumentFile.createDirectory(newTripName);
+                    if (tripFile == null) {
+                        Toast.makeText(getActivity(), R.string.storage_error, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    final DocumentFile gpxFile = tripFile.createFile("", newTripName + ".gpx");
+                    if (gpxFile == null) {
+                        Toast.makeText(getActivity(), R.string.storage_error, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    FileHelper.copyByStream(is, gpxFile.getOutputStream());
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyCalendar.updateTripTimeZoneFromGpxFile(getActivity(), newTripName, gpxFile);
+                        }
+                    }).start();
                 } catch (FileNotFoundException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
@@ -732,42 +751,8 @@ public class LocalTripsFragment extends Fragment {
                 uris.add(uri);
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                 getActivity().startService(intent);
-            } else if (requestCode == REQUEST_GET_TOKEN) {
-                if (resultCode == Activity.RESULT_OK) {
-                    new GetAccessTokenTask().execute();
-                }
             }
         }
-    }
-
-    class GetAccessTokenTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
-                if (adapter.checksName != null && getActivity() != null) {
-                    for (int i = 0; i < adapter.checksName.size(); i++) {
-                        Intent intent = new Intent(getActivity(), SendTripService.class);
-                        intent.putExtra(SendTripService.tripNameTag, adapter.checksName.get(i));
-                        intent.putExtra(SendTripService.accountTag, account);
-                        intent.putExtra(SendTripService.tokenTag, token);
-                        intent.putExtra(SendTripService.publicTag, uploadPublic);
-                        getActivity().startService(intent);
-                        DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_tripdiary", adapter.checksName.get(i), null);
-                    }
-                }
-            } catch (UserRecoverableAuthException e) {
-
-                e.printStackTrace();
-                startActivityForResult(e.getIntent(), REQUEST_GET_TOKEN);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
     }
 
     class UpdateTripTimeZoneTask extends AsyncTask<String, String, String> {
@@ -806,39 +791,15 @@ public class LocalTripsFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-
             publishProgress("setMax", String.valueOf(trips.size()));
             for (int i = 0; i < trips.size(); i++) {
                 if (cancel)
                     break;
                 String tripName = trips.get(i);
                 publishProgress(tripName, String.valueOf(i));
-                try {
-                    DocumentFile gpxFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, tripName + ".gpx");
-                    BufferedReader br = new BufferedReader(new InputStreamReader(gpxFile.getInputStream()));
-                    String s;
-                    while ((s = br.readLine()) != null) {
-                        if (s.contains("<trkpt ")) {
-                            String[] toks = s.split("\"");
-                            double lat, lng;
-                            if (s.indexOf("lat") > s.indexOf("lon")) {
-                                lat = Double.parseDouble(toks[3]);
-                                lng = Double.parseDouble(toks[1]);
-                            } else {
-                                lat = Double.parseDouble(toks[1]);
-                                lng = Double.parseDouble(toks[3]);
-                            }
-                            MyCalendar.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
-                            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), tripName + ".gpx.cache");
-                            if (cacheFile != null) {
-                                cacheFile.delete();
-                            }
-                            break;
-                        }
-                    }
-                    br.close();
-                } catch (IOException | IllegalArgumentException e) {
-                    e.printStackTrace();
+                DocumentFile gpxFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, tripName + ".gpx");
+                if (gpxFile != null) {
+                    MyCalendar.updateTripTimeZoneFromGpxFile(getActivity(), tripName, gpxFile);
                 }
             }
             return null;
@@ -846,7 +807,6 @@ public class LocalTripsFragment extends Fragment {
 
         @Override
         protected void onProgressUpdate(String... values) {
-
             if (values[0].equals("setMax")) {
                 progress.setMax(Integer.valueOf(values[1]));
                 progressMessage.setText("0/" + values[1]);

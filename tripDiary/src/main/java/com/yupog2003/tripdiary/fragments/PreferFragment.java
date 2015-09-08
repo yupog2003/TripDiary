@@ -18,6 +18,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -36,12 +37,8 @@ import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.MyBackupAgent;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
-import com.yupog2003.tripdiary.preferences.SeekBarPreference;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class PreferFragment extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
     Preference musicpath;
@@ -57,7 +54,6 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     ListPreference playpoispeed;
     ListPreference distanceUnit;
     ListPreference altitudeUnit;
-    SeekBarPreference diaryfontsize;
     SwitchPreference usesaf;
 
     private static final int selectmusicpath = 0;
@@ -84,9 +80,6 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         diaryfont = findPreference("diaryfont");
         diaryfont.setOnPreferenceClickListener(this);
         diaryfont.setSummary(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("diaryfont", getString(R.string.select_diary_font)));
-        diaryfontsize = (SeekBarPreference) findPreference("diaryfontsize");
-        diaryfontsize.setSummary(String.valueOf(diaryfontsize.getProgress()) + " pixels");
-        diaryfontsize.setOnPreferenceChangeListener(this);
         playingtripmode = (ListPreference) findPreference("playingtripmode");
         playingtripmode.setSummary(playingtripmode.getEntry());
         playingtripmode.setOnPreferenceChangeListener(this);
@@ -121,7 +114,6 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         if (backupPreferenceFile == null) {
             backupPreferenceFile = TripDiaryApplication.rootDocumentFile.createDirectory(".settings");
         }
-
     }
 
     @SuppressLint("DefaultLocale")
@@ -281,7 +273,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         } else if (preference.equals(account)) {
             ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
                 @Override
-                public void onAccountPicked(String accountName) {
+                public void onAccountPicked(@NonNull String accountName) {
                     account.setSummary(accountName);
                 }
             }, true);
@@ -291,9 +283,6 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-        if (preference.equals(diaryfontsize)) {
-            diaryfontsize.setSummary(String.valueOf(newValue) + " pixels");
-        }
         if (preference instanceof ListPreference) {
             ((ListPreference) preference).setValue((String) newValue);
             preference.setSummary(((ListPreference) preference).getEntry());
@@ -322,9 +311,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     }
 
     private void setNewRootPath(String newRootPath) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-        editor.putString("rootpath", newRootPath);
-        editor.apply();
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putString("rootpath", newRootPath).apply();
         rootpath.setSummary(newRootPath);
         TripDiaryApplication.updateRootPath();
         backupPreferenceFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, ".settings");
@@ -372,31 +359,9 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                     break;
                 String tripName = trips[i].getName();
                 publishProgress(tripName, String.valueOf(i));
-                try {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(FileHelper.findfile(trips[i], tripName + ".gpx").getInputStream()));
-                    String s;
-                    while ((s = br.readLine()) != null) {
-                        if (s.contains("<trkpt ")) {
-                            String[] toks = s.split("\"");
-                            double lat, lng;
-                            if (s.indexOf("lat") > s.indexOf("lon")) {
-                                lat = Double.parseDouble(toks[3]);
-                                lng = Double.parseDouble(toks[1]);
-                            } else {
-                                lat = Double.parseDouble(toks[1]);
-                                lng = Double.parseDouble(toks[3]);
-                            }
-                            MyCalendar.updateTripTimeZoneFromLatLng(getActivity(), tripName, lat, lng);
-                            DocumentFile cache = FileHelper.findfile(trips[i], tripName + ".gpx.cache");
-                            if (cache != null) {
-                                cache.delete();
-                            }
-                            break;
-                        }
-                    }
-                    br.close();
-                } catch (IOException | IllegalArgumentException e) {
-                    e.printStackTrace();
+                DocumentFile gpxFile = FileHelper.findfile(trips[i], tripName + ".gpx");
+                if (gpxFile != null) {
+                    MyCalendar.updateTripTimeZoneFromGpxFile(getActivity(), tripName, gpxFile);
                 }
             }
             return null;

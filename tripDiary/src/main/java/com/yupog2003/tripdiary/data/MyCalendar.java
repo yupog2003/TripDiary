@@ -2,6 +2,8 @@ package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
@@ -178,9 +180,10 @@ public class MyCalendar extends GregorianCalendar {
         return String.format("%dT%d:%d:%d", day, hour, min, sec);
     }
 
+    @NonNull
     public static MyCalendar getTripTime(String tripName) { //in UTC
         try {
-            SharedPreferences tripTimePreference = TripDiaryApplication.instance.getSharedPreferences("tripTime", 0);
+            SharedPreferences tripTimePreference = TripDiaryApplication.instance.getSharedPreferences("tripTime", Context.MODE_PRIVATE);
             String s;
             if ((s = tripTimePreference.getString(tripName, null)) != null) {
                 return getTime(s, type_gpx);
@@ -200,8 +203,9 @@ public class MyCalendar extends GregorianCalendar {
         return MyCalendar.getInstance();
     }
 
-    public static String getTimezoneFromLatlng(double lat, double lng) {
-        String result = TimeZone.getDefault().getID();
+    @Nullable
+    public static String getTimezoneFromLatLng(double lat, double lng) {
+        if (!DeviceHelper.isMobileNetworkAvailable(TripDiaryApplication.instance)) return null;
         try {
             URL url = new URL("https://maps.googleapis.com/maps/api/timezone/xml?location=" + String.valueOf(lat) + "," + String.valueOf(lng) + "&timestamp=0&sensor=true");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -209,17 +213,18 @@ public class MyCalendar extends GregorianCalendar {
             String s = IOUtils.toString(is, "UTF-8");
             if (s.contains("OVER_QUERY_LIMIT")) {
                 Thread.sleep(5000);
-                return getTimezoneFromLatlng(lat, lng);
+                return getTimezoneFromLatLng(lat, lng);
             }
             if (s.contains("OK")) {
-                result = s.substring(s.indexOf("<time_zone_id>") + 14, s.indexOf("</time_zone_id>"));
+                return s.substring(s.indexOf("<time_zone_id>") + 14, s.indexOf("</time_zone_id>"));
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return result;
+        return null;
     }
 
+    @NonNull
     public static String getTripTimeZone(Context context, String tripName) {
         if (context == null)
             return TimeZone.getDefault().getID();
@@ -229,15 +234,52 @@ public class MyCalendar extends GregorianCalendar {
         return preference.getString(tripName, TimeZone.getDefault().getID());
     }
 
-    public static void updateTripTimeZoneFromLatLng(Context context, String tripName, double lat, double lng) {
-        updateTripTimeZone(context, tripName, getTimezoneFromLatlng(lat, lng));
+    @Nullable
+    public static String getTripTimeZoneFromGpxFile(DocumentFile gpxFile) {
+        if (gpxFile != null) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(gpxFile.getInputStream()));
+            String s;
+            try {
+                while ((s = br.readLine()) != null) {
+                    if (s.contains("<trkpt ")) {
+                        String[] toks = s.split("\"");
+                        double lat, lng;
+                        if (s.indexOf("lat") > s.indexOf("lon")) {
+                            lat = Double.parseDouble(toks[3]);
+                            lng = Double.parseDouble(toks[1]);
+                        } else {
+                            lat = Double.parseDouble(toks[1]);
+                            lng = Double.parseDouble(toks[3]);
+                        }
+                        return getTimezoneFromLatLng(lat, lng);
+                    }
+                }
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
-    public static void updateTripTimeZone(Context context, String tripName, String timezone) {
-        if (context == null)
-            return;
+    public static boolean updateTripTimeZoneFromGpxFile(Context context, String tripName, DocumentFile gpxFile) {
+        if (context == null || tripName == null || gpxFile == null) return false;
+        String timeZone = getTripTimeZoneFromGpxFile(gpxFile);
+        if (timeZone != null && updateTripTimeZone(context, tripName, timeZone)) {
+            DocumentFile cacheFile = FileHelper.findfile(gpxFile.getParentFile(), gpxFile.getName() + ".cache");
+            if (cacheFile != null) {
+                cacheFile.delete();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean updateTripTimeZone(Context context, String tripName, String timezone) {
+        if (context == null || tripName == null || timezone == null)
+            return false;
         context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE).edit().putString(tripName, timezone).apply();
         context.getSharedPreferences("tripTime", Context.MODE_PRIVATE).edit().remove(tripName).apply();
+        return true;
     }
 
     @Override
@@ -248,5 +290,33 @@ public class MyCalendar extends GregorianCalendar {
 
     public void setTimeZone(String timeZoneID) {
         setTimeZone(TimeZone.getTimeZone(timeZoneID));
+    }
+
+    public static int getOffset(String timezone, DocumentFile gpxFile) { //support daylight savings time
+        if (timezone == null) return TimeZone.getDefault().getRawOffset();
+        TimeZone timeZone = TimeZone.getTimeZone(timezone);
+        if (gpxFile == null) return timeZone.getRawOffset();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(gpxFile.getInputStream()));
+            String s;
+            while ((s = br.readLine()) != null) {
+                if (s.contains("<time>")) {
+                    MyCalendar time = getTime("UTC", s, type_gpx);
+                    return timeZone.getOffset(time.getTimeInMillis());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return timeZone.getRawOffset();
     }
 }

@@ -15,8 +15,7 @@ public class UnScrollableListView extends ListView {
 
     }
 
-    public UnScrollableListView(Context context, AttributeSet attrs,
-                                int defStyle) {
+    public UnScrollableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
     }

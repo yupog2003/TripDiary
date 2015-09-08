@@ -48,7 +48,8 @@
 
         <service
             android:name=".services.RecordService"
-            android:exported="false" />
+            android:exported="false"
+            android:stopWithTask="false" />
 
         <activity
             android:name=".ViewPointActivity"
@@ -96,7 +97,7 @@
             android:launchMode="standard"
             android:maxRecents="3"
             android:persistableMode="persistNever">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -110,7 +111,7 @@
                     android:host="219.85.61.62"
                     android:pathPrefix="/TripDiary/Trip.html"
                     android:scheme="http" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".AllRecordActivity"
@@ -120,9 +121,9 @@
         <activity
             android:name=".MultiFileChooseActivity"
             android:label="@string/import_files" />
-
         <activity
             android:name=".RecordActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <service
@@ -145,10 +146,9 @@
                 <data android:mimeType="video/*" />
                 <data android:mimeType="audio/*" />
             </intent-filter>
-
         </activity>
         <activity
-            android:name=".ViewGraphAcivity"
+            android:name=".ViewGraphActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".RestoreTripActivity"
@@ -167,6 +167,8 @@
         <service
             android:name=".services.BackupRestoreTripService"
             android:exported="false" />
+
+        <activity android:name=".DummyActivity" />
     </application>
 
 </manifest>

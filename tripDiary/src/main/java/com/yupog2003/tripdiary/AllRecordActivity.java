@@ -1,7 +1,5 @@
 package com.yupog2003.tripdiary;
 
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -151,7 +149,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         return true;
     }
 
-    class AnalysisTask extends AsyncTask<String, Object, Boolean> implements OnCancelListener {
+    class AnalysisTask extends AsyncTask<String, Object, Boolean> {
 
         String progressFormat;
         BitmapDescriptor bd;
@@ -219,7 +217,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                     AllRecordActivity.this.record.minLatitude = record.minLatitude;
                 }
             }
-
             return success;
         }
 
@@ -227,12 +224,13 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
         @Override
         public void onProgressUpdate(Object... values) {
-
             if (values[0] instanceof Integer) {
+                if (trips == null) return;
                 int value = (Integer) values[0];
+                Trip trip = trips[value];
                 progressBar.setProgress(value);
                 setTitle(String.format(progressFormat, value, tripNames.length));
-                POI[] pois = trips[value].pois;
+                POI[] pois = trip.pois;
                 int poisLength = pois.length;
                 record.num_POIs += poisLength;
                 for (POI poi : pois) {
@@ -243,12 +241,12 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                         continue;
                     markers.add(gmap.addMarker(new MarkerOptions()
                             .position(new LatLng(poi.latitude, poi.longitude))
-                            .title(trips[value].tripName + "/" + poi.title)
-                            .snippet(" " + poi.time.formatInTimezone(trips[value].timezone) + "\n " + poi.diary)
+                            .title(trip.tripName + "/" + poi.title)
+                            .snippet(" " + poi.time.formatInTimezone(trip.timezone) + "\n " + poi.diary)
                             .draggable(false)
                             .icon(bd)));
                 }
-                if (value == tripNames.length - 1) {
+                if (value == tripNames.length - 1 && trips != null) {
                     gmap.setInfoWindowAdapter(new POIInfoWindowAdapter(getActivity(), null, trips));
                 }
             } else if (values[0] instanceof double[]) {
@@ -281,11 +279,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             setTitle(getString(R.string.lifetime_record));
             progressBar.setVisibility(View.GONE);
         }
-
-        public void onCancel(DialogInterface dialog) {
-            AllRecordActivity.this.stop();
-        }
-
     }
 
     public void progressChanged(int progress) {

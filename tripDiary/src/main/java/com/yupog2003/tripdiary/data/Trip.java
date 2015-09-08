@@ -2,8 +2,14 @@ package com.yupog2003.tripdiary.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -11,14 +17,21 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
-import java.io.BufferedReader;
+import org.apache.commons.io.IOUtils;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TimeZone;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class Trip implements Comparable<Trip> {
 
@@ -54,10 +67,9 @@ public class Trip implements Comparable<Trip> {
         }
     }
 
-
     public static Trip createTrip(Context context, String tripName) {
         DocumentFile dir = TripDiaryApplication.rootDocumentFile.createDirectory(tripName);
-        if (dir == null){
+        if (dir == null) {
             Toast.makeText(context, R.string.storage_error, Toast.LENGTH_SHORT).show();
             return null;
         }
@@ -68,6 +80,7 @@ public class Trip implements Comparable<Trip> {
     public void refreshBasic() {
         this.tripName = dir.getName();
         this.time = MyCalendar.getTripTime(tripName);
+        this.timezone = MyCalendar.getTripTimeZone(context, tripName);
         this.category = context.getSharedPreferences("trip", Context.MODE_PRIVATE).getString(tripName, context.getString(R.string.nocategory));
     }
 
@@ -90,19 +103,13 @@ public class Trip implements Comparable<Trip> {
         if (noteFile == null) {
             this.noteFile = dir.createFile("", "note");
         }
-        this.timezone = MyCalendar.getTripTimeZone(context, tripName);
         this.note = "";
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(noteFile.getInputStream()));
-            String s;
-            StringBuilder sb = new StringBuilder();
-            while ((s = br.readLine()) != null) {
-                sb.append(s).append("\n");
+        if (noteFile != null) {
+            try {
+                note = IOUtils.toString(noteFile.getInputStream(), "UTF-8");
+            } catch (NullPointerException | IOException | IllegalArgumentException e) {
+                e.printStackTrace();
             }
-            note = sb.toString();
-            br.close();
-        } catch (NullPointerException | IOException | IllegalArgumentException e) {
-            e.printStackTrace();
         }
         refreshPOIs();
     }
@@ -150,6 +157,280 @@ public class Trip implements Comparable<Trip> {
                 e.printStackTrace();
             }
         }
+    }
+
+    @NonNull
+    public String getDateDurationString() {
+        if (cache == null) return "";
+        final String startTime = cache.startTime;
+        final String endTime = cache.endTime;
+        if (startTime == null || endTime == null) {
+            return "";
+        }
+        if (!startTime.contains("T") || !endTime.contains("T")) {
+            return startTime;
+        }
+        String startDate = startTime.substring(0, startTime.indexOf("T"));
+        String endDate = endTime.substring(0, endTime.indexOf("T"));
+        if (!startDate.contains("-") || !endDate.contains("-")) {
+            return startDate;
+        }
+        String[] startDates = startDate.split("-");
+        String[] endDates = endDate.split("-");
+        if (startDates.length != 3 || endDates.length != 3) {
+            return startDate;
+        }
+        StringBuilder resultBuilder = new StringBuilder(startDate);
+        for (int i = 0; i < 3; i++) {
+            if (!startDates[i].equals(endDates[i])) {
+                resultBuilder.append("~");
+                for (int j = i; j < 3; j++) {
+                    resultBuilder.append(endDates[j]).append("-");
+                }
+                resultBuilder.deleteCharAt(resultBuilder.length() - 1);
+                break;
+            }
+        }
+        return resultBuilder.toString();
+    }
+
+    public interface GenerateKMxListener {
+        void onProgressChanged(int progress, int total);
+    }
+
+    @Nullable
+    public DocumentFile generateKML(DocumentFile kmlFile, GenerateKMxListener listener) {
+        if (pois == null || cache == null || kmlFile == null || note == null)
+            return null;
+        int lineColor = PreferenceManager.getDefaultSharedPreferences(context).getInt("trackcolor", 0xff6699cc);
+        String lineColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(lineColor), Color.blue(lineColor), Color.green(lineColor), Color.red(lineColor));
+        int iconColor = PreferenceManager.getDefaultSharedPreferences(context).getInt("markercolor", 0xffff0000);
+        String iconColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(iconColor), Color.blue(iconColor), Color.green(iconColor), Color.red(iconColor));
+        try {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(kmlFile.getOutputStream()));
+            bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            bw.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n");
+            bw.write("<Document>\n");
+            bw.write("<name>" + tripName + "</name>\n");
+            bw.write("<description>" + note + "</description>\n");
+            bw.write("<Style id=\"lineColor\">\n");
+            bw.write("<LineStyle>\n");
+            bw.write("<color>" + lineColorInKML + "</color>\n");
+            bw.write("<width>4</width>\n");
+            bw.write("</LineStyle>\n");
+            bw.write("</Style>\n");
+            bw.write("<Style id=\"iconColor\">\n");
+            bw.write("<IconStyle>\n");
+            bw.write("<color>" + iconColorInKML + "</color>\n");
+            bw.write("</IconStyle>\n");
+            bw.write("</Style>\n");
+            bw.write("<Folder>\n");
+            bw.write("<Placemark>\n");
+            bw.write("<name>" + tripName + "</name>\n");
+            bw.write("<description>Generated by TripDiary</description>\n");
+            bw.write("<styleUrl>#lineColor</styleUrl>\n");
+            bw.write("<LineString>\n");
+            bw.write("<coordinates>");
+            int length = Math.min(cache.latitudes.length, cache.longitudes.length);
+            length = Math.min(length, cache.altitudes.length);
+            final int poiLength = pois.length;
+            final int totalLength = poiLength + length;
+            double maxLatitude = -Double.MAX_VALUE;
+            double minLatitude = Double.MAX_VALUE;
+            double maxLongitude = -Double.MAX_VALUE;
+            double minLongitude = Double.MAX_VALUE;
+            for (int i = 0; i < length; i++) {
+                double longitude = cache.longitudes[i];
+                double latitude = cache.latitudes[i];
+                if (maxLatitude < latitude) {
+                    maxLatitude = latitude;
+                }
+                if (minLatitude > latitude) {
+                    minLatitude = latitude;
+                }
+                if (maxLongitude < longitude) {
+                    maxLongitude = longitude;
+                }
+                if (minLongitude > longitude) {
+                    minLongitude = longitude;
+                }
+                bw.write(String.format(" %f,%f,%f\n", longitude, latitude, cache.altitudes[i]));
+                if (listener != null) {
+                    listener.onProgressChanged(i, totalLength);
+                }
+            }
+            bw.write("</coordinates>\n");
+            bw.write("</LineString>\n");
+            bw.write("</Placemark>\n");
+            for (int i = 0; i < poiLength; i++) {
+                POI poi = pois[i];
+                bw.write("<Placemark>\n");
+                bw.write("<name>" + poi.title + "</name>\n");
+                bw.write("<styleUrl>#iconColor</styleUrl>\n");
+                bw.write("<description>" + poi.time.formatInTimezone(timezone) + "<br/>" + poi.diary + "</description>\n");
+                bw.write("<Point>\n");
+                bw.write("<coordinates>" + String.valueOf(poi.longitude) + "," + String.valueOf(poi.latitude) + "," + String.valueOf(poi.altitude) + "</coordinates>\n");
+                bw.write("</Point>\n");
+                bw.write("</Placemark>\n");
+                if (listener != null) {
+                    listener.onProgressChanged(length + i, totalLength);
+                }
+            }
+            bw.write("</Folder>\n");
+            bw.write("<LookAt>\n");
+            bw.write("<longitude>" + String.valueOf((maxLongitude + minLongitude) / 2) + "</longitude>\n");
+            bw.write("<latitude>" + String.valueOf((maxLatitude + minLatitude) / 2) + "</latitude>\n");
+            bw.write("<altitude>0</altitude>\n");
+            bw.write("<heading>0</heading>\n");
+            bw.write("<tilt>45</tilt>\n");
+            bw.write("<range>20000</range>\n");
+            bw.write("<altitudeMode>clampToGround</altitudeMode>\n");
+            bw.write("</LookAt>\n");
+            bw.write("</Document>\n");
+            bw.write("</kml>");
+            bw.flush();
+            bw.close();
+        } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return kmlFile;
+    }
+
+
+    @Nullable
+    public DocumentFile generateKMZ(DocumentFile kmzFile, GenerateKMxListener listener) {
+        try {
+            ZipOutputStream zos = new ZipOutputStream(kmzFile.getOutputStream());
+            int lineColor = PreferenceManager.getDefaultSharedPreferences(context).getInt("trackcolor", 0xff6699cc);
+            String lineColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(lineColor), Color.blue(lineColor), Color.green(lineColor), Color.red(lineColor));
+            int iconColor = PreferenceManager.getDefaultSharedPreferences(context).getInt("markercolor", 0xffff0000);
+            String iconColorInKML = String.format("%02x%02x%02x%02x", Color.alpha(iconColor), Color.blue(iconColor), Color.green(iconColor), Color.red(iconColor));
+            File tempDir = new File(context.getCacheDir(), "kmzcache");
+            tempDir.mkdirs();
+            File tempKML = new File(tempDir, "doc.kml");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempKML));
+            bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            bw.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n");
+            bw.write("<Document>\n");
+            bw.write("<name>" + tripName + "</name>\n");
+            bw.write("<description>" + note + "</description>\n");
+            bw.write("<Style id=\"lineColor\">\n");
+            bw.write("<LineStyle>\n");
+            bw.write("<color>" + lineColorInKML + "</color>\n");
+            bw.write("<width>4</width>\n");
+            bw.write("</LineStyle>\n");
+            bw.write("</Style>\n");
+            bw.write("<Style id=\"iconColor\">\n");
+            bw.write("<IconStyle>\n");
+            bw.write("<color>" + iconColorInKML + "</color>\n");
+            bw.write("</IconStyle>\n");
+            bw.write("</Style>\n");
+            bw.write("<Folder>\n");
+            bw.write("<Placemark>\n");
+            bw.write("<name>" + tripName + "</name>\n");
+            bw.write("<description>Generated by TripDiary</description>\n");
+            bw.write("<styleUrl>#lineColor</styleUrl>\n");
+            bw.write("<LineString>\n");
+            bw.write("<coordinates>");
+            int length = Math.min(cache.latitudes.length, cache.longitudes.length);
+            length = Math.min(length, cache.altitudes.length);
+            double maxLatitude = -Double.MAX_VALUE;
+            double minLatitude = Double.MAX_VALUE;
+            double maxLongitude = -Double.MAX_VALUE;
+            double minLongitude = Double.MAX_VALUE;
+            for (int i = 0; i < length; i++) {
+                double longitude = cache.longitudes[i];
+                double latitude = cache.latitudes[i];
+                if (maxLatitude < latitude) {
+                    maxLatitude = latitude;
+                }
+                if (minLatitude > latitude) {
+                    minLatitude = latitude;
+                }
+                if (maxLongitude < longitude) {
+                    maxLongitude = longitude;
+                }
+                if (minLongitude > longitude) {
+                    minLongitude = longitude;
+                }
+                bw.write(String.format(" %f,%f,%f\n", longitude, latitude, cache.altitudes[i]));
+                if (listener != null) {
+                    listener.onProgressChanged(i, length);
+                }
+            }
+            bw.write("</coordinates>\n");
+            bw.write("</LineString>\n");
+            bw.write("</Placemark>\n");
+            final int targetPicWidth = 640;
+            final int poiLength = pois.length;
+            for (int i = 0; i < poiLength; i++) {
+                POI poi = pois[i];
+                if (listener != null) {
+                    listener.onProgressChanged(i * 100, poiLength * 100);
+                }
+                final int picSize = poi.picFiles.length;
+                StringBuilder descriptionBuilder = new StringBuilder();
+                descriptionBuilder.append(poi.time.formatInTimezone(timezone)).append("<br/>").append(poi.diary).append("<br/>");
+                for (int j = 0; j < picSize; j++) {
+                    InputStream is = poi.picFiles[j].getInputStream();
+                    BitmapFactory.Options op = new BitmapFactory.Options();
+                    op.inJustDecodeBounds = true;
+                    BitmapFactory.decodeStream(is, new Rect(0, 0, 0, 0), op);
+                    op.inSampleSize = (int) Math.ceil(op.outWidth / targetPicWidth);
+                    op.inJustDecodeBounds = false;
+                    is = poi.picFiles[j].getInputStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is, new Rect(0, 0, 0, 0), op);
+                    String fileName = poi.picFiles[j].getName();
+                    zos.putNextEntry(new ZipEntry(fileName));
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zos);
+                    bitmap.recycle();
+                    zos.closeEntry();
+                    descriptionBuilder.append("<img src=\"").append(fileName).append("\" width=\"").append(String.valueOf(targetPicWidth)).append("\" /><br/>");
+                    if (listener != null) {
+                        listener.onProgressChanged(i * 100 + j * 100 / picSize, poiLength * 100);
+                    }
+                }
+                bw.write("<Placemark>\n");
+                bw.write("<name>" + poi.title + "</name>\n");
+                bw.write("<styleUrl>#iconColor</styleUrl>\n");
+                bw.write("<description>" + descriptionBuilder.toString() + "</description>\n");
+                bw.write("<Point>\n");
+                bw.write("<coordinates>" + String.valueOf(poi.longitude) + "," + String.valueOf(poi.latitude) + "," + String.valueOf(poi.altitude) + "</coordinates>\n");
+                bw.write("</Point>\n");
+                bw.write("</Placemark>\n");
+            }
+            bw.write("</Folder>\n");
+            bw.write("<LookAt>\n");
+            bw.write("<longitude>" + String.valueOf((maxLongitude + minLongitude) / 2) + "</longitude>\n");
+            bw.write("<latitude>" + String.valueOf((maxLatitude + minLatitude) / 2) + "</latitude>\n");
+            bw.write("<altitude>0</altitude>\n");
+            bw.write("<heading>0</heading>\n");
+            bw.write("<tilt>45</tilt>\n");
+            bw.write("<range>20000</range>\n");
+            bw.write("<altitudeMode>clampToGround</altitudeMode>\n");
+            bw.write("</LookAt>\n");
+            bw.write("</Document>\n");
+            bw.write("</kml>");
+            bw.flush();
+            bw.close();
+            zos.putNextEntry(new ZipEntry(tempKML.getName()));
+            byte[] buffer = new byte[4096];
+            int count;
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(tempKML));
+            while ((count = bis.read(buffer, 0, 4096)) != -1) {
+                zos.write(buffer, 0, count);
+            }
+            zos.flush();
+            bis.close();
+            zos.closeEntry();
+            zos.close();
+            FileHelper.deletedir(tempDir.getPath());
+        } catch (NullPointerException | IOException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return kmzFile;
     }
 
     public POI getPOI(String poiName) {
@@ -287,6 +568,7 @@ public class Trip implements Comparable<Trip> {
         dir.delete();
         context.getSharedPreferences("trip", Context.MODE_PRIVATE).edit().remove(tripName).apply();
         context.getSharedPreferences("tripTimezone", Context.MODE_PRIVATE).edit().remove(tripName).apply();
+        context.getSharedPreferences("tripTime", Context.MODE_PRIVATE).edit().remove(tripName).apply();
     }
 
     @Override

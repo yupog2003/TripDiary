@@ -7,6 +7,7 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Surface;
 
@@ -86,5 +87,22 @@ public class DeviceHelper {
         if (a == null) return Surface.ROTATION_0;
         DisplayMetrics dm = getDisPlayMetrics(a);
         return dm.widthPixels > dm.heightPixels ? Surface.ROTATION_90 : Surface.ROTATION_0;
+    }
+
+    public static void getNumColumnsAndWidth(Activity a, int[] result) {
+        int screenWidth = getScreenWidth(a);
+        if (screenWidth > getScreenHeight(a)) {
+            int numColumns = PreferenceManager.getDefaultSharedPreferences(a).getInt("landscapeNumImagesInRow", 5);
+            if (numColumns < 1) numColumns = 1;
+            if (numColumns > 20) numColumns = 20;
+            result[0] = numColumns;
+            result[1] = screenWidth / numColumns;
+        } else {
+            int numColumns = PreferenceManager.getDefaultSharedPreferences(a).getInt("portraitNumImagesInRow", 3);
+            if (numColumns < 1) numColumns = 1;
+            if (numColumns > 10) numColumns = 10;
+            result[0] = numColumns;
+            result[1] = screenWidth / numColumns;
+        }
     }
 }

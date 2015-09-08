@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -103,11 +104,24 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         if (action == Action.get_content) {
             save.setVisibility(View.GONE);
         }
-        save.setOnClickListener(this);
         gridView = (GridView) findViewById(R.id.gridView);
-        adapter = new MemoryAdapter(type);
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(adapter);
+        checkHasPermission(new OnGrantPermissionCompletedListener() {
+            @Override
+            public void onGranted() {
+                if (TripDiaryApplication.rootDocumentFile == null) {
+                    TripDiaryApplication.updateRootPath();
+                }
+                save.setOnClickListener(GetContentActivity.this);
+                adapter = new MemoryAdapter(type);
+                gridView.setAdapter(adapter);
+                gridView.setOnItemClickListener(adapter);
+            }
+
+            @Override
+            public void onFailed() {
+                finishAndRemoveTask();
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -235,7 +249,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         String[] pictureNames = nowDirFile.listFileNames(DocumentFile.list_pics);
                         displayNames.addAll(Arrays.asList(pictureNames));
                         options = new DisplayImageOptions.Builder()
-                                .displayer(new FadeInBitmapDisplayer(500))
+                                .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                                 .cacheInMemory(true)
                                 .cacheOnDisk(false)
                                 .bitmapConfig(Bitmap.Config.RGB_565)
@@ -283,20 +297,14 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
 
         public void setGridView(boolean open) {
             if (open) {
-                int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-                int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-                if (screenWidth > screenHeight) {
-                    gridWidth = screenWidth / 5;
-                    gridView.setNumColumns(5);
-                } else {
-                    gridWidth = screenWidth / 3;
-                    gridView.setNumColumns(3);
-                }
+                int[] numColumnsAndWidth = new int[2];
+                DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
+                gridWidth = numColumnsAndWidth[1];
+                gridView.setNumColumns(numColumnsAndWidth[0]);
             } else {
                 gridWidth = gridView.getWidth();
                 gridView.setNumColumns(1);
             }
-
         }
 
         @Override

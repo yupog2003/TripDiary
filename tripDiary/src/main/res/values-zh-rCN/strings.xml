@@ -74,7 +74,16 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-
+    <string-array name="habit_of_adding_poi">
+        <item>在浏览兴趣点之前新增它</item>
+        <item>在浏览兴趣点时新增它</item>
+        <item>在浏览兴趣点之后新增它</item>
+    </string-array>
+    <string-array name="habit_of_adding_poi_value"> 
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
     <string name="title_activity_category">类别</string>
     <string name="input_the_poi_title">输入兴趣点标题</string>
@@ -172,7 +181,7 @@
     <string name="select_the_audio_by">选取声音</string>
     <string name="max_speed">最高速</string>
     <string name="total_ascent">总爬升</string>
-    <string name="max_altitude">最大高度</string>
+    <string name="max_altitude">最高高度</string>
     <string name="min_altitude">最低高度</string>
     <string name="velocity">速率</string>
     <string name="share_track_kml">分享轨迹(KML)</string>
@@ -220,7 +229,6 @@
     <string name="explain_update_trip_timezone">原本TripDiary以当前时区显示所有时间资讯，但现在你可以根据轨迹的第一个位置更新旅程时区，如此一來TripDiary就可以根据旅程时区显示正确时区。(需要互连网)</string>
     <string name="no_internet_connection">没有网路连线</string>
     <string name="updating">更新中</string>
-    <string name="choose_a_account">选择一个帐户</string>
     <string name="zipping">压缩中</string>
     <string name="uploading">上传中</string>
     <string name="local_trips">本机旅程</string>
@@ -277,7 +285,7 @@
     <string name="searching_for_satellite">定位中</string>
     <string name="please_input_poi_name">请输入兴趣点名称</string>
     <string name="poi_has_been_saved">已储存兴趣点</string>
-    <string name="generate_video">生成影片(实验性)</string>
+    <string name="generate_video">生成影片</string>
     <string name="encoding">编码中</string>
     <string name="please_connect_to_internet_for_downloading_google_map_background">请连线至网路以下载Google Map背景</string>
     <string name="add_background_music">加入背景音乐</string>
@@ -316,9 +324,16 @@
     <string name="track_is_too_long">轨迹过长 (内存不足)</string>
     <string name="view_trip">观看旅程</string>
     <string name="open">开启</string>
-    <string name="permission_explanation_accounts">旅游日记需要帐户权限以得知您的电子邮件地址，电子邮件地址被用来与网页版互动</string>
     <string name="permission_explanation_location">旅游日记需要位置权限以纪录轨迹</string>
     <string name="permission_explanation_write_external_storage">旅游日记需要储存装置权限以储存旅程在内部储存装置或外部储存装置</string>
     <string name="storage_error">储存装置错误</string>
-
+    <string name="no_poi">没有兴趣点</string>
+    <string name="Keep_in_memory">常驻记忆体</string>
+    <string name="Keep_in_memory_explanation">纪录轨迹时旅游日记会尽可能常驻记忆体，也许可以改善断断续续的轨迹纪录</string>
+    <string name="downloading_ffmpeg_binary_file_for_armv7_neon">为armv7-neon下载ffmpeg二进位档中</string>
+    <string name="num_of_images_in_a_row_in_landscape_mode">横向模式中一列有几张图片</string>
+    <string name="num_of_images_in_a_row_in_portrait_mode">纵向模式中一列有几张图片</string>
+    <string name="habit_of_adding_poi">新增兴趣点习惯</string>
+    <string name="when_do_you_usually_add_a_poi">你新增兴趣点的习惯，这会影响到汇入回忆的行为</string>
+    <string name="measurementUnit_image">张图片</string>
 </resources>

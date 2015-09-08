@@ -37,7 +37,7 @@ public class AllPictureFragment extends Fragment {
     RecyclerView recyclerView;
     POIAdapter poiAdapter;
     int width;
-    int numColums;
+    int numColumns;
     String timezone;
 
     public AllPictureFragment() {
@@ -46,15 +46,10 @@ public class AllPictureFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-        int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-        if (screenWidth > screenHeight) {
-            width = screenWidth / 5;
-            numColums = 5;
-        } else {
-            width = screenWidth / 3;
-            numColums = 3;
-        }
+        int[] numColumnsAndWidth = new int[2];
+        DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
+        width = numColumnsAndWidth[1];
+        numColumns = numColumnsAndWidth[0];
         recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -155,7 +150,7 @@ public class AllPictureFragment extends Fragment {
                 this.poiName = (TextView) cardView.findViewById(R.id.poiName);
                 this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
                 this.gridView = (UnScrollableGridView) cardView.findViewById(R.id.pictures);
-                this.gridView.setNumColumns(numColums);
+                this.gridView.setNumColumns(numColumns);
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

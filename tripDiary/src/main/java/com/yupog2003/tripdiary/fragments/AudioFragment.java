@@ -5,9 +5,9 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -42,9 +42,7 @@ public class AudioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (ListView) inflater.inflate(R.layout.fragment_audio, container, false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            layout.setNestedScrollingEnabled(true);
-        }
+        ViewCompat.setNestedScrollingEnabled(layout, true);
         audioDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
         refresh();
         return layout;
@@ -86,7 +84,6 @@ public class AudioFragment extends Fragment {
         }
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
             final ArrayList<DocumentFile> checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
@@ -98,7 +95,7 @@ public class AudioFragment extends Fragment {
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
                 ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
-                ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+                ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -110,7 +107,7 @@ public class AudioFragment extends Fragment {
                         }
                     }
                 });
-                ab.setNegativeButton(getString(R.string.cancel), null);
+                ab.setNegativeButton(getString(R.string.no), null);
                 ab.show();
                 mode.finish();
             } else if (item.getItemId() == R.id.rename) {
@@ -209,12 +206,10 @@ public class AudioFragment extends Fragment {
         }
 
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-
             return true;
         }
 
         public void onItemCheckedStateChanged(final ActionMode mode, int position, long id, boolean checked) {
-
             checks[position] = checked;
             int selects = 0;
             for (boolean check : checks) {
@@ -222,13 +217,12 @@ public class AudioFragment extends Fragment {
                     selects++;
                 }
             }
-            mode.getMenu().findItem(R.id.rename).setVisible(!(selects > 1));
-
+            mode.getMenu().findItem(R.id.rename).setVisible(selects == 1);
         }
-
     }
 
     class AudioAdapter extends BaseAdapter implements OnItemClickListener {
+
         DocumentFile[] audios;
         boolean onMultiChoiceMode;
 
@@ -238,7 +232,6 @@ public class AudioFragment extends Fragment {
         }
 
         public int getCount() {
-
             if (audios == null)
                 return 0;
             return audios.length;

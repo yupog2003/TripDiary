@@ -2,6 +2,9 @@ package com.yupog2003.tripdiary.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 
@@ -76,5 +79,24 @@ public class TrackCache implements Serializable, Parcelable {
         dest.writeFloat(climb);
         dest.writeFloat(maxAltitude);
         dest.writeFloat(minAltitude);
+    }
+
+    @NonNull
+    public LatLng[] getLats() {
+        if (latitudes == null || longitudes == null) return new LatLng[0];
+        int length = Math.min(latitudes.length, longitudes.length);
+        LatLng[] result = new LatLng[length];
+        for (int i = 0; i < length; i++) {
+            result[i] = new LatLng(latitudes[i], longitudes[i]);
+        }
+        return result;
+    }
+
+    public int getTrackLength() {
+        if (latitudes == null || longitudes == null || altitudes == null || times == null) {
+            return 0;
+        } else {
+            return Math.min(Math.min(latitudes.length, longitudes.length), Math.min(altitudes.length, times.length));
+        }
     }
 }

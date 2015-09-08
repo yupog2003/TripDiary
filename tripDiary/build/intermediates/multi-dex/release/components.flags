@@ -1,7 +1,7 @@
 -injars /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/multi-dex/release/allclasses.jar
 -outjars /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/multi-dex/release/componentClasses.jar
 
--libraryjars /home/yupog2003/Android/android-sdk-linux/build-tools/23.0.0/lib/shrinkedAndroid.jar
+-libraryjars /home/yupog2003/Android/android-sdk-linux/build-tools/23.0.1/lib/shrinkedAndroid.jar
 
 -forceprocessing
 -dontoptimize
@@ -88,7 +88,7 @@
     <init>();
 }
 
--keep class com.yupog2003.tripdiary.ViewGraphAcivity {
+-keep class com.yupog2003.tripdiary.ViewGraphActivity {
     <init>();
 }
 
@@ -97,6 +97,10 @@
 }
 
 -keep class com.yupog2003.tripdiary.services.BackupRestoreTripService {
+    <init>();
+}
+
+-keep class com.yupog2003.tripdiary.DummyActivity {
     <init>();
 }
 
