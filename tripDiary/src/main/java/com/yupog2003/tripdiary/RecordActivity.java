@@ -173,7 +173,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         DrawableCompat.setTint(DrawableCompat.wrap(takeText.getCompoundDrawables()[1].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(takePaint.getCompoundDrawables()[1].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(takeMoney.getCompoundDrawables()[1].mutate()), accentColor);
-        DrawableCompat.setTint(DrawableCompat.wrap(select.getDrawable().mutate()), accentColor);
         setAddPOIMode(false);
     }
 
@@ -551,9 +550,9 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             }
             nowFileForCameraIntent = null;
         } else if (requestCode == REQUEST_PICK_PLACE) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
                 Place place = PlacePicker.getPlace(data, this);
-                if (!addPOIMode) {
+                if (!addPOIMode && place != null) {
                     userChosenLatLng = place.getLatLng();
                     poiName.setText(place.getName().toString());
                     addPOI.performClick();

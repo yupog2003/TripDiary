@@ -382,7 +382,7 @@ public class Trip implements Comparable<Trip> {
                 StringBuilder descriptionBuilder = new StringBuilder();
                 descriptionBuilder.append(poi.time.formatInTimezone(timezone)).append("<br/>").append(poi.diary).append("<br/>");
                 for (int j = 0; j < picSize; j++) {
-                    DocumentFile picFile = poi.picFiles[i];
+                    DocumentFile picFile = poi.picFiles[j];
                     if (picFile == null) continue;
                     InputStream is = picFile.getInputStream();
                     BitmapFactory.Options op = new BitmapFactory.Options();

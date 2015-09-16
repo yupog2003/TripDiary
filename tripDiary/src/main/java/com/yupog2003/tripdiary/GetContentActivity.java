@@ -470,6 +470,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.activity_get_content, menu);
+            menu.removeItem(R.id.save);
             onMultiChoiceMode = true;
             checks = new boolean[getCount()];
             Arrays.fill(checks, false);
