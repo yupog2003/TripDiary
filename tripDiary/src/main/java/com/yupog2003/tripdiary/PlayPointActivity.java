@@ -115,23 +115,25 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             }
                         }
                         final Bitmap b = bitmap;
-                        handler.post(new Runnable() {
-                            public void run() {
-                                img.setImageBitmap(b);
+                        if (b != null) {
+                            handler.post(new Runnable() {
+                                public void run() {
+                                    img.setImageBitmap(b);
+                                }
+                            });
+                            try {
+                                Thread.sleep(interval);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
-                        });
-                        try {
-                            Thread.sleep(interval);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    img.setImageBitmap(null);
+                                    b.recycle();
+                                }
+                            });
                         }
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                img.setImageBitmap(null);
-                                b.recycle();
-                            }
-                        });
                     } else if (viewFlipper.getChildAt(currentIndex) instanceof VideoView) {
                         videoView = (VideoView) viewFlipper.getChildAt(currentIndex);
                         videoView.start();
@@ -146,7 +148,6 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                             try {
                                 Thread.sleep(50);
                             } catch (InterruptedException e) {
-
                                 e.printStackTrace();
                             }
                         }
@@ -243,7 +244,6 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             }
             img.setTag(new ImgTag(file, option2));
             viewFlipper.addView(img);
-
         }
     }
 
@@ -252,7 +252,7 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
             VideoView videoView = new VideoView(PlayPointActivity.this);
             videoView.setVideoURI(poi.videoFiles[i].getUri());
             videoView.setMediaController(new MediaController(PlayPointActivity.this));
-
+            viewFlipper.addView(videoView);
         }
     }
 
@@ -266,7 +266,6 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
     }
 
     public void onClick(View v) {
-
         if (v.equals(skip)) {
             if (mp != null) {
                 mp.stop();
@@ -288,14 +287,8 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                     videoView.start();
                 }
             }
-            if (threadpause) {
-                pause.setImageResource(R.drawable.ic_pause);
-                threadpause = false;
-            } else {
-                pause.setImageResource(R.drawable.ic_play);
-                threadpause = true;
-            }
-
+            threadpause = !threadpause;
+            pause.setImageResource(threadpause ? R.drawable.ic_play : R.drawable.ic_pause);
         } else if (v.equals(next)) {
             if (!mediafinish) {
                 mediafinish = true;

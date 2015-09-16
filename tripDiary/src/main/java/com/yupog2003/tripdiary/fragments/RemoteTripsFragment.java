@@ -37,8 +37,8 @@ import android.widget.Toast;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.services.DownloadTripService;
 import com.yupog2003.tripdiary.thrift.TripDiary;
@@ -191,11 +191,6 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             }
         }
 
-        @Override
-        protected void onProgressUpdate(String... values) {
-
-            super.onProgressUpdate(values);
-        }
     }
 
     class UpdateDataTask extends AsyncTask<String, String, String> {
@@ -411,7 +406,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
                     ab2.setTitle(getString(R.string.be_careful));
                     ab2.setMessage(getString(R.string.are_you_sure_to_delete));
-                    ab2.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+                    ab2.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
                     ab2.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
@@ -485,16 +480,16 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         public boolean onQueryTextSubmit(String query) {
-            final String searchname = searchView.getQuery().toString().toLowerCase(Locale.US);
+            final String searchName = searchView.getQuery().toString().toLowerCase(Locale.US);
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
             searchView.clearFocus();
-            if (!searchname.equals("")) {
+            if (!searchName.equals("")) {
                 final ArrayList<Trip> founds = new ArrayList<>();
                 int adaptercount = trips.size();
                 for (int i = 0; i < adaptercount; i++) {
                     String itemname = trips.get(i).name;
-                    if (itemname.toLowerCase(Locale.US).contains(searchname)) {
+                    if (itemname.toLowerCase(Locale.US).contains(searchName)) {
                         founds.add(trips.get(i));
                     }
                 }

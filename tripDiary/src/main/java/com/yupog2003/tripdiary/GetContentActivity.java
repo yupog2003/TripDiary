@@ -2,21 +2,28 @@ package com.yupog2003.tripdiary;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -24,20 +31,23 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.MyImageDownloader;
+import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
+import com.yupog2003.tripdiary.views.CheckableLayout;
+import com.yupog2003.tripdiary.views.SquareCheckableLayout;
 import com.yupog2003.tripdiary.views.SquareImageView;
 
 import java.io.FileNotFoundException;
@@ -57,6 +67,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
 
     private Type type;
     private Action action;
+    private boolean allowMultiple;
     private GridView gridView;
     private Button save;
     private int gridWidth;
@@ -73,10 +84,14 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         setContentView(R.layout.activity_get_content);
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
+        allowMultiple = false;
         String intentAction = getIntent().getAction();
         switch (intentAction) {
             case Intent.ACTION_GET_CONTENT:
                 action = Action.get_content;
+                if (Build.VERSION.SDK_INT >= 18) {
+                    allowMultiple = getIntent().getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+                }
                 break;
             case Intent.ACTION_SEND:
                 action = Action.send;
@@ -95,11 +110,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         } else {
             type = Type.other;
         }
-        folderDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_folder);
-        pictureDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_picture);
-        videoDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_takevideo);
-        audioDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.ic_music);
-        poiDrawable = ColorHelper.getAccentTintDrawable(this, R.drawable.poi);
+        folderDrawable = DrawableHelper.getAccentTintDrawable(this, R.drawable.ic_folder);
+        pictureDrawable = DrawableHelper.getAccentTintDrawable(this, R.drawable.ic_picture);
+        videoDrawable = DrawableHelper.getAccentTintDrawable(this, R.drawable.ic_takevideo);
+        audioDrawable = DrawableHelper.getAccentTintDrawable(this, R.drawable.ic_music);
+        poiDrawable = DrawableHelper.getAccentTintDrawable(this, R.drawable.poi);
         save = (Button) findViewById(R.id.save);
         if (action == Action.get_content) {
             save.setVisibility(View.GONE);
@@ -115,6 +130,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 adapter = new MemoryAdapter(type);
                 gridView.setAdapter(adapter);
                 gridView.setOnItemClickListener(adapter);
+                if (allowMultiple) {
+                    gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+                    gridView.setMultiChoiceModeListener(adapter);
+                }
+                adapter.setDir("/");
             }
 
             @Override
@@ -124,19 +144,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_get_content, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    class MemoryAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+    class MemoryAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, AbsListView.MultiChoiceModeListener {
 
         Type type;
         String nowDir; // /category/trip/poi
@@ -150,6 +158,9 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         int lastVideoIndex;
         int lastAudioIndex;
         DisplayImageOptions options;
+        boolean onMultiChoiceMode;
+        boolean[] checks;
+        boolean checkAll;
 
         public MemoryAdapter(Type type) {
             this.type = type;
@@ -163,7 +174,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             this.lastPictureIndex = -1;
             this.lastVideoIndex = -1;
             this.lastAudioIndex = -1;
-            setDir("/");
+            this.onMultiChoiceMode = false;
         }
 
         public void setDir(String dir) {
@@ -179,6 +190,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             if (nowLevel == 0) { //root
                 setGridView(false);
                 save.setEnabled(false);
+                gridView.setLongClickable(false);
                 Set<String> categorySet = categorysp.getAll().keySet();
                 String[] categories = categorySet.toArray(new String[categorySet.size()]);
                 if (categories.length < 2) {
@@ -190,6 +202,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 nowDirFile = TripDiaryApplication.rootDocumentFile;
             } else if (nowLevel == 1) { //category
                 save.setEnabled(false);
+                gridView.setLongClickable(false);
                 nowDirFile = TripDiaryApplication.rootDocumentFile;
                 String[] tripNames = nowDirFile.listFileNames(DocumentFile.list_dirs);
                 String category = levels[1];
@@ -203,9 +216,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                     public int compare(String lhs, String rhs) {
                         MyCalendar time1 = MyCalendar.getTripTime(lhs);
                         MyCalendar time2 = MyCalendar.getTripTime(rhs);
-                        if (time1 == null || time2 == null)
-                            return 0;
-                        else if (time1.after(time2))
+                        if (time1.after(time2))
                             return 1;
                         else if (time2.after(time1))
                             return -1;
@@ -215,13 +226,14 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 });
             } else if (nowLevel == 2) {//trip
                 save.setEnabled(false);
+                gridView.setLongClickable(false);
                 setGridView(false);
                 String tripName = levels[2];
                 nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
                 DocumentFile[] poiFiles = nowDirFile.listFiles(DocumentFile.list_dirs);
                 pois = new POI[poiFiles.length];
                 for (int i = 0; i < pois.length; i++) {
-                    pois[i] = new POI(GetContentActivity.this, poiFiles[i]);
+                    pois[i] = new POI(GetContentActivity.this, poiFiles[i], null);
                 }
                 Arrays.sort(pois, new Comparator<POI>() {
                     @Override
@@ -240,6 +252,10 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 }
             } else if (nowLevel == 3) {//poi
                 save.setEnabled(true);
+                gridView.setLongClickable(allowMultiple);
+                if (allowMultiple) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.long_click_to_select_multiple_file, Snackbar.LENGTH_SHORT).show();
+                }
                 String tripName = levels[2];
                 String poiName = levels[3];
                 switch (type) {
@@ -249,12 +265,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         String[] pictureNames = nowDirFile.listFileNames(DocumentFile.list_pics);
                         displayNames.addAll(Arrays.asList(pictureNames));
                         options = new DisplayImageOptions.Builder()
-                                .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                                 .cacheInMemory(true)
-                                .cacheOnDisk(false)
                                 .bitmapConfig(Bitmap.Config.RGB_565)
                                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                                 .extraForDownloader(nowDirFile.listFiles(DocumentFile.list_pics))
+                                .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
+                                .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_error))
                                 .build();
                         break;
                     case video:
@@ -263,12 +279,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         String[] videoNames = nowDirFile.listFileNames(DocumentFile.list_videos);
                         displayNames.addAll(Arrays.asList(videoNames));
                         options = new DisplayImageOptions.Builder()
-                                .displayer(new FadeInBitmapDisplayer(500))
                                 .cacheInMemory(true)
-                                .cacheOnDisk(false)
                                 .bitmapConfig(Bitmap.Config.RGB_565)
                                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                                 .extraForDownloader(nowDirFile.listFiles(DocumentFile.list_videos))
+                                .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
+                                .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_error))
                                 .build();
                         break;
                     case audio:
@@ -355,9 +371,9 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 SquareImageView imageView = new SquareImageView(GetContentActivity.this);
                 imageView.setMaxWidth(gridWidth);
                 imageView.setMaxHeight(gridWidth);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setScaleType(ImageView.ScaleType.CENTER);
                 convertView = imageView;
-                ImageLoader.getInstance().displayImage(displayNames.get(position), (ImageView) convertView, options);
+                ImageLoader.getInstance().displayImage(displayNames.get(position), new MyImageViewAware((ImageView) convertView), options);
             } else {
                 TextView textView = new TextView(GetContentActivity.this);
                 if (nowLevel == 3 && type == Type.audio) {
@@ -402,15 +418,40 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 }
                 convertView = textView;
             }
+            if (nowLevel == 3 && allowMultiple) {
+                CheckableLayout l;
+                if (type == Type.picture || type == Type.video) {
+                    l = new SquareCheckableLayout(getActivity());
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                    convertView.setLayoutParams(params);
+                } else {
+                    l = new CheckableLayout(getActivity());
+                }
+                l.addView(convertView);
+                l.setOnMultiChoiceMode(onMultiChoiceMode);
+                return l;
+            }
             return convertView;
         }
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (nowLevel == 3) {
-                if (action == Action.get_content) {
+            if (action == Action.get_content && nowLevel == 3) {
+                DocumentFile file = (DocumentFile) getItem(position);
+                if (allowMultiple && Build.VERSION.SDK_INT >= 16) {
+                    String[] mimeTypes = new String[]{file.getType()};
+                    ClipData.Item item = new ClipData.Item(file.getUri());
+                    ClipData clipData = new ClipData(GetContentActivity.class.getName(), mimeTypes, item);
                     Intent intent = new Intent();
-                    intent.setData(((DocumentFile) getItem(position)).getUri());
+                    intent.setClipData(clipData);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.setData(file.getUri());
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
@@ -419,6 +460,69 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             } else {
                 setDir(nowDir + "/" + displayNames.get(position));
             }
+        }
+
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            checks[position] = checked;
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.activity_get_content, menu);
+            onMultiChoiceMode = true;
+            checks = new boolean[getCount()];
+            Arrays.fill(checks, false);
+            checkAll = false;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            final ArrayList<DocumentFile> checksFile = new ArrayList<>();
+            for (int i = 0; i < checks.length; i++) {
+                if (checks[i]) {
+                    checksFile.add((DocumentFile) adapter.getItem(i));
+                }
+            }
+            if (item.getItemId() == R.id.selectall) {
+                for (int i = 0; i < gridView.getCount(); i++) {
+                    gridView.setItemChecked(i, !checkAll);
+                }
+                checkAll = !checkAll;
+            } else if (item.getItemId() == R.id.open) {
+                if (checksFile.size() < 1) {
+                    finish();
+                    return true;
+                }
+                ArrayList<String> mimeTypeList = new ArrayList<>();
+                for (DocumentFile file : checksFile) {
+                    mimeTypeList.add(file.getType());
+                }
+                String[] mimeTypes = mimeTypeList.toArray(new String[mimeTypeList.size()]);
+                ClipData clipData = new ClipData(GetContentActivity.class.getName(), mimeTypes, new ClipData.Item(checksFile.get(0).getUri()));
+                for (int i = 1; i < checksFile.size(); i++) {
+                    clipData.addItem(new ClipData.Item(checksFile.get(i).getUri()));
+                }
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= 16) {
+                    intent.setClipData(clipData);
+                }
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            onMultiChoiceMode = false;
         }
     }
 

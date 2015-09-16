@@ -19,13 +19,11 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
     }
 
     public CheckableLayout(Context context, AttributeSet attrs) {
-
         super(context, attrs);
         initialCheckImage(context);
     }
 
     public CheckableLayout(Context context, AttributeSet attrs, int defStyle) {
-
         super(context, attrs, defStyle);
         initialCheckImage(context);
     }
@@ -50,6 +48,7 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
     boolean onMultiChoiceMode = false;
 
     public void setOnMultiChoiceMode(boolean onMultiChoiceMode) {
+        if (this.onMultiChoiceMode == onMultiChoiceMode) return;
         this.onMultiChoiceMode = onMultiChoiceMode;
         if (onMultiChoiceMode) {
             if (checkImage.getParent() == null) {
@@ -60,6 +59,7 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
         }
     }
 
+    @Override
     public void setChecked(boolean checked) {
         this.checked = checked;
         checkImage.setImageResource(checked ? R.drawable.ic_checked : R.drawable.ic_unchecked);

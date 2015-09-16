@@ -108,7 +108,8 @@ public class MyCalendar extends GregorianCalendar {
     public static MyCalendar getTime(String timezone, String s, int type) {
         MyCalendar c = MyCalendar.getInstance(TimeZone.getTimeZone(timezone));
         String date, t;
-        String[] datetoks = new String[3], timetoks = new String[3];
+        String[] datetoks = new String[]{"0", "0", "0"};
+        String[] timetoks = new String[]{"0", "0", "0"};
         switch (type) {
             case type_gpx:
                 if (s.contains(">") && s.contains("T") && s.contains("Z")) {
@@ -200,7 +201,7 @@ public class MyCalendar extends GregorianCalendar {
         } catch (NullPointerException | IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
-        return MyCalendar.getInstance();
+        return MyCalendar.getInstance(TimeZone.getTimeZone("UTC"));
     }
 
     @Nullable

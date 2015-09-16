@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.view.Menu;
 
 import com.yupog2003.tripdiary.fragments.PreferFragment;
 import com.yupog2003.tripdiary.services.BackupRestoreTripService;
@@ -22,7 +21,6 @@ public class RestoreTripActivity extends MyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restore_trip);
         String action = getIntent().getAction();
         if (action.equals(Intent.ACTION_SEND)) {
             uris = new ArrayList<>();
@@ -91,12 +89,4 @@ public class RestoreTripActivity extends MyActivity {
         intent.putExtra(BackupRestoreTripService.tag_category, category);
         startService(intent);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_restore_trip, menu);
-        return true;
-    }
-
 }

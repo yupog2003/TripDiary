@@ -2,13 +2,13 @@ package com.yupog2003.tripdiary;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -29,8 +29,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -41,7 +41,6 @@ import com.yupog2003.tripdiary.fragments.PictureFragment;
 import com.yupog2003.tripdiary.fragments.TextFragment;
 import com.yupog2003.tripdiary.fragments.VideoFragment;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,10 +51,10 @@ public class ViewPointActivity extends MyActivity {
     public static final DecimalFormat latlngFormat = new DecimalFormat("#.######");
     MyPagerAdapter adapter;
     TabLayout pagerTab;
-    static final int pick_multi_file = 0;
     static final int import_picture = 1;
     static final int import_video = 2;
     static final int import_audio = 3;
+    static final int pick_multi_file = 4;
     String timezone;
     ViewPager viewPager;
     AppBarLayout appBarLayout;
@@ -64,7 +63,7 @@ public class ViewPointActivity extends MyActivity {
     public static final String tag_tripname = "tag_tripname";
     public static final String tag_poiname = "tag_poiname";
     public static final String tag_fromActivity = "tag_activity";
-    public static final int REQUEST_VIEW_COST = 4;
+    public static final int REQUEST_VIEW_COST = 6;
     static final boolean preLollipop = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
 
     @Override
@@ -102,7 +101,7 @@ public class ViewPointActivity extends MyActivity {
         }
         setTitle(poiName);
         getSupportActionBar().setSubtitle(poi.time.formatInTimezone(timezone));
-        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTrip.getName() + "-" + poi.title, null);
+        DeviceHelper.sendGATrack(getActivity(), "Trip", "view_poi", poi.parentTripFile.getName() + "-" + poi.title, null);
         appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -252,20 +251,28 @@ public class ViewPointActivity extends MyActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.importpicture) {
-            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            i.setType("image/*");
-            startActivityForResult(Intent.createChooser(i, getString(R.string.select_the_picture_by)), import_picture);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            if (Build.VERSION.SDK_INT >= 18) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+            intent.setType("image/*");
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.select_the_picture_by)), import_picture);
         } else if (item.getItemId() == R.id.importvideo) {
-            Intent i2 = new Intent(Intent.ACTION_GET_CONTENT);
-            i2.setType("video/*");
-            startActivityForResult(Intent.createChooser(i2, getString(R.string.select_the_video_by)), import_video);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            if (Build.VERSION.SDK_INT >= 18) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+            intent.setType("video/*");
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.select_the_video_by)), import_video);
         } else if (item.getItemId() == R.id.importaudio) {
-            Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
-            i3.setType("audio/*");
-            startActivityForResult(Intent.createChooser(i3, getString(R.string.select_the_audio_by)), import_audio);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            if (Build.VERSION.SDK_INT >= 18) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+            intent.setType("audio/*");
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.select_the_audio_by)), import_audio);
         } else if (item.getItemId() == R.id.importfiles) {
             Intent intent = new Intent(ViewPointActivity.this, MultiFileChooseActivity.class);
-            intent.putExtra("root", Environment.getExternalStorageDirectory().getPath());
             startActivityForResult(intent, pick_multi_file);
         } else if (item.getItemId() == R.id.playpoint) {
             Intent intent = new Intent(ViewPointActivity.this, PlayPointActivity.class);
@@ -382,7 +389,7 @@ public class ViewPointActivity extends MyActivity {
             });
             ab2.setNegativeButton(getString(R.string.no), null);
             AlertDialog ad = ab2.create();
-            ad.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+            ad.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
             ad.show();
         }
         return false;
@@ -425,24 +432,29 @@ public class ViewPointActivity extends MyActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
+        if (resultCode == RESULT_OK && data != null) {
             if (requestCode == pick_multi_file) {
-                if (resultCode == Activity.RESULT_OK) {
-                    new ImportFilesTask(data.getExtras().getStringArrayList("files")).execute();
-                }
+                ArrayList<Uri> uris = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+                new ImportFilesTask(uris).execute();
             } else if (requestCode == import_picture || requestCode == import_video || requestCode == import_audio) {
-                Uri uri = data.getData();
-                if (uri != null) {
-                    poi.importMemories(null, uri);
-                    requestUpdatePOI();
-                }
-            } else if (requestCode == REQUEST_VIEW_COST) {
-                if (resultCode == Activity.RESULT_OK) {
-                    Bundle bundle = data.getExtras();
-                    if (bundle == null) return;
-                    if (bundle.getBoolean(ViewTripActivity.tag_request_updatePOI, false)) {
-                        requestUpdatePOI();
+                ClipData clipData;
+                ArrayList<Uri> uris = new ArrayList<>();
+                if (Build.VERSION.SDK_INT >= 18 && (clipData = data.getClipData()) != null) {
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        uris.add(clipData.getItemAt(i).getUri());
                     }
+                } else {
+                    Uri uri = data.getData();
+                    if (uri != null) {
+                        uris.add(uri);
+                    }
+                }
+                new ImportFilesTask(uris).execute();
+            } else if (requestCode == REQUEST_VIEW_COST) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) return;
+                if (bundle.getBoolean(ViewTripActivity.tag_request_updatePOI, false)) {
+                    requestUpdatePOI();
                 }
             }
         }
@@ -451,39 +463,33 @@ public class ViewPointActivity extends MyActivity {
     class ImportFilesTask extends AsyncTask<String, Integer, String> {
 
         ProgressDialog pd;
-        ArrayList<String> files;
+        ArrayList<Uri> uris;
 
-        public ImportFilesTask(ArrayList<String> files) {
-            this.files = files;
+        public ImportFilesTask(ArrayList<Uri> uris) {
+            this.uris = uris;
         }
 
         @Override
         protected void onPreExecute() {
-
             pd = new ProgressDialog(ViewPointActivity.this);
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            if (files != null)
-                pd.setMax(files.size());
+            if (uris != null)
+                pd.setMax(uris.size());
             pd.setTitle(R.string.importing);
             pd.show();
         }
 
         @Override
         protected String doInBackground(String... params) {
-
-            if (files == null)
+            if (uris == null)
                 return null;
-            File[] filess = new File[files.size()];
-            for (int i = 0; i < filess.length; i++) {
-                filess[i] = new File(files.get(i));
-            }
             POI.ImportMemoriesListener listener = new POI.ImportMemoriesListener() {
                 @Override
                 public void onProgressUpdate(int progess) {
                     publishProgress(progess);
                 }
             };
-            poi.importMemories(listener, filess);
+            poi.importMemories(listener, uris.toArray(new Uri[uris.size()]));
             return null;
         }
 

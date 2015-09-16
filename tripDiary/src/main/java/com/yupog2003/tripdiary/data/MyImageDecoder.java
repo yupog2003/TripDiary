@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.media.MediaMetadataRetriever;
 import android.text.TextUtils;
 
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
@@ -37,17 +38,19 @@ public class MyImageDecoder implements ImageDecoder {
         }
         String cleanedUriString = info.getImageUri();
         if (FileHelper.isVideo(cleanedUriString)) {
-            return makeVideoThumbnail((DocumentFile[]) info.getExtraForDownloader(), info.getTargetSize().getWidth(), info.getTargetSize().getHeight(), cleanedUriString);
+            return makeVideoThumbnail((DocumentFile[]) info.getExtraForDownloader(), info.getTargetSize(), cleanedUriString);
         } else {
-            return centerCrop(m_imageUriDecoder.decode(info), info.getTargetSize().getWidth(), info.getTargetSize().getHeight());
+            return centerCrop(m_imageUriDecoder.decode(info), info.getTargetSize());
         }
     }
 
-    private Bitmap makeVideoThumbnail(DocumentFile[] files, int targetWidth, int targetHeight, String filePath) {
+    private Bitmap makeVideoThumbnail(DocumentFile[] files, ImageSize targetSize, String filePath) {
         if (filePath == null || files == null) {
             return null;
         }
         try {
+            int targetWidth = targetSize.getWidth();
+            int targetHeight = targetSize.getHeight();
             DocumentFile videoFile = FileHelper.findfile(files, filePath.substring(filePath.lastIndexOf("/") + 1));
             if (videoFile == null) return null;
             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
@@ -64,7 +67,7 @@ public class MyImageDecoder implements ImageDecoder {
                     false
             );
             thumbnail.recycle();
-            Bitmap croppedBitmap = centerCrop(scaledBitmap, targetWidth, targetHeight);
+            Bitmap croppedBitmap = centerCrop(scaledBitmap, targetSize);
             if (croppedBitmap == null) return null;
             int resultWidth = croppedBitmap.getWidth();
             int resultHeight = croppedBitmap.getHeight();
@@ -81,8 +84,10 @@ public class MyImageDecoder implements ImageDecoder {
         return null;
     }
 
-    private Bitmap centerCrop(Bitmap bitmap, int targetWidth, int targetHeight) {
+    private Bitmap centerCrop(Bitmap bitmap, ImageSize targetSize) {
         try {
+            int targetWidth = targetSize.getWidth();
+            int targetHeight = targetSize.getHeight();
             int decodedWidth = bitmap.getWidth();
             int decodedHeight = bitmap.getHeight();
             Bitmap result;

@@ -4,7 +4,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,28 +25,34 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
+import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.CheckableLayout;
+import com.yupog2003.tripdiary.views.SquareCheckableLayout;
+import com.yupog2003.tripdiary.views.SquareImageView;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PictureFragment extends Fragment implements OnItemClickListener {
     GridView layout;
     PictureAdapter adapter;
     POI poi;
-    int width;
+    int sideLength;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +77,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         }
         int[] numColumnsAndWidth = new int[2];
         DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
-        width = numColumnsAndWidth[1];
+        sideLength = numColumnsAndWidth[1];
         layout.setNumColumns(numColumnsAndWidth[0]);
         layout.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         layout.setMultiChoiceModeListener(new MyMultiChoiceModeListener());
@@ -91,22 +97,23 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     class PictureAdapter extends BaseAdapter {
         DocumentFile[] files;
         DisplayImageOptions options;
-        int dp2;
         boolean onMultiChoiceMode;
+        ImageSize targetSize;
 
         public PictureAdapter() {
-            dp2 = (int) DeviceHelper.pxFromDp(getActivity(), 2);
             files = poi.picFiles;
             if (files == null) {
                 files = new DocumentFile[0];
             }
             options = new DisplayImageOptions.Builder()
-                    .displayer(new FadeInBitmapDisplayer(500, true, true, false))
                     .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                     .bitmapConfig(Bitmap.Config.RGB_565)
                     .cacheInMemory(true)
                     .extraForDownloader(files)
+                    .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
+                    .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_error))
                     .build();
+            targetSize = new ImageSize(sideLength, sideLength);
             onMultiChoiceMode = false;
         }
 
@@ -115,29 +122,28 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         }
 
         public Object getItem(int position) {
-
             return files[position];
         }
 
         public long getItemId(int position) {
-
             return position;
         }
 
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                ImageView i = new ImageView(getActivity());
-                i.setMaxWidth(width);
-                i.setMaxHeight(width);
-                i.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                CheckableLayout l = new CheckableLayout(getActivity());
-                l.setLayoutParams(new AbsListView.LayoutParams(width, width));
-                l.setPadding(dp2, dp2, dp2, dp2);
+                SquareImageView i = new SquareImageView(getActivity());
+                i.setMaxWidth(sideLength);
+                i.setMaxHeight(sideLength);
+                i.setScaleType(ImageView.ScaleType.CENTER);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                i.setLayoutParams(params);
+                SquareCheckableLayout l = new SquareCheckableLayout(getActivity());
                 l.addView(i);
                 convertView = l;
                 convertView.setTag(i);
             }
-            ImageLoader.getInstance().displayImage("trip://" + files[position].getUri().getPath(), (ImageView) convertView.getTag(), options);
+            ImageLoader.getInstance().displayImage("trip://" + files[position].getUri().getPath(), new MyImageViewAware((ImageView) convertView.getTag()), options);
             ((CheckableLayout) convertView).setOnMultiChoiceMode(onMultiChoiceMode);
             return convertView;
         }
@@ -153,7 +159,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         }
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
             final ArrayList<DocumentFile> checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
@@ -164,7 +169,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+                ab.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -222,14 +227,11 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
 
                         PrintHelper photoPrinter = new PrintHelper(getActivity());
                         photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-                        Bitmap bitmap;
                         try {
-                            bitmap = BitmapFactory.decodeStream(picFile.getInputStream());
-                            photoPrinter.printBitmap(editText.getText().toString(), bitmap);
-                        } catch (IllegalArgumentException e) {
+                            photoPrinter.printBitmap(editText.getText().toString(), picFile.getUri());
+                        } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
                 ab.setNegativeButton(R.string.cancel, null);
@@ -241,23 +243,36 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                         uris.add(((DocumentFile) adapter.getItem(i)).getUri());
                     }
                 }
-                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                if (uris.size() == 0) return true;
+                Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                if (uris.size() == 1) {
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, uris.get(0));
+                } else if (uris.size() > 1) {
+                    intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                    intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                }
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final DocumentFile tripFile = poi.dir.getParentFile();
-                final String[] pois = tripFile.listFileNames(DocumentFile.list_dirs);
+                if (poi == null || poi.parentTrip == null || poi.parentTrip.pois == null)
+                    return true;
+                final POI[] pois = poi.parentTrip.pois;
+                final String[] poiNames = new String[pois.length];
+                for (int i = 0; i < poiNames.length; i++) {
+                    poiNames[i] = pois[i].title;
+                }
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);
-                ab.setItems(pois, new OnClickListener() {
+                ab.setItems(poiNames, new OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
-                        DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "pictures");
+                        DocumentFile toDir = pois[which].picDir;
                         if (toDir == null) return;
                         DocumentFile[] filesInToDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
@@ -288,9 +303,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         public boolean onCreateActionMode(final ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
             checks = new boolean[adapter.getCount()];
-            for (int i = 0; i < checks.length; i++) {
-                checks[i] = false;
-            }
+            Arrays.fill(checks, false);
             checkAll = false;
             adapter.onMultiChoiceMode = true;
             return true;
@@ -301,7 +314,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         }
 
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-
             return true;
         }
 
@@ -315,9 +327,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
             }
             mode.getMenu().findItem(R.id.rename).setVisible(selects == 1);
             mode.getMenu().findItem(R.id.print).setVisible(selects == 1);
-
         }
-
     }
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {

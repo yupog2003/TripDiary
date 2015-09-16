@@ -2,7 +2,6 @@ package com.yupog2003.tripdiary;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -25,6 +24,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -68,25 +68,22 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     String token;
     String email;
     String tripName;
+    boolean isPublic;
     ViewMapFragment viewMapFragment;
     AllAudioFragment allAudioFragment;
     AllTextFragment allTextFragment;
     AllPictureFragment allPictureFragment;
     AllVideoFragment allVideoFragment;
     ViewCostFragment viewCostFragment;
-    TextView navigationTripName;
-    TextView navigationTripTime;
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
     RelativeLayout navigationHeader;
     ActionBarDrawerToggle drawerToggle;
-    AppBarLayout appBarLayout;
     FrameLayout fragmentLayout;
-    CoordinatorLayout coordinatorLayout;
     public AppCompatSpinner spinner;
     Mode mode = Mode.map_mode;
     int appBarLayoutDefaultHeight;
     boolean fromWeb;
+    Menu navigationMenu;
 
     public static final int REQUEST_VIEW_POI = 1;
     public static final String tag_request_updatePOI = "request_update_poi";
@@ -115,33 +112,10 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             finishAndRemoveTask();
             return;
         }
-        boolean isPublic = false;
+        isPublic = false;
         if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_VIEW)) {
-            Uri uri = intent.getData();
-            if (uri == null) {
-                finishAndRemoveTask();
-                return;
-            }
-            String scheme = uri.getScheme();
-            String host = uri.getHost();
-            if (scheme.equals("http") && (host.equals(TripDiaryApplication.serverHost) || host.equals(TripDiaryApplication.serverIP))) {
-                try {
-                    fromWeb = true;
-                    String uriStr = URLDecoder.decode(uri.toString(), "UTF-8");
-                    String tripPath = uriStr.substring(uriStr.indexOf("trippath=") + 9, uriStr.lastIndexOf("&"));
-                    String[] pathSegments = tripPath.split("/");
-                    email = pathSegments[1];
-                    tripName = pathSegments[2];
-                    isPublic = uriStr.substring(uriStr.lastIndexOf("&public=")).contains("yes");
-                    if (isPublic) {
-                        token = "abc";
-                    }
-                } catch (UnsupportedEncodingException | RuntimeException e) {
-                    e.printStackTrace();
-                    finishAndRemoveTask();
-                    return;
-                }
-            } else {
+            boolean success = tryGetTripInfoFromIntent(intent);
+            if (!success) {
                 finishAndRemoveTask();
                 return;
             }
@@ -159,16 +133,14 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
-        drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        navigationView = (NavigationView) findViewById(R.id.navigation);
+        int colorPrimaryDark = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+        drawerLayout.setStatusBarBackgroundColor(Color.argb(128, Color.red(colorPrimaryDark), Color.green(colorPrimaryDark), Color.blue(colorPrimaryDark)));
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationTripName = (TextView) findViewById(R.id.navigationTripName);
-        navigationTripTime = (TextView) findViewById(R.id.navigationTripTime);
+        navigationMenu = navigationView.getMenu();
         navigationHeader = (RelativeLayout) findViewById(R.id.navigationHeader);
         navigationHeader.setOnClickListener(this);
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         spinner = (AppCompatSpinner) findViewById(R.id.spinner);
         allAudioFragment = new AllAudioFragment();
         allVideoFragment = new AllVideoFragment();
@@ -188,6 +160,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         ft.add(R.id.fragment, allVideoFragment, AllVideoFragment.class.getSimpleName());
         ft.add(R.id.fragment, viewCostFragment, ViewCostFragment.class.getSimpleName());
         ft.commit();
+        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -198,22 +171,48 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 }
                 appBarLayoutDefaultHeight = appBarLayout.getHeight();
                 setMode(Mode.map_mode);
+                if (fromWeb && !isPublic) {
+                    getAccessToken(email, new OnAccessTokenGotListener() {
+                        @Override
+                        public void onAccessTokenGot(@NonNull String token) {
+                            if (email != null && tripName != null) {
+                                ViewTripActivity.this.token = token;
+                                new PrepareTripTask().execute();
+                            }
+                        }
+                    });
+                } else {
+                    new PrepareTripTask().execute();
+                }
             }
         });
-        setMode(Mode.map_mode);
-        if (fromWeb && !isPublic) {
-            getAccessToken(email, new OnAccessTokenGotListener() {
-                @Override
-                public void onAccessTokenGot(@NonNull String token) {
-                    if (email != null && tripName != null) {
-                        ViewTripActivity.this.token = token;
-                        new PrepareTripTask().execute();
-                    }
-                }
-            });
-        } else {
-            new PrepareTripTask().execute();
+    }
+
+    private boolean tryGetTripInfoFromIntent(Intent intent) {
+        Uri uri = intent.getData();
+        if (uri == null) {
+            return false;
         }
+        String scheme = uri.getScheme();
+        String host = uri.getHost();
+        if (scheme.equals("http") && (host.equals(TripDiaryApplication.serverHost) || host.equals(TripDiaryApplication.serverIP))) {
+            try {
+                fromWeb = true;
+                String uriStr = URLDecoder.decode(uri.toString(), "UTF-8");
+                String tripPath = uriStr.substring(uriStr.indexOf("trippath=") + 9, uriStr.lastIndexOf("&"));
+                String[] pathSegments = tripPath.split("/");
+                email = pathSegments[1];
+                tripName = pathSegments[2];
+                isPublic = uriStr.substring(uriStr.lastIndexOf("&public=")).contains("yes");
+                if (isPublic) {
+                    token = "abc";
+                }
+                return true;
+            } catch (UnsupportedEncodingException | RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     @Override
@@ -266,7 +265,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip != null)
                     setTitle(trip.tripName);
                 ft.show(viewMapFragment);
-                navigationView.getMenu().findItem(R.id.map).setChecked(true);
+                navigationMenu.findItem(R.id.map).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
                 spinner.setVisibility(View.VISIBLE);
                 break;
@@ -274,7 +273,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.diary));
                 ft.show(allTextFragment);
-                navigationView.getMenu().findItem(R.id.diary).setChecked(true);
+                navigationMenu.findItem(R.id.diary).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
                 spinner.setVisibility(View.GONE);
                 break;
@@ -282,7 +281,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.photo));
                 ft.show(allPictureFragment);
-                navigationView.getMenu().findItem(R.id.photo).setChecked(true);
+                navigationMenu.findItem(R.id.photo).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
                 spinner.setVisibility(View.GONE);
                 break;
@@ -290,7 +289,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.video));
                 ft.show(allVideoFragment);
-                navigationView.getMenu().findItem(R.id.video).setChecked(true);
+                navigationMenu.findItem(R.id.video).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
                 spinner.setVisibility(View.GONE);
                 break;
@@ -298,7 +297,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.sound));
                 ft.show(allAudioFragment);
-                navigationView.getMenu().findItem(R.id.audio).setChecked(true);
+                navigationMenu.findItem(R.id.audio).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, 0);
                 spinner.setVisibility(View.GONE);
                 break;
@@ -306,7 +305,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip != null)
                     setTitle(trip.tripName + "-" + getString(R.string.cost));
                 ft.show(viewCostFragment);
-                navigationView.getMenu().findItem(R.id.money).setChecked(true);
+                navigationMenu.findItem(R.id.money).setChecked(true);
                 fragmentLayout.setPadding(0, 0, 0, appBarLayoutDefaultHeight);
                 spinner.setVisibility(View.GONE);
                 break;
@@ -343,6 +342,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     }
 
     private void resetAppBar() {
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         if (appBarLayout == null || coordinatorLayout == null) return;
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
@@ -355,15 +356,17 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
         LatLngBounds bounds;
         LatLng[] lat;
-        ProgressDialog pd;
+        ProgressBar progressBar;
+        TextView progressMessage;
+        static final int setPOI = 0;
+        static final int setTime = 1;
 
         @Override
         protected void onPreExecute() {
-            pd = new ProgressDialog(ViewTripActivity.this);
-            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            pd.setMax(1000);
-            pd.setCancelable(false);
-            pd.show();
+            progressBar = (ProgressBar) findViewById(R.id.loadingTripProgress);
+            progressBar.setMax(1000);
+            progressBar.setProgress(0);
+            progressMessage = (TextView) findViewById(R.id.loadingTripProgressMessage);
             if (!libraryLoadSuccess) {
                 Toast.makeText(getActivity(), getString(R.string.failed_to_loadlibrary), Toast.LENGTH_SHORT).show();
             }
@@ -382,6 +385,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             }
             trip = new Trip(ViewTripActivity.this, tripFile, false, this);
             trip.listener = null;
+            publishProgress(setPOI);
+            publishProgress(500, analyzeGpx);
             if (libraryLoadSuccess) {
                 trip.getCacheJNI(this);
             } else {
@@ -392,19 +397,21 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 if (trip.cache != null) {
                     TrackCache cache = trip.cache;
                     final int latsSize = Math.min(cache.latitudes.length, cache.longitudes.length);
+                    if (trip.dir instanceof WebDocumentFile && latsSize > 0) {
+                        String timeZone = MyCalendar.getTimezoneFromLatLng(cache.latitudes[0], cache.longitudes[0]);
+                        if (timeZone == null) timeZone = TimeZone.getDefault().getID();
+                        trip.timezone = timeZone;
+                        publishProgress(setPOI);
+                    }
+                    publishProgress(setTime);
                     lat = new LatLng[latsSize];
-                    LatLngBounds.Builder latlngBoundesBuilder = new LatLngBounds.Builder();
+                    LatLngBounds.Builder latLngBoundsBuilder = new LatLngBounds.Builder();
                     for (int i = 0; i < latsSize; i++) {
                         LatLng latLng = new LatLng(cache.latitudes[i], cache.longitudes[i]);
                         lat[i] = latLng;
-                        latlngBoundesBuilder.include(latLng);
+                        latLngBoundsBuilder.include(latLng);
                     }
-                    bounds = latlngBoundesBuilder.build();
-                    if (trip.dir instanceof WebDocumentFile && latsSize > 0) {
-                        String timeZone = MyCalendar.getTimezoneFromLatLng(lat[0].latitude, lat[0].longitude);
-                        if (timeZone == null) timeZone = TimeZone.getDefault().getID();
-                        trip.timezone = timeZone;
-                    }
+                    bounds = latLngBoundsBuilder.build();
                 }
             } catch (Exception e) {
                 if (trip != null || trip.cacheFile != null) {
@@ -420,35 +427,48 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
         @Override
         protected void onProgressUpdate(Object... values) {
-            pd.setProgress((int) values[0]);
-            pd.setMessage((String) values[1]);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
-                viewMapFragment.refresh(trip, lat, bounds, pd);
+            int value0 = (int) values[0];
+            if (values.length == 2) {
+                progressBar.setProgress(value0);
+                progressMessage.setText(values[1] + "\n" + String.valueOf(value0 / 10) + "%");
+            } else if (value0 == setPOI) {
                 if (trip.pois != null) {
+                    new LoadNavigationHeaderBackgroundTask().execute();
                     allTextFragment.refresh();
                     allPictureFragment.refresh();
                     allVideoFragment.refresh();
                     allAudioFragment.refresh();
                     viewCostFragment.refreshData(false);
                 }
-                if (trip.tripName != null && trip.time != null) {
-                    navigationTripName.setText(trip.tripName);
+            } else if (value0 == setTime) {
+                if (trip.tripName != null) {
                     String dateDuration = trip.getDateDurationString();
+                    TextView navigationTripName = (TextView) findViewById(R.id.navigationTripName);
+                    TextView navigationTripTime = (TextView) findViewById(R.id.navigationTripTime);
+                    navigationTripName.setText(trip.tripName);
                     navigationTripTime.setText(dateDuration);
                     ActionBar actionBar = getSupportActionBar();
                     if (actionBar != null) {
                         actionBar.setSubtitle(dateDuration);
                     }
-                    new LoadNavigationHeaderBackgroundTask().execute();
                 }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            progressBar.setProgress(progressBar.getMax());
+            drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(ViewTripActivity.this, R.color.colorPrimaryDark));
+            findViewById(R.id.fragment).setAlpha(1.0f);
+            findViewById(R.id.appbar).setAlpha(1.0f);
+            progressMessage.setVisibility(View.GONE);
+            if (success) {
+                viewMapFragment.initialMap(trip, lat, bounds, progressBar);
             } else {
                 Toast.makeText(getActivity(), R.string.invalid_trip_file, Toast.LENGTH_SHORT).show();
                 finishAndRemoveTask();
-                pd.dismiss();
+                progressBar.setProgress(0); //prevent progress drawable become 100% next time
+                progressBar.setVisibility(View.GONE);
             }
         }
 

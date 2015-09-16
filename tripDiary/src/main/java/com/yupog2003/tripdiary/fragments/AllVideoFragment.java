@@ -2,6 +2,8 @@ package com.yupog2003.tripdiary.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -21,11 +23,12 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
+import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.SquareImageView;
@@ -35,7 +38,7 @@ public class AllVideoFragment extends Fragment {
     POIAdapter adapter;
     POI[] pois;
     RecyclerView recyclerView;
-    int width;
+    int sideLength;
     int numColumns;
     POIAdapter poiAdapter;
     String timezone;
@@ -50,7 +53,7 @@ public class AllVideoFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         int[] numColumnsAndWidth = new int[2];
         DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
-        width = numColumnsAndWidth[1];
+        sideLength = numColumnsAndWidth[1];
         numColumns = numColumnsAndWidth[0];
         setHasOptionsMenu(true);
         if (poiAdapter != null) {
@@ -94,14 +97,13 @@ public class AllVideoFragment extends Fragment {
             this.videos = videos;
             if (videos.length > 0) {
                 options = new DisplayImageOptions.Builder()
-                        .displayer(new FadeInBitmapDisplayer(500, true, true, false))
-                        .showImageOnFail(R.drawable.ic_play)
                         .cacheInMemory(true)
                         .bitmapConfig(Bitmap.Config.RGB_565)
                         .extraForDownloader(videos)
+                        .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
+                        .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_play))
                         .build();
             }
-
         }
 
         public int getCount() {
@@ -118,13 +120,16 @@ public class AllVideoFragment extends Fragment {
             return position;
         }
 
-        public View getView(int position, View view, ViewGroup viewGroup) {
-            SquareImageView image = new SquareImageView(getActivity());
-            image.setMaxWidth(width);
-            image.setMaxHeight(width);
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.getInstance().displayImage("trip://" + videos[position].getUri().getPath(), image, options);
-            return image;
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            if (convertView == null) {
+                SquareImageView imageView = new SquareImageView(getActivity());
+                imageView.setMaxWidth(sideLength);
+                imageView.setMaxHeight(sideLength);
+                imageView.setScaleType(ImageView.ScaleType.CENTER);
+                convertView = imageView;
+            }
+            ImageLoader.getInstance().displayImage("trip://" + videos[position].getUri().getPath(), new MyImageViewAware((ImageView) convertView), options);
+            return convertView;
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

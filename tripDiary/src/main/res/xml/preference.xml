@@ -143,7 +143,7 @@
             android:summary="@string/play_poi_speed_summary"
             android:title="@string/playing_poi_speed" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="1"
             android:dialogTitle="@string/playing_trip_mode"
             android:entries="@array/play_view_type"
             android:entryValues="@array/play_view_type_value"

@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector;
@@ -208,7 +209,7 @@ public class FloatingGroupExpandableListView extends ExpandableListView {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         // Reflection is used here to obtain info about the selector
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             mSelectorPosition = (Integer) ReflectionUtils.getFieldValue(AbsListView.class, "mSelectorPosition", FloatingGroupExpandableListView.this);
@@ -245,7 +246,7 @@ public class FloatingGroupExpandableListView extends ExpandableListView {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
         final int action = ev.getAction() & MotionEvent.ACTION_MASK;
 
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_CANCEL) {
@@ -294,19 +295,19 @@ public class FloatingGroupExpandableListView extends ExpandableListView {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    public boolean onInterceptTouchEvent(@NonNull MotionEvent ev) {
         mHandledByOnInterceptTouchEvent = super.onInterceptTouchEvent(ev);
         return mHandledByOnInterceptTouchEvent;
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(@NonNull MotionEvent ev) {
         mHandledByOnTouchEvent = super.onTouchEvent(ev);
         return mHandledByOnTouchEvent;
     }
 
     @Override
-    public void setSelector(Drawable sel) {
+    public void setSelector(@NonNull Drawable sel) {
         super.setSelector(new ColorDrawable(Color.TRANSPARENT));
         if (mSelector != null) {
             mSelector.setCallback(null);

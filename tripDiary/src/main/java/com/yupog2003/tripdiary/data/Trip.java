@@ -67,6 +67,7 @@ public class Trip implements Comparable<Trip> {
         }
     }
 
+    @Nullable
     public static Trip createTrip(Context context, String tripName) {
         DocumentFile dir = TripDiaryApplication.rootDocumentFile.createDirectory(tripName);
         if (dir == null) {
@@ -111,7 +112,13 @@ public class Trip implements Comparable<Trip> {
                 e.printStackTrace();
             }
         }
-        refreshPOIs();
+        ArrayList<DocumentFile> poiFileList = new ArrayList<>();
+        for (DocumentFile file : files) {
+            if (file.isDirectory() && !file.getName().startsWith(".")) {
+                poiFileList.add(file);
+            }
+        }
+        refreshPOIs(poiFileList.toArray(new DocumentFile[poiFileList.size()]));
     }
 
     public void getCacheJava(GpxAnalyzerJava.ProgressChangedListener listener) {
@@ -264,6 +271,7 @@ public class Trip implements Comparable<Trip> {
             bw.write("</Placemark>\n");
             for (int i = 0; i < poiLength; i++) {
                 POI poi = pois[i];
+                if (poi == null) continue;
                 bw.write("<Placemark>\n");
                 bw.write("<name>" + poi.title + "</name>\n");
                 bw.write("<styleUrl>#iconColor</styleUrl>\n");
@@ -369,11 +377,14 @@ public class Trip implements Comparable<Trip> {
                 if (listener != null) {
                     listener.onProgressChanged(i * 100, poiLength * 100);
                 }
+                if (poi == null) continue;
                 final int picSize = poi.picFiles.length;
                 StringBuilder descriptionBuilder = new StringBuilder();
                 descriptionBuilder.append(poi.time.formatInTimezone(timezone)).append("<br/>").append(poi.diary).append("<br/>");
                 for (int j = 0; j < picSize; j++) {
-                    InputStream is = poi.picFiles[j].getInputStream();
+                    DocumentFile picFile = poi.picFiles[i];
+                    if (picFile == null) continue;
+                    InputStream is = picFile.getInputStream();
                     BitmapFactory.Options op = new BitmapFactory.Options();
                     op.inJustDecodeBounds = true;
                     BitmapFactory.decodeStream(is, new Rect(0, 0, 0, 0), op);
@@ -381,12 +392,14 @@ public class Trip implements Comparable<Trip> {
                     op.inJustDecodeBounds = false;
                     is = poi.picFiles[j].getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is, new Rect(0, 0, 0, 0), op);
-                    String fileName = poi.picFiles[j].getName();
-                    zos.putNextEntry(new ZipEntry(fileName));
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zos);
-                    bitmap.recycle();
-                    zos.closeEntry();
-                    descriptionBuilder.append("<img src=\"").append(fileName).append("\" width=\"").append(String.valueOf(targetPicWidth)).append("\" /><br/>");
+                    if (bitmap != null) {
+                        String fileName = picFile.getName();
+                        zos.putNextEntry(new ZipEntry(fileName));
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, zos);
+                        bitmap.recycle();
+                        zos.closeEntry();
+                        descriptionBuilder.append("<img src=\"").append(fileName).append("\" width=\"").append(String.valueOf(targetPicWidth)).append("\" /><br/>");
+                    }
                     if (listener != null) {
                         listener.onProgressChanged(i * 100 + j * 100 / picSize, poiLength * 100);
                     }
@@ -433,6 +446,7 @@ public class Trip implements Comparable<Trip> {
         return kmzFile;
     }
 
+    @Nullable
     public POI getPOI(String poiName) {
         if (pois != null && poiName != null) {
             for (POI poi : pois) {
@@ -446,6 +460,7 @@ public class Trip implements Comparable<Trip> {
     }
 
     //If exists, return it. If not, create it.
+    @Nullable
     public POI createPOI(String poiName, MyCalendar time, double latitude, double longitude, double altitude) {
         POI poi;
         if ((poi = getPOI(poiName)) != null) {
@@ -458,7 +473,7 @@ public class Trip implements Comparable<Trip> {
         if (poiFile == null) {
             return null;
         }
-        poi = new POI(context, poiFile);
+        poi = new POI(context, poiFile, this);
         poi.updateBasicInformation(null, time, latitude, longitude, altitude);
         ArrayList<POI> poiList = new ArrayList<>(Arrays.asList(pois));
         poiList.add(poi);
@@ -494,22 +509,24 @@ public class Trip implements Comparable<Trip> {
 
     public void refreshPOIs() {
         if (dir != null) {
-            DocumentFile[] poiFiles = dir.listFiles(DocumentFile.list_dirs);
-            if (poiFiles != null) {
-                this.pois = new POI[poiFiles.length];
-                for (int i = 0; i < pois.length; i++) {
-                    pois[i] = new POI(context, poiFiles[i]);
-                    if (listener != null) {
-                        listener.onPOICreated(i, pois.length, pois[i].title);
-                    }
-                }
-                Arrays.sort(pois);
-                return;
-            }
+            refreshPOIs(dir.listFiles(DocumentFile.list_dirs));
+        } else {
+            this.pois = new POI[0];
         }
-        this.pois = new POI[0];
     }
 
+    public void refreshPOIs(@NonNull DocumentFile[] poiFiles) {
+        this.pois = new POI[poiFiles.length];
+        for (int i = 0; i < pois.length; i++) {
+            pois[i] = new POI(context, poiFiles[i], this);
+            if (listener != null) {
+                listener.onPOICreated(i, pois.length, pois[i].title);
+            }
+        }
+        Arrays.sort(pois);
+    }
+
+    @NonNull
     public SparseArray<POI> getPOIsInTrackMap() {
         SparseArray<POI> markersMap = new SparseArray<>();
         if (pois == null || cache == null || cache.times == null || timezone == null) {
@@ -540,7 +557,8 @@ public class Trip implements Comparable<Trip> {
     }
 
     public void renameTrip(String name) {
-        if (dir == null || cacheFile == null || gpxFile == null) return;
+        if (name == null || name.equals("") || dir == null || cacheFile == null || gpxFile == null)
+            return;
         SharedPreferences p = context.getSharedPreferences("trip", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = p.edit();
         editor.remove(tripName);

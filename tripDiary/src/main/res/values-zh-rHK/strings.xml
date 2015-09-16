@@ -127,9 +127,9 @@
     <string name="share_diary">分享日記</string>
     <string name="statistics">統計資料</string>
     <string name="import_trip_with_gpx">以gpx檔匯入旅程</string>
-    <string name="import_a_picture">匯入一照片</string>
-    <string name="import_a_video">匯入一影片</string>
-    <string name="import_a_audio">匯入一聲音</string>
+    <string name="import_pictures">匯入照片</string>
+    <string name="import_videos">匯入影片</string>
+    <string name="import_audios">匯入聲音</string>
     <string name="play_music">播放音樂</string>
     <string name="play_background_music">播放旅程時播放背景音樂</string>
     <string name="dont_play_background_music">播放旅程時不播放背景音樂</string>
@@ -149,7 +149,6 @@
     <string name="diary_font">日記字體</string>
     <string name="invalid_font">無效的字型</string>
     <string name="diary_font_size">日記字體大小</string>
-    <string name="select_diary_font_size">選擇日記字體大小</string>
     <string name="please_enable_the_gps_provider">請開啟GPS</string>
     <string name="share">分享</string>
     <string name="select_diary_font">選擇日記字體</string>
@@ -218,7 +217,7 @@
     <string name="camera_is_not_available">無相機服務</string>
     <string name="resume_trip">接續旅程</string>
     <string name="import_memory">匯入回憶</string>
-    <string name="import_memory_explanation">旅遊日記可以匯入回憶(圖片、影片、聲音)，只需要選擇一個含有回憶的資料夾，然後它就會根據建立時間(JPEG則根據EXIF時間)自動複製這些檔案到適當的POI資料夾，但你應該注意回憶的時區必須與現在時區相同。</string>
+    <string name="import_memory_explanation">旅遊日記可以匯入回憶(圖片、影片、聲音)，只需要選擇一個含有回憶的資料夾，然後它就會根據建立時間(JPEG則根據EXIF時間)自動複製這些檔案到適當的POI資料夾，但你應該注意回憶的時區必須與旅程時區相同。</string>
     <string name="importing">匯入中</string>
     <string name="select_a_directory">選一個資料夾</string>
     <string name="update_trip_timezone">更新旅程時區</string>
@@ -235,7 +234,6 @@
     <string name="unzipping">解壓縮中</string>
     <string name="download">下載</string>
     <string name="toggle_public">切換公開性</string>
-    <string name="login">登入</string>
     <string name="account">帳戶</string>
     <string name="upload">上傳</string>
     <string name="map">地圖</string>
@@ -333,4 +331,7 @@
     <string name="habit_of_adding_poi">新增興趣點習慣</string>
     <string name="when_do_you_usually_add_a_poi">你新增興趣點的習慣，這會影響到匯入回憶的行為</string>
     <string name="measurementUnit_image">張圖片</string>
+    <string name="long_click_to_select_multiple_file">長按以選擇多個檔案</string>
+    <string name="input_poi_name">輸入興趣點名稱</string>
+    <string name="select_poi_name">選擇興趣點名稱</string>
 </resources>

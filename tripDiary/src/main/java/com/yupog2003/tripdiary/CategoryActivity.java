@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yupog2003.tripdiary.data.ColorHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 
 import java.util.Map;
 import java.util.Set;
@@ -81,7 +81,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
             final int color = Color.WHITE;
-            colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
+            colorImage.setImageDrawable(DrawableHelper.getColorDrawable(CategoryActivity.this, 100, color));
             colorImage.setTag(color);
             pickColor.setOnClickListener(new View.OnClickListener() {
 
@@ -91,7 +91,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
 
                         public void onOk(AmbilWarnaDialog dialog, int color) {
 
-                            colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
+                            colorImage.setImageDrawable(DrawableHelper.getColorDrawable(CategoryActivity.this, 100, color));
                             colorImage.setTag(color);
                         }
 
@@ -145,7 +145,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             TextView textView = new TextView(CategoryActivity.this);
             textView.setTextAppearance(CategoryActivity.this, android.R.style.TextAppearance_Large);
             int color = Integer.parseInt(categorysp.getString(categories[position], String.valueOf(Color.WHITE)));
-            textView.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(CategoryActivity.this, 50, color), null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(CategoryActivity.this, 50, color), null, null, null);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setText(categories[position]);
             return textView;
@@ -160,7 +160,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
             final int color = Integer.parseInt(categorysp.getString(categories[position], String.valueOf(Color.WHITE)));
-            colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
+            colorImage.setImageDrawable(DrawableHelper.getColorDrawable(CategoryActivity.this, 100, color));
             colorImage.setTag(color);
             categoryName.setText(categories[position]);
             pickColor.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +171,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
 
                         public void onOk(AmbilWarnaDialog dialog, int color) {
 
-                            colorImage.setImageDrawable(ColorHelper.getColorDrawable(CategoryActivity.this, 100, color));
+                            colorImage.setImageDrawable(DrawableHelper.getColorDrawable(CategoryActivity.this, 100, color));
                             colorImage.setTag(color);
                         }
 
@@ -210,7 +210,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.delete));
             ab.setMessage(getString(R.string.are_you_sure_to_delete));
-            ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+            ab.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
             ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {

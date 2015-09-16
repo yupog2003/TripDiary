@@ -19,12 +19,6 @@ import com.yupog2003.tripdiary.fragments.RemoteTripsFragment;
 
 public class ViewActivity extends MyActivity {
 
-    MyPagerAdapter pagerAdapter;
-    ViewPager viewPager;
-    TabLayout tabs;
-    AppBarLayout appBarLayout;
-    CoordinatorLayout coordinatorLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +29,9 @@ public class ViewActivity extends MyActivity {
             assert getSupportActionBar() != null;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabs = (TabLayout) findViewById(R.id.tabs);
+        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -47,12 +40,12 @@ public class ViewActivity extends MyActivity {
                 } else {
                     appBarLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 }
-                pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+                MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
                 viewPager.setAdapter(pagerAdapter);
                 viewPager.addOnPageChangeListener(pagerAdapter);
                 tabs.setupWithViewPager(viewPager);
                 viewPager.setCurrentItem(1);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){ //pre lollipop can not nested scroll
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) { //pre lollipop can not nested scroll
                     viewPager.setPadding(0, 0, 0, appBarLayout.getHeight());
                 }
             }
@@ -139,6 +132,8 @@ public class ViewActivity extends MyActivity {
     }
 
     private void resetAppBar() {
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
         if (behavior != null) {

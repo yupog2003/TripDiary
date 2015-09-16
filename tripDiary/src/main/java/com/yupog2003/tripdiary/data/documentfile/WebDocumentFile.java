@@ -31,13 +31,13 @@ import java.util.ArrayList;
 
 public class WebDocumentFile extends DocumentFile {
 
-    public String urlStr;
-    boolean isDir;
-    public String token;
-    static final String serviceURL = TripDiaryApplication.serverURL + "/DocumentFileService.php";
+    private String urlStr;
+    private boolean isDir;
+    private String token;
+    private static final String serviceURL = TripDiaryApplication.serverURL + "/DocumentFileService.php";
     static final String charset = "UTF-8";
-    JSONArray children;
-    String content;
+    private JSONArray children;
+    private String content;
 
     public WebDocumentFile(String token, String urlStr, DocumentFile parent, JSONArray children, boolean isDir) {
         super(parent);
@@ -111,6 +111,16 @@ public class WebDocumentFile extends DocumentFile {
 
     @Override
     public long length() {
+        if (content != null) {
+            try {
+                return content.getBytes(charset).length;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        if (localCache != null) {
+            return localCache.length();
+        }
         String result = postService("length", urlStr, token);
         if (result != null)
             return Long.parseLong(result);
@@ -169,13 +179,13 @@ public class WebDocumentFile extends DocumentFile {
             public void run() {
                 try {
                     long startTime = System.currentTimeMillis();
-                    String[] segments = urlStr.substring(TripDiaryApplication.serverURL.length() + 1).split("/");
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(TripDiaryApplication.serverURL);
-                    for (String segment : segments) {
-                        sb.append("/").append(URLEncoder.encode(segment, charset));
-                    }
-                    URLConnection connection = new URL(sb.toString().replace("+", "%20")).openConnection();
+                    URLConnection connection = new URL(serviceURL).openConnection();
+                    connection.setDoOutput(true);
+                    connection.setRequestProperty("Accept-Charset", charset);
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+                    OutputStream outputStream = connection.getOutputStream();
+                    String query = "function=" + URLEncoder.encode("getInputStream", charset) + "&url=" + URLEncoder.encode(urlStr, charset) + "&token=" + URLEncoder.encode(token, charset);
+                    outputStream.write(query.getBytes(charset));
                     InputStream is = connection.getInputStream();
                     localCache = new File(TripDiaryApplication.instance.getCacheDir(), String.valueOf(System.currentTimeMillis()));
                     FileOutputStream fos = new FileOutputStream(localCache);
@@ -230,49 +240,19 @@ public class WebDocumentFile extends DocumentFile {
         }
         try {
             ArrayList<WebDocumentFile> fileList = new ArrayList<>();
-            for (int i = 0; i < children.length(); i++) {
+            Filter filter = getFilterFromListType(list_type);
+            int childrenLength = children.length();
+            for (int i = 0; i < childrenLength; i++) {
                 JSONObject child = children.getJSONObject(i);
                 String urlStr = URLDecoder.decode(child.getString("self"), charset);
-                JSONArray nextChildren = child.getJSONArray("children");
                 boolean isDir = child.getString("isDir").equals("1");
-                WebDocumentFile file = new WebDocumentFile(token, urlStr, this, nextChildren, isDir);
-                if (child.has("content")) {
-                    file.setContent(child.getString("content"));
-                }
-                switch (list_type) {
-                    case list_all:
-                        fileList.add(file);
-                        break;
-                    case list_pics:
-                        if (FileHelper.isPicture(urlStr)) {
-                            fileList.add(file);
-                        }
-                        break;
-                    case list_videos:
-                        if (FileHelper.isVideo(urlStr)) {
-                            fileList.add(file);
-                        }
-                        break;
-                    case list_audios:
-                        if (FileHelper.isAudio(urlStr)) {
-                            fileList.add(file);
-                        }
-                        break;
-                    case list_dirs:
-                        if (isDir && !file.getName().startsWith(".")) {
-                            fileList.add(file);
-                        }
-                        break;
-                    case list_withoutdots:
-                        if (!file.getName().startsWith(".")) {
-                            fileList.add(file);
-                        }
-                        break;
-                    case list_memory:
-                        if (FileHelper.isMemory(urlStr)) {
-                            fileList.add(file);
-                        }
-                        break;
+                if (filter.accept(urlStr, isDir)) {
+                    JSONArray nextChildren = child.getJSONArray("children");
+                    WebDocumentFile file = new WebDocumentFile(token, urlStr, this, nextChildren, isDir);
+                    if (child.has("content")) {
+                        file.setContent(child.getString("content"));
+                    }
+                    fileList.add(file);
                 }
             }
             return fileList.toArray(new WebDocumentFile[fileList.size()]);
@@ -280,6 +260,74 @@ public class WebDocumentFile extends DocumentFile {
             e.printStackTrace();
         }
         return new DocumentFile[0];
+    }
+
+    interface Filter {
+        boolean accept(String urlStr, boolean isDir);
+    }
+
+    @NonNull
+    private Filter getFilterFromListType(int list_type) {
+        switch (list_type) {
+            case list_all:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        return true;
+                    }
+                };
+            case list_pics:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        return FileHelper.isPicture(urlStr);
+                    }
+                };
+            case list_videos:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        return FileHelper.isVideo(urlStr);
+                    }
+                };
+            case list_audios:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        return FileHelper.isAudio(urlStr);
+                    }
+                };
+            case list_dirs:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        String fileName = urlStr.substring(urlStr.lastIndexOf("/") + 1);
+                        return isDir && !fileName.startsWith(".");
+                    }
+                };
+            case list_withoutdots:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        String fileName = urlStr.substring(urlStr.lastIndexOf("/") + 1);
+                        return !fileName.startsWith(".");
+                    }
+                };
+            case list_memory:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        return FileHelper.isMemory(urlStr);
+                    }
+                };
+            default:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String urlStr, boolean isDir) {
+                        return true;
+                    }
+                };
+        }
     }
 
     private WebDocumentFile thumbFile;
@@ -299,7 +347,7 @@ public class WebDocumentFile extends DocumentFile {
 
     }
 
-    public static String postService(final String function, final String url, final String token, final String... params) {
+    protected static String postService(final String function, final String url, final String token, final String... params) {
         final StringBuilder resultBuilder = new StringBuilder();
         Thread t = new Thread(new Runnable() {
             @Override

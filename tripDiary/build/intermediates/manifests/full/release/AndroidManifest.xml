@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="188"
-    android:versionName="1.3.1" >
+    android:versionCode="189"
+    android:versionName="1.3.2" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -88,7 +88,7 @@
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
+            android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
         <!-- publish key=  AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->

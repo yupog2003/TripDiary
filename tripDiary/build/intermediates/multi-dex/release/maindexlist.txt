@@ -172,7 +172,6 @@ android/support/annotation/StringRes.class
 com/google/android/gms/ads/internal/formats/zzf.class
 android/support/v4/app/NotificationCompatBase$UnreadConversation$Factory.class
 org/apache/http/conn/params/ConnRoutePNames.class
-com/yupog2003/tripdiary/ViewTripActivity$3.class
 org/apache/http/conn/params/ConnPerRoute.class
 android/support/v4/app/NotificationCompatKitKat$Builder.class
 org/apache/http/impl/pool/BasicConnPool.class
@@ -411,13 +410,13 @@ com/google/android/gms/wearable/ChannelApi.class
 com/google/android/gms/internal/zzfj.class
 org/apache/thrift/protocol/TBinaryProtocol.class
 android/support/v4/app/NotificationCompat$Action.class
-com/yupog2003/tripdiary/data/ColorHelper.class
 org/apache/http/client/HttpClient.class
 com/google/android/gms/internal/zzdf.class
 android/support/v4/widget/MaterialProgressDrawable$Ring.class
 org/apache/thrift/TServiceClient.class
 android/support/v7/internal/view/menu/MenuItemImpl.class
 com/yupog2003/tripdiary/ViewTripActivity.class
+com/google/android/gms/common/UserRecoverableException.class
 org/apache/http/client/config/CookieSpecs.class
 org/apache/http/impl/client/EntityEnclosingRequestWrapper.class
 android/support/v4/app/SuperNotCalledException.class
@@ -446,6 +445,7 @@ org/apache/http/impl/io/AbstractSessionInputBuffer.class
 org/apache/http/message/BasicLineParser.class
 com/yupog2003/tripdiary/GetContentActivity$MemoryAdapter.class
 com/google/android/gms/internal/zzbw.class
+com/google/android/gms/common/GooglePlayServicesNotAvailableException.class
 com/yupog2003/tripdiary/services/SendTripService$1.class
 android/support/annotation/StyleRes.class
 android/support/v4/app/BackStackRecord.class
@@ -622,6 +622,7 @@ android/support/v4/widget/DrawerLayout.class
 org/apache/http/impl/client/HttpClientBuilder.class
 -keep public class * extends android.app.backup.BackupAgent {
 android/support/v4/app/NotificationCompat$NotificationCompatImplHoneycomb.class
+com/google/android/gms/location/places/Place.class
 org/apache/http/impl/conn/DefaultHttpRoutePlanner.class
 com/google/android/gms/internal/zzhc.class
 com/yupog2003/tripdiary/ViewTripActivity$LoadNavigationHeaderBackgroundTask.class
@@ -742,6 +743,7 @@ com/google/ads/AdRequest.class
 org/apache/http/conn/ClientConnectionOperator.class
 com/google/android/gms/gcm/OneoffTask.class
 android/support/v4/app/FragmentManager$BackStackEntry.class
+com/google/android/gms/common/GooglePlayServicesRepairableException.class
 org/apache/thrift/transport/TTransport.class
 com/google/android/gms/wallet/Address.class
 android/support/v4/media/VolumeProviderCompat$ControlType.class
@@ -752,7 +754,6 @@ com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask.class
 android/support/v4/app/NotificationCompat$NotificationCompatImplGingerbread.class
 com/google/android/gms/ads/internal/zzi.class
 com/google/android/gms/internal/zzda.class
-com/yupog2003/tripdiary/data/POI$ImportMemoriesListener.class
 android/support/design/R$styleable.class
 android/support/design/widget/SwipeDismissBehavior$OnDismissListener.class
     *;
@@ -769,8 +770,9 @@ com/google/android/gms/maps/CameraUpdate.class
 com/google/android/gms/wallet/fragment/zzc.class
 com/yupog2003/tripdiary/ViewGraphActivity$AltitudeFormatter.class
 com/yupog2003/tripdiary/data/GpxAnalyzer2.class
-android/support/v7/appcompat/R$styleable.class
 com/google/android/gms/location/places/ui/PlacePicker$IntentBuilder.class
+android/support/v7/appcompat/R$styleable.class
+com/yupog2003/tripdiary/data/DrawableHelper.class
 android/support/v7/widget/Toolbar.class
 com/yupog2003/tripdiary/ViewPointActivity$1.class
 android/support/v4/app/FragmentManagerImpl$1.class
@@ -802,6 +804,7 @@ com/google/android/gms/ads/internal/zze.class
 com/google/android/gms/internal/zzhh.class
 com/google/android/gms/analytics/ecommerce/ProductAction.class
 com/google/android/gms/games/achievement/Achievement.class
+com/google/android/gms/location/places/ui/PlacePicker.class
 org/apache/http/impl/client/DefaultRedirectStrategyAdaptor.class
 com/yupog2003/tripdiary/GetContentActivity$1.class
 android/support/design/widget/CoordinatorLayout$LayoutParams.class
@@ -820,6 +823,7 @@ org/apache/http/impl/cookie/BestMatchSpecFactory.class
 org/apache/http/impl/client/ClientParamsStack.class
 android/support/design/widget/ViewOffsetHelper.class
 android/support/v4/widget/DrawerLayout$DrawerListener.class
+com/google/android/gms/common/data/Freezable.class
 android/support/v4/app/NotificationCompat$BigTextStyle.class
 com/google/android/gms/internal/zzev.class
 android/support/v4/media/MediaDescriptionCompat.class
@@ -1025,6 +1029,7 @@ com/google/android/gms/internal/zzco.class
 com/yupog2003/tripdiary/MainActivity$4.class
 com/google/android/gms/internal/zzhr.class
 com/nostra13/universalimageloader/core/ImageLoader.class
+com/yupog2003/tripdiary/RecordActivity$4.class
 com/yupog2003/tripdiary/services/GenerateVideoService.class
 android/support/annotation/LayoutRes.class
 android/support/design/widget/AppBarLayout$LayoutParams.class
@@ -1081,7 +1086,6 @@ com/google/android/gms/wallet/WalletConstants.class
 android/support/v4/app/NavUtils.class
 com/nostra13/universalimageloader/core/decode/ImageDecoder.class
 com/google/android/gms/internal/zzcs.class
-com/yupog2003/tripdiary/RecordActivity$UpdateTask.class
 android/support/v4/app/NotificationCompat$InboxStyle.class
 android/support/v4/media/session/PlaybackStateCompat$CustomAction.class
 com/yupog2003/tripdiary/RecordActivity$3.class

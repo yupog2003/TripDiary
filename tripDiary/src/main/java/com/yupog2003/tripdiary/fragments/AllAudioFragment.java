@@ -21,8 +21,7 @@ import android.widget.TextView;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
-import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.UnScrollableListView;
@@ -30,8 +29,6 @@ import com.yupog2003.tripdiary.views.UnScrollableListView;
 public class AllAudioFragment extends Fragment {
     POI[] pois;
     RecyclerView recyclerView;
-    int width;
-    int numColums;
     POIAdapter poiAdapter;
     String timezone;
     Drawable audioDrawable;
@@ -42,19 +39,10 @@ public class AllAudioFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        int screenWidth = DeviceHelper.getScreenWidth(getActivity());
-        int screenHeight = DeviceHelper.getScreenHeight(getActivity());
-        if (screenWidth > screenHeight) {
-            width = screenWidth / 5;
-            numColums = 5;
-        } else {
-            width = screenWidth / 3;
-            numColums = 3;
-        }
         setHasOptionsMenu(true);
         recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        audioDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
+        audioDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
         return recyclerView;
     }
 
@@ -107,12 +95,15 @@ public class AllAudioFragment extends Fragment {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView = new TextView(getActivity());
-            textView.setText(audios[position].getName());
-            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_DeviceDefault_Medium);
-            textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
-            textView.setGravity(Gravity.CENTER_VERTICAL);
-            return textView;
+            if (convertView == null) {
+                TextView textView = new TextView(getActivity());
+                textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_DeviceDefault_Medium);
+                textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                convertView = textView;
+            }
+            ((TextView) convertView).setText(audios[position].getName());
+            return convertView;
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

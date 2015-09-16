@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="name"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/textColorDarkPrimary" />
 
@@ -34,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:singleLine="true"
-                android:text="2015-25-14T12:30:56"
                 android:textColor="@color/textColorDarkSecondary"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>

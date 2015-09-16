@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
+    android:orientation="vertical"
     android:padding="@dimen/dialog_padding">
 
     <TextView
@@ -16,9 +16,9 @@
         android:id="@+id/costname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" 
+        android:ems="10"
         android:inputType="text">
-	
+
         <requestFocus />
     </EditText>
 
@@ -32,8 +32,7 @@
     <RadioGroup
         android:id="@+id/costtype"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/food"
@@ -53,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/transportation" />
+
         <RadioButton
             android:id="@+id/other"
             android:layout_width="wrap_content"

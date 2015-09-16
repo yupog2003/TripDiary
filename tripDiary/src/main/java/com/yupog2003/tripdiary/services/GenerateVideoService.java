@@ -718,21 +718,6 @@ public class GenerateVideoService extends IntentService {
             e.printStackTrace();
         }
         return false;
-        /*try {
-            InputStream inputStream = getAssets().open("ffmpeg");
-            FileOutputStream fileOutputStream = new FileOutputStream(ffmpegFile);
-            FileHelper.copyByStream(inputStream, fileOutputStream);
-            try {
-                ProcessBuilder processBuilder = new ProcessBuilder("chmod", "777", ffmpegFile.getPath());
-                processBuilder.redirectErrorStream(true);
-                Process process = processBuilder.start();
-                process.waitFor();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private int getNum_total_materials(SparseArray<POI> pois) {

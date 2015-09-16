@@ -21,7 +21,8 @@ import java.io.OutputStreamWriter;
 public class POI implements Comparable<POI> {
 
     Context context;
-    public DocumentFile parentTrip;
+    public Trip parentTrip;
+    public DocumentFile parentTripFile;
     public DocumentFile dir;
     public DocumentFile picDir;
     public DocumentFile audioDir;
@@ -40,9 +41,10 @@ public class POI implements Comparable<POI> {
     public double altitude;
     public String diary;
 
-    public POI(Context context, DocumentFile dir) throws NullPointerException {
+    public POI(Context context, DocumentFile dir, Trip trip) throws NullPointerException {
         this.context = context;
         this.dir = dir;
+        this.parentTrip = trip;
         if (context == null || dir == null) {
             throw new NullPointerException();
         } else {
@@ -52,7 +54,7 @@ public class POI implements Comparable<POI> {
 
     public void updateAllFields() {
         DocumentFile[] files = dir.listFiles();
-        this.parentTrip = dir.getParentFile();
+        this.parentTripFile = dir.getParentFile();
         this.picDir = FileHelper.findfile(files, "pictures");
         if (picDir == null)
             this.picDir = dir.createDirectory("pictures");
@@ -273,6 +275,7 @@ public class POI implements Comparable<POI> {
     }
 
     public void renamePOI(String name) {
+        if (name == null || name.equals("") || dir == null) return;
         dir.renameTo(name);
         updateAllFields();
         updateBasicInformation(name, null, null, null, null);

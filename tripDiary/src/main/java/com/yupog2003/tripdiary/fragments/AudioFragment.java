@@ -7,9 +7,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +26,7 @@ import android.widget.TextView;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
 import com.yupog2003.tripdiary.data.POI;
@@ -32,6 +34,7 @@ import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AudioFragment extends Fragment {
     ListView layout;
@@ -43,7 +46,7 @@ public class AudioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (ListView) inflater.inflate(R.layout.fragment_audio, container, false);
         ViewCompat.setNestedScrollingEnabled(layout, true);
-        audioDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
+        audioDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_music);
         refresh();
         return layout;
     }
@@ -94,7 +97,7 @@ public class AudioFragment extends Fragment {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+                ab.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -144,27 +147,40 @@ public class AudioFragment extends Fragment {
                         uris.add(((DocumentFile) adapter.getItem(i)).getUri());
                     }
                 }
-                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                if (uris.size() == 0) return true;
+                Intent intent = new Intent();
                 intent.setType("audio/*");
-                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                if (uris.size() == 1) {
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, uris.get(0));
+                } else if (uris.size() > 1) {
+                    intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                    intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                }
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final DocumentFile tripFile = poi.dir.getParentFile();
-                final String[] pois = tripFile.listFileNames(DocumentFile.list_dirs);
+                if (poi == null || poi.parentTrip == null || poi.parentTrip.pois == null)
+                    return true;
+                final POI[] pois = poi.parentTrip.pois;
+                final String[] poiNames = new String[pois.length];
+                for (int i = 0; i < poiNames.length; i++) {
+                    poiNames[i] = pois[i].title;
+                }
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);
-                ab.setItems(pois, new OnClickListener() {
+                ab.setItems(poiNames, new OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
-                        DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "audios");
+                        DocumentFile toDir = pois[which].audioDir;
                         if (toDir == null) return;
-                        DocumentFile[] filesIntoDir = toDir.listFiles();
+                        DocumentFile[] filesInToDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
-                            toFiles[i] = FileHelper.findfile(filesIntoDir, checksName.get(i).getName());
+                            toFiles[i] = FileHelper.findfile(filesInToDir, checksName.get(i).getName());
                             if (toFiles[i] == null) {
                                 toFiles[i] = toDir.createFile("", checksName.get(i).getName());
                             }
@@ -174,7 +190,6 @@ public class AudioFragment extends Fragment {
 
                             @Override
                             public void onFinish() {
-
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
                                 }
@@ -193,9 +208,7 @@ public class AudioFragment extends Fragment {
             mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
             menu.findItem(R.id.print).setVisible(false);
             checks = new boolean[adapter.getCount()];
-            for (int i = 0; i < checks.length; i++) {
-                checks[i] = false;
-            }
+            Arrays.fill(checks, false);
             checkAll = false;
             adapter.onMultiChoiceMode = true;
             return true;
@@ -246,14 +259,19 @@ public class AudioFragment extends Fragment {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView = new TextView(getActivity());
-            textView.setTextSize(30);
-            textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
-            textView.setText(audios[position].getName());
-            CheckableLayout l = new CheckableLayout(getActivity());
-            l.addView(textView);
-            l.setOnMultiChoiceMode(onMultiChoiceMode);
-            convertView = l;
+            if (convertView == null) {
+                TextView textView = new TextView(getActivity());
+                textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Large);
+                textView.setTextColor(ContextCompat.getColor(getActivity(), R.color.textColorDarkPrimary));
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setCompoundDrawablesWithIntrinsicBounds(audioDrawable, null, null, null);
+                CheckableLayout l = new CheckableLayout(getActivity());
+                l.addView(textView);
+                convertView = l;
+                convertView.setTag(textView);
+            }
+            ((TextView) convertView.getTag()).setText(audios[position].getName());
+            ((CheckableLayout) convertView).setOnMultiChoiceMode(onMultiChoiceMode);
             return convertView;
         }
 

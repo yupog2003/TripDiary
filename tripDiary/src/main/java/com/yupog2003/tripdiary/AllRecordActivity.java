@@ -26,8 +26,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
@@ -162,7 +162,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             }
             progressBar.setMax(tripNames.length);
             progressFormat = getString(R.string.lifetime_record) + "(%d/%d)";
-            float hue = ColorHelper.getMarkerColorHue(getActivity());
+            float hue = DrawableHelper.getMarkerColorHue(getActivity());
             bd = BitmapDescriptorFactory.defaultMarker(hue);
         }
 

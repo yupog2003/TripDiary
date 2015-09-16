@@ -78,7 +78,8 @@ public class BackupRestoreTripService extends IntentService {
             Intent sendIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
             sendIntent.setType("application/zip");
             sendIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, resultUris);
-            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pi = PendingIntent.getActivity(this, 0, sendIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             nb.setContentIntent(pi);
             nb.setProgress(0, 0, false);

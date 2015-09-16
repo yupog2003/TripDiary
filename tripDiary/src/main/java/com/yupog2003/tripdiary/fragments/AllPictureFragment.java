@@ -2,6 +2,8 @@ package com.yupog2003.tripdiary.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -22,11 +24,12 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
+import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.SquareImageView;
@@ -36,7 +39,7 @@ public class AllPictureFragment extends Fragment {
     POI[] pois;
     RecyclerView recyclerView;
     POIAdapter poiAdapter;
-    int width;
+    int sideLength;
     int numColumns;
     String timezone;
 
@@ -48,7 +51,7 @@ public class AllPictureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int[] numColumnsAndWidth = new int[2];
         DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
-        width = numColumnsAndWidth[1];
+        sideLength = numColumnsAndWidth[1];
         numColumns = numColumnsAndWidth[0];
         recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_all, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -88,18 +91,17 @@ public class AllPictureFragment extends Fragment {
 
         public PictureAdapter(DocumentFile[] pictures) {
             this.pictures = pictures;
-            if (pictures.length > 0)
-                options = new DisplayImageOptions.Builder()
-                        .displayer(new FadeInBitmapDisplayer(500, true, true, false))
-                        .bitmapConfig(Bitmap.Config.RGB_565)
-                        .cacheInMemory(true)
-                        .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                        .extraForDownloader(pictures)
-                        .build();
+            options = new DisplayImageOptions.Builder()
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .cacheInMemory(true)
+                    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                    .extraForDownloader(pictures)
+                    .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
+                    .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_error))
+                    .build();
         }
 
         public int getCount() {
-
             if (pictures == null)
                 return 0;
             return pictures.length;
@@ -116,12 +118,12 @@ public class AllPictureFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 SquareImageView imageView = new SquareImageView(getActivity());
-                imageView.setMaxWidth(width);
-                imageView.setMaxHeight(width);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setMaxWidth(sideLength);
+                imageView.setMaxHeight(sideLength);
+                imageView.setScaleType(ImageView.ScaleType.CENTER);
                 convertView = imageView;
             }
-            ImageLoader.getInstance().displayImage("trip://" + pictures[position].getUri().getPath(), (ImageView) convertView, options);
+            ImageLoader.getInstance().displayImage("trip://" + pictures[position].getUri().getPath(), new MyImageViewAware((ImageView) convertView), options);
             return convertView;
         }
 

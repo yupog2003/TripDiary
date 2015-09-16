@@ -158,30 +158,7 @@ public class TreeDocumentFile extends DocumentFile {
             Cursor c = null;
             try {
                 c = resolver.query(childrenUri, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_MIME_TYPE}, null, null, null);
-                Filter filter = new Filter() {
-                    @Override
-                    public boolean accept(String name, String mimeType) {
-                        switch (list_type) {
-                            case list_all:
-                                return true;
-                            case list_pics:
-                                return FileHelper.isPicture(name);
-                            case list_videos:
-                                return FileHelper.isVideo(name);
-                            case list_audios:
-                                return FileHelper.isAudio(name);
-                            case list_dirs:
-                                name = name.substring(name.lastIndexOf("/") + 1);
-                                return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mimeType.equals(DocumentsContract.Document.MIME_TYPE_DIR) && !name.startsWith(".");
-                            case list_withoutdots:
-                                name = name.substring(name.lastIndexOf("/") + 1);
-                                return !name.startsWith(".");
-                            case list_memory:
-                                return FileHelper.isMemory(name);
-                        }
-                        return true;
-                    }
-                };
+                Filter filter = getFilterFromListType(list_type);
                 while (c.moveToNext()) {
                     final String documentId = c.getString(0);
                     final String mimeType = c.getString(1);
@@ -198,6 +175,72 @@ public class TreeDocumentFile extends DocumentFile {
             }
         }
         return new TreeDocumentFile[0];
+    }
+    interface Filter {
+        boolean accept(String name, String mimeType);
+    }
+    @NonNull
+    private Filter getFilterFromListType(int list_type) {
+        switch (list_type) {
+            case list_all:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        return true;
+                    }
+                };
+            case list_pics:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        return FileHelper.isPicture(name);
+                    }
+                };
+            case list_videos:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        return FileHelper.isVideo(name);
+                    }
+                };
+            case list_audios:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        return FileHelper.isAudio(name);
+                    }
+                };
+            case list_dirs:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        String realName = name.substring(name.lastIndexOf("/") + 1);
+                        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mimeType.equals(DocumentsContract.Document.MIME_TYPE_DIR) && !realName.startsWith(".");
+                    }
+                };
+            case list_withoutdots:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        String realName = name.substring(name.lastIndexOf("/") + 1);
+                        return !realName.startsWith(".");
+                    }
+                };
+            case list_memory:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        return FileHelper.isMemory(name);
+                    }
+                };
+            default:
+                return new Filter() {
+                    @Override
+                    public boolean accept(String name, String mimeType) {
+                        return true;
+                    }
+                };
+        }
     }
 
     @Override

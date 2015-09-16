@@ -16,6 +16,7 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.THttpClient;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -59,11 +60,8 @@ public class SendTripService extends IntentService {
         final String tripName = tripFile.getName();
         try {
             updateNotification(tripName, getString(R.string.zipping) + "...", 0, 0);
-            DocumentFile zipFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName + ".zip");
-            if (zipFile != null) {
-                zipFile.delete();
-            }
-            zipFile = TripDiaryApplication.rootDocumentFile.createFile("", tripName + ".zip");
+            DocumentFile zipFile = DocumentFile.fromFile(new File(getCacheDir(), tripName + ".zip"));
+            zipFile.delete();
             FileHelper.zip(tripFile, zipFile);
             totalBytes = zipFile.length();
             updateNotification(tripName, getString(R.string.uploading) + "...", 0, 0);
@@ -105,6 +103,7 @@ public class SendTripService extends IntentService {
                     SendTripService.this.startActivity(intent1);
                 }
             }
+            zipFile.delete();
             stopForeground(true);
         } catch (IOException | TException e) {
             e.printStackTrace();

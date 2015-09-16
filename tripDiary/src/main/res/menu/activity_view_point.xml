@@ -5,17 +5,17 @@
         android:id="@+id/importpicture"
         android:orderInCategory="100"
         app:showAsAction="never"
-        android:title="@string/import_a_picture" />
+        android:title="@string/import_pictures" />
     <item
         android:id="@+id/importvideo"
         android:orderInCategory="100"
         app:showAsAction="never"
-        android:title="@string/import_a_video" />
+        android:title="@string/import_videos" />
     <item
         android:id="@+id/importaudio"
         android:orderInCategory="100"
         app:showAsAction="never"
-        android:title="@string/import_a_audio" />
+        android:title="@string/import_audios" />
     <item
         android:id="@+id/importfiles"
         android:orderInCategory="100"

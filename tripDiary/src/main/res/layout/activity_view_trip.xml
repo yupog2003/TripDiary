@@ -11,16 +11,52 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/fragment"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
+                android:id="@+id/fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <ProgressBar
+                android:id="@+id/loadingTripProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_above="@+id/space"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-92dp"
+                android:progressDrawable="@drawable/circular_progress" />
+
+            <TextView
+                android:id="@+id/loadingTripProgressMessage"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_above="@+id/space"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:maxLines="2"/>
+
+        </RelativeLayout>
+
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
             android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar

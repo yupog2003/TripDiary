@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.view.Surface;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -81,12 +80,6 @@ public class DeviceHelper {
     public static boolean isGpsEnabled(Context c) {
         LocationManager locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    public static int getRotation(Activity a) {
-        if (a == null) return Surface.ROTATION_0;
-        DisplayMetrics dm = getDisPlayMetrics(a);
-        return dm.widthPixels > dm.heightPixels ? Surface.ROTATION_90 : Surface.ROTATION_0;
     }
 
     public static void getNumColumnsAndWidth(Activity a, int[] result) {

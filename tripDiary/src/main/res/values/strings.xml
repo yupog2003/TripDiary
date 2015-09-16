@@ -137,9 +137,9 @@
     <string name="share_diary">Share Diary</string>
     <string name="statistics">Statistics</string>
     <string name="import_trip_with_gpx">Import trip with .gpx</string>
-    <string name="import_a_picture">Import a picture</string>
-    <string name="import_a_video">Import a video</string>
-    <string name="import_a_audio">Import a audio</string>
+    <string name="import_pictures">Import pictures</string>
+    <string name="import_videos">Import videos</string>
+    <string name="import_audios">Import audios</string>
     <string name="play_music">Play Music</string>
     <string name="play_background_music">Play background music when playing trip</string>
     <string name="dont_play_background_music">Don\'t play background music when playing trip</string>
@@ -159,7 +159,6 @@
     <string name="diary_font">Diary Font</string>
     <string name="invalid_font">Invalid font</string>
     <string name="diary_font_size">Diary Font Size</string>
-    <string name="select_diary_font_size">Select diary font size</string>
     <string name="please_enable_the_gps_provider">Please enable the gps provider</string>
     <string name="share">Share</string>
     <string name="select_diary_font">Select dairy font</string>
@@ -228,7 +227,7 @@
     <string name="camera_is_not_available">Camera is not available</string>
     <string name="resume_trip">Resume Trip</string>
     <string name="import_memory">Import memory</string>
-    <string name="import_memory_explanation">TripDiary can import memory(pictures,videos,sounds) by selecting a folder that contains memory.And it will copy those files to the appropriate POI\'s folder according to their build time(for JPEG,by EXIF time) automatically.But you should be aware of the memory timezone is the same as the timezone now.</string>
+    <string name="import_memory_explanation">TripDiary can import memory(pictures, videos and sounds) by selecting a folder that contains memory.And it will copy those files to the appropriate POI\'s folder according to their build time(for JPEG,by EXIF time) automatically.But you should be aware of the memory timezone must be the same as the trip timezone.</string>
     <string name="importing">Importing</string>
     <string name="select_a_directory">Select a directory</string>
     <string name="update_trip_timezone">Update trip timezone</string>
@@ -245,7 +244,6 @@
     <string name="unzipping">Unzipping</string>
     <string name="download">Download</string>
     <string name="toggle_public">Toggle public</string>
-    <string name="login">Login</string>
     <string name="account">Account</string>
     <string name="upload">Upload</string>
     <string name="map">Map</string>
@@ -343,5 +341,8 @@
     <string name="habit_of_adding_poi">Habit of adding POI</string>
     <string name="when_do_you_usually_add_a_poi">Your habbit of adding a POI. It will affect the importing memory behavior.</string>
     <string name="measurementUnit_image">images</string>
+    <string name="long_click_to_select_multiple_file">Long click to select multiple file</string>
+    <string name="input_poi_name">Input POI name</string>
+    <string name="select_poi_name">Select POI name</string>
 
 </resources>

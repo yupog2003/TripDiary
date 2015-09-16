@@ -48,8 +48,8 @@ import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewTripActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
@@ -66,6 +66,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -99,8 +100,8 @@ public class LocalTripsFragment extends Fragment {
         categorysp = getActivity().getSharedPreferences("category", Context.MODE_PRIVATE);
         tripsp = getActivity().getSharedPreferences("trip", Context.MODE_PRIVATE);
         categoryExpandSp = getActivity().getSharedPreferences("categoryExpand", Context.MODE_PRIVATE);
-        expandDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_expand2);
-        collapaseDrawable = ColorHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
+        expandDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_expand2);
+        collapaseDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
         return listView;
     }
 
@@ -151,7 +152,7 @@ public class LocalTripsFragment extends Fragment {
                 if (categories[i].equals(getString(R.string.nocategory))) {
                     rg.check(i);
                     String color = categorysp.getString(categories[i], String.valueOf(Color.WHITE));
-                    category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
+                    category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
                 }
             }
             rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -159,7 +160,7 @@ public class LocalTripsFragment extends Fragment {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                     String color = categorysp.getString(categories[checkedId], String.valueOf(Color.WHITE));
-                    category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
+                    category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
                 }
             });
             ab2.setTitle(getString(R.string.import_trip_with_gpx));
@@ -307,7 +308,7 @@ public class LocalTripsFragment extends Fragment {
             categoryDrawables = new HashMap<>();
             for (int i = 0; i < categories.length; i++) {
                 try {
-                    categoryDrawables.put(categories[i], ColorHelper.getColorDrawable(getActivity(), 40, Integer.valueOf(categorysp.getString(categories[i], String.valueOf(Color.WHITE)))));
+                    categoryDrawables.put(categories[i], DrawableHelper.getColorDrawable(getActivity(), 40, Integer.valueOf(categorysp.getString(categories[i], String.valueOf(Color.WHITE)))));
                 } catch (NumberFormatException e) {
                     categorysp.edit().putString(categories[i], String.valueOf(Color.WHITE)).apply();
                     i--;
@@ -462,7 +463,7 @@ public class LocalTripsFragment extends Fragment {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+                ab.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -512,7 +513,7 @@ public class LocalTripsFragment extends Fragment {
                     if (originalcategory.equals(categories[i])) {
                         rg.check(i);
                         String color = categorysp.getString(categories[i], String.valueOf(Color.WHITE));
-                        category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
+                        category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
                     }
                 }
                 rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -520,7 +521,7 @@ public class LocalTripsFragment extends Fragment {
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                         String color = categorysp.getString(categories[checkedId], String.valueOf(Color.WHITE));
-                        category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
+                        category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
                     }
                 });
                 ab2.setTitle(getString(R.string.edit));
@@ -605,8 +606,7 @@ public class LocalTripsFragment extends Fragment {
             mode.getMenuInflater().inflate(R.menu.local_trip_menu, menu);
             onActionMode = true;
             checks = new boolean[tripsArray.length];
-            for (int i = 0; i < checks.length; i++)
-                checks[i] = false;
+            Arrays.fill(checks, false);
             checkAll = false;
             return true;
         }
@@ -639,21 +639,21 @@ public class LocalTripsFragment extends Fragment {
                 if (check)
                     selects++;
             }
-            mode.getMenu().findItem(R.id.edit).setVisible(!(selects > 1));
+            mode.getMenu().findItem(R.id.edit).setVisible(selects == 1);
 
         }
 
         public boolean onQueryTextSubmit(String query) {
 
-            final String searchname = search.getQuery().toString().toLowerCase(Locale.US);
+            final String searchName = search.getQuery().toString().toLowerCase(Locale.US);
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
             search.clearFocus();
-            if (!searchname.equals("")) {
+            if (!searchName.equals("")) {
                 final ArrayList<String> founds = new ArrayList<>();
                 for (Trip trip : tripsArray) {
                     String itemname = trip.tripName;
-                    if (itemname.toLowerCase(Locale.US).contains(searchname)) {
+                    if (itemname.toLowerCase(Locale.US).contains(searchName)) {
                         founds.add(itemname);
                     }
                 }

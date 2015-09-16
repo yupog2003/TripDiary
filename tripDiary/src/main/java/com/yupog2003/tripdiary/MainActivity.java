@@ -27,8 +27,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.Trip;
@@ -110,7 +110,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
                 GooglePlayServicesUtil.getErrorDialog(resultCode, MainActivity.this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Toast.makeText(MainActivity.this, "This device is not supported by Google Play Serivce", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "This device is not supported by Google Play Service", Toast.LENGTH_SHORT).show();
                 finishAndRemoveTask();
             }
             return false;
@@ -128,8 +128,8 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
 
     private void startTripDialog() {
         tripNameClicked = false;
-        final SharedPreferences categorysp = getSharedPreferences("category", MODE_PRIVATE);
-        Set<String> keySet = categorysp.getAll().keySet();
+        final SharedPreferences categorySp = getSharedPreferences("category", MODE_PRIVATE);
+        Set<String> keySet = categorySp.getAll().keySet();
         final String[] categories = keySet.toArray(new String[keySet.size()]);
         AlertDialog.Builder ab2 = new AlertDialog.Builder(MainActivity.this);
         View layout = getLayoutInflater().inflate(R.layout.edit_trip, (ViewGroup) findViewById(android.R.id.content), false);
@@ -142,15 +142,15 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
             rg.addView(rb);
             if (categories[i].equals(getString(R.string.nocategory))) {
                 rg.check(i);
-                String color = categorysp.getString(categories[i], String.valueOf(Color.WHITE));
-                category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);
+                String color = categorySp.getString(categories[i], String.valueOf(Color.WHITE));
+                category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);
             }
         }
         rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                String color = categorysp.getString(categories[checkedId], "Gray");
-                category.setCompoundDrawablesWithIntrinsicBounds(ColorHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);
+                String color = categorySp.getString(categories[checkedId], "Gray");
+                category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(MainActivity.this, 50, Integer.valueOf(color)), null, null, null);
             }
         });
         ab2.setTitle(getString(R.string.Start_Trip));

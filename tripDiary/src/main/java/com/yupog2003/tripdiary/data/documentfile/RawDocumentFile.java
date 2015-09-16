@@ -133,28 +133,7 @@ public class RawDocumentFile extends DocumentFile {
     @Override
     public RawDocumentFile[] listFiles(final int list_type) {
         if (file != null) {
-            File[] files = file.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String filename) {
-                    switch (list_type) {
-                        case list_all:
-                            return true;
-                        case list_pics:
-                            return FileHelper.isPicture(filename);
-                        case list_videos:
-                            return FileHelper.isVideo(filename);
-                        case list_audios:
-                            return FileHelper.isAudio(filename);
-                        case list_dirs:
-                            return new File(dir, filename).isDirectory() && !filename.startsWith(".");
-                        case list_withoutdots:
-                            return !filename.contains(".");
-                        case list_memory:
-                            return FileHelper.isMemory(filename);
-                    }
-                    return true;
-                }
-            });
+            File[] files = file.listFiles(getFilterFromListType(list_type));
             if (files == null) {
                 return new RawDocumentFile[0];
             }
@@ -165,6 +144,69 @@ public class RawDocumentFile extends DocumentFile {
             return result;
         }
         return new RawDocumentFile[0];
+    }
+
+    @NonNull
+    private FilenameFilter getFilterFromListType(int list_type) {
+        switch (list_type) {
+            case list_all:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return true;
+                    }
+                };
+            case list_pics:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return FileHelper.isPicture(fileName);
+                    }
+                };
+            case list_videos:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return FileHelper.isVideo(fileName);
+                    }
+                };
+            case list_audios:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return FileHelper.isAudio(fileName);
+                    }
+                };
+            case list_dirs:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return new File(dir, fileName).isDirectory() && !fileName.startsWith(".");
+                    }
+                };
+            case list_withoutdots:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        String realName = fileName.substring(fileName.lastIndexOf("/") + 1);
+                        return !realName.startsWith(".");
+                    }
+                };
+            case list_memory:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return FileHelper.isMemory(fileName);
+                    }
+                };
+            default:
+                return new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String fileName) {
+                        return true;
+                    }
+                };
+        }
     }
 
     @Override

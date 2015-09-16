@@ -29,10 +29,6 @@ public abstract class DocumentFile {
         this.parent = parent;
     }
 
-    interface Filter {
-        boolean accept(String name, String mimeType);
-    }
-
     public DocumentFile getParentFile() {
         return parent;
     }
@@ -145,7 +141,6 @@ public abstract class DocumentFile {
 
     public static long queryForLong(Context context, Uri self, String column, long defaultValue) {
         final ContentResolver resolver = context.getContentResolver();
-
         Cursor c = null;
         try {
             c = resolver.query(self, new String[]{column}, null, null, null);

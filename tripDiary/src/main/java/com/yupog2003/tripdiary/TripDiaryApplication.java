@@ -102,7 +102,7 @@ public class TripDiaryApplication extends Application {
         if (!file.exists()) {
             return file.mkdirs();
         } else if (file.isFile()) {
-            return  file.delete() && file.mkdirs();
+            return file.delete() && file.mkdirs();
         }
         return true;
     }
@@ -111,8 +111,8 @@ public class TripDiaryApplication extends Application {
         MyImageDecoder imageDecoder = new MyImageDecoder(this, new BaseImageDecoder(false));
         MyImageDownloader imageDownloader = new MyImageDownloader(this);
         int imageloaderMemoryCachePercentage = PreferenceManager.getDefaultSharedPreferences(this).getInt("imageloaderMemoryCachePercentage", 30);
-        imageloaderMemoryCachePercentage = Math.max(imageloaderMemoryCachePercentage, 1);
-        imageloaderMemoryCachePercentage = Math.min(imageloaderMemoryCachePercentage, 99);
+        if (imageloaderMemoryCachePercentage < 1) imageloaderMemoryCachePercentage = 1;
+        if (imageloaderMemoryCachePercentage > 99) imageloaderMemoryCachePercentage = 99;
         ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(imageDownloader).imageDecoder(imageDecoder).memoryCacheSizePercentage(imageloaderMemoryCachePercentage).build();
         ImageLoader.getInstance().init(conf);
     }

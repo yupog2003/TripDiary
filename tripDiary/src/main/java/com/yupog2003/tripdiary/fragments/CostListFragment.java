@@ -23,8 +23,8 @@ import android.widget.TextView;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewCostActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.CostData;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
@@ -269,7 +269,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+                ab.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {

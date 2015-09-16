@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class MyActivity extends AppCompatActivity {
         }
     }
 
+    @NonNull
     public static List<ActivityManager.AppTask> getMyTasks(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -51,6 +53,7 @@ public class MyActivity extends AppCompatActivity {
         }
     }
 
+    @Nullable
     public static ActivityManager.AppTask findViewTripActivityTask(Context context, String tripName) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             for (ActivityManager.AppTask task : getMyTasks(context)) {

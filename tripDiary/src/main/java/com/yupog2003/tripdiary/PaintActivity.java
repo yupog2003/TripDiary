@@ -103,7 +103,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
     public void onClick(View v) {
 
         if (v.equals(paintColor)) {
-            AmbilWarnaDialog.OnAmbilWarnaListener listener = new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            AmbilWarnaDialog dialog = new AmbilWarnaDialog(PaintActivity.this, brushColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
 
                 public void onOk(AmbilWarnaDialog dialog, int color) {
                     brushColor = color;
@@ -113,8 +113,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
                 public void onCancel(AmbilWarnaDialog dialog) {
 
                 }
-            };
-            AmbilWarnaDialog dialog = new AmbilWarnaDialog(PaintActivity.this, brushColor, listener);
+            });
             dialog.show();
         } else if (v.equals(paintSetting)) {
             final int tempThicknessValue = thicknessValue;
@@ -137,9 +136,7 @@ public class PaintActivity extends MyActivity implements OnClickListener {
                 }
 
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                     thicknessValue = progress;
-
                 }
             });
             final CheckBox checkEmboss = (CheckBox) layout.findViewById(R.id.checkemboss);

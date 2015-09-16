@@ -79,8 +79,8 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewGraphActivity;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
@@ -119,24 +119,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     ImageButton switchMapMode;
     ImageButton playTrip;
     ImageButton stopTrip;
-    ImageButton fastforward;
-    ImageButton slowforward;
+    ImageButton fastForward;
+    ImageButton slowForward;
     ImageButton viewGraph;
     ImageButton streetView;
     ImageButton viewNote;
-    SeekBar processSeekBar;
-    CardView playPanel;
-    TextView altitude;
-    TextView distance;
-    TextView speed;
-    TextView time;
-    SearchView search;
     TripPlayer tripPlayer;
     Handler handler;
-    int trackColor;
-    LinearLayout buttonBar;
     POIInfoWindowAdapter poiInfoWindowAdapter;
-    int rotation;
     Trip trip;
 
     private static final int REQUEST_BACKGROUND_MUSIC = 3;
@@ -148,26 +138,17 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_view_map, container, false);
-        rotation = DeviceHelper.getRotation(getActivity());
-        buttonBar = (LinearLayout) rootView.findViewById(R.id.buttonbar);
-        trackColor = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
         markers = new ArrayList<>();
         handler = new Handler();
         viewInformation = (ImageButton) rootView.findViewById(R.id.viewinformation);
         switchMapMode = (ImageButton) rootView.findViewById(R.id.switchmapmode);
         playTrip = (ImageButton) rootView.findViewById(R.id.playtrip);
         stopTrip = (ImageButton) rootView.findViewById(R.id.stoptrip);
-        fastforward = (ImageButton) rootView.findViewById(R.id.fastforward);
-        slowforward = (ImageButton) rootView.findViewById(R.id.slowforward);
+        fastForward = (ImageButton) rootView.findViewById(R.id.fastforward);
+        slowForward = (ImageButton) rootView.findViewById(R.id.slowforward);
         viewGraph = (ImageButton) rootView.findViewById(R.id.viewgraph);
         streetView = (ImageButton) rootView.findViewById(R.id.streetview);
         viewNote = (ImageButton) rootView.findViewById(R.id.viewnote);
-        playPanel = (CardView) rootView.findViewById(R.id.playPanel);
-        altitude = (TextView) rootView.findViewById(R.id.altitude);
-        distance = (TextView) rootView.findViewById(R.id.distance);
-        speed = (TextView) rootView.findViewById(R.id.speed);
-        time = (TextView) rootView.findViewById(R.id.elapsedTime);
-        processSeekBar = (SeekBar) rootView.findViewById(R.id.playProcess);
         return rootView;
     }
 
@@ -176,6 +157,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         super.onActivityCreated(savedInstanceState);
         mapFragment = SupportMapFragment.newInstance();
         getChildFragmentManager().beginTransaction().add(R.id.maplayout, mapFragment).commit();
+
     }
 
     @Override
@@ -186,12 +168,11 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
     }
 
-    public void refresh(final Trip trip, final LatLng[] lats, final LatLngBounds bounds, final ProgressDialog pd) {
+    public void initialMap(final Trip trip, final LatLng[] lats, final LatLngBounds bounds, final ProgressBar progressBar) {
         if (trip == null) return;
         this.trip = trip;
         viewNote.setOnClickListener(ViewMapFragment.this);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
-
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 gmap = googleMap;
@@ -201,13 +182,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 streetView.setOnClickListener(ViewMapFragment.this);
                 cache = trip.cache;
                 if (lats != null && cache != null && bounds != null) {
+                    int trackColor=PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
                     gmap.addPolyline(new PolylineOptions().add(lats).width(5).color(trackColor));
                     gmap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, (int) DeviceHelper.pxFromDp(getActivity(), 10)));
                     viewInformation.setOnClickListener(ViewMapFragment.this);
                     playTrip.setOnClickListener(ViewMapFragment.this);
                     stopTrip.setOnClickListener(ViewMapFragment.this);
-                    fastforward.setOnClickListener(ViewMapFragment.this);
-                    slowforward.setOnClickListener(ViewMapFragment.this);
+                    fastForward.setOnClickListener(ViewMapFragment.this);
+                    slowForward.setOnClickListener(ViewMapFragment.this);
                     viewGraph.setOnClickListener(ViewMapFragment.this);
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.invalid_gpx_file), Toast.LENGTH_SHORT).show();
@@ -220,18 +202,21 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     poiInfoWindowAdapter = new POIInfoWindowAdapter(getActivity(), trip.pois, null);
                     gmap.setInfoWindowAdapter(poiInfoWindowAdapter);
                 }
-                if (pd != null && pd.isShowing()) {
-                    pd.dismiss();
+                if (progressBar != null) {
+                    progressBar.setProgress(0); //prevent progress drawable become 100% next time
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
+
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_view_map, menu);
         MenuItem searchItem = menu.findItem(R.id.searchviewmap);
-        search = (SearchView) MenuItemCompat.getActionView(searchItem);
+        final SearchView search = (SearchView) MenuItemCompat.getActionView(searchItem);
         search.setQueryHint(getString(R.string.search_poi));
         search.setOnQueryTextListener(new OnQueryTextListener() {
 
@@ -480,15 +465,17 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
     class ImportMemoryTask extends AsyncTask<File, String, String> {
 
-        File memory;
+        File memoryDir;
         TextView message;
         ProgressBar progress;
         TextView progressMessage;
         AlertDialog dialog;
         boolean cancel = false;
+        HashMap<Long, File> memories;
+        long start, end;
 
-        public ImportMemoryTask(File memory) {
-            this.memory = memory;
+        public ImportMemoryTask(File memoryDir) {
+            this.memoryDir = memoryDir;
         }
 
         @Override
@@ -514,68 +501,59 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         @Override
         protected String doInBackground(File... params) {
             publishProgress("Sorting...", "0");
-            if (trip.pois.length < 1 || cache.times == null || memory == null)
+            if (trip.pois.length < 1 || cache.times == null || memoryDir == null)
                 return null;
+            //prepare memories
+            start = 0;
+            end = Long.MAX_VALUE;
+            if (cache.times.length > 0) {
+                start = MyCalendar.getTime(trip.timezone, cache.times[0], MyCalendar.type_self).getTimeInMillis();
+                end = MyCalendar.getTime(trip.timezone, cache.times[cache.times.length - 1], MyCalendar.type_self).getTimeInMillis();
+            }
+            memories = new HashMap<>();
+            getMemories(memoryDir);
+            if (cancel) return null;
+            Set<Long> set = memories.keySet();
+            Long[] memTimes = set.toArray(new Long[set.size()]);
+            publishProgress("setMax", String.valueOf(memTimes.length));
+            Arrays.sort(memTimes);
+            //prepare pois
             Arrays.sort(trip.pois);
             Long[] poiTimes = new Long[trip.pois.length];
             for (int i = 0; i < poiTimes.length; i++) {
+                if (cancel) return null;
                 MyCalendar time = trip.pois[i].time;
                 time.setTimeZone(trip.timezone);
                 poiTimes[i] = time.getTimeInMillis();
             }
             Arrays.sort(poiTimes);
-            File[] memories = memory.listFiles(FileHelper.getMemoryFilter());
-            if (memories == null)
-                memories = new File[0];
-            long start = 0;
-            long end = Long.MAX_VALUE;
-            if (cache.times.length > 0) {
-                start = MyCalendar.getTime(trip.timezone, cache.times[0], MyCalendar.type_self).getTimeInMillis();
-                end = MyCalendar.getTime(trip.timezone, cache.times[cache.times.length - 1], MyCalendar.type_self).getTimeInMillis();
-            }
-            HashMap<Long, File> mems = new HashMap<>();
-            for (File memory : memories) {
-                long timeMills = getFileTime(memory);
-                if (timeMills >= start && timeMills <= end) {
-                    mems.put(timeMills, memory);
-                }
-            }
-            Set<Long> set = mems.keySet();
-            Long[] memTimes = set.toArray(new Long[set.size()]);
-            Arrays.sort(memTimes);
-            publishProgress("setMax", String.valueOf(memTimes.length));
             int habitOfAddingPOI = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("habitofaddingpoi", "1"));
-            Long[] poiTimeSection = new Long[0];
+            Long[] poiTimeSection = new Long[poiTimes.length + 1];
             switch (habitOfAddingPOI) {
                 case 0: //before
-                    ArrayList<Long> temp = new ArrayList<>(Arrays.asList(poiTimes));
-                    temp.add(end);
-                    temp.set(0, start);
-                    poiTimeSection = temp.toArray(new Long[temp.size()]);
+                    System.arraycopy(poiTimes, 0, poiTimeSection, 0, poiTimes.length);
                     break;
                 case 1: //while
-                    poiTimeSection = new Long[poiTimes.length + 1];
-                    poiTimeSection[0] = start;
                     for (int i = 1; i < poiTimeSection.length - 1; i++) {
                         poiTimeSection[i] = (poiTimes[i - 1] + poiTimes[i]) / 2;
                     }
-                    poiTimeSection[poiTimeSection.length - 1] = end;
                     break;
                 case 2: //after
-                    ArrayList<Long> temp2 = new ArrayList<>(Arrays.asList(poiTimes));
-                    temp2.add(0, start);
-                    temp2.set(temp2.size() - 1, end);
-                    poiTimeSection = temp2.toArray(new Long[temp2.size()]);
+                    System.arraycopy(poiTimes, 0, poiTimeSection, 1, poiTimes.length);
                     break;
             }
+            poiTimeSection[0] = start;
+            poiTimeSection[poiTimeSection.length - 1] = end;
             int nowPOITimeSection = 0;
             for (int memIndex = 0; memIndex < memTimes.length; memIndex++) {
+                if (cancel) return null;
                 long memoryTime = memTimes[memIndex];
-                File inFile = mems.get(memoryTime);
+                File inFile = memories.get(memoryTime);
                 publishProgress(inFile.getName(), String.valueOf(memIndex));
                 if (!FileHelper.isMemory(inFile)) continue;
                 boolean coppied = false;
                 for (; nowPOITimeSection < poiTimeSection.length - 1; nowPOITimeSection++) {
+                    if (cancel) return null;
                     if (memoryTime <= poiTimeSection[nowPOITimeSection + 1]) {
                         trip.pois[nowPOITimeSection].importMemories(null, inFile);
                         coppied = true;
@@ -587,6 +565,23 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 }
             }
             return null;
+        }
+
+        private void getMemories(File file) {
+            if (cancel) return;
+            if (file == null) return;
+            if (file.isDirectory()) {
+                File[] children = file.listFiles();
+                if (children == null) return;
+                for (File child : children) {
+                    getMemories(child);
+                }
+            } else if (FileHelper.isMemory(file)) {
+                long timeMills = getFileTime(file);
+                if (timeMills >= start && timeMills <= end) {
+                    memories.put(timeMills, file);
+                }
+            }
         }
 
         private long getFileTime(File file) {
@@ -642,7 +637,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             markers.get(i).remove();
         }
         markers.clear();
-        float hue = ColorHelper.getMarkerColorHue(getActivity());
+        float hue = DrawableHelper.getMarkerColorHue(getActivity());
         BitmapDescriptor bd = BitmapDescriptorFactory.defaultMarker(hue);
         for (POI poi : trip.pois) {
             String poiTime = poi.time.formatInTimezone(trip.timezone);
@@ -906,11 +901,11 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             if (tripPlayer != null) {
                 tripPlayer.stop();
             }
-        } else if (v.equals(fastforward)) {
+        } else if (v.equals(fastForward)) {
             if (tripPlayer != null) {
                 tripPlayer.changeForward(TripPlayer.fast);
             }
-        } else if (v.equals(slowforward)) {
+        } else if (v.equals(slowForward)) {
             if (tripPlayer != null) {
                 tripPlayer.changeForward(TripPlayer.slow);
             }
@@ -1007,13 +1002,27 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         SparseArray<POI> markersMap;
         float[] distances;
         LatLng[] lat;
+        CardView playPanel;
+        TextView altitude;
+        TextView distance;
+        TextView speed;
+        TextView time;
+        SeekBar processSeekBar;
 
         public TripPlayer() {
             index = 0;
             pointSize = getPointSize();
-            playMode = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("playingtripmode", "0"));
+            playMode = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("playingtripmode", "1"));
             interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("playtripspeed", "10"));
             latlength = 0;
+            processSeekBar = (SeekBar) rootView.findViewById(R.id.playProcess);
+            processSeekBar.setOnSeekBarChangeListener(this);
+            playPanel = (CardView) rootView.findViewById(R.id.playPanel);
+            altitude = (TextView) rootView.findViewById(R.id.altitude);
+            distance = (TextView) rootView.findViewById(R.id.distance);
+            speed = (TextView) rootView.findViewById(R.id.speed);
+            time = (TextView) rootView.findViewById(R.id.elapsedTime);
+            mapLayout = (RelativeLayout) rootView.findViewById(R.id.maplayout);
             if (cache != null) {
                 latlength = cache.getTrackLength();
                 lat = cache.getLats();
@@ -1021,8 +1030,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             if (latlength > 0)
                 processSeekBar.setMax(latlength - 1);
             markersMap = getPOIsMap();
-            processSeekBar.setOnSeekBarChangeListener(this);
-            mapLayout = (RelativeLayout) rootView.findViewById(R.id.maplayout);
             if (playMode == playtriptype_skyview) {
                 runPointImage = new ImageView(getActivity());
                 runPointImage.setImageResource(R.drawable.runpoint);
@@ -1053,8 +1060,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             }
             playTrip.setImageResource(R.drawable.ic_pause);
             stopTrip.setVisibility(View.VISIBLE);
-            fastforward.setVisibility(View.VISIBLE);
-            slowforward.setVisibility(View.VISIBLE);
+            fastForward.setVisibility(View.VISIBLE);
+            slowForward.setVisibility(View.VISIBLE);
             viewInformation.setVisibility(View.GONE);
             viewGraph.setVisibility(View.GONE);
             streetView.setVisibility(View.GONE);
@@ -1088,8 +1095,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             index = 0;
             run = false;
             stopTrip.setVisibility(View.GONE);
-            fastforward.setVisibility(View.GONE);
-            slowforward.setVisibility(View.GONE);
+            fastForward.setVisibility(View.GONE);
+            slowForward.setVisibility(View.GONE);
             viewInformation.setVisibility(View.VISIBLE);
             viewGraph.setVisibility(View.VISIBLE);
             streetView.setVisibility(View.VISIBLE);
@@ -1336,8 +1343,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                             return;
                         }
                         final LatLng[] lat = cache.getLats();
+                        int trackColor=PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
                         googleMap.addPolyline(new PolylineOptions().add(lat).color(trackColor).width(5));
-                        float hue = ColorHelper.getMarkerColorHue(getActivity());
+                        float hue = DrawableHelper.getMarkerColorHue(getActivity());
                         BitmapDescriptor bd = BitmapDescriptorFactory.defaultMarker(hue);
                         poisMap = getPOIsMap();
                         if (poisMap == null) return;

@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,27 +24,31 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
-import com.yupog2003.tripdiary.data.ColorHelper;
 import com.yupog2003.tripdiary.data.DeviceHelper;
+import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.FileHelper.MoveFilesTask.OnFinishedListener;
+import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.CheckableLayout;
+import com.yupog2003.tripdiary.views.SquareCheckableLayout;
 import com.yupog2003.tripdiary.views.SquareImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class VideoFragment extends Fragment implements OnItemClickListener {
     GridView layout;
     VideoAdapter adapter;
-    int width;
+    int sideLength;
     POI poi;
 
     @Override
@@ -75,7 +81,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
         }
         int[] numColumnsAndWidth = new int[2];
         DeviceHelper.getNumColumnsAndWidth(getActivity(), numColumnsAndWidth);
-        width = numColumnsAndWidth[1];
+        sideLength = numColumnsAndWidth[1];
         layout.setNumColumns(numColumnsAndWidth[0]);
         adapter = new VideoAdapter();
         layout.setAdapter(adapter);
@@ -87,51 +93,51 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
     class VideoAdapter extends BaseAdapter {
         DocumentFile[] videos;
         DisplayImageOptions options;
-        int dp2;
         boolean onMultiChoiceMode;
 
         public VideoAdapter() {
             videos = poi.videoFiles;
             options = new DisplayImageOptions.Builder()
-                    .displayer(new FadeInBitmapDisplayer(500, true, true, false))
-                    .showImageOnFail(R.drawable.ic_play)
-                    .cacheInMemory(true)
+                    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                     .bitmapConfig(Bitmap.Config.RGB_565)
+                    .cacheInMemory(true)
                     .extraForDownloader(videos)
+                    .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
+                    .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_play))
                     .build();
-            dp2 = (int) DeviceHelper.pxFromDp(getActivity(), 2);
             onMultiChoiceMode = false;
         }
 
         public int getCount() {
-
             if (videos == null)
                 return 0;
             return videos.length;
         }
 
         public Object getItem(int position) {
-
             return videos[position];
         }
 
         public long getItemId(int position) {
-
             return position;
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            SquareImageView image = new SquareImageView(getActivity());
-            image.setMaxWidth(width);
-            image.setMaxHeight(width);
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.getInstance().displayImage("trip://" + videos[position].getUri().getPath(), image, options);
-            CheckableLayout l = new CheckableLayout(getActivity());
-            l.setLayoutParams(new ListView.LayoutParams(width, width));
-            l.setPadding(dp2, dp2, dp2, dp2);
-            l.addView(image);
-            l.setOnMultiChoiceMode(onMultiChoiceMode);
-            convertView = l;
+            if (convertView == null) {
+                SquareImageView i = new SquareImageView(getActivity());
+                i.setMaxWidth(sideLength);
+                i.setMaxHeight(sideLength);
+                i.setScaleType(ImageView.ScaleType.CENTER);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                i.setLayoutParams(params);
+                SquareCheckableLayout l = new SquareCheckableLayout(getActivity());
+                l.addView(i);
+                convertView = l;
+                convertView.setTag(i);
+            }
+            ImageLoader.getInstance().displayImage("trip://" + videos[position].getUri().getPath(), new MyImageViewAware((ImageView) convertView.getTag()), options);
+            ((CheckableLayout) convertView).setOnMultiChoiceMode(onMultiChoiceMode);
             return convertView;
         }
 
@@ -157,7 +163,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.be_careful));
                 ab.setMessage(getString(R.string.are_you_sure_to_delete));
-                ab.setIcon(ColorHelper.getAlertDrawable(getActivity()));
+                ab.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
                 ab.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -207,23 +213,36 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                         uris.add(((DocumentFile) adapter.getItem(i)).getUri());
                     }
                 }
-                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                if (uris.size() == 0) return true;
+                Intent intent = new Intent();
                 intent.setType("video/*");
-                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                if (uris.size() == 1) {
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, uris.get(0));
+                } else if (uris.size() > 1) {
+                    intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                    intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                }
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.move) {
-                final DocumentFile tripFile = poi.dir.getParentFile();
-                final String[] pois = tripFile.listFileNames(DocumentFile.list_dirs);
+                if (poi == null || poi.parentTrip == null || poi.parentTrip.pois == null)
+                    return true;
+                final POI[] pois = poi.parentTrip.pois;
+                final String[] poiNames = new String[pois.length];
+                for (int i = 0; i < poiNames.length; i++) {
+                    poiNames[i] = pois[i].title;
+                }
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(R.string.move_to);
-                ab.setItems(pois, new OnClickListener() {
+                ab.setItems(poiNames, new OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         DocumentFile[] fromFiles = new DocumentFile[checksName.size()];
                         DocumentFile[] toFiles = new DocumentFile[checksName.size()];
-                        DocumentFile toDir = FileHelper.findfile(tripFile, pois[which], "videos");
+                        DocumentFile toDir = pois[which].videoDir;
                         if (toDir == null) return;
                         DocumentFile[] filesInToDir = toDir.listFiles();
                         for (int i = 0; i < toFiles.length; i++) {
@@ -237,13 +256,11 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
 
                             @Override
                             public void onFinish() {
-
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
                                 }
                             }
                         }).execute();
-
 
                     }
                 });
@@ -258,9 +275,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
             mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
             menu.findItem(R.id.print).setVisible(false);
             checks = new boolean[adapter.getCount()];
-            for (int i = 0; i < checks.length; i++) {
-                checks[i] = false;
-            }
+            Arrays.fill(checks, false);
             checkAll = false;
             adapter.onMultiChoiceMode = true;
             return true;

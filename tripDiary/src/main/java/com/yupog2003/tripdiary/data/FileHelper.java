@@ -345,7 +345,7 @@ public class FileHelper {
         }
     }
 
-    public static void unZip(File zip, final DocumentFile target) {
+    public static void unZip(File zip, DocumentFile target) {
         try {
             unZip(new FileInputStream(zip), target);
         } catch (FileNotFoundException e) {
@@ -369,7 +369,7 @@ public class FileHelper {
                     if (temp == null) {
                         temp = entryFile.createDirectory(dirs[i]);
                     }
-                    if (temp == null){
+                    if (temp == null) {
                         return;
                     }
                     entryFile = temp;
@@ -379,7 +379,7 @@ public class FileHelper {
                     entryFile.createDirectory(entryFileName);
                 } else {
                     entryFile = entryFile.createFile("", entryFileName);
-                    if (entryFile == null){
+                    if (entryFile == null) {
                         return;
                     }
                     byte[] data = new byte[4096];
@@ -458,11 +458,19 @@ public class FileHelper {
         Context context;
         boolean showHideDir;
         Drawable dirDrawable;
+        Drawable pictureDrawable;
+        Drawable videoDrawable;
+        Drawable audioDrawable;
+        Drawable fileDrawable;
 
         public DirAdapter(Context context, boolean showHideDir, File root) {
             this.context = context;
             this.showHideDir = showHideDir;
-            this.dirDrawable = ColorHelper.getAccentTintDrawable(context, R.drawable.ic_folder);
+            this.dirDrawable = DrawableHelper.getAccentTintDrawable(context, R.drawable.ic_folder);
+            this.pictureDrawable = DrawableHelper.getAccentTintDrawable(context, R.drawable.ic_picture);
+            this.videoDrawable = DrawableHelper.getAccentTintDrawable(context, R.drawable.ic_takevideo);
+            this.audioDrawable = DrawableHelper.getAccentTintDrawable(context, R.drawable.ic_music);
+            this.fileDrawable = DrawableHelper.getAccentTintDrawable(context, R.drawable.ic_description);
             setDir(root);
         }
 
@@ -475,9 +483,7 @@ public class FileHelper {
             File[] dirss = root.listFiles(new FileFilter() {
 
                 public boolean accept(File pathname) {
-                    if (!showHideDir && pathname.getName().startsWith("."))
-                        return false;
-                    return pathname.isDirectory();
+                    return showHideDir || !pathname.getName().startsWith(".");
                 }
             });
             if (dirss == null)
@@ -500,40 +506,50 @@ public class FileHelper {
         }
 
         public int getCount() {
-
             return dirs.length;
         }
 
         public Object getItem(int position) {
-
             return dirs[position];
         }
 
         public long getItemId(int position) {
-
             return position;
         }
 
         public View getView(int position, View convertView, ViewGroup viewGroup) {
-
+            File file = dirs[position];
             TextView textView = new TextView(context);
             textView.setTextAppearance(context, android.R.style.TextAppearance_Large);
-            textView.setCompoundDrawablesWithIntrinsicBounds(position > 1 ? dirDrawable : null, null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(position > 1 ? getDrawable(file) : null, null, null, null);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             if (position == 0)
                 textView.setText(root.getPath());
             else if (position == 1)
                 textView.setText("...");
             else
-                textView.setText(dirs[position].getName());
+                textView.setText(file.getName());
             return textView;
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
             if (position > 0) {
                 setDir(dirs[position]);
                 notifyDataSetChanged();
+            }
+        }
+
+        private Drawable getDrawable(File file) {
+            if (file.isDirectory()) {
+                return dirDrawable;
+            } else if (FileHelper.isPicture(file)) {
+                return pictureDrawable;
+            } else if (FileHelper.isVideo(file)) {
+                return videoDrawable;
+            } else if (FileHelper.isAudio(file)) {
+                return audioDrawable;
+            } else {
+                return fileDrawable;
             }
         }
 
@@ -566,10 +582,9 @@ public class FileHelper {
 
         @Override
         protected void onPreExecute() {
-
             AlertDialog.Builder ab = new AlertDialog.Builder(activity);
             ab.setTitle(activity.getString(R.string.move_to));
-            LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, null);
+            LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.progressdialog_import_memory, (ViewGroup) activity.findViewById(android.R.id.content), false);
             message = (TextView) layout.findViewById(R.id.message);
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);
@@ -577,7 +592,6 @@ public class FileHelper {
             ab.setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-
                     cancel = true;
                 }
             });
@@ -587,21 +601,20 @@ public class FileHelper {
 
         @Override
         protected String doInBackground(String... params) {
-
             if (fromFiles != null && toFiles != null) {
-                publishProgress("setMax", String.valueOf(Math.min(fromFiles.length, toFiles.length)));
-                for (int i = 0; i < Math.min(fromFiles.length, toFiles.length); i++) {
+                int length = Math.min(fromFiles.length, toFiles.length);
+                publishProgress("setMax", String.valueOf(length));
+                for (int i = 0; i < length; i++) {
+                    DocumentFile fromFile = fromFiles[i];
+                    DocumentFile toFile = toFiles[i];
+                    if (fromFile == null || toFile == null) continue;
                     if (cancel)
                         break;
-                    publishProgress(fromFiles[i].getName(), String.valueOf(i));
-                    if (fromFiles[i].getUri().toString().equals(toFiles[i].getUri().toString()))
+                    publishProgress(fromFile.getName(), String.valueOf(i));
+                    if (fromFile.getUri().toString().equals(toFile.getUri().toString()))
                         continue;
-                    try {
-                        copyByStream(fromFiles[i].getInputStream(), toFiles[i].getOutputStream());
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    }
-                    fromFiles[i].delete();
+                    copyFile(fromFile, toFile);
+                    fromFile.delete();
                 }
             }
             return null;
@@ -609,7 +622,6 @@ public class FileHelper {
 
         @Override
         protected void onProgressUpdate(String... values) {
-
             if (values[0].equals("setMax")) {
                 progress.setMax(Integer.valueOf(values[1]));
                 progressMessage.setText("0/" + values[1]);
@@ -622,7 +634,6 @@ public class FileHelper {
 
         @Override
         protected void onPostExecute(String result) {
-
             dialog.dismiss();
             if (listener != null) {
                 listener.onFinish();

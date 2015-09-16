@@ -20,6 +20,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -71,7 +72,6 @@ public class RecordService extends Service implements LocationListener, Runnable
     StopTripReceiver stopTripReceiver;
     PauseReceiver pauseReceiver;
     ScreenOnOffReceiver screenOnOffReceiver;
-    String name;
     public Trip trip;
     int recordDuration; //in milliseconds
     int recordDistanceInterval; //in meters
@@ -80,15 +80,23 @@ public class RecordService extends Service implements LocationListener, Runnable
     long lastFixTime;
     boolean shaketoaddpoi;
     SensorManager sensorManager;
+    Handler handler;
     public static final String actionStopTrip = "com.yupog2003.tripdiary.stopTrip";
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
     public static final String tag_tripName = "tag_tripName";
     public static final String tag_lastRecordTrip = "tag_lastRecordTrip";
 
+    String labelDistance;
+    String labelTotalTime;
+    String labelVelocity;
+    String labelAccuracy;
+    String labelAltitude;
+
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
         instance = this;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RecordService.this);
+        String name;
         if (intent != null) {
             name = intent.getStringExtra(tag_tripName);
         } else {
@@ -106,8 +114,14 @@ public class RecordService extends Service implements LocationListener, Runnable
         }
         trip = new Trip(RecordService.this, tripFile, false);
         trip.deleteCache();
+        handler = new Handler();
         run = true;
         screenOn = true;
+        labelDistance = getString(R.string.distance) + ":";
+        labelTotalTime = getString(R.string.total_time) + ":";
+        labelVelocity = getString(R.string.velocity) + ":";
+        labelAccuracy = getString(R.string.accuracy) + ":";
+        labelAltitude = getString(R.string.Altitude) + ":";
         try {
             recordDuration = (int) Double.parseDouble(preferences.getString("record_duration", "1000"));
             recordDuration = Math.max(recordDuration, 200);
@@ -168,7 +182,7 @@ public class RecordService extends Service implements LocationListener, Runnable
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, this);
             firstFixed = false;
-            new Thread(RecordService.this).start();
+            handler.postDelayed(RecordService.this, updateDuration);
         }
         stopTripReceiver = new StopTripReceiver();
         pauseReceiver = new PauseReceiver();
@@ -230,11 +244,11 @@ public class RecordService extends Service implements LocationListener, Runnable
     private NotificationCompat.InboxStyle getContent() {
         String timeExpression = String.valueOf(totalTime / 3600) + ":" + String.valueOf(totalTime % 3600 / 60) + ":" + String.valueOf(totalTime % 3600 % 60);
         NotificationCompat.InboxStyle content = new NotificationCompat.InboxStyle();
-        content.addLine(getString(R.string.distance) + ":" + GpxAnalyzer2.getDistanceString((float) totalDistance / 1000, "km"));
-        content.addLine(getString(R.string.total_time) + ":" + timeExpression);
-        content.addLine(getString(R.string.velocity) + ":" + GpxAnalyzer2.getDistanceString((float) nowSpeed * 18 / 5, "km/hr"));
-        content.addLine(getString(R.string.accuracy) + "=" + (accuracy == -1 ? "∞" : GpxAnalyzer2.getAltitudeString(accuracy, "m")));
-        content.addLine(getString(R.string.Altitude) + ":" + GpxAnalyzer2.getAltitudeString((float) elevation, "m"));
+        content.addLine(labelDistance + GpxAnalyzer2.getDistanceString((float) totalDistance / 1000, "km"));
+        content.addLine(labelTotalTime + timeExpression);
+        content.addLine(labelVelocity + GpxAnalyzer2.getDistanceString((float) nowSpeed * 18 / 5, "km/hr"));
+        content.addLine(labelAccuracy + (accuracy == -1 ? "∞" : GpxAnalyzer2.getAltitudeString(accuracy, "m")));
+        content.addLine(labelAltitude + GpxAnalyzer2.getAltitudeString((float) elevation, "m"));
         return content;
     }
 
@@ -283,6 +297,7 @@ public class RecordService extends Service implements LocationListener, Runnable
             }
             bw = null;
         }
+        handler = null;
         super.onDestroy();
     }
 
@@ -306,17 +321,17 @@ public class RecordService extends Service implements LocationListener, Runnable
             trip.deleteCache();
             stopForeground(true);
             Toast.makeText(getApplicationContext(), getString(R.string.trip_has_been_stopped), Toast.LENGTH_SHORT).show();
-            DeviceHelper.sendGATrack(RecordService.this, "Trip", "stop", name, null);
+            DeviceHelper.sendGATrack(RecordService.this, "Trip", "stop", trip.tripName, null);
             PreferenceManager.getDefaultSharedPreferences(RecordService.this).edit().remove(RecordActivity.pref_tag_onaddpoi).apply();
             instance = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActivityManager.AppTask task = MyActivity.findViewTripActivityTask(RecordService.this, name);
+                ActivityManager.AppTask task = MyActivity.findViewTripActivityTask(RecordService.this, trip.tripName);
                 if (task != null) {
                     task.finishAndRemoveTask();
                 }
             }
             Intent i = new Intent(context, ViewTripActivity.class);
-            i.putExtra(ViewTripActivity.tag_tripName, name);
+            i.putExtra(ViewTripActivity.tag_tripName, trip.tripName);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
             RecordService.this.stopSelf();
@@ -329,7 +344,7 @@ public class RecordService extends Service implements LocationListener, Runnable
         public void onReceive(Context context, Intent intent) {
             run = !run;
             nb = new NotificationCompat.Builder(RecordService.this);
-            nb.setContentTitle(name);
+            nb.setContentTitle(trip.tripName);
             nb.setContentText(getString(R.string.click_or_swipe_down_to_view_detail));
             nb.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
             nb.setTicker(getString(R.string.Start_Trip));
@@ -339,7 +354,7 @@ public class RecordService extends Service implements LocationListener, Runnable
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, RecordService.this);
                 }
                 firstFixed = false;
-                new Thread(RecordService.this).start();
+                handler.postDelayed(RecordService.this, updateDuration);
                 nb.setSmallIcon(R.drawable.ic_satellite);
                 Intent pauseIntent = new Intent(actionPauseTrip);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -364,7 +379,7 @@ public class RecordService extends Service implements LocationListener, Runnable
             PendingIntent stopPendingIntent = PendingIntent.getBroadcast(RecordService.this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             nb.addAction(R.drawable.ic_stop, getString(R.string.stop), stopPendingIntent);
             Intent i3 = new Intent(RecordService.this, RecordActivity.class);
-            i3.putExtra(RecordActivity.tag_tripname, name);
+            i3.putExtra(RecordActivity.tag_tripname, trip.tripName);
             PendingIntent pi4 = PendingIntent.getActivity(RecordService.this, 1, i3, PendingIntent.FLAG_UPDATE_CURRENT);
             nb.setContentIntent(pi4);
             nb.setOngoing(true);
@@ -385,7 +400,7 @@ public class RecordService extends Service implements LocationListener, Runnable
                 if (keepforeground && DummyActivity.instance != null) {
                     DummyActivity.instance.finishAndRemoveTask();
                 }
-                new Thread(RecordService.this).start();
+                handler.postDelayed(RecordService.this, updateDuration);
                 if (shaketoaddpoi && sensorManager != null) {
                     sensorManager.registerListener(RecordService.this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
                 }
@@ -460,13 +475,9 @@ public class RecordService extends Service implements LocationListener, Runnable
     }
 
     public void run() {
-        while (run && screenOn) {
-            try {
-                Thread.sleep(updateDuration);
-                updateNotification();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (run && screenOn) {
+            updateNotification();
+            handler.postDelayed(this, updateDuration);
         }
     }
 
@@ -500,5 +511,4 @@ public class RecordService extends Service implements LocationListener, Runnable
             }
         }
     }
-
 }
