@@ -5,23 +5,35 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.yupog2003.tripdiary.data.FileHelper;
+import com.yupog2003.tripdiary.data.documentfile.DriveDocumentFile;
 import com.yupog2003.tripdiary.services.RecordService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +42,8 @@ public class MyActivity extends AppCompatActivity {
     public static final int REQUEST_PERMISSION = 8000;
     public static final int REQUEST_ACCOUNT = 8001;
     public static final int REQUEST_GET_TOKEN = 8002;
+    public static final int REQUEST_CONNECT_TO_DRIVE = 8003;
+    public static final int REQUEST_CONNECT_TO_REST_API = 8004;
 
     public MyActivity getActivity() {
         return this;
@@ -57,9 +71,13 @@ public class MyActivity extends AppCompatActivity {
     public static ActivityManager.AppTask findViewTripActivityTask(Context context, String tripName) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             for (ActivityManager.AppTask task : getMyTasks(context)) {
-                String s = task.getTaskInfo().baseIntent.getStringExtra(ViewTripActivity.tag_tripName);
-                if (s != null && s.equals(tripName)) {
-                    return task;
+                try {
+                    String s = task.getTaskInfo().baseIntent.getStringExtra(ViewTripActivity.tag_tripName);
+                    if (s != null && s.equals(tripName)) {
+                        return task;
+                    }
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -100,7 +118,7 @@ public class MyActivity extends AppCompatActivity {
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 permissionList.add(permission);
-                if (shouldShowRequestPermissionRationale(permission)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                     switch (permission) {
                         case Manifest.permission.WRITE_EXTERNAL_STORAGE:
                             Toast.makeText(this, R.string.permission_explanation_write_external_storage, Toast.LENGTH_LONG).show();
@@ -115,7 +133,7 @@ public class MyActivity extends AppCompatActivity {
         if (permissionList.isEmpty()) {
             listener.onGranted();
         } else {
-            requestPermissions(permissionList.toArray(new String[permissionList.size()]), REQUEST_PERMISSION);
+            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), REQUEST_PERMISSION);
         }
     }
 
@@ -174,6 +192,12 @@ public class MyActivity extends AppCompatActivity {
             onAccountPickedListener = null;
         } else if (requestCode == REQUEST_GET_TOKEN && resultCode == Activity.RESULT_OK) {
             new GetAccessTokenTask().execute();
+        } else if (requestCode == REQUEST_CONNECT_TO_DRIVE && resultCode == Activity.RESULT_OK) {
+            if (googleApiClient != null) {
+                googleApiClient.connect();
+            }
+        } else if (requestCode == REQUEST_CONNECT_TO_REST_API && resultCode == Activity.RESULT_OK) {
+            connectToDriveApi(callbacks);
         }
     }
 
@@ -191,13 +215,13 @@ public class MyActivity extends AppCompatActivity {
     private OnAccessTokenGotListener onAccessTokenGotListener;
     private String account;
 
-    private class GetAccessTokenTask extends AsyncTask<String, String, String> {
+    private class GetAccessTokenTask extends AsyncTask<Void, Void, String> {
 
         Intent loginIntent;
         String token;
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... params) {
             try {
                 token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
             } catch (UserRecoverableAuthException e) {
@@ -219,5 +243,59 @@ public class MyActivity extends AppCompatActivity {
                 startActivityForResult(loginIntent, REQUEST_GET_TOKEN);
             }
         }
+    }
+
+    public GoogleApiClient googleApiClient;
+    private GoogleApiClient.ConnectionCallbacks callbacks;
+
+    public void connectToDriveApi(final GoogleApiClient.ConnectionCallbacks callbacks) {
+        this.callbacks = callbacks;
+        getAccount(new OnAccountPickedListener() {
+            @Override
+            public void onAccountPicked(@NonNull final String account) {
+                googleApiClient = DriveDocumentFile.getDefaultGoogleApiClientBuilder(MyActivity.this, account)
+                        .addConnectionCallbacks(callbacks)
+                        .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
+                            @Override
+                            public void onConnectionFailed(ConnectionResult connectionResult) {
+                                if (connectionResult.hasResolution()) {
+                                    try {
+                                        connectionResult.startResolutionForResult(MyActivity.this, REQUEST_CONNECT_TO_DRIVE);
+                                    } catch (IntentSender.SendIntentException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), MyActivity.this, 0).show();
+                                }
+                            }
+                        }).build();
+                googleApiClient.connect();
+                TripDiaryApplication.googleApiClient = googleApiClient;
+            }
+        }, false);
+
+    }
+
+    public interface OnDirPickedListener {
+        void onDirPicked(File dir);
+    }
+
+    public void pickDir(String dialogTitle, final OnDirPickedListener listener) {
+        AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+        ListView listView = new ListView(getActivity());
+        final FileHelper.DirAdapter adapter = new FileHelper.DirAdapter(getActivity(), false, Environment.getExternalStorageDirectory());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(adapter);
+        ab.setTitle(dialogTitle);
+        ab.setView(listView);
+        ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (listener != null) {
+                    listener.onDirPicked(adapter.getRoot());
+                }
+            }
+        });
+        ab.setNegativeButton(getString(R.string.cancel), null);
+        ab.show();
     }
 }

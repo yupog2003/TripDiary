@@ -149,7 +149,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         return true;
     }
 
-    class AnalysisTask extends AsyncTask<String, Object, Boolean> {
+    class AnalysisTask extends AsyncTask<Void, Object, Boolean> {
 
         String progressFormat;
         BitmapDescriptor bd;
@@ -175,13 +175,13 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         }
 
         @Override
-        protected Boolean doInBackground(String... params) {
-
+        protected Boolean doInBackground(Void... params) {
             if (tripNames == null)
                 return false;
             boolean success = true;
             DocumentFile[] tripFiles = TripDiaryApplication.rootDocumentFile.listFiles();
-            for (int i = 0; i < tripNames.length; i++) {
+            int tripNamesLength = tripNames.length;
+            for (int i = 0; i < tripNamesLength; i++) {
                 DocumentFile tripFile = FileHelper.findfile(tripFiles, tripNames[i]);
                 if (tripFile == null) {
                     continue;
@@ -355,12 +355,13 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                 }
                 if (s.contains("<trkpt")) {
                     latlng = new MyLatLng2();
+                    String[] tokes = s.split("\"");
                     if (s.indexOf("lat") > s.indexOf("lon")) {
-                        latlng.longitude = Double.parseDouble(s.split("\"")[1]);
-                        latlng.latitude = Double.parseDouble(s.split("\"")[3]);
+                        latlng.longitude = Double.parseDouble(tokes[1]);
+                        latlng.latitude = Double.parseDouble(tokes[3]);
                     } else {
-                        latlng.latitude = Double.parseDouble(s.split("\"")[1]);
-                        latlng.longitude = Double.parseDouble(s.split("\"")[3]);
+                        latlng.latitude = Double.parseDouble(tokes[1]);
+                        latlng.longitude = Double.parseDouble(tokes[3]);
                     }
                     if (latlng.latitude > maxLatitude) {
                         maxLatitude = latlng.latitude;

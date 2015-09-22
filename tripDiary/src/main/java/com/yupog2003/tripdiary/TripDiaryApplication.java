@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
@@ -40,6 +41,8 @@ public class TripDiaryApplication extends Application {
     public static int altitude_unit;
     //public static final int unit_m = 0;
     public static final int unit_ft = 1;
+
+    public static GoogleApiClient googleApiClient;
 
     synchronized public Tracker getTracker() {
         if (appTracker == null) {

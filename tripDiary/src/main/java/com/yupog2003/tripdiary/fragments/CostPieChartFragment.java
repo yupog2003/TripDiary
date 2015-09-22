@@ -17,12 +17,9 @@ import com.yupog2003.tripdiary.ViewCostActivity;
 import java.util.ArrayList;
 
 public class CostPieChartFragment extends Fragment {
-    int option;
     int[] colors;
     float[] totals;
     PieChart pieChart;
-    public String tripName;
-    public String poiName;
 
     public CostPieChartFragment() {
 
@@ -30,9 +27,6 @@ public class CostPieChartFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.option = getArguments().getInt(ViewCostActivity.tag_option);
-        this.tripName = getArguments().getString(ViewCostActivity.tag_trip);
-        this.poiName = getArguments().getString(ViewCostActivity.tag_poi);
         this.pieChart = new PieChart(getActivity());
         refresh();
         return pieChart;

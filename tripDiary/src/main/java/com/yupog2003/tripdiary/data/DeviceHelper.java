@@ -49,9 +49,16 @@ public class DeviceHelper {
     }
 
     public static boolean isMobileNetworkAvailable(Context context) {
+        return getActiveNetworkType(context) != -1;
+    }
+
+    public static int getActiveNetworkType(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
-        return info != null && info.isConnected();
+        if (info != null && info.isConnected()) {
+            return info.getType();
+        }
+        return -1;
     }
 
     public static void sendGATrack(Application app, String category, String action, String label, Long value) {

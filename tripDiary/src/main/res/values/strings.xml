@@ -110,7 +110,6 @@
     <string name="delete">Delete</string>
     <string name="are_you_sure_to_delete">Are you sure to delete?</string>
     <string name="input_the_trip_name">Input the Trip Name</string>
-    <string name="same_trip">Same Trip</string>
     <string name="explain_same_trip">There is a same trip in history.Do you want to continue that trip?</string>
     <string name="explain_conflict_trip">There is a same trip.Please use another name.</string>
     <string name="add_poi">Add POI</string>
@@ -190,7 +189,6 @@
     <string name="max_altitude">Max Altitude</string>
     <string name="min_altitude">Min Altitude</string>
     <string name="velocity">Velocity</string>
-    <string name="share_track_kml">Share track(KML)</string>
     <string name="has_not_been_installed">has not been installed</string>
     <string name="do_you_want_to_install">Do you want to install?</string>
     <string name="street_view">StreetView Service</string>
@@ -284,7 +282,6 @@
     <string name="failed_to_loadlibrary">Failed to load library. Use slower method.</string>
     <string name="click_or_swipe_down_to_view_detail">Click or pinch zoom to get details</string>
     <string name="recording">Recording</string>
-    <string name="poi_name">POI name</string>
     <string name="add">Add</string>
     <string name="pausing">Pause</string>
     <string name="searching_for_satellite">Searching</string>
@@ -314,8 +311,6 @@
     <string name="use_storage_access_framework">Use Storage Access Framework</string>
     <string name="storage_access_framework_explanation">Enable SD Card write permission for Lollipop. It reduces some performance. Please reset root path after changing this.</string>
     <string name="kmz_with_explanation">KMZ (Google Earth, including compressed image)</string>
-    <string name="share_track_kmz">Share track(KMZ)</string>
-    <string name="share_track_gpx">Share track(GPX)</string>
     <string name="please_stop_previous_trip_first">Please stop previous trip first</string>
     <string name="from_new_to_old">New -> Old</string>
     <string name="from_old_to_new">Old -> New</string>
@@ -344,5 +339,15 @@
     <string name="long_click_to_select_multiple_file">Long click to select multiple file</string>
     <string name="input_poi_name">Input POI name</string>
     <string name="select_poi_name">Select POI name</string>
+    <string name="terrain">Terrain</string>
+    <string name="satellite">Satellite</string>
+    <string name="satellite_and_streets">Satellite and streets</string>
+    <string name="upload_to_google_drive">Upload to Google Drive</string>
+    <string name="google_drive">Google Drive</string>
+    <string name="upload_to_tripdiary">Upload to TripDiary</string>
+    <string name="open_from_other_source">Open from other source</string>
+    <string name="select_output_directory">Select output directory</string>
+    <string name="download_from_google_drive">Download from Google Drive</string>
+    <string name="same_trip">There is a same trip on local device</string>
 
 </resources>

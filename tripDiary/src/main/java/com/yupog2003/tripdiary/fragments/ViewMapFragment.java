@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.ExifInterface;
@@ -14,7 +13,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -45,7 +43,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -55,6 +53,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -82,7 +81,6 @@ import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -95,14 +93,11 @@ import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.BackupRestoreTripService;
 import com.yupog2003.tripdiary.services.GenerateVideoService;
 import com.yupog2003.tripdiary.services.SendTripService;
+import com.yupog2003.tripdiary.services.UploadToDriveService;
 import com.yupog2003.tripdiary.views.POIInfoWindowAdapter;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -182,7 +177,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 streetView.setOnClickListener(ViewMapFragment.this);
                 cache = trip.cache;
                 if (lats != null && cache != null && bounds != null) {
-                    int trackColor=PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
+                    int trackColor = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
                     gmap.addPolyline(new PolylineOptions().add(lats).width(5).color(trackColor));
                     gmap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, (int) DeviceHelper.pxFromDp(getActivity(), 10)));
                     viewInformation.setOnClickListener(ViewMapFragment.this);
@@ -280,102 +275,29 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             if (trip.cache == null) return true;
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setTitle(getString(R.string.share_track_by___));
-            String[] bys = new String[]{getString(R.string.gpx), getString(R.string.kml) + "(Google Earth)", getString(R.string.kmz_with_explanation), getString(R.string.app_name)};
+            String[] bys = new String[]{getString(R.string.gpx), getString(R.string.kml) + "(Google Earth)", getString(R.string.kmz_with_explanation)};
             ab.setSingleChoiceItems(bys, -1, new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int which) {
-
-                    switch (which) {
-                        case 0:
-                            AlertDialog.Builder ab0 = new AlertDialog.Builder(getActivity());
-                            ab0.setTitle(getString(R.string.share_track_gpx));
-                            final EditText filepath0 = new EditText(getActivity());
-                            filepath0.setText(Environment.getExternalStorageDirectory() + "/" + trip.tripName + ".gpx");
-                            ab0.setView(filepath0);
-                            ab0.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    try {
-                                        File outputFile = new File(filepath0.getText().toString());
-                                        BufferedReader br = new BufferedReader(new InputStreamReader(trip.gpxFile.getInputStream()));
-                                        String s;
-                                        BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
-                                        while ((s = br.readLine()) != null) {
-                                            bw.write(s);
-                                            bw.write("\n");
-                                            if (s.contains("<gpx")) {
-                                                for (POI poi : trip.pois) {
-                                                    if (poi == null) continue;
-                                                    poi.time.setTimeZone("UTC");
-                                                    bw.write(" <wpt lat=\"" + String.valueOf(poi.latitude) + "\" lon=\"" + String.valueOf(poi.longitude) + "\">\n");
-                                                    bw.write("  <ele>" + String.valueOf(poi.altitude) + "</ele>\n");
-                                                    bw.write("  <name>" + poi.title + "</name>\n");
-                                                    bw.write("  <time>" + poi.time.format3339() + "</time>\n");
-                                                    bw.write(" </wpt>\n");
-                                                }
-                                            }
-                                        }
-                                        br.close();
-                                        bw.flush();
-                                        bw.close();
-                                        Intent intent = new Intent(Intent.ACTION_SEND);
-                                        intent.setType("application/gpx+xml");
-                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(outputFile));
-                                        startActivity(intent);
-                                        DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_gpx", trip.tripName, null);
-                                    } catch (NullPointerException | IOException | IllegalArgumentException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            });
-                            ab0.setNegativeButton(getString(R.string.cancel), null);
-                            ab0.show();
-                            break;
-                        case 1:
-                            AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-                            ab.setTitle(getString(R.string.share_track_kml));
-                            final EditText filepath = new EditText(getActivity());
-                            filepath.setText(Environment.getExternalStorageDirectory() + "/" + trip.tripName + ".kml");
-                            ab.setView(filepath);
-                            ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    DocumentFile kmlFile = DocumentFile.fromFile(new File(filepath.getText().toString()));
+                public void onClick(DialogInterface dialog, final int which) {
+                    ((MyActivity) getActivity()).pickDir(getString(R.string.select_output_directory), new MyActivity.OnDirPickedListener() {
+                        @Override
+                        public void onDirPicked(File dir) {
+                            switch (which) {
+                                case 0:
+                                    DocumentFile gpxFile = DocumentFile.fromFile(new File(dir, trip.tripName + ".gpx"));
+                                    new GenerateKMxTask(gpxFile, GenerateKMxTask.gpx).execute();
+                                    break;
+                                case 1:
+                                    DocumentFile kmlFile = DocumentFile.fromFile(new File(dir, trip.tripName + ".kml"));
                                     new GenerateKMxTask(kmlFile, GenerateKMxTask.kml).execute();
-                                }
-                            });
-                            ab.setNegativeButton(getString(R.string.cancel), null);
-                            ab.show();
-                            break;
-                        case 2:
-                            AlertDialog.Builder ab2 = new AlertDialog.Builder(getActivity());
-                            ab2.setTitle(getString(R.string.share_track_kmz));
-                            final EditText filepath2 = new EditText(getActivity());
-                            filepath2.setText(Environment.getExternalStorageDirectory() + "/" + trip.tripName + ".kmz");
-                            ab2.setView(filepath2);
-                            ab2.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    DocumentFile kmzFile = DocumentFile.fromFile(new File(filepath2.getText().toString()));
+                                    break;
+                                case 2:
+                                    DocumentFile kmzFile = DocumentFile.fromFile(new File(dir, trip.tripName + ".kmz"));
                                     new GenerateKMxTask(kmzFile, GenerateKMxTask.kmz).execute();
-                                }
-                            });
-                            ab2.setNegativeButton(getString(R.string.cancel), null);
-                            ab2.show();
-                            break;
-                        case 3:
-                            ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
-                                @Override
-                                public void onAccountPicked(@NonNull String accountName) {
-                                    askUploadPublic(accountName);
-                                }
-                            }, false);
-                            break;
-                    }
+                                    break;
+                            }
+                        }
+                    });
                     dialog.dismiss();
                 }
             });
@@ -388,23 +310,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
                 public void onClick(DialogInterface dialog, int which) {
 
-                    AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-                    ListView listView = new ListView(getActivity());
-                    final DirAdapter adapter = new DirAdapter(getActivity(), false, Environment.getExternalStorageDirectory());
-                    listView.setAdapter(adapter);
-                    listView.setOnItemClickListener(adapter);
-                    ab.setTitle(getString(R.string.select_a_directory));
-                    ab.setView(listView);
-                    ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-
+                    ((MyActivity) getActivity()).pickDir(getString(R.string.select_a_directory), new MyActivity.OnDirPickedListener() {
+                        @Override
+                        public void onDirPicked(File dir) {
                             DeviceHelper.sendGATrack(getActivity(), "Trip", "import_memory", trip.tripName, null);
-                            new ImportMemoryTask(adapter.getRoot()).execute();
+                            importMemoryTask = new ImportMemoryTask(dir);
+                            importMemoryTask.execute();
                         }
                     });
-                    ab.setNegativeButton(getString(R.string.cancel), null);
-                    ab.show();
                 }
             });
             ab.setNegativeButton(getString(R.string.cancel), null);
@@ -418,12 +331,56 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             }
         } else if (item.getItemId() == R.id.backup) {
             if (trip.tripName == null) return true;
-            ArrayList<String> tripNames = new ArrayList<>();
-            tripNames.add(trip.tripName);
-            Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
-            intent.setAction(BackupRestoreTripService.ACTION_BACKUP);
-            intent.putStringArrayListExtra(BackupRestoreTripService.tag_tripnames, tripNames);
-            getActivity().startService(intent);
+            ((MyActivity) getActivity()).pickDir(getString(R.string.select_output_directory), new MyActivity.OnDirPickedListener() {
+                @Override
+                public void onDirPicked(File dir) {
+                    ArrayList<String> tripNames = new ArrayList<>();
+                    tripNames.add(trip.tripName);
+                    Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
+                    intent.setAction(BackupRestoreTripService.ACTION_BACKUP);
+                    intent.putStringArrayListExtra(BackupRestoreTripService.tag_tripnames, tripNames);
+                    intent.putExtra(BackupRestoreTripService.tag_directory, dir);
+                    getActivity().startService(intent);
+                }
+            });
+        } else if (item.getItemId() == R.id.upload) {
+            AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+            String[] options = new String[]{getString(R.string.upload_to_tripdiary), getString(R.string.upload_to_google_drive)};
+            ab.setSingleChoiceItems(options, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, final int which) {
+                    ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                        @Override
+                        public void onAccountPicked(@NonNull final String account) {
+                            switch (which) {
+                                case 0:
+                                    askUploadPublic(account);
+                                    break;
+                                case 1:
+                                    ((MyActivity) getActivity()).connectToDriveApi(new GoogleApiClient.ConnectionCallbacks() {
+                                        @Override
+                                        public void onConnected(Bundle bundle) {
+                                            ArrayList<String> tripNames = new ArrayList<>();
+                                            tripNames.add(trip.tripName);
+                                            Intent intent = new Intent(getActivity(), UploadToDriveService.class);
+                                            intent.putExtra(UploadToDriveService.tag_tripNames, tripNames);
+                                            intent.putExtra(UploadToDriveService.tag_account, account);
+                                            getActivity().startService(intent);
+                                        }
+
+                                        @Override
+                                        public void onConnectionSuspended(int i) {
+
+                                        }
+                                    });
+                                    break;
+                            }
+                        }
+                    }, false);
+                    dialog.dismiss();
+                }
+            });
+            ab.show();
         }
         return true;
     }
@@ -463,7 +420,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         });
     }
 
-    class ImportMemoryTask extends AsyncTask<File, String, String> {
+    ImportMemoryTask importMemoryTask;
+
+    class ImportMemoryTask extends AsyncTask<Void, String, String> {
 
         File memoryDir;
         TextView message;
@@ -499,7 +458,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         @Override
-        protected String doInBackground(File... params) {
+        protected String doInBackground(Void... params) {
             publishProgress("Sorting...", "0");
             if (trip.pois.length < 1 || cache.times == null || memoryDir == null)
                 return null;
@@ -627,6 +586,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
                 ((ViewTripActivity) getActivity()).onPOIUpdate(null);
             }
+            importMemoryTask = null;
         }
     }
 
@@ -874,23 +834,29 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         } else if (v.equals(switchMapMode)) {
             if (gmap == null)
                 return;
-            switch (gmap.getMapType()) {
-                case GoogleMap.MAP_TYPE_NORMAL:
-                    gmap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                    break;
-                case GoogleMap.MAP_TYPE_SATELLITE:
-                    gmap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                    break;
-                case GoogleMap.MAP_TYPE_HYBRID:
-                    gmap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                    break;
-                case GoogleMap.MAP_TYPE_TERRAIN:
-                    gmap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    break;
-                default:
-                    gmap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    break;
-            }
+            PopupMenu popupMenu = new PopupMenu(getActivity(), switchMapMode);
+            popupMenu.inflate(R.menu.map_type);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.normal:
+                            gmap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                            break;
+                        case R.id.satellite:
+                            gmap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                            break;
+                        case R.id.hybrid:
+                            gmap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                            break;
+                        case R.id.terrain:
+                            gmap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                            break;
+                    }
+                    return true;
+                }
+            });
+            popupMenu.show();
         } else if (v.equals(playTrip)) {
             if (tripPlayer == null) {
                 tripPlayer = new TripPlayer();
@@ -988,7 +954,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         int index;
         int playMode;
         boolean run;
-        int pointSize;
         MediaPlayer mp;
         Marker playPoint;
         ImageView runPointImage;
@@ -1011,7 +976,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
 
         public TripPlayer() {
             index = 0;
-            pointSize = getPointSize();
             playMode = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("playingtripmode", "1"));
             interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("playtripspeed", "10"));
             latlength = 0;
@@ -1208,12 +1172,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             resume();
         }
 
-        private int getPointSize() {
-            BitmapFactory.Options option = new BitmapFactory.Options();
-            option.inJustDecodeBounds = true;
-            BitmapFactory.decodeResource(getResources(), R.drawable.runpoint, option);
-            return option.outWidth / 2;
-        }
     }
 
     private SparseArray<POI> getPOIsMap() {
@@ -1224,13 +1182,14 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
     }
 
-    class GenerateKMxTask extends AsyncTask<String, Object, DocumentFile> {
+    class GenerateKMxTask extends AsyncTask<Void, Object, DocumentFile> {
 
         DocumentFile outputFile;
         ProgressDialog pd;
         int option;
         public static final int kmz = 0;
         public static final int kml = 1;
+        public static final int gpx = 2;
 
         public GenerateKMxTask(DocumentFile outputFile, int option) {
             this.outputFile = outputFile;
@@ -1246,7 +1205,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         }
 
         @Override
-        protected DocumentFile doInBackground(String... params) {
+        protected DocumentFile doInBackground(Void... params) {
             Trip.GenerateKMxListener listener = new Trip.GenerateKMxListener() {
                 @Override
                 public void onProgressChanged(int progress, int total) {
@@ -1257,6 +1216,8 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 return trip.generateKMZ(outputFile, listener);
             } else if (option == kml) {
                 return trip.generateKML(outputFile, listener);
+            } else if (option == gpx) {
+                return trip.generateGPX(outputFile, listener);
             } else {
                 return null;
             }
@@ -1281,6 +1242,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 } else if (option == kmz) {
                     intent.setType("application/vnd.google-earth.kmz");
                     DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_kmz", trip.tripName, null);
+                } else if (option == gpx) {
+                    intent.setType("application/gpx+xml");
+                    DeviceHelper.sendGATrack(getActivity(), "Trip", "share_track_by_gpx", trip.tripName, null);
                 }
                 startActivity(intent);
             }
@@ -1343,7 +1307,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                             return;
                         }
                         final LatLng[] lat = cache.getLats();
-                        int trackColor=PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
+                        int trackColor = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("trackcolor", 0xff6699cc);
                         googleMap.addPolyline(new PolylineOptions().add(lat).color(trackColor).width(5));
                         float hue = DrawableHelper.getMarkerColorHue(getActivity());
                         BitmapDescriptor bd = BitmapDescriptorFactory.defaultMarker(hue);
@@ -1453,6 +1417,10 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         if (gmap != null) {
             gmap.setMyLocationEnabled(false);
             gmap.clear();
+        }
+        if (importMemoryTask != null) {
+            importMemoryTask.cancel = true;
+            importMemoryTask = null;
         }
         super.onDestroy();
     }

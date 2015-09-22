@@ -32,6 +32,7 @@ public class BackupRestoreTripService extends IntentService {
     public static final String ACTION_RESTORE = "com.yupog2003.tripdiary.services.action.RESTORE";
     public static final String tag_tripnames = "com.yupog2003.tripdiary.services.tag_tripnames";
     public static final String tag_category = "com.yupog2003.tripdiary.services.tag_category";
+    public static final String tag_directory = "com.yupog2003.tripdiary.services.tag_directory";
 
     public BackupRestoreTripService() {
         super("BackupRestoreTripService");
@@ -60,12 +61,13 @@ public class BackupRestoreTripService extends IntentService {
             DocumentFile[] tripFiles = TripDiaryApplication.rootDocumentFile.listFiles(DocumentFile.list_dirs);
             ArrayList<Uri> resultUris = new ArrayList<>();
             StringBuilder sb = new StringBuilder();
-            File dir = Environment.getExternalStorageDirectory();
+            File dir = (File) intent.getSerializableExtra(tag_directory);
+            if (dir == null) dir = Environment.getExternalStorageDirectory();
             String dirPath = dir.getPath();
             for (int i = 0; i < tripNames.size(); i++) {
                 String tripName = tripNames.get(i);
                 if (tripName == null) continue;
-                sb.append(dirPath).append("/").append(tripName).append(", ");
+                sb.append(dirPath).append("/").append(tripName).append(".zip").append(", ");
                 publishProgress(getString(R.string.zipping), getString(R.string.zipping), tripName, true);
                 DocumentFile from = FileHelper.findfile(tripFiles, tripName);
                 DocumentFile to = DocumentFile.fromFile(new File(dir, tripName + ".zip"));

@@ -208,7 +208,6 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
         AlertDialog ad = ab2.create();
         ad.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         ad.show();
-
     }
 
     private void startTrip(@NonNull final String name, @Nullable final String note, @Nullable final String category) {

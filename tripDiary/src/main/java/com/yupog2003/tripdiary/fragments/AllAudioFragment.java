@@ -123,7 +123,7 @@ public class AllAudioFragment extends Fragment {
             public CardView cardView;
             public TextView poiName;
             public TextView poiTime;
-            public UnScrollableListView gridView;
+            public UnScrollableListView listView;
             public View.OnClickListener onClickListener;
             public int index;
 
@@ -132,7 +132,7 @@ public class AllAudioFragment extends Fragment {
                 this.cardView = v;
                 this.poiName = (TextView) cardView.findViewById(R.id.poiName);
                 this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
-                this.gridView = (UnScrollableListView) cardView.findViewById(R.id.audios);
+                this.listView = (UnScrollableListView) cardView.findViewById(R.id.audios);
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -166,9 +166,9 @@ public class AllAudioFragment extends Fragment {
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.poiName.setText(pois[position].title + "(" + String.valueOf(pois[position].audioFiles.length) + ")");
             holder.poiTime.setText(pois[position].time.formatInTimezone(timezone));
-            holder.gridView.setVisibility(audioAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
-            holder.gridView.setAdapter(audioAdapters[position]);
-            holder.gridView.setOnItemClickListener(audioAdapters[position]);
+            holder.listView.setVisibility(audioAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
+            holder.listView.setAdapter(audioAdapters[position]);
+            holder.listView.setOnItemClickListener(audioAdapters[position]);
             holder.index = position;
         }
 

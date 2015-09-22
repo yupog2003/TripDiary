@@ -43,7 +43,9 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.yupog2003.tripdiary.AllRecordActivity;
+import com.yupog2003.tripdiary.CategoryActivity;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
@@ -56,11 +58,13 @@ import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.BackupRestoreTripService;
 import com.yupog2003.tripdiary.services.SendTripService;
+import com.yupog2003.tripdiary.services.UploadToDriveService;
 import com.yupog2003.tripdiary.views.CheckableLayout;
 import com.yupog2003.tripdiary.views.FloatingGroupExpandableListView;
 import com.yupog2003.tripdiary.views.WrapperExpandableListAdapter;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -217,6 +221,8 @@ public class LocalTripsFragment extends Fragment {
                 }
             });
             ab.show();
+        } else if (item.getItemId() == R.id.category){
+            getActivity().startActivity(new Intent(getActivity(), CategoryActivity.class));
         }
         return false;
     }
@@ -449,7 +455,6 @@ public class LocalTripsFragment extends Fragment {
         }
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
             checksName = new ArrayList<>();
             for (int i = 0; i < checks.length; i++) {
                 if (checks[i]) {
@@ -480,10 +485,16 @@ public class LocalTripsFragment extends Fragment {
                 ab.setNegativeButton(getString(R.string.no), null);
                 ab.show();
             } else if (item.getItemId() == R.id.backup) {
-                Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
-                intent.setAction(BackupRestoreTripService.ACTION_BACKUP);
-                intent.putStringArrayListExtra(BackupRestoreTripService.tag_tripnames, checksName);
-                getActivity().startService(intent);
+                ((MyActivity)getActivity()).pickDir(getString(R.string.select_output_directory), new MyActivity.OnDirPickedListener() {
+                    @Override
+                    public void onDirPicked(File dir) {
+                        Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);
+                        intent.setAction(BackupRestoreTripService.ACTION_BACKUP);
+                        intent.putStringArrayListExtra(BackupRestoreTripService.tag_tripnames, checksName);
+                        intent.putExtra(BackupRestoreTripService.tag_directory, dir);
+                        getActivity().startService(intent);
+                    }
+                });
             } else if (item.getItemId() == R.id.edit) {
                 String message = "";
                 String s;
@@ -519,7 +530,6 @@ public class LocalTripsFragment extends Fragment {
                 rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                         String color = categorysp.getString(categories[checkedId], String.valueOf(Color.WHITE));
                         category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
                     }
@@ -562,12 +572,41 @@ public class LocalTripsFragment extends Fragment {
                 }
                 checkAll = !checkAll;
             } else if (item.getItemId() == R.id.upload) {
-                ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+                String[] options = new String[]{getString(R.string.upload_to_tripdiary), getString(R.string.upload_to_google_drive)};
+                ab.setSingleChoiceItems(options, -1, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onAccountPicked(@NonNull String accountName) {
-                        askUploadPublic(accountName);
+                    public void onClick(DialogInterface dialog, final int which) {
+                        ((MyActivity) getActivity()).getAccount(new MyActivity.OnAccountPickedListener() {
+                            @Override
+                            public void onAccountPicked(@NonNull final String account) {
+                                switch (which) {
+                                    case 0:
+                                        askUploadPublic(account);
+                                        break;
+                                    case 1:
+                                        ((MyActivity) getActivity()).connectToDriveApi(new GoogleApiClient.ConnectionCallbacks() {
+                                            @Override
+                                            public void onConnected(Bundle bundle) {
+                                                Intent intent = new Intent(getActivity(), UploadToDriveService.class);
+                                                intent.putExtra(UploadToDriveService.tag_tripNames, checksName);
+                                                intent.putExtra(UploadToDriveService.tag_account, account);
+                                                getActivity().startService(intent);
+                                            }
+
+                                            @Override
+                                            public void onConnectionSuspended(int i) {
+
+                                            }
+                                        });
+                                        break;
+                                }
+                            }
+                        }, false);
+                        dialog.dismiss();
                     }
-                }, false);
+                });
+                ab.show();
             } else if (item.getItemId() == R.id.category) {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 ab.setTitle(getString(R.string.choose_a_category));
@@ -585,7 +624,8 @@ public class LocalTripsFragment extends Fragment {
                 ab.show();
             } else if (item.getItemId() == R.id.timezone) {
                 if (DeviceHelper.isMobileNetworkAvailable(getActivity())) {
-                    new UpdateTripTimeZoneTask(checksName).execute();
+                    updateTripTimeZoneTask = new UpdateTripTimeZoneTask(checksName);
+                    updateTripTimeZoneTask.execute();
                 } else {
                     Toast.makeText(getActivity(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
                 }
@@ -755,7 +795,9 @@ public class LocalTripsFragment extends Fragment {
         }
     }
 
-    class UpdateTripTimeZoneTask extends AsyncTask<String, String, String> {
+    UpdateTripTimeZoneTask updateTripTimeZoneTask;
+
+    class UpdateTripTimeZoneTask extends AsyncTask<Void, String, String> {
         TextView message;
         ProgressBar progress;
         TextView progressMessage;
@@ -769,7 +811,6 @@ public class LocalTripsFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setTitle(getString(R.string.updating));
             LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.progressdialog_import_memory, (ViewGroup) getView(), false);
@@ -777,6 +818,7 @@ public class LocalTripsFragment extends Fragment {
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);
             ab.setView(layout);
+            ab.setCancelable(false);
             ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
@@ -790,7 +832,7 @@ public class LocalTripsFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... params) {
             publishProgress("setMax", String.valueOf(trips.size()));
             for (int i = 0; i < trips.size(); i++) {
                 if (cancel)
@@ -815,13 +857,21 @@ public class LocalTripsFragment extends Fragment {
                 progress.setProgress(Integer.valueOf(values[1]));
                 progressMessage.setText(values[1] + "/" + String.valueOf(progress.getMax()));
             }
-            super.onProgressUpdate(values);
         }
 
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            super.onPostExecute(result);
+            updateTripTimeZoneTask = null;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (updateTripTimeZoneTask != null) {
+            updateTripTimeZoneTask.cancel = true;
+            updateTripTimeZoneTask = null;
+        }
+        super.onDestroy();
     }
 }

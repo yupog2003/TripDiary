@@ -8,8 +8,8 @@ android {
         applicationId "com.yupog2003.tripdiary"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 190
-        versionName "1.3.2"
+        versionCode 191
+        versionName "1.3.3"
         multiDexEnabled true
 
         ndk {

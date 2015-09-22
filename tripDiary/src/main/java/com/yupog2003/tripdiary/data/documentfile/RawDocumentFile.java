@@ -119,7 +119,7 @@ public class RawDocumentFile extends DocumentFile {
     @Override
     public boolean delete() {
         if (file != null) {
-            FileHelper.deletedir(file.getPath());
+            FileHelper.deleteDir(file);
         }
         return true;
     }

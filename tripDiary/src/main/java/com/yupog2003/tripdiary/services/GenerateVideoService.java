@@ -103,7 +103,7 @@ public class GenerateVideoService extends IntentService {
         num_total_materials = getNum_total_materials(poisMap);
         num_processed_materials = 0;
         tempDir = new File(getCacheDir(), cacheDirName);
-        FileHelper.deletedir(tempDir.getPath());
+        FileHelper.deleteDir(tempDir);
         tempDir.mkdirs();
         String backgroundMusicPath = intent.getStringExtra(tag_background_music_path);
         fps = intent.getIntExtra(tag_fps, 25);

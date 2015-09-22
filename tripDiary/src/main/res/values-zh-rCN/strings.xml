@@ -101,7 +101,7 @@
     <string name="delete">删除</string>
     <string name="are_you_sure_to_delete">确定要删除吗?</string>
     <string name="input_the_trip_name">输入旅程名称</string>
-    <string name="same_trip">相同旅程</string>
+    <string name="same_trip">本机已有相同旅程</string>
     <string name="explain_conflict_trip">有相同的旅程，请使用其他名称</string>
     <string name="explain_same_trip">有相同的旅程，你要继续该旅程吗?</string>
     <string name="add_poi">新增兴趣点</string>
@@ -183,7 +183,6 @@
     <string name="max_altitude">最高高度</string>
     <string name="min_altitude">最低高度</string>
     <string name="velocity">速率</string>
-    <string name="share_track_kml">分享轨迹(KML)</string>
     <string name="has_not_been_installed">未安装</string>
     <string name="do_you_want_to_install">要安装吗？</string>
     <string name="street_view">街景服务</string>
@@ -277,7 +276,6 @@
     <string name="failed_to_loadlibrary">载入library失败，使用较慢方法</string>
     <string name="click_or_swipe_down_to_view_detail">点击或放大以了解细节</string>
     <string name="recording">纪录中</string>
-    <string name="poi_name">兴趣点名称</string>
     <string name="add">新增</string>
     <string name="pausing">暂停中</string>
     <string name="searching_for_satellite">定位中</string>
@@ -307,8 +305,6 @@
     <string name="use_storage_access_framework">使用Storage Access Framework</string>
     <string name="storage_access_framework_explanation">为棒棒糖开启SD卡写入权限，会降低一点效能，改变后请重新设定根目录</string>
     <string name="kmz_with_explanation">KMZ (Google Earth, 包含压缩后的图片)</string>
-    <string name="share_track_kmz">分享轨迹(KMZ)</string>
-    <string name="share_track_gpx">分享轨迹(GPX)</string>
     <string name="please_stop_previous_trip_first">请先停止之前的旅程</string>
     <string name="from_new_to_old">新 -> 旧</string>
     <string name="from_old_to_new">旧 -> 新</string>
@@ -337,4 +333,13 @@
     <string name="long_click_to_select_multiple_file">长按以选择多个档案</string>
     <string name="input_poi_name">输入兴趣点名称</string>
     <string name="select_poi_name">选择兴趣点名称</string>
+    <string name="terrain">地形</string>
+    <string name="satellite">卫星</string>
+    <string name="satellite_and_streets">卫星和街道</string>
+    <string name="upload_to_google_drive">上传到Google云端硬碟</string>
+    <string name="google_drive">Google云盘</string>
+    <string name="upload_to_tripdiary">上传到旅游日记</string>
+    <string name="open_from_other_source">从其他来源开启</string>
+    <string name="select_output_directory">选择输出资料夹</string>
+    <string name="download_from_google_drive">从Google云盘下载</string>
 </resources>

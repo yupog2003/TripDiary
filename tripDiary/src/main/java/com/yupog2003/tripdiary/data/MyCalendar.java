@@ -122,7 +122,7 @@ public class MyCalendar extends GregorianCalendar {
             case type_time_format3399:
                 if (s.contains("=") && s.contains("T") && s.contains(".")) {
                     date = s.substring(s.indexOf("=") + 1, s.lastIndexOf("T"));
-                    t = s.substring(s.lastIndexOf("T") + 1, s.lastIndexOf("."));
+                    t = s.substring(s.lastIndexOf("T") + 1, s.indexOf("."));
                     datetoks = date.split("-");
                     timetoks = t.split(":");
                 }
@@ -130,15 +130,15 @@ public class MyCalendar extends GregorianCalendar {
             case type_self:
                 if (s.contains("T")) {
                     date = s.substring(0, s.indexOf("T"));
-                    t = s.substring(s.indexOf("T") + 1, s.length());
+                    t = s.substring(s.indexOf("T") + 1);
                     datetoks = date.split("-");
                     timetoks = t.split(":");
                 }
                 break;
             case type_exif:
                 if (s.contains(":") && s.contains(" ")) {
-                    date = s.split("\\s+")[0];
-                    t = s.split("\\s+")[1];
+                    date = s.substring(0, s.indexOf(" "));
+                    t = s.substring(s.indexOf(" ") + 1);
                     datetoks = date.split(":");
                     timetoks = t.split(":");
                 }
@@ -243,14 +243,14 @@ public class MyCalendar extends GregorianCalendar {
             try {
                 while ((s = br.readLine()) != null) {
                     if (s.contains("<trkpt ")) {
-                        String[] toks = s.split("\"");
+                        String[] tokes = s.split("\"");
                         double lat, lng;
                         if (s.indexOf("lat") > s.indexOf("lon")) {
-                            lat = Double.parseDouble(toks[3]);
-                            lng = Double.parseDouble(toks[1]);
+                            lat = Double.parseDouble(tokes[3]);
+                            lng = Double.parseDouble(tokes[1]);
                         } else {
-                            lat = Double.parseDouble(toks[1]);
-                            lng = Double.parseDouble(toks[3]);
+                            lat = Double.parseDouble(tokes[1]);
+                            lng = Double.parseDouble(tokes[3]);
                         }
                         return getTimezoneFromLatLng(lat, lng);
                     }

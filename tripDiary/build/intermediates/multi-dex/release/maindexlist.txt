@@ -37,6 +37,7 @@ com/google/android/gms/analytics/HitBuilders$ItemBuilder.class
 org/apache/commons/io/filefilter/FileFilterUtils.class
 android/support/v4/app/NotificationCompatGingerbread.class
 com/google/android/gms/internal/zzhj.class
+com/google/android/gms/drive/DriveFolder$DriveFileResult.class
 org/apache/http/impl/client/AuthenticationStrategyAdaptor.class
 org/apache/http/client/RedirectHandler.class
 com/google/android/gms/internal/zzgg.class
@@ -118,6 +119,7 @@ com/google/android/gms/ads/internal/purchase/zzc.class
 org/apache/http/conn/params/ConnRouteParams.class
 com/google/ads/AdSize.class
 com/yupog2003/tripdiary/ViewPointActivity$MyPagerAdapter.class
+android/support/v4/widget/SwipeRefreshLayout$OnRefreshListener.class
 com/google/android/gms/drive/query/Query$Builder.class
 android/support/annotation/RequiresPermission$Read.class
 com/google/android/gms/maps/model/MarkerOptions.class
@@ -131,6 +133,7 @@ com/github/mikephil/charting/interfaces/ChartInterface.class
 com/google/android/gms/internal/zzdr.class
 com/google/android/gms/ads/internal/purchase/zzb.class
 com/google/android/gms/analytics/GoogleAnalytics.class
+com/google/android/gms/drive/DriveResource.class
 android/support/v4/widget/SlidingPaneLayout.class
 com/google/android/gms/common/api/GoogleApiClient.class
 android/support/design/widget/SnackbarManager.class
@@ -188,6 +191,7 @@ com/yupog2003/tripdiary/ViewTripActivity$2.class
 android/support/v4/view/animation/LookupTableInterpolator.class
 com/yupog2003/tripdiary/MultiFileChooseActivity$FileAdapter.class
 com/google/android/gms/ads/internal/zzc.class
+com/yupog2003/tripdiary/providers/DriveProvider.class
 com/google/android/gms/ads/internal/request/zzc.class
 com/google/android/gms/ads/internal/client/zzg.class
 android/support/v4/app/NotificationBuilderWithBuilderAccessor.class
@@ -205,6 +209,7 @@ com/google/android/gms/ads/internal/request/zzd.class
 com/yupog2003/tripdiary/ViewPointActivity$2.class
 org/apache/http/impl/conn/DefaultClientConnectionOperator.class
 com/google/android/gms/internal/zzdv.class
+com/google/android/gms/drive/MetadataChangeSet$Builder.class
 android/support/v4/media/session/MediaSessionCompat$Callback.class
 com/yupog2003/tripdiary/ViewPointActivity$3.class
 com/github/mikephil/charting/components/MarkerView.class
@@ -212,6 +217,7 @@ android/support/design/widget/TabLayout$SlidingTabStrip.class
 org/apache/http/impl/cookie/PublicSuffixFilter.class
 com/google/android/gms/ads/internal/zzh.class
 com/google/android/gms/internal/zzdb.class
+com/google/android/gms/drive/Metadata.class
 android/support/annotation/ColorRes.class
 android/support/v4/app/FragmentManagerImpl$3.class
 com/google/android/gms/drive/MetadataBuffer.class
@@ -240,11 +246,13 @@ com/yupog2003/tripdiary/GetContentActivity.class
 android/support/design/widget/NavigationView.class
 -keep class com.yupog2003.tripdiary.MainActivity { <init>(); }
 com/google/android/gms/internal/zzfn.class
+com/google/android/gms/common/api/Status.class
 android/support/design/widget/CoordinatorLayout$SavedState.class
 com/yupog2003/tripdiary/services/SendTripService$MultipartUtility.class
 android/support/v7/widget/ActionMenuView$LayoutParams.class
 org/apache/http/conn/HttpHostConnectException.class
 -keep class com.yupog2003.tripdiary.DummyActivity { <init>(); }
+com/yupog2003/tripdiary/fragments/DriveTripsFragment.class
 com/yupog2003/tripdiary/GetContentActivity$2.class
 android/support/annotation/CallSuper.class
 com/google/android/gms/internal/zzeu.class
@@ -363,6 +371,7 @@ com/google/android/gms/internal/zzds.class
 android/support/v4/media/MediaMetadataCompat$1.class
 org/apache/http/client/config/RequestConfig.class
 yuku/ambilwarna/AmbilWarnaDialog.class
+com/google/android/gms/common/api/GoogleApiClient$Builder.class
 android/support/v7/app/AlertDialog$Builder.class
 org/apache/http/conn/ClientConnectionManagerFactory.class
 com/yupog2003/tripdiary/PlayPointActivity$1.class
@@ -377,6 +386,7 @@ android/support/design/widget/TabLayout$TabGravity.class
 com/google/android/gms/internal/zzie.class
 com/google/android/gms/common/annotation/KeepName.class
 org/apache/http/conn/ssl/SSLSocketFactory.class
+com/google/android/gms/common/api/GoogleApiClient$ConnectionCallbacks.class
 org/apache/http/protocol/ExecutionContext.class
 org/apache/http/impl/conn/ProxySelectorRoutePlanner.class
 com/google/android/gms/ads/internal/request/zze.class
@@ -430,6 +440,7 @@ org/apache/http/auth/AuthState.class
 org/apache/http/impl/conn/tsccm/AbstractConnPool.class
 org/apache/http/conn/ssl/SSLContextBuilder.class
 org/apache/http/conn/scheme/SchemeSocketFactory.class
+com/yupog2003/tripdiary/services/DownloadFromDriveService$1.class
 com/google/android/gms/common/data/DataBuffer.class
 org/apache/http/impl/conn/AbstractPooledConnAdapter.class
 com/google/android/gms/internal/zzdl.class
@@ -447,6 +458,8 @@ com/yupog2003/tripdiary/GetContentActivity$MemoryAdapter.class
 com/google/android/gms/internal/zzbw.class
 com/google/android/gms/common/GooglePlayServicesNotAvailableException.class
 com/yupog2003/tripdiary/services/SendTripService$1.class
+-keep class com.yupog2003.tripdiary.services.UploadToDriveService { <init>(); }
+com/google/android/gms/drive/DriveFolder$DriveFolderResult.class
 android/support/annotation/StyleRes.class
 android/support/v4/app/BackStackRecord.class
 android/support/annotation/XmlRes.class
@@ -454,6 +467,7 @@ com/google/android/gms/ads/internal/overlay/zzd$zza.class
 android/support/design/widget/Snackbar.class
 android/support/v4/widget/DrawerLayoutImpl.class
 com/google/android/gms/internal/zzbq.class
+com/yupog2003/tripdiary/MyActivity$2.class
 com/google/android/gms/internal/zzfa.class
 android/support/v7/appcompat/R$style.class
 org/apache/http/impl/conn/BasicClientConnectionManager.class
@@ -497,6 +511,7 @@ com/google/android/gms/ads/internal/request/AdResponseParcel.class
 android/support/v4/app/NotificationCompat$Builder.class
 com/google/android/gms/analytics/zza.class
 org/apache/http/client/utils/URIBuilder.class
+com/yupog2003/tripdiary/data/FileHelper$DirAdapter.class
 android/support/v4/content/PermissionChecker.class
 com/google/android/gms/internal/zzfe.class
 com/yupog2003/tripdiary/RecordActivity$RefreshTask.class
@@ -559,6 +574,8 @@ com/google/android/gms/internal/zzdm.class
 com/yupog2003/tripdiary/PaintActivity$4.class
 com/yupog2003/tripdiary/R$id.class
 org/apache/http/client/utils/URLEncodedUtils.class
+com/google/android/gms/drive/DriveApi.class
+com/yupog2003/tripdiary/fragments/RemoteTripsFragment.class
 com/google/android/gms/ads/mediation/customevent/CustomEventExtras.class
 android/support/v4/app/NotificationCompat$NotificationCompatImplJellybean.class
 com/google/android/gms/ads/internal/reward/mediation/client/zzb.class
@@ -586,7 +603,6 @@ com/google/android/gms/appstate/AppStateManager.class
 android/support/design/widget/CoordinatorLayout$ApplyInsetsListener.class
 com/google/android/gms/ads/internal/request/zza.class
 com/google/android/gms/gcm/PeriodicTask.class
-com/yupog2003/tripdiary/ViewActivity$MyPagerAdapter.class
 org/apache/http/impl/client/HttpAuthenticator.class
 com/google/android/gms/ads/internal/purchase/zze.class
 android/support/v4/app/NotificationCompatBase$Action$Factory.class
@@ -616,6 +632,7 @@ org/apache/http/conn/scheme/SchemeRegistry.class
 com/google/android/gms/internal/zzbd.class
 android/support/v4/widget/MaterialProgressDrawable$3.class
 com/google/android/gms/internal/zzif.class
+com/google/android/gms/drive/DriveApi$DriveContentsResult.class
 android/support/design/widget/AnimationUtils.class
 com/yupog2003/tripdiary/PlayPointActivity.class
 android/support/v4/widget/DrawerLayout.class
@@ -626,7 +643,9 @@ com/google/android/gms/location/places/Place.class
 org/apache/http/impl/conn/DefaultHttpRoutePlanner.class
 com/google/android/gms/internal/zzhc.class
 com/yupog2003/tripdiary/ViewTripActivity$LoadNavigationHeaderBackgroundTask.class
+com/google/android/gms/drive/Drive.class
 com/google/android/gms/internal/zzdj.class
+com/yupog2003/tripdiary/services/UploadToDriveService.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 com/google/android/gms/ads/internal/reward/client/RewardedVideoAdRequestParcel.class
 com/google/android/gms/gcm/Task.class
@@ -637,9 +656,11 @@ android/support/v4/media/MediaMetadataCompat$Builder.class
 android/support/v7/app/ActionBarDrawerToggle$Delegate.class
 android/support/v7/widget/LinearLayoutCompat$OrientationMode.class
 com/google/android/gms/internal/zzik.class
+com/google/android/gms/drive/MetadataChangeSet.class
 -keep class com.yupog2003.tripdiary.ViewCostActivity { <init>(); }
 com/google/android/gms/games/leaderboard/Leaderboard.class
 com/google/android/gms/ads/internal/formats/zzd.class
+com/google/android/gms/common/api/PendingResult.class
 android/support/design/widget/TabLayout$TabLayoutOnPageChangeListener.class
 android/support/v4/widget/MaterialProgressDrawable$ProgressDrawableSize.class
 com/google/android/gms/internal/zzge.class
@@ -668,6 +689,7 @@ com/google/android/gms/location/places/NearbyAlertRequest.class
 org/apache/http/impl/AbstractHttpClientConnection.class
 android/support/v4/media/MediaMetadataCompatApi21$Builder.class
 com/google/android/gms/internal/zzjh$zza.class
+com/google/android/gms/drive/DriveFile.class
 android/support/v7/app/ActionBar$TabListener.class
 android/support/v4/app/NotificationCompat$BuilderExtender.class
 android/support/v7/app/ActionBar$LayoutParams.class
@@ -748,7 +770,6 @@ org/apache/thrift/transport/TTransport.class
 com/google/android/gms/wallet/Address.class
 android/support/v4/media/VolumeProviderCompat$ControlType.class
 android/support/v4/view/ViewPropertyAnimatorListenerAdapter.class
-com/yupog2003/tripdiary/ViewActivity$1.class
 com/yupog2003/tripdiary/GetContentActivity$MoveFilesTask.class
 -keep class com.yupog2003.tripdiary.PlayPointActivity { <init>(); }
 android/support/v4/app/NotificationCompat$NotificationCompatImplGingerbread.class
@@ -764,8 +785,10 @@ com/google/android/gms/ads/internal/client/zzx.class
 org/apache/http/conn/scheme/SchemeSocketFactoryAdaptor.class
 android/support/v4/content/PermissionChecker$PermissionResult.class
 -keep class com.google.android.gms.ads.purchase.InAppPurchaseActivity { <init>(); }
+com/google/android/gms/drive/DriveId.class
 org/apache/http/impl/cookie/NetscapeDraftSpecFactory.class
 com/github/mikephil/charting/utils/Utils.class
+com/yupog2003/tripdiary/providers/DriveProvider$1.class
 com/google/android/gms/maps/CameraUpdate.class
 com/google/android/gms/wallet/fragment/zzc.class
 com/yupog2003/tripdiary/ViewGraphActivity$AltitudeFormatter.class
@@ -796,6 +819,7 @@ android/support/v7/widget/LinearLayoutCompat.class
 android/support/design/widget/ValueAnimatorCompat$AnimatorUpdateListener.class
 com/google/android/gms/appindexing/AppIndexApi.class
 com/google/android/gms/internal/zzes.class
+com/yupog2003/tripdiary/MyActivity$OnDirPickedListener.class
 com/google/android/gms/maps/model/BitmapDescriptor.class
 com/nostra13/universalimageloader/core/ImageLoaderConfiguration$Builder.class
 android/support/design/widget/Snackbar$SnackbarLayout$OnLayoutChangeListener.class
@@ -804,6 +828,7 @@ com/google/android/gms/ads/internal/zze.class
 com/google/android/gms/internal/zzhh.class
 com/google/android/gms/analytics/ecommerce/ProductAction.class
 com/google/android/gms/games/achievement/Achievement.class
+com/yupog2003/tripdiary/services/DownloadFromDriveService.class
 com/google/android/gms/location/places/ui/PlacePicker.class
 org/apache/http/impl/client/DefaultRedirectStrategyAdaptor.class
 com/yupog2003/tripdiary/GetContentActivity$1.class
@@ -901,6 +926,7 @@ android/support/design/widget/AppBarLayout.class
 com/google/android/gms/ads/internal/zzf.class
 com/yupog2003/tripdiary/services/RecordService.class
 com/google/android/gms/location/GeofencingApi.class
+-keep class com.yupog2003.tripdiary.providers.DriveProvider { <init>(); }
 com/google/android/gms/games/Player.class
 org/apache/thrift/protocol/TProtocol.class
 com/google/android/gms/internal/zzeq.class
@@ -929,6 +955,7 @@ org/apache/http/impl/io/DefaultHttpRequestParser.class
 com/google/android/gms/analytics/HitBuilders$AppViewBuilder.class
 android/support/design/widget/ValueAnimatorCompat.class
 com/yupog2003/tripdiary/MainActivity$6.class
+com/yupog2003/tripdiary/fragments/LocalTripsFragment.class
 com/google/android/gms/internal/zzfy.class
 org/apache/http/impl/cookie/BestMatchSpec.class
 com/nostra13/universalimageloader/core/DisplayImageOptions$Builder.class
@@ -944,6 +971,7 @@ com/google/android/gms/internal/zzga.class
 android/support/v4/view/ViewPager$OnPageChangeListener.class
 android/support/annotation/RequiresPermission$Write.class
 org/apache/http/params/BasicHttpParams.class
+com/google/android/gms/drive/DriveFile$DownloadProgressListener.class
 org/apache/http/impl/conn/tsccm/WaitingThreadAborter.class
 android/support/design/R.class
 com/google/android/gms/wallet/MaskedWallet.class
@@ -962,6 +990,7 @@ android/support/v4/util/LogWriter.class
 android/support/multidex/MultiDex$V4.class
 android/support/v4/view/OnApplyWindowInsetsListener.class
 android/support/v4/view/NestedScrollingParentHelper.class
+com/yupog2003/tripdiary/services/UploadToDriveService$1.class
 com/google/android/gms/ads/internal/request/AdRequestInfoParcel$zza.class
 com/google/android/gms/internal/zzdh$zza.class
 org/apache/http/client/params/ClientParamBean.class
@@ -984,7 +1013,9 @@ android/support/v4/media/VolumeProviderCompatApi21.class
 android/support/v7/internal/widget/ViewUtils.class
 org/apache/http/impl/io/HttpRequestWriter.class
 org/apache/http/impl/conn/tsccm/BasicPoolEntryRef.class
+-keep class com.yupog2003.tripdiary.services.DownloadFromDriveService { <init>(); }
 com/google/android/gms/internal/zzgc.class
+com/google/android/gms/common/api/Releasable.class
 com/google/android/gms/R$style.class
 com/google/android/gms/wallet/fragment/WalletFragmentStyle$LogoImageType.class
 org/apache/http/impl/client/AbstractAuthenticationHandler.class
@@ -999,6 +1030,7 @@ com/google/android/gms/internal/zzck.class
 com/yupog2003/tripdiary/thrift/TripDiary$Client.class
 com/google/android/gms/ads/internal/formats/zzh.class
 -keep class com.yupog2003.tripdiary.TripDiaryApplication {
+com/google/android/gms/drive/DriveContents.class
 com/google/android/gms/internal/zzbc.class
 com/yupog2003/tripdiary/MainActivity$3.class
 org/apache/http/io/EofSensor.class
@@ -1059,6 +1091,7 @@ com/google/android/gms/internal/zzec.class
 -keep class com.yupog2003.tripdiary.MyActivity { <init>(); }
 android/support/design/widget/CoordinatorLayout$1.class
 com/google/android/gms/ads/search/SearchAdRequest.class
+com/google/android/gms/drive/DriveFolder.class
 android/support/annotation/AttrRes.class
 com/google/android/gms/location/places/internal/PlaceLocalization.class
 com/google/android/gms/ads/internal/overlay/zzd.class
@@ -1067,6 +1100,7 @@ org/apache/http/impl/client/RequestWrapper.class
 com/google/android/gms/appindexing/AppIndexApi$ActionResult.class
 com/google/android/gms/common/data/AbstractDataBuffer.class
 com/nostra13/universalimageloader/core/decode/BaseImageDecoder.class
+com/google/android/gms/drive/DriveApi$MetadataBufferResult.class
 com/google/android/gms/internal/zzrs.class
 android/support/annotation/Size.class
 com/yupog2003/tripdiary/ViewGraphActivity.class
@@ -1090,6 +1124,7 @@ android/support/v4/app/NotificationCompat$InboxStyle.class
 android/support/v4/media/session/PlaybackStateCompat$CustomAction.class
 com/yupog2003/tripdiary/RecordActivity$3.class
 android/support/annotation/WorkerThread.class
+com/yupog2003/tripdiary/data/documentfile/DriveDocumentFile.class
 android/support/multidex/ZipUtil.class
 com/yupog2003/tripdiary/data/FileHelper.class
 android/support/annotation/FractionRes.class

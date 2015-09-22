@@ -22,7 +22,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,6 @@ import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
-import com.yupog2003.tripdiary.data.FileHelper.DirAdapter;
 import com.yupog2003.tripdiary.data.MyBackupAgent;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
@@ -234,23 +232,15 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                 startActivityForResult(intent, selectrootpath);
             } else {
-                AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-                ListView listView = new ListView(getActivity());
-                final DirAdapter adapter = new DirAdapter(getActivity(), false, Environment.getExternalStorageDirectory());
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(adapter);
-                ab.setTitle(getString(R.string.select_a_directory));
-                ab.setView(listView);
-                ab.setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newRootPath = adapter.getRoot().getPath();
+                ((MyActivity) getActivity()).pickDir(getString(R.string.select_a_directory), new MyActivity.OnDirPickedListener() {
+                    @Override
+                    public void onDirPicked(File dir) {
+                        String newRootPath = dir.getPath();
                         if (FileHelper.checkHasWritePermission(getActivity(), newRootPath)) {
                             setNewRootPath(newRootPath);
                         }
                     }
                 });
-                ab.setNegativeButton(getString(R.string.cancel), null);
-                ab.show();
             }
 
         } else if (preference.equals(tripTimeZone)) {
@@ -262,7 +252,8 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 public void onClick(DialogInterface dialog, int which) {
 
                     if (DeviceHelper.isMobileNetworkAvailable(getActivity())) {
-                        new UpdateTripTimeZoneTask().execute();
+                        updateTripTimeZoneTask = new UpdateTripTimeZoneTask();
+                        updateTripTimeZoneTask.execute();
                     } else {
                         Toast.makeText(getActivity(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                     }
@@ -320,7 +311,9 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         }
     }
 
-    class UpdateTripTimeZoneTask extends AsyncTask<String, String, String> {
+    UpdateTripTimeZoneTask updateTripTimeZoneTask;
+
+    class UpdateTripTimeZoneTask extends AsyncTask<Void, String, String> {
         TextView message;
         ProgressBar progress;
         TextView progressMessage;
@@ -350,7 +343,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... params) {
 
             DocumentFile[] trips = TripDiaryApplication.rootDocumentFile.listFiles(DocumentFile.list_dirs);
             publishProgress("setMax", String.valueOf(trips.length));
@@ -369,9 +362,8 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
 
         @Override
         protected void onPostExecute(String result) {
-
             dialog.dismiss();
-            super.onPostExecute(result);
+            updateTripTimeZoneTask = null;
         }
 
         @Override
@@ -385,9 +377,17 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                 progress.setProgress(Integer.valueOf(values[1]));
                 progressMessage.setText(values[1] + "/" + String.valueOf(progress.getMax()));
             }
-            super.onProgressUpdate(values);
+            updateTripTimeZoneTask = null;
         }
 
     }
 
+    @Override
+    public void onDestroy() {
+        if (updateTripTimeZoneTask != null) {
+            updateTripTimeZoneTask.cancel = true;
+            updateTripTimeZoneTask = null;
+        }
+        super.onDestroy();
+    }
 }

@@ -460,7 +460,7 @@ public class ViewPointActivity extends MyActivity {
         }
     }
 
-    class ImportFilesTask extends AsyncTask<String, Integer, String> {
+    class ImportFilesTask extends AsyncTask<Void, Integer, String> {
 
         ProgressDialog pd;
         ArrayList<Uri> uris;
@@ -480,7 +480,7 @@ public class ViewPointActivity extends MyActivity {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... params) {
             if (uris == null)
                 return null;
             POI.ImportMemoriesListener listener = new POI.ImportMemoriesListener() {

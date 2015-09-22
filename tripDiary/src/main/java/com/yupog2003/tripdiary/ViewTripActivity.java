@@ -37,10 +37,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.yupog2003.tripdiary.data.DeviceHelper;
-import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
@@ -82,13 +83,19 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     public AppCompatSpinner spinner;
     Mode mode = Mode.map_mode;
     int appBarLayoutDefaultHeight;
-    boolean fromWeb;
     Menu navigationMenu;
+    int source;
+    DriveId driveId;
 
     public static final int REQUEST_VIEW_POI = 1;
     public static final String tag_request_updatePOI = "request_update_poi";
     public static final String tag_update_poiNames = "update_poiNames";
     public static final String tag_tripName = "tag_tripname";
+    public static final String tag_fromDrive = "tag_fromDrive";
+    public static final String tag_driveId = "tag_driveid";
+    public static final int fromLocal = 0;
+    public static final int fromWeb = 1;
+    public static final int fromDrive = 2;
 
     enum Mode {
         map_mode, text_mode, photo_mode, video_mode, audio_mode, money_mode
@@ -120,7 +127,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 return;
             }
         } else {
-            fromWeb = false;
+            if (intent.getBooleanExtra(tag_fromDrive, false)) {
+                source = fromDrive;
+                driveId = intent.getParcelableExtra(tag_driveId);
+            } else {
+                source = fromLocal;
+            }
             tripName = intent.getStringExtra(tag_tripName);
         }
         DeviceHelper.sendGATrack(getActivity(), "Trip", "view", tripName, null);
@@ -171,7 +183,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 }
                 appBarLayoutDefaultHeight = appBarLayout.getHeight();
                 setMode(Mode.map_mode);
-                if (fromWeb && !isPublic) {
+                if (source == fromWeb && !isPublic) {
                     getAccessToken(email, new OnAccessTokenGotListener() {
                         @Override
                         public void onAccessTokenGot(@NonNull String token) {
@@ -179,6 +191,18 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                                 ViewTripActivity.this.token = token;
                                 new PrepareTripTask().execute();
                             }
+                        }
+                    });
+                } else if (source == fromDrive) {
+                    connectToDriveApi(new GoogleApiClient.ConnectionCallbacks() {
+                        @Override
+                        public void onConnected(Bundle bundle) {
+                            new PrepareTripTask().execute();
+                        }
+
+                        @Override
+                        public void onConnectionSuspended(int i) {
+
                         }
                     });
                 } else {
@@ -197,7 +221,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         String host = uri.getHost();
         if (scheme.equals("http") && (host.equals(TripDiaryApplication.serverHost) || host.equals(TripDiaryApplication.serverIP))) {
             try {
-                fromWeb = true;
+                source = fromWeb;
                 String uriStr = URLDecoder.decode(uri.toString(), "UTF-8");
                 String tripPath = uriStr.substring(uriStr.indexOf("trippath=") + 9, uriStr.lastIndexOf("&"));
                 String[] pathSegments = tripPath.split("/");
@@ -352,7 +376,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         }
     }
 
-    class PrepareTripTask extends AsyncTask<String, Object, Boolean> implements GpxAnalyzerJava.ProgressChangedListener, Trip.ConstructListener {
+    class PrepareTripTask extends AsyncTask<Void, Object, Boolean> implements GpxAnalyzerJava.ProgressChangedListener, Trip.ConstructListener {
 
         LatLngBounds bounds;
         LatLng[] lat;
@@ -373,12 +397,18 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         }
 
         @Override
-        protected Boolean doInBackground(String... params) {
-            DocumentFile tripFile;
-            if (fromWeb) {
-                tripFile = DocumentFile.fromWeb(email, tripName, token);
-            } else {
-                tripFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName);
+        protected Boolean doInBackground(Void... params) {
+            DocumentFile tripFile = null;
+            switch (source) {
+                case fromLocal:
+                    tripFile = TripDiaryApplication.rootDocumentFile.findFile(tripName);
+                    break;
+                case fromWeb:
+                    tripFile = DocumentFile.fromWeb(email, tripName, token);
+                    break;
+                case fromDrive:
+                    tripFile = DocumentFile.fromDrive(googleApiClient, driveId);
+                    break;
             }
             if (tripFile == null) {
                 return false;
@@ -442,6 +472,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 }
             } else if (value0 == setTime) {
                 if (trip.tripName != null) {
+                    setTitle(trip.tripName);
                     String dateDuration = trip.getDateDurationString();
                     TextView navigationTripName = (TextView) findViewById(R.id.navigationTripName);
                     TextView navigationTripTime = (TextView) findViewById(R.id.navigationTripTime);
@@ -485,7 +516,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         }
     }
 
-    class LoadNavigationHeaderBackgroundTask extends AsyncTask<String, String, Bitmap> {
+    class LoadNavigationHeaderBackgroundTask extends AsyncTask<Void, Void, Bitmap> {
 
         ProgressBar progressBar;
 
@@ -496,7 +527,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected Bitmap doInBackground(Void... params) {
             if (trip == null || trip.pois == null) return null;
             ArrayList<DocumentFile> pics = new ArrayList<>();
             for (POI poi : trip.pois) {
@@ -521,11 +552,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 }
             }
             return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-
         }
 
         @Override
@@ -654,7 +680,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         if (trip != null) {
-            if (fromWeb) {
+            if (source == fromWeb) {
                 deleteLocalCache();
             }
             ((TripDiaryApplication) getApplication()).removeTrip(trip.tripName);

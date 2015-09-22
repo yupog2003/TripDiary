@@ -76,10 +76,9 @@
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4"/>
+            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
         <!-- publish key=  AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->
 
@@ -125,8 +124,7 @@
         <activity
             android:name=".RecordActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".services.GenerateVideoService"
@@ -171,6 +169,20 @@
             android:exported="false" />
 
         <activity android:name=".DummyActivity" />
+
+        <service
+            android:name=".services.UploadToDriveService"
+            android:exported="false" />
+
+        <provider
+            android:name=".providers.DriveProvider"
+            android:authorities="com.yupog2003.tripdiary.driveprovider"
+            android:exported="true" />
+
+        <service
+            android:name=".services.DownloadFromDriveService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

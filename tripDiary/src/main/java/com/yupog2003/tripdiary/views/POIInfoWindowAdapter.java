@@ -1,7 +1,6 @@
 package com.yupog2003.tripdiary.views;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -27,7 +26,6 @@ import java.util.HashMap;
 
 public class POIInfoWindowAdapter implements InfoWindowAdapter {
 
-    Activity activity;
     POI[] pois;
     Trip[] trips;
     HashMap<String, Bitmap> bitmaps;
@@ -37,12 +35,10 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
     TextView diary;
     ImageView img;
     Drawable poiDrawable;
-    ContentResolver contentResolver;
     int imageWidth;
     Rect rect;
 
     public POIInfoWindowAdapter(Activity activity, POI[] pois, Trip[] trips) {
-        this.activity = activity;
         this.pois = pois;
         this.trips = trips;
         this.bitmaps = new HashMap<>();
@@ -52,7 +48,6 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
         this.diary = (TextView) rootView.findViewById(R.id.poiDiary);
         this.img = (ImageView) rootView.findViewById(R.id.poiImage);
         this.poiDrawable = img.getDrawable().mutate();
-        this.contentResolver = activity.getContentResolver();
         this.imageWidth = (int) DeviceHelper.pxFromDp(activity, 72);
         this.rect = new Rect(0, 0, 0, 0);
         DrawableCompat.setTint(DrawableCompat.wrap(poiDrawable), PreferenceManager.getDefaultSharedPreferences(activity).getInt("markercolor", 0xffff0000));

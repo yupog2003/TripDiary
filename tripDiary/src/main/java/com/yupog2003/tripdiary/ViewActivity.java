@@ -1,119 +1,117 @@
 package com.yupog2003.tripdiary;
 
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
 
+import com.yupog2003.tripdiary.fragments.DriveTripsFragment;
 import com.yupog2003.tripdiary.fragments.LocalTripsFragment;
 import com.yupog2003.tripdiary.fragments.RemoteTripsFragment;
 
-public class ViewActivity extends MyActivity {
+public class ViewActivity extends MyActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    LocalTripsFragment localTripsFragment;
+    RemoteTripsFragment personalFragment;
+    RemoteTripsFragment publicFragment;
+    DriveTripsFragment driveTripsFragment;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolBar != null) {
-            setSupportActionBar(toolBar);
-            assert getSupportActionBar() != null;
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    appBarLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                } else {
-                    appBarLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                }
-                MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-                viewPager.setAdapter(pagerAdapter);
-                viewPager.addOnPageChangeListener(pagerAdapter);
-                tabs.setupWithViewPager(viewPager);
-                viewPager.setCurrentItem(1);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) { //pre lollipop can not nested scroll
-                    viewPager.setPadding(0, 0, 0, appBarLayout.getHeight());
-                }
-            }
-        });
+        setSupportActionBar(toolBar);
+        setTitle(R.string.local_trips);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(this);
+        personalFragment = new RemoteTripsFragment();
+        Bundle personalTripFragmentBundle = new Bundle();
+        personalTripFragmentBundle.putInt(RemoteTripsFragment.tag_option, RemoteTripsFragment.option_personal);
+        personalFragment.setArguments(personalTripFragmentBundle);
+        localTripsFragment = new LocalTripsFragment();
+        Bundle localTripFragmentBundle = new Bundle();
+        localTripsFragment.setArguments(localTripFragmentBundle);
+        publicFragment = new RemoteTripsFragment();
+        Bundle publicTripFragmentBundle = new Bundle();
+        publicTripFragmentBundle.putInt(RemoteTripsFragment.tag_option, RemoteTripsFragment.option_public);
+        publicFragment.setArguments(publicTripFragmentBundle);
+        driveTripsFragment = new DriveTripsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.fragment, localTripsFragment);
+        ft.add(R.id.fragment, personalFragment);
+        ft.add(R.id.fragment, publicFragment);
+        ft.add(R.id.fragment, driveTripsFragment);
+        ft.hide(personalFragment);
+        ft.hide(publicFragment);
+        ft.hide(driveTripsFragment);
+        ft.commit();
     }
 
-    class MyPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
 
-        public Fragment[] fragments;
-
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-            fragments = new Fragment[3];
-            fragments[0] = new RemoteTripsFragment();
-            Bundle personalTripFragmentBundle = new Bundle();
-            personalTripFragmentBundle.putInt(RemoteTripsFragment.tag_option, RemoteTripsFragment.option_personal);
-            fragments[0].setArguments(personalTripFragmentBundle);
-            fragments[1] = new LocalTripsFragment();
-            Bundle localTripFragmentBundle = new Bundle();
-            fragments[1].setArguments(localTripFragmentBundle);
-            fragments[2] = new RemoteTripsFragment();
-            Bundle publicTripFragmentBundle = new Bundle();
-            publicTripFragmentBundle.putInt(RemoteTripsFragment.tag_option, RemoteTripsFragment.option_public);
-            fragments[2].setArguments(publicTripFragmentBundle);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == DriveTripsFragment.REQUEST_PICK_DIR){
+            driveTripsFragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            switch (position) {
-                case 0:
-                    return getString(R.string.remote_personal_trips);
-                case 1:
-                    return getString(R.string.local_trips);
-                case 2:
-                    return getString(R.string.remote_public_trips);
-            }
-            return getTitle();
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        drawerLayout.closeDrawers();
+        resetAppBar();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.hide(localTripsFragment);
+        ft.hide(personalFragment);
+        ft.hide(publicFragment);
+        ft.hide(driveTripsFragment);
+        ft.commit();
+        ft = getSupportFragmentManager().beginTransaction();
+        switch (menuItem.getItemId()) {
+            case R.id.local:
+                ft.show(localTripsFragment);
+                setTitle(R.string.local_trips);
+                localTripsFragment.loadData();
+                break;
+            case R.id.cloudPersonal:
+                ft.show(personalFragment);
+                setTitle(R.string.remote_personal_trips);
+                personalFragment.loadData();
+                break;
+            case R.id.cloudPublic:
+                ft.show(publicFragment);
+                setTitle(R.string.remote_public_trips);
+                publicFragment.loadData();
+                break;
+            case R.id.drive:
+                ft.show(driveTripsFragment);
+                setTitle(R.string.google_drive);
+                driveTripsFragment.loadData();
+                break;
         }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments[position];
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.length;
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            resetAppBar();
-            Fragment f = getItem(position);
-            if (f instanceof RemoteTripsFragment) {
-                ((RemoteTripsFragment) f).loadData();
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+        return true;
     }
 
     @Override
@@ -124,11 +122,7 @@ public class ViewActivity extends MyActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return actionBarDrawerToggle.onOptionsItemSelected(item);
     }
 
     private void resetAppBar() {
@@ -138,6 +132,15 @@ public class ViewActivity extends MyActivity {
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
         if (behavior != null) {
             behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, -1000, true);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawers();
+        } else {
+            super.onBackPressed();
         }
     }
 }

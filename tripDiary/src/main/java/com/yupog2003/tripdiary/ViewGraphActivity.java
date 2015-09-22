@@ -123,7 +123,7 @@ public class ViewGraphActivity extends MyActivity {
         }
     }
 
-    class LoadChartTask extends AsyncTask<String, String, ArrayList<LineDataSet>> {
+    class LoadChartTask extends AsyncTask<Void, Void, ArrayList<LineDataSet>> {
         @Override
         protected void onPreExecute() {
             lineChart.setVisibility(View.INVISIBLE);
@@ -131,7 +131,7 @@ public class ViewGraphActivity extends MyActivity {
         }
 
         @Override
-        protected ArrayList<LineDataSet> doInBackground(String... params) {
+        protected ArrayList<LineDataSet> doInBackground(Void... params) {
             if (trackCache == null) {
                 return null;
             }

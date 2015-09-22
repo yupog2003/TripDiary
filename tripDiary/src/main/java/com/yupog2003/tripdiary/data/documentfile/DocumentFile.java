@@ -5,10 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveFolder;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResource;
+import com.google.android.gms.drive.Metadata;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 
 import org.json.JSONArray;
@@ -20,6 +27,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 
 public abstract class DocumentFile {
 
@@ -112,10 +120,12 @@ public abstract class DocumentFile {
         return null;
     }
 
+    @NonNull
     public static DocumentFile fromFile(File file) {
         return new RawDocumentFile(null, file);
     }
 
+    @Nullable
     public static DocumentFile fromTreeUri(Uri uri) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new TreeDocumentFile(null, DocumentsContract.buildDocumentUriUsingTree(uri, DocumentsContract.getTreeDocumentId(uri)), true);
@@ -123,6 +133,7 @@ public abstract class DocumentFile {
         return null;
     }
 
+    @Nullable
     public static DocumentFile fromWeb(String email, String tripName, String token) {
         if (email == null || tripName == null || token == null) return null;
         String tripDirJson = WebDocumentFile.postService("getTripWebDocumentFile", TripDiaryApplication.serverURL + "/Trips/" + email + "/" + tripName, token, "email", email, "tripName", tripName);
@@ -137,6 +148,40 @@ public abstract class DocumentFile {
             }
         }
         return null;
+    }
+
+    @Nullable
+    public static DocumentFile fromDrive(final GoogleApiClient googleApiClient, final DriveId driveId) {
+        if (googleApiClient == null || !googleApiClient.isConnected() || driveId == null)
+            return null;
+        final ArrayList<DriveDocumentFile> result = new ArrayList<>();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                DriveFolder driveFolder = Drive.DriveApi.getFolder(googleApiClient, driveId);
+                DriveResource.MetadataResult metadataResult = driveFolder.getMetadata(googleApiClient).await();
+                if (metadataResult.getStatus().isSuccess()) {
+                    Metadata metadata = metadataResult.getMetadata();
+                    result.add(new DriveDocumentFile(null, googleApiClient, metadata.getDriveId(), metadata));
+                }
+            }
+        };
+        if (Looper.getMainLooper() == Looper.myLooper()) {
+            Thread t = new Thread(r);
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            r.run();
+        }
+        if (result.size() > 0) {
+            return result.get(0);
+        } else {
+            return null;
+        }
     }
 
     public static long queryForLong(Context context, Uri self, String column, long defaultValue) {

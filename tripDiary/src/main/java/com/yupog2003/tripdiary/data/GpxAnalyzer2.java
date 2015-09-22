@@ -45,11 +45,11 @@ public class GpxAnalyzer2 {
             FileHelper.copyFile(trip.gpxFile, temp);
             fileSize = temp.length();
             success = parse(temp.getPath(), cache, timeZoneOffset);
-            FileHelper.copyFile(new File(temp.getPath() + ".cache"), cacheFile);
-            new File(temp.getPath() + ".cache").delete();
+            File tempCache = new File(temp.getPath() + ".cache");
+            FileHelper.copyFile(tempCache, cacheFile);
+            tempCache.delete();
         }
         return success;
-
     }
 
     public void onProgressChanged(long progress) {

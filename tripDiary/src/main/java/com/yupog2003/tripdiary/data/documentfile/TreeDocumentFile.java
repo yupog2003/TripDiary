@@ -176,9 +176,11 @@ public class TreeDocumentFile extends DocumentFile {
         }
         return new TreeDocumentFile[0];
     }
+
     interface Filter {
         boolean accept(String name, String mimeType);
     }
+
     @NonNull
     private Filter getFilterFromListType(int list_type) {
         switch (list_type) {

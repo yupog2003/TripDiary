@@ -547,7 +547,8 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         if (v.equals(save)) {
             if (action == Action.send) {
                 Uri uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
-                new MoveFilesTask(GetContentActivity.this, new Uri[]{uri}, new DocumentFile[]{getToFile(uri)}).execute();
+                moveFilesTask = new MoveFilesTask(GetContentActivity.this, new Uri[]{uri}, new DocumentFile[]{getToFile(uri)});
+                moveFilesTask.execute();
             } else if (action == Action.send_multiple) {
                 ArrayList<Uri> uris = getIntent().getParcelableArrayListExtra(Intent.EXTRA_STREAM);
                 if (uris != null) {
@@ -557,7 +558,8 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         uriArray[i] = uris.get(i);
                         toFiles[i] = getToFile(uris.get(i));
                     }
-                    new MoveFilesTask(GetContentActivity.this, uriArray, toFiles).execute();
+                    moveFilesTask = new MoveFilesTask(GetContentActivity.this, uriArray, toFiles);
+                    moveFilesTask.execute();
                 }
             }
         }
@@ -588,7 +590,9 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         return null;
     }
 
-    class MoveFilesTask extends AsyncTask<String, String, String> {
+    private MoveFilesTask moveFilesTask;
+
+    class MoveFilesTask extends AsyncTask<Void, String, String> {
 
         Activity activity;
         Uri[] fromUris;
@@ -616,6 +620,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);
             ab.setView(layout);
+            ab.setCancelable(false);
             ab.setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
@@ -627,7 +632,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... params) {
 
             if (fromUris != null && toFiles != null) {
                 publishProgress("setMax", String.valueOf(Math.min(fromUris.length, toFiles.length)));
@@ -667,7 +672,17 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
+            moveFilesTask = null;
             GetContentActivity.this.finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (moveFilesTask != null) {
+            moveFilesTask.cancel = true;
+            moveFilesTask=null;
+        }
+        super.onDestroy();
     }
 }

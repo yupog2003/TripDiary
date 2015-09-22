@@ -18,12 +18,9 @@ import com.yupog2003.tripdiary.ViewCostActivity;
 import java.util.ArrayList;
 
 public class CostBarChartFragment extends Fragment {
-    int option;
     int[] colors;
     float[] totals;
     BarChart barChart;
-    public String tripName;
-    public String poiName;
 
     public CostBarChartFragment() {
 
@@ -31,9 +28,6 @@ public class CostBarChartFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.option = getArguments().getInt(ViewCostActivity.tag_option);
-        this.tripName = getArguments().getString(ViewCostActivity.tag_trip);
-        this.poiName = getArguments().getString(ViewCostActivity.tag_poi);
         this.barChart = new BarChart(getActivity());
         refresh();
         return barChart;

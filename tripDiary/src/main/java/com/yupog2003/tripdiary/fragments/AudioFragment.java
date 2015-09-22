@@ -41,6 +41,7 @@ public class AudioFragment extends Fragment {
     AudioAdapter adapter;
     POI poi;
     Drawable audioDrawable;
+    FileHelper.MoveFilesTask moveFilesTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -186,15 +187,17 @@ public class AudioFragment extends Fragment {
                             }
                             fromFiles[i] = checksName.get(i);
                         }
-                        new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
+                        moveFilesTask = new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
 
                             @Override
                             public void onFinish() {
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
+                                    moveFilesTask = null;
                                 }
                             }
-                        }).execute();
+                        });
+                        moveFilesTask.execute();
 
                     }
                 });
@@ -283,4 +286,13 @@ public class AudioFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onDestroy() {
+        if (moveFilesTask != null) {
+            moveFilesTask.cancel();
+            moveFilesTask = null;
+        }
+        super.onDestroy();
+    }
 }

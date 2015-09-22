@@ -43,6 +43,7 @@
             android:paddingLeft="10dp"
             android:verticalSpacing="2dp"
             android:horizontalSpacing="2dp"
-            android:paddingTop="10dp"/>
+            android:paddingTop="10dp"
+            android:drawSelectorOnTop="true"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

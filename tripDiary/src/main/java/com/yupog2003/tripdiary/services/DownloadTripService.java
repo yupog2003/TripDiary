@@ -22,7 +22,7 @@ import java.net.URLEncoder;
 
 public class DownloadTripService extends IntentService {
 
-    int totalread = 0;
+    int totalRead = 0;
     int fileSize = 0;
     static final String phpURL = TripDiaryApplication.serverURL + "/zipTrip.php";
     NotificationCompat.Builder nb;
@@ -56,13 +56,13 @@ public class DownloadTripService extends IntentService {
             FileOutputStream fos = new FileOutputStream(zipFile);
             byte[] buffer = new byte[4096];
             int read;
-            totalread = 0;
+            totalRead = 0;
             new Thread(new Runnable() {
 
                 public void run() {
 
-                    while (totalread < fileSize) {
-                        updateNotification(tripName, getString(R.string.downloading) + "...", totalread, fileSize);
+                    while (totalRead < fileSize) {
+                        updateNotification(tripName, getString(R.string.downloading) + "...", totalRead, fileSize);
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -72,16 +72,16 @@ public class DownloadTripService extends IntentService {
                 }
             }).start();
             while ((read = is.read(buffer)) != -1) {
-                totalread += read;
+                totalRead += read;
                 fos.write(buffer, 0, read);
             }
             fos.flush();
             fos.close();
             is.close();
-            updateNotification(tripName, getString(R.string.unzipping) + "...", totalread, fileSize);
+            updateNotification(tripName, getString(R.string.unzipping) + "...", totalRead, fileSize);
             FileHelper.unZip(zipFile, TripDiaryApplication.rootDocumentFile);
             zipFile.delete();
-            updateNotification(tripName, getString(R.string.update_trip_timezone), totalread, fileSize);
+            updateNotification(tripName, getString(R.string.update_trip_timezone), totalRead, fileSize);
             DocumentFile gpxFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, tripName + ".gpx");
             if (gpxFile != null) {
                 MyCalendar.updateTripTimeZoneFromGpxFile(DownloadTripService.this, tripName, gpxFile);

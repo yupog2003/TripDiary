@@ -30,7 +30,6 @@ import android.widget.RelativeLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -53,6 +52,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     PictureAdapter adapter;
     POI poi;
     int sideLength;
+    FileHelper.MoveFilesTask moveFilesTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +98,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         DocumentFile[] files;
         DisplayImageOptions options;
         boolean onMultiChoiceMode;
-        ImageSize targetSize;
 
         public PictureAdapter() {
             files = poi.picFiles;
@@ -113,7 +112,6 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                     .showImageOnLoading(new ColorDrawable(Color.LTGRAY))
                     .showImageOnFail(DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.ic_error))
                     .build();
-            targetSize = new ImageSize(sideLength, sideLength);
             onMultiChoiceMode = false;
         }
 
@@ -282,15 +280,17 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                             }
                             fromFiles[i] = checksName.get(i);
                         }
-                        new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
+                        moveFilesTask = new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
 
                             @Override
                             public void onFinish() {
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
+                                    moveFilesTask = null;
                                 }
                             }
-                        }).execute();
+                        });
+                        moveFilesTask.execute();
 
                     }
                 });
@@ -337,5 +337,12 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(intent);
     }
-
+    @Override
+    public void onDestroy() {
+        if (moveFilesTask != null) {
+            moveFilesTask.cancel();
+            moveFilesTask = null;
+        }
+        super.onDestroy();
+    }
 }

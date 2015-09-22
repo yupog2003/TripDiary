@@ -8,7 +8,8 @@
     android:numColumns="3"
     android:padding="2dp"
     android:horizontalSpacing="2dp"
-    android:verticalSpacing="2dp"/>
+    android:verticalSpacing="2dp"
+    android:drawSelectorOnTop="true"/>
 
 
 

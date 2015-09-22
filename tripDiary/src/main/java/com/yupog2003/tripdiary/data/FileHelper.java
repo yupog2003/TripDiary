@@ -35,7 +35,6 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -48,15 +47,6 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class FileHelper {
-    public static FilenameFilter getDirFilter() {
-        return new FilenameFilter() {
-
-            public boolean accept(File dir, String filename) {
-
-                return new File(dir, filename).isDirectory() && !filename.startsWith(".");
-            }
-        };
-    }
 
     public static void copyFile(File infile, File outfile) {
         try {
@@ -131,20 +121,16 @@ public class FileHelper {
         }
     }
 
-    public static void deletedir(String path) {
-        if (path == null)
-            return;
-        File file = new File(path);
-        File[] files = file.listFiles();
-        if (files != null) {
-            for (File file1 : files) {
-                if (file1.isDirectory()) {
-                    deletedir(file1.getPath());
-                }
-                file1.delete();
+    public static void deleteDir(File dir) {
+        if (dir == null) return;
+        if (dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            if (files == null) return;
+            for (File file : files) {
+                deleteDir(file);
             }
         }
-        file.delete();
+        dir.delete();
     }
 
     @SuppressLint("DefaultLocale")
@@ -290,15 +276,16 @@ public class FileHelper {
         return findfile(dir.listFiles(), name);
     }
 
-    public static DocumentFile findfile(DocumentFile[] files, String... names) {
+    public static DocumentFile findfile(DocumentFile[] files, final String... names) {
         if (files == null || names == null) return null;
-        for (int i = 0; i < names.length; i++) {
+        int namesLength = names.length;
+        for (int i = 0; i < namesLength; i++) {
             if (names[i] == null) continue;
             int filesLength = files.length;
             for (int j = 0; j < filesLength; j++) {
                 if (files[j] == null) continue;
                 if (names[i].equals(files[j].getName())) {
-                    if (i == names.length - 1) {
+                    if (i == namesLength - 1) {
                         return files[j];
                     } else {
                         files = files[j].listFiles();
@@ -555,7 +542,7 @@ public class FileHelper {
 
     }
 
-    public static class MoveFilesTask extends AsyncTask<String, String, String> {
+    public static class MoveFilesTask extends AsyncTask<Void, String, String> {
 
         Activity activity;
         DocumentFile[] fromFiles;
@@ -589,6 +576,7 @@ public class FileHelper {
             progress = (ProgressBar) layout.findViewById(R.id.progressBar);
             progressMessage = (TextView) layout.findViewById(R.id.progress);
             ab.setView(layout);
+            ab.setCancelable(false);
             ab.setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
@@ -600,7 +588,7 @@ public class FileHelper {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... params) {
             if (fromFiles != null && toFiles != null) {
                 int length = Math.min(fromFiles.length, toFiles.length);
                 publishProgress("setMax", String.valueOf(length));
@@ -618,6 +606,10 @@ public class FileHelper {
                 }
             }
             return null;
+        }
+
+        public void cancel() {
+            cancel = true;
         }
 
         @Override

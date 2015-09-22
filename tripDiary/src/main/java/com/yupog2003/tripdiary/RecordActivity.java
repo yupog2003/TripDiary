@@ -266,6 +266,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             }
             if (POIMarker != null) {
                 POIMarker.remove();
+                POIMarker = null;
             }
         }
     }
@@ -605,7 +606,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         return false;
     }
 
-    class RefreshTask extends AsyncTask<Boolean, String, String> {
+    class RefreshTask extends AsyncTask<Void, Void, String> {
         ArrayList<LatLng> lat;
         POI[] pois;
         boolean refreshTrack;
@@ -625,7 +626,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         }
 
         @Override
-        protected String doInBackground(Boolean... params) {
+        protected String doInBackground(Void... params) {
             if (RecordService.instance == null) return null;
             if (refreshTrack) {
                 try {
@@ -636,10 +637,11 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                     while ((s = br.readLine()) != null) {
                         if (s.contains("<trkpt") && s.contains("lat") && s.contains("lon")) {
                             LatLng latlng;
+                            String[] tokes = s.split("\"");
                             if (s.indexOf("lat") > s.indexOf("lon")) {
-                                latlng = new LatLng(Double.parseDouble(s.split("\"")[3]), Double.parseDouble(s.split("\"")[1]));
+                                latlng = new LatLng(Double.parseDouble(tokes[3]), Double.parseDouble(tokes[1]));
                             } else {
-                                latlng = new LatLng(Double.parseDouble(s.split("\"")[1]), Double.parseDouble(s.split("\"")[3]));
+                                latlng = new LatLng(Double.parseDouble(tokes[1]), Double.parseDouble(tokes[3]));
                             }
                             lat.add(latlng);
                         }
@@ -659,11 +661,6 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-
-        }
-
-        @Override
         protected void onPostExecute(String result) {
             if (refreshTrack && lat != null && lat.size() > 0 && gmap != null) {
                 if (polyline == null) {
@@ -674,7 +671,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             }
             if (animateCamera) {
                 if (ContextCompat.checkSelfPermission(RecordActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(RecordActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    if (POIMarker != null) {
+                    if (addPOIMode && POIMarker != null) {
                         gmap.animateCamera(CameraUpdateFactory.newLatLngZoom(POIMarker.getPosition(), 16));
                     } else {
                         LatLng latlng = null;

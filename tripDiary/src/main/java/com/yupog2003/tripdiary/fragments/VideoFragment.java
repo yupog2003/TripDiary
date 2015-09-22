@@ -50,6 +50,7 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
     VideoAdapter adapter;
     int sideLength;
     POI poi;
+    FileHelper.MoveFilesTask moveFilesTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -252,15 +253,17 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
                             }
                             fromFiles[i] = checksName.get(i);
                         }
-                        new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
+                        moveFilesTask = new FileHelper.MoveFilesTask(getActivity(), fromFiles, toFiles, new OnFinishedListener() {
 
                             @Override
                             public void onFinish() {
                                 if (getActivity() != null && getActivity() instanceof ViewPointActivity) {
                                     ((ViewPointActivity) getActivity()).requestUpdatePOIs(false);
+                                    moveFilesTask = null;
                                 }
                             }
-                        }).execute();
+                        });
+                        moveFilesTask.execute();
 
                     }
                 });
@@ -309,5 +312,14 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
         intent.setDataAndType(((DocumentFile) adapter.getItem(position)).getUri(), "video/*");
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (moveFilesTask != null) {
+            moveFilesTask.cancel();
+            moveFilesTask = null;
+        }
+        super.onDestroy();
     }
 }

@@ -35,7 +35,6 @@ import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
 
 public class AllVideoFragment extends Fragment {
-    POIAdapter adapter;
     POI[] pois;
     RecyclerView recyclerView;
     int sideLength;
@@ -71,7 +70,7 @@ public class AllVideoFragment extends Fragment {
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
             this.pois = ((ViewTripActivity) getActivity()).trip.pois;
             this.timezone = ((ViewTripActivity) getActivity()).trip.timezone;
-            poiAdapter = new POIAdapter();
+            POIAdapter poiAdapter = new POIAdapter();
             recyclerView.setAdapter(poiAdapter);
         }
 

@@ -34,8 +34,8 @@ import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
 public class CategoryActivity extends MyActivity implements View.OnClickListener {
 
-    SharedPreferences categorysp;
-    SharedPreferences tripsp;
+    SharedPreferences categorySp;
+    SharedPreferences tripSp;
     String[] categories;
     String[] trips;
     ListView listView;
@@ -57,12 +57,12 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
     }
 
     private void loaddata() {
-        categorysp = getSharedPreferences("category", MODE_PRIVATE);
-        tripsp = getSharedPreferences("trip", MODE_PRIVATE);
-        Map<String, ?> map = categorysp.getAll();
+        categorySp = getSharedPreferences("category", MODE_PRIVATE);
+        tripSp = getSharedPreferences("trip", MODE_PRIVATE);
+        Map<String, ?> map = categorySp.getAll();
         Set<String> set = map.keySet();
         categories = set.toArray(new String[set.size()]);
-        map = tripsp.getAll();
+        map = tripSp.getAll();
         set = map.keySet();
         trips = set.toArray(new String[set.size()]);
         adapter = new CategoryAdapter();
@@ -113,7 +113,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                         Toast.makeText(CategoryActivity.this, getString(R.string.cannot_add_nocategory), Toast.LENGTH_SHORT).show();
                     } else {
                         int color = (Integer) colorImage.getTag();
-                        categorysp.edit().putString(nameStr, String.valueOf(color)).apply();
+                        categorySp.edit().putString(nameStr, String.valueOf(color)).apply();
                         loaddata();
                     }
                 }
@@ -141,10 +141,9 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
             TextView textView = new TextView(CategoryActivity.this);
             textView.setTextAppearance(CategoryActivity.this, android.R.style.TextAppearance_Large);
-            int color = Integer.parseInt(categorysp.getString(categories[position], String.valueOf(Color.WHITE)));
+            int color = Integer.parseInt(categorySp.getString(categories[position], String.valueOf(Color.WHITE)));
             textView.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(CategoryActivity.this, 50, color), null, null, null);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setText(categories[position]);
@@ -159,7 +158,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             final ImageView colorImage = (ImageView) layout.findViewById(R.id.categorycolor);
             final Button pickColor = (Button) layout.findViewById(R.id.pickColor);
             final EditText categoryName = (EditText) layout.findViewById(R.id.categoryname);
-            final int color = Integer.parseInt(categorysp.getString(categories[position], String.valueOf(Color.WHITE)));
+            final int color = Integer.parseInt(categorySp.getString(categories[position], String.valueOf(Color.WHITE)));
             colorImage.setImageDrawable(DrawableHelper.getColorDrawable(CategoryActivity.this, 100, color));
             colorImage.setTag(color);
             categoryName.setText(categories[position]);
@@ -191,12 +190,12 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                     String nameStr = categoryName.getText().toString();
                     int color = (Integer) colorImage.getTag();
                     for (String trip : trips) {
-                        if (tripsp.getString(trip, getString(R.string.nocategory)).equals(categories[position])) {
-                            tripsp.edit().putString(trip, nameStr).apply();
+                        if (tripSp.getString(trip, getString(R.string.nocategory)).equals(categories[position])) {
+                            tripSp.edit().putString(trip, nameStr).apply();
                         }
                     }
-                    categorysp.edit().remove(categories[position]).apply();
-                    categorysp.edit().putString(nameStr, String.valueOf(color)).apply();
+                    categorySp.edit().remove(categories[position]).apply();
+                    categorySp.edit().putString(nameStr, String.valueOf(color)).apply();
                     loaddata();
                 }
             });
@@ -219,12 +218,12 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
                         Toast.makeText(CategoryActivity.this, getString(R.string.cannot_delete_nocategory), Toast.LENGTH_SHORT).show();
                     } else {
                         for (String trip : trips) {
-                            String category = tripsp.getString(trip, getString(R.string.nocategory));
+                            String category = tripSp.getString(trip, getString(R.string.nocategory));
                             if (category.equals(categories[position])) {
-                                tripsp.edit().putString(trip, getString(R.string.nocategory)).apply();
+                                tripSp.edit().putString(trip, getString(R.string.nocategory)).apply();
                             }
                         }
-                        categorysp.edit().remove(categories[position]).apply();
+                        categorySp.edit().remove(categories[position]).apply();
                         loaddata();
                     }
                 }

@@ -3,11 +3,11 @@
     android:id="@+id/videogrid"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:drawSelectorOnTop="true"
     android:gravity="center"
-    android:numColumns="3"
     android:horizontalSpacing="2dp"
+    android:numColumns="3"
     android:padding="2dp"
-    android:verticalSpacing="2dp">
+    android:verticalSpacing="2dp" />
 
-</GridView>
  

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="190"
-    android:versionName="1.3.2" >
+    android:versionCode="191"
+    android:versionName="1.3.3" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -180,6 +180,20 @@
             android:exported="false" />
 
         <activity android:name="com.yupog2003.tripdiary.DummyActivity" />
+
+        <service
+            android:name="com.yupog2003.tripdiary.services.UploadToDriveService"
+            android:exported="false" />
+
+        <provider
+            android:name="com.yupog2003.tripdiary.providers.DriveProvider"
+            android:authorities="com.yupog2003.tripdiary.driveprovider"
+            android:exported="true" />
+
+        <service
+            android:name="com.yupog2003.tripdiary.services.DownloadFromDriveService"
+            android:exported="false" />
+
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

@@ -104,6 +104,18 @@
     <init>();
 }
 
+-keep class com.yupog2003.tripdiary.services.UploadToDriveService {
+    <init>();
+}
+
+-keep class com.yupog2003.tripdiary.providers.DriveProvider {
+    <init>();
+}
+
+-keep class com.yupog2003.tripdiary.services.DownloadFromDriveService {
+    <init>();
+}
+
 -keep class com.google.android.gms.ads.AdActivity {
     <init>();
 }

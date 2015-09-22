@@ -141,15 +141,17 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         return client;
     }
 
-    class GetTripsTask extends AsyncTask<String, String, Trip[]> {
+    class GetTripsTask extends AsyncTask<Void, Void, Trip[]> {
 
         @Override
         protected void onPreExecute() {
-
+            if (!swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(true);
+            }
         }
 
         @Override
-        protected Trip[] doInBackground(String... params) {
+        protected Trip[] doInBackground(Void... params) {
 
             if (client == null)
                 return null;
@@ -193,7 +195,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     }
 
-    class UpdateDataTask extends AsyncTask<String, String, String> {
+    class UpdateDataTask extends AsyncTask<String, Void, String> {
 
         Task task;
         String token;
@@ -244,15 +246,16 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
     }
 
-    class LoadMoreTripTask extends AsyncTask<String, String, ArrayList<Trip>> {
+    class LoadMoreTripTask extends AsyncTask<Void, Void, ArrayList<Trip>> {
         @Override
         protected void onPreExecute() {
-
-
+            if (!swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(true);
+            }
         }
 
         @Override
-        protected ArrayList<Trip> doInBackground(String... params) {
+        protected ArrayList<Trip> doInBackground(Void... params) {
 
             if (trip_option == option_public) {
                 try {
@@ -276,14 +279,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-
-
-        }
-
-        @Override
         protected void onPostExecute(ArrayList<Trip> result) {
-
             if (result != null && adapter != null) {
                 adapter.addTrips(result);
             }
@@ -342,7 +338,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                     String tripName = trips.get(position).name;
                     if (which == 0) {
                         if (FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName) != null) {
-                            Toast.makeText(getActivity(), getString(R.string.explain_same_trip_when_import), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.same_trip), Toast.LENGTH_SHORT).show();
                         } else {
                             Intent intent = new Intent(getActivity(), DownloadTripService.class);
                             intent.putExtra("path", tripPath);
@@ -446,8 +442,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
             }
             onActionMode = true;
             checks = new boolean[trips.size()];
-            for (int i = 0; i < checks.length; i++)
-                checks[i] = false;
+            Arrays.fill(checks, false);
             checkAll = false;
             return true;
         }

@@ -15,7 +15,6 @@ import java.util.TimeZone;
 public class GpxAnalyzerJava {
     TrackCache cache;
     Trip trip;
-    Context context;
     ProgressChangedListener listener;
     public static final double earthRadius = 6378.1 * 1000;
     public static final int altitudeDifferThreshold = 20;
@@ -23,7 +22,6 @@ public class GpxAnalyzerJava {
 
     public GpxAnalyzerJava(Trip trip, Context context) {
         this.trip = trip;
-        this.context = context;
         stop = false;
     }
 
@@ -125,12 +123,13 @@ public class GpxAnalyzerJava {
                 }
                 if (s.contains("<trkpt")) {
                     latlng = new MyLatLng2();
+                    String[] tokes = s.split("\"");
                     if (s.indexOf("lat") > s.indexOf("lon")) {
-                        latlng.longitude = Double.parseDouble(s.split("\"")[1]);
-                        latlng.latitude = Double.parseDouble(s.split("\"")[3]);
+                        latlng.longitude = Double.parseDouble(tokes[1]);
+                        latlng.latitude = Double.parseDouble(tokes[3]);
                     } else {
-                        latlng.latitude = Double.parseDouble(s.split("\"")[1]);
-                        latlng.longitude = Double.parseDouble(s.split("\"")[3]);
+                        latlng.latitude = Double.parseDouble(tokes[1]);
+                        latlng.longitude = Double.parseDouble(tokes[3]);
                     }
                 } else if (s.contains("<ele>")) {
                     float altitude = Float.parseFloat(s.substring(s.indexOf(">") + 1, s.lastIndexOf("<")));
