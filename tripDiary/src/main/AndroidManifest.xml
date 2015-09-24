@@ -44,7 +44,8 @@
         </activity>
         <activity
             android:name=".ViewActivity"
-            android:label="@string/title_activity_view" />
+            android:label="@string/title_activity_view"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".services.RecordService"

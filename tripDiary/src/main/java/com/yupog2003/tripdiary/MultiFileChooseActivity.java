@@ -45,7 +45,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_file_choose);
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ok = (Button) findViewById(R.id.ok);
         ok.setOnClickListener(this);

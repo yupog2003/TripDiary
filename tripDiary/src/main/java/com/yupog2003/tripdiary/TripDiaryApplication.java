@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.api.services.drive.Drive;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
@@ -43,6 +44,7 @@ public class TripDiaryApplication extends Application {
     public static final int unit_ft = 1;
 
     public static GoogleApiClient googleApiClient;
+    public static Drive service;
 
     synchronized public Tracker getTracker() {
         if (appTracker == null) {
@@ -113,10 +115,10 @@ public class TripDiaryApplication extends Application {
     private void initialImageLoader() {
         MyImageDecoder imageDecoder = new MyImageDecoder(this, new BaseImageDecoder(false));
         MyImageDownloader imageDownloader = new MyImageDownloader(this);
-        int imageloaderMemoryCachePercentage = PreferenceManager.getDefaultSharedPreferences(this).getInt("imageloaderMemoryCachePercentage", 30);
-        if (imageloaderMemoryCachePercentage < 1) imageloaderMemoryCachePercentage = 1;
-        if (imageloaderMemoryCachePercentage > 99) imageloaderMemoryCachePercentage = 99;
-        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(imageDownloader).imageDecoder(imageDecoder).memoryCacheSizePercentage(imageloaderMemoryCachePercentage).build();
+        int imageLoaderMemoryCachePercentage = PreferenceManager.getDefaultSharedPreferences(this).getInt("imageloaderMemoryCachePercentage", 30);
+        if (imageLoaderMemoryCachePercentage < 1) imageLoaderMemoryCachePercentage = 1;
+        if (imageLoaderMemoryCachePercentage > 99) imageLoaderMemoryCachePercentage = 99;
+        ImageLoaderConfiguration conf = new ImageLoaderConfiguration.Builder(this).imageDownloader(imageDownloader).imageDecoder(imageDecoder).memoryCacheSizePercentage(imageLoaderMemoryCachePercentage).build();
         ImageLoader.getInstance().init(conf);
     }
 

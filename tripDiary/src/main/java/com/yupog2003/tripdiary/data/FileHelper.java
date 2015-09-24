@@ -114,10 +114,15 @@ public class FileHelper {
                 outputStream.write(buffer, 0, len);
             }
             outputStream.flush();
-            outputStream.close();
-            inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

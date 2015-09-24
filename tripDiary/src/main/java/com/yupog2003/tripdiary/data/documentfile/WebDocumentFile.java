@@ -165,13 +165,15 @@ public class WebDocumentFile extends DocumentFile {
             return new ByteArrayInputStream(content.getBytes());
         }
         if (localCache != null) {
-            if (shouldDeleteLocalCache && localCache.delete()) {
+            if (shouldDeleteLocalCache) {
+                localCache.delete();
                 return new NullInputStream(0);
-            }
-            try {
-                return new FileInputStream(localCache);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } else {
+                try {
+                    return new FileInputStream(localCache);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
         Thread t = new Thread(new Runnable() {
@@ -200,7 +202,8 @@ public class WebDocumentFile extends DocumentFile {
         try {
             t.join();
             if (localCache != null) {
-                if (shouldDeleteLocalCache && localCache.delete()) {
+                if (shouldDeleteLocalCache) {
+                    localCache.delete();
                     return new NullInputStream(0);
                 } else {
                     return new FileInputStream(localCache);
@@ -332,6 +335,7 @@ public class WebDocumentFile extends DocumentFile {
 
     private WebDocumentFile thumbFile;
 
+    @NonNull
     public InputStream getThumbInputStream() {
         if (!FileHelper.isPicture(getName())) {
             return new NullInputStream(0);

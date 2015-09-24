@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,12 +16,14 @@ import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.Metadata;
 import com.yupog2003.tripdiary.TripDiaryApplication;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -166,17 +167,29 @@ public abstract class DocumentFile {
                 }
             }
         };
-        if (Looper.getMainLooper() == Looper.myLooper()) {
-            Thread t = new Thread(r);
-            t.start();
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        DeviceHelper.runOnBackgroundThread(r);
+        if (result.size() > 0) {
+            return result.get(0);
         } else {
-            r.run();
+            return null;
         }
+    }
+
+    public static DocumentFile fromRestDrive(final com.google.api.services.drive.Drive service, final String resourceId, final String account) {
+        if (service == null || account == null || resourceId == null) return null;
+        final ArrayList<RestDriveDocumentFile> result = new ArrayList<>();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    com.google.api.services.drive.model.File file = service.files().get(resourceId).execute();
+                    result.add(new RestDriveDocumentFile(null, service, file));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        DeviceHelper.runOnBackgroundThread(r);
         if (result.size() > 0) {
             return result.get(0);
         } else {

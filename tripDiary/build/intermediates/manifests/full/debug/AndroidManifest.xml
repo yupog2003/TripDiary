@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="191"
-    android:versionName="1.3.3" >
+    android:versionCode="192"
+    android:versionName="1.3.4" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -55,7 +55,8 @@
         </activity>
         <activity
             android:name="com.yupog2003.tripdiary.ViewActivity"
-            android:label="@string/title_activity_view" />
+            android:label="@string/title_activity_view"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.yupog2003.tripdiary.services.RecordService"

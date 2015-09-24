@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.yupog2003.tripdiary.fragments.CalendarTripsFragment;
 import com.yupog2003.tripdiary.fragments.DriveTripsFragment;
 import com.yupog2003.tripdiary.fragments.LocalTripsFragment;
 import com.yupog2003.tripdiary.fragments.RemoteTripsFragment;
@@ -23,6 +24,7 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
     RemoteTripsFragment personalFragment;
     RemoteTripsFragment publicFragment;
     DriveTripsFragment driveTripsFragment;
+    CalendarTripsFragment calendarTripsFragment;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -51,11 +53,14 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
         publicTripFragmentBundle.putInt(RemoteTripsFragment.tag_option, RemoteTripsFragment.option_public);
         publicFragment.setArguments(publicTripFragmentBundle);
         driveTripsFragment = new DriveTripsFragment();
+        calendarTripsFragment=new CalendarTripsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.fragment, localTripsFragment);
+        ft.add(R.id.fragment, calendarTripsFragment);
         ft.add(R.id.fragment, personalFragment);
         ft.add(R.id.fragment, publicFragment);
         ft.add(R.id.fragment, driveTripsFragment);
+        ft.hide(calendarTripsFragment);
         ft.hide(personalFragment);
         ft.hide(publicFragment);
         ft.hide(driveTripsFragment);
@@ -82,6 +87,7 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
         resetAppBar();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.hide(localTripsFragment);
+        ft.hide(calendarTripsFragment);
         ft.hide(personalFragment);
         ft.hide(publicFragment);
         ft.hide(driveTripsFragment);
@@ -92,6 +98,11 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
                 ft.show(localTripsFragment);
                 setTitle(R.string.local_trips);
                 localTripsFragment.loadData();
+                break;
+            case R.id.calendar:
+                ft.show(calendarTripsFragment);
+                setTitle(R.string.calendar);
+                calendarTripsFragment.loadData();
                 break;
             case R.id.cloudPersonal:
                 ft.show(personalFragment);

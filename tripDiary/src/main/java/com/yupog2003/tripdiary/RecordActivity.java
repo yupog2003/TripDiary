@@ -325,7 +325,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 final double longitude = userChosenLatLng == null ? location.getLongitude() : userChosenLatLng.longitude;
                 final double altitude = location.getAltitude();
                 LatLng latLng = new LatLng(latitude, longitude);
-                POIMarker = gmap.addMarker(new MarkerOptions().position(latLng).title(poi.title).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                POIMarker = gmap.addMarker(new MarkerOptions().position(latLng).title(poi.title).snippet(time.formatInCurrentTimezone()).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                 poi.updateBasicInformation(null, time, latitude, longitude, altitude);
             } else { // edit exist poi
                 if (markers != null) {
@@ -703,7 +703,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 for (POI poi : pois) {
                     if (addPOIMode && POIMarker != null && poi.title.equals(POIMarker.getTitle()))
                         continue;
-                    markers.add(gmap.addMarker(new MarkerOptions().position(new LatLng(poi.latitude, poi.longitude)).title(poi.title).draggable(false)));
+                    markers.add(gmap.addMarker(new MarkerOptions().position(new LatLng(poi.latitude, poi.longitude)).title(poi.title).snippet(poi.time.formatInCurrentTimezone()).draggable(false)));
                 }
             }
             if (!addPOIMode && preference.getString(pref_tag_onaddpoi, null) != null) {

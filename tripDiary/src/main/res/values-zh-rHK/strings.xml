@@ -339,4 +339,8 @@
     <string name="open_from_other_source">從其他來源開啟</string>
     <string name="select_output_directory">選擇輸出資料夾</string>
     <string name="download_from_google_drive">從Google雲端硬碟下載</string>
+    <string name="open_in_read_only_mode">以唯讀模式開啟</string>
+    <string name="calendar">日曆</string>
+    <string name="year">年</string>
+    <string name="today">今天</string>
 </resources>

@@ -41,6 +41,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.api.services.drive.Drive;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzerJava;
 import com.yupog2003.tripdiary.data.MyCalendar;
@@ -48,6 +49,7 @@ import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.TrackCache;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
+import com.yupog2003.tripdiary.data.documentfile.RestDriveDocumentFile;
 import com.yupog2003.tripdiary.data.documentfile.WebDocumentFile;
 import com.yupog2003.tripdiary.fragments.AllAudioFragment;
 import com.yupog2003.tripdiary.fragments.AllPictureFragment;
@@ -86,6 +88,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     Menu navigationMenu;
     int source;
     DriveId driveId;
+    String resourceId;
+    Drive service;
 
     public static final int REQUEST_VIEW_POI = 1;
     public static final String tag_request_updatePOI = "request_update_poi";
@@ -93,9 +97,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     public static final String tag_tripName = "tag_tripname";
     public static final String tag_fromDrive = "tag_fromDrive";
     public static final String tag_driveId = "tag_driveid";
+    public static final String tag_fromRestDrive = "tag_fromRestDrive";
+    public static final String tag_resourceId = "tag_resourceId";
     public static final int fromLocal = 0;
     public static final int fromWeb = 1;
     public static final int fromDrive = 2;
+    public static final int fromRestDrive = 3;
 
     enum Mode {
         map_mode, text_mode, photo_mode, video_mode, audio_mode, money_mode
@@ -130,6 +137,9 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             if (intent.getBooleanExtra(tag_fromDrive, false)) {
                 source = fromDrive;
                 driveId = intent.getParcelableExtra(tag_driveId);
+            } else if (intent.getBooleanExtra(tag_fromRestDrive, false)) {
+                source = fromRestDrive;
+                resourceId = intent.getStringExtra(tag_resourceId);
             } else {
                 source = fromLocal;
             }
@@ -140,7 +150,6 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             setTaskDescription(new ActivityManager.TaskDescription(tripName, null, ContextCompat.getColor(this, R.color.colorPrimary)));
         }
         setTitle(tripName);
-        trip = null;
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
@@ -183,16 +192,21 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 }
                 appBarLayoutDefaultHeight = appBarLayout.getHeight();
                 setMode(Mode.map_mode);
-                if (source == fromWeb && !isPublic) {
-                    getAccessToken(email, new OnAccessTokenGotListener() {
-                        @Override
-                        public void onAccessTokenGot(@NonNull String token) {
-                            if (email != null && tripName != null) {
-                                ViewTripActivity.this.token = token;
-                                new PrepareTripTask().execute();
+                if (source == fromWeb) {
+                    Toast.makeText(getActivity(), R.string.open_in_read_only_mode, Toast.LENGTH_SHORT).show();
+                    if (isPublic) {
+                        new PrepareTripTask().execute();
+                    } else {
+                        getAccessToken(email, new OnAccessTokenGotListener() {
+                            @Override
+                            public void onAccessTokenGot(@NonNull String token) {
+                                if (email != null && tripName != null) {
+                                    ViewTripActivity.this.token = token;
+                                    new PrepareTripTask().execute();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 } else if (source == fromDrive) {
                     connectToDriveApi(new GoogleApiClient.ConnectionCallbacks() {
                         @Override
@@ -205,7 +219,17 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
                         }
                     });
-                } else {
+                } else if (source == fromRestDrive) {
+                    Toast.makeText(getActivity(), R.string.open_in_read_only_mode, Toast.LENGTH_SHORT).show();
+                    connectToRestDriveApi(new OnConnectedToRestDriveApiListener() {
+                        @Override
+                        public void onConnected(Drive service, String account) {
+                            ViewTripActivity.this.service = service;
+                            ViewTripActivity.this.email = account;
+                            new PrepareTripTask().execute();
+                        }
+                    });
+                } else if (source == fromLocal) {
                     new PrepareTripTask().execute();
                 }
             }
@@ -409,6 +433,9 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 case fromDrive:
                     tripFile = DocumentFile.fromDrive(googleApiClient, driveId);
                     break;
+                case fromRestDrive:
+                    tripFile = DocumentFile.fromRestDrive(service, resourceId, email);
+                    break;
             }
             if (tripFile == null) {
                 return false;
@@ -507,7 +534,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
 
         @Override
         public void onPOICreated(int poi, int total, String poiName) {  //construct poi
-            publishProgress(500 * poi / total, poiName);
+            publishProgress(500 * (poi + 1) / total, poiName);
         }
 
         @Override
@@ -660,8 +687,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     }
 
     private static void tryDeleteLocalCache(DocumentFile file) {
-        if (file != null && file instanceof WebDocumentFile) {
-            ((WebDocumentFile) file).deleteLocalCache();
+        if (file != null) {
+            if (file instanceof WebDocumentFile) {
+                ((WebDocumentFile) file).deleteLocalCache();
+            } else if (file instanceof RestDriveDocumentFile) {
+                ((RestDriveDocumentFile) file).deleteLocalCache();
+            }
         }
     }
 
@@ -680,7 +711,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         if (trip != null) {
-            if (source == fromWeb) {
+            if (source == fromWeb || source == fromRestDrive) {
                 deleteLocalCache();
             }
             ((TripDiaryApplication) getApplication()).removeTrip(trip.tripName);

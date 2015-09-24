@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.yupog2003.tripdiary.CategoryActivity;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
@@ -47,6 +48,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
     Preference tripTimeZone;
     Preference account;
     Preference rootpath;
+    Preference legalNotice;
     ListPreference playingtripmode;
     ListPreference playtripspeed;
     ListPreference playpoispeed;
@@ -108,6 +110,8 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             usesaf.setEnabled(false);
         }
+        legalNotice = findPreference("legalnotice");
+        legalNotice.setOnPreferenceClickListener(this);
         backupPreferenceFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, ".settings");
         if (backupPreferenceFile == null) {
             backupPreferenceFile = TripDiaryApplication.rootDocumentFile.createDirectory(".settings");
@@ -268,6 +272,11 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
                     account.setSummary(accountName);
                 }
             }, true);
+        } else if (preference.equals(legalNotice)) {
+            AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+            ab.setMessage(GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(getActivity()));
+            ab.setTitle("Legal Notice");
+            ab.show();
         }
         return false;
     }

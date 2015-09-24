@@ -7,6 +7,7 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
@@ -103,6 +104,24 @@ public class DeviceHelper {
             if (numColumns > 10) numColumns = 10;
             result[0] = numColumns;
             result[1] = screenWidth / numColumns;
+        }
+    }
+
+    public static boolean isOnMainThread() {
+        return Looper.getMainLooper() == Looper.myLooper();
+    }
+
+    public static void runOnBackgroundThread(Runnable r) {
+        if (isOnMainThread()) {
+            Thread t = new Thread(r);
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            r.run();
         }
     }
 }

@@ -697,7 +697,6 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     }
 
     public void onMapLongClick(final LatLng latlng) {
-
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
         ab.setTitle(getString(R.string.add_poi));
         View layout = getActivity().getLayoutInflater().inflate(R.layout.edit_poi, rootView, false);
@@ -918,7 +917,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             ab.setTitle(getString(R.string.Note));
             final String noteStr = trip.note;
             TextView textView = new TextView(getActivity());
-            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Large);
+            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
             textView.setText(noteStr);
             int dip10 = (int) DeviceHelper.pxFromDp(getActivity(), 10);
             textView.setPadding(dip10, dip10, dip10, dip10);

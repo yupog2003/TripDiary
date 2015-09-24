@@ -80,7 +80,7 @@ import java.util.Set;
 public class LocalTripsFragment extends Fragment {
 
     ExpandableListView listView;
-    public String newTripName;
+    String newTripName;
     TripAdapter adapter;
     SearchView search;
     SharedPreferences categorysp;
@@ -90,7 +90,7 @@ public class LocalTripsFragment extends Fragment {
     private static final int REQUEST_IMPORT_TRIP = 2;
     public static final String pref_timesort = "timesort";
     Drawable expandDrawable;
-    Drawable collapaseDrawable;
+    Drawable collapseDrawable;
 
     public LocalTripsFragment() {
 
@@ -105,7 +105,7 @@ public class LocalTripsFragment extends Fragment {
         tripsp = getActivity().getSharedPreferences("trip", Context.MODE_PRIVATE);
         categoryExpandSp = getActivity().getSharedPreferences("categoryExpand", Context.MODE_PRIVATE);
         expandDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_expand2);
-        collapaseDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
+        collapseDrawable = DrawableHelper.getAccentTintDrawable(getActivity(), R.drawable.indicator_collapse2);
         return listView;
     }
 
@@ -162,7 +162,6 @@ public class LocalTripsFragment extends Fragment {
             rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                     String color = categorysp.getString(categories[checkedId], String.valueOf(Color.WHITE));
                     category.setCompoundDrawablesWithIntrinsicBounds(DrawableHelper.getColorDrawable(getActivity(), 50, Integer.valueOf(color)), null, null, null);
                 }
@@ -303,15 +302,16 @@ public class LocalTripsFragment extends Fragment {
         String[] categories;
         ArrayList<ArrayList<Trip>> trips;
         Trip[] tripsArray;
-        HashMap<String, Drawable> categoryDrawables;
         boolean onActionMode = false;
         public ArrayList<String> checksName;
+        int dp25;
 
         public TripAdapter() {
+            dp25=(int)DeviceHelper.pxFromDp(getActivity(), 25);
             Map<String, ?> map = categorysp.getAll();
             Set<String> set = map.keySet();
             categories = set.toArray(new String[set.size()]);
-            categoryDrawables = new HashMap<>();
+            HashMap<String, Drawable> categoryDrawables = new HashMap<>();
             for (int i = 0; i < categories.length; i++) {
                 try {
                     categoryDrawables.put(categories[i], DrawableHelper.getColorDrawable(getActivity(), 40, Integer.valueOf(categorysp.getString(categories[i], String.valueOf(Color.WHITE)))));
@@ -383,7 +383,7 @@ public class LocalTripsFragment extends Fragment {
                 CheckableLayout layout = (CheckableLayout) getActivity().getLayoutInflater().inflate(R.layout.trip_list_item, parent, false);
                 holder.item = (TextView) layout.findViewById(R.id.tripname);
                 holder.itemextra = (TextView) layout.findViewById(R.id.tripextra);
-                layout.setPadding(50, 0, 0, 0);
+                layout.setPadding(dp25, 0, 0, 0);
                 convertView = layout;
                 convertView.setTag(holder);
             }
@@ -429,7 +429,7 @@ public class LocalTripsFragment extends Fragment {
                 convertView.setTag(holder);
             }
             holder = (GroupViewHolder) convertView.getTag();
-            holder.title.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? expandDrawable : collapaseDrawable, null, null, null);
+            holder.title.setCompoundDrawablesWithIntrinsicBounds(isExpanded ? expandDrawable : collapseDrawable, null, null, null);
             holder.title.setText(categories[groupPosition]);
             holder.count.setText("(" + String.valueOf(getChildrenCount(groupPosition)) + ")");
             return convertView;

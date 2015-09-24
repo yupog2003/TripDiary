@@ -349,5 +349,12 @@
     <string name="select_output_directory">Select output directory</string>
     <string name="download_from_google_drive">Download from Google Drive</string>
     <string name="same_trip">There is a same trip on local device</string>
+    <string name="open_in_read_only_mode">Open in read-only mode</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="calendar">Calendar</string>
+    <string name="year">Year</string>
+    <string name="today">Today</string>
 
 </resources>

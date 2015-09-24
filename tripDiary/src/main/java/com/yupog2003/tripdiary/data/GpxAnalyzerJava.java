@@ -1,7 +1,5 @@
 package com.yupog2003.tripdiary.data;
 
-import android.content.Context;
-
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedReader;
@@ -20,7 +18,7 @@ public class GpxAnalyzerJava {
     public static final int altitudeDifferThreshold = 20;
     long fileSize;
 
-    public GpxAnalyzerJava(Trip trip, Context context) {
+    public GpxAnalyzerJava(Trip trip) {
         this.trip = trip;
         stop = false;
     }

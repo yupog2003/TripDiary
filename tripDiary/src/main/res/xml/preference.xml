@@ -181,6 +181,9 @@
             android:key="usesaf"
             android:summary="@string/storage_access_framework_explanation"
             android:title="@string/use_storage_access_framework" />
+        <Preference
+            android:key="legalnotice"
+            android:title="Legal Notice" />
     </PreferenceCategory>
 
 </PreferenceScreen>

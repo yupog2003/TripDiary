@@ -29,11 +29,18 @@ import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
 import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.documentfile.DriveDocumentFile;
 import com.yupog2003.tripdiary.services.RecordService;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,7 +204,7 @@ public class MyActivity extends AppCompatActivity {
                 googleApiClient.connect();
             }
         } else if (requestCode == REQUEST_CONNECT_TO_REST_API && resultCode == Activity.RESULT_OK) {
-            connectToDriveApi(callbacks);
+            connectToRestDriveApi(onConnectedToRestDriveApiListener);
         }
     }
 
@@ -246,10 +253,8 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public GoogleApiClient googleApiClient;
-    private GoogleApiClient.ConnectionCallbacks callbacks;
 
     public void connectToDriveApi(final GoogleApiClient.ConnectionCallbacks callbacks) {
-        this.callbacks = callbacks;
         getAccount(new OnAccountPickedListener() {
             @Override
             public void onAccountPicked(@NonNull final String account) {
@@ -297,5 +302,44 @@ public class MyActivity extends AppCompatActivity {
         });
         ab.setNegativeButton(getString(R.string.cancel), null);
         ab.show();
+    }
+
+    public interface OnConnectedToRestDriveApiListener {
+        void onConnected(Drive service, String account);
+    }
+
+    OnConnectedToRestDriveApiListener onConnectedToRestDriveApiListener;
+
+    public void connectToRestDriveApi(final OnConnectedToRestDriveApiListener listener) {
+        this.onConnectedToRestDriveApiListener = listener;
+        getAccount(new OnAccountPickedListener() {
+            @Override
+            public void onAccountPicked(@NonNull final String account) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<String> scopes = new ArrayList<>();
+                        scopes.add(DriveScopes.DRIVE);
+                        GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(MyActivity.this, scopes);
+                        credential.setSelectedAccountName(account);
+                        Drive service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
+                        try {
+                            service.about().get().execute();
+                            TripDiaryApplication.service = service;
+                            if (listener != null) {
+                                listener.onConnected(service, account);
+                            }
+                        } catch (UserRecoverableAuthIOException e) {
+                            e.printStackTrace();
+                            startActivityForResult(e.getIntent(), REQUEST_CONNECT_TO_REST_API);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+            }
+        }, false);
+
     }
 }

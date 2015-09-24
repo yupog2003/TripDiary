@@ -295,8 +295,8 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
 
         public TripAdapter(ArrayList<Trip> trips) {
             this.trips = trips;
-            dip10 = (int) DeviceHelper.pxFromDp(getActivity(), 10);
-            isLoading = false;
+            this.dip10 = (int) DeviceHelper.pxFromDp(getActivity(), 10);
+            this.isLoading = false;
         }
 
         public int getCount() {
@@ -329,7 +329,7 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
-            String[] selections = new String[]{getString(R.string.download), getString(R.string.open)};
+            String[] selections = new String[]{getString(R.string.download), getString(R.string.open), getString(R.string.share)};
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
             ab.setSingleChoiceItems(selections, -1, new DialogInterface.OnClickListener() {
                 @Override
@@ -347,9 +347,17 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                         }
                     } else if (which == 1) {
                         String tripPublic = trip_option == option_public ? "yes" : "no";
-                        String uri = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
+                        String urlStr = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(uri));
+                        intent.setData(Uri.parse(urlStr));
+                        startActivity(intent);
+                    } else if (which == 2) {
+                        String tripPublic = trip_option == option_public ? "yes" : "no";
+                        String urlStr = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_TEXT, urlStr);
+                        intent.putExtra(Intent.EXTRA_SUBJECT, tripName);
                         startActivity(intent);
                     }
                     dialog.dismiss();

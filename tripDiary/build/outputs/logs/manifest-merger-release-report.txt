@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:2:1-188:12
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:2:1-189:12
 	package
 		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:3:5-38
 		INJECTED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
@@ -96,7 +96,7 @@ ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Andr
 	android:name
 		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:24:9-47
 application
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:27:5-186:19
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:27:5-187:19
 MERGED from [com.android.support:appcompat-v7:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services/7.8.0/AndroidManifest.xml:19:5-20
@@ -196,6 +196,8 @@ MERGED from [com.android.support:appcompat-v7:23.0.1] /run/media/yupog2003/1345b
 MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:cardview-v7:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
+MERGED from [com.prolificinteractive:material-calendarview:0.8.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/0.8.1/AndroidManifest.xml:12:5-20
+MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
 	android:backupAgent
 		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:30:9-50
 	android:label
@@ -229,59 +231,61 @@ ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Andr
 	android:name
 		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:42:27-74
 activity#com.yupog2003.tripdiary.ViewActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:45:9-47:59
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:45:9-48:52
+	android:screenOrientation
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:48:13-49
 	android:label
 		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:47:13-56
 	android:name
 		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:46:13-41
 service#com.yupog2003.tripdiary.services.RecordService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:49:9-52:44
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:50:9-53:44
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:51:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:52:13-37
 	android:stopWithTask
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:52:13-41
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:53:13-41
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:50:13-51
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:51:13-51
 activity#com.yupog2003.tripdiary.ViewPointActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:54:9-57:65
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:55:9-58:65
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:57:13-62
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:58:13-62
 	android:configChanges
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:56:13-74
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:57:13-74
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:55:13-46
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:56:13-46
 activity#com.yupog2003.tripdiary.PlayPointActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:58:9-61:65
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:59:9-62:65
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:61:13-62
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:62:13-62
 	android:configChanges
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:60:13-74
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:61:13-74
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:59:13-46
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:60:13-46
 activity#com.yupog2003.tripdiary.PreferActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:62:9-64:65
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:63:9-65:65
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:64:13-62
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:65:13-62
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:63:13-43
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:64:13-43
 activity#com.yupog2003.tripdiary.CategoryActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:65:9-67:63
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:66:9-68:63
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:67:13-60
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:68:13-60
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:66:13-45
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:67:13-45
 activity#com.yupog2003.tripdiary.PaintActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:68:9-70:60
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:69:9-71:60
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:70:13-57
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:71:13-57
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:69:13-42
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:70:13-42
 activity#com.yupog2003.tripdiary.ViewCostActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:71:9-54
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:72:9-54
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:71:19-51
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:72:19-51
 meta-data#com.google.android.gms.version
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:73:9-75:69
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:74:9-76:69
 MERGED from [com.google.android.gms:play-services-base:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-base:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-base:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
@@ -312,175 +316,175 @@ MERGED from [com.google.android.gms:play-services-base:7.8.0] /run/media/yupog20
 MERGED from [com.google.android.gms:play-services-base:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-base:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:75:13-66
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:76:13-66
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:74:13-58
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:75:13-58
 meta-data#com.google.android.backup.api_key
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:76:9-78:82
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:77:9-79:82
 	android:value
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:78:13-79
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:79:13-79
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:77:13-61
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:78:13-61
 meta-data#com.google.android.geo.API_KEY
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:79:9-81:71
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:80:9-82:71
 	android:value
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:81:13-68
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:82:13-68
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:80:13-58
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:81:13-58
 service#com.yupog2003.tripdiary.services.SendTripService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:85:9-87:40
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:86:9-88:40
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:87:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:88:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:86:13-53
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:87:13-53
 service#com.yupog2003.tripdiary.services.DownloadTripService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:88:9-90:40
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:89:9-91:40
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:90:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:91:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:89:13-57
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:90:13-57
 activity#com.yupog2003.tripdiary.ViewTripActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:92:9-115:20
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:93:9-116:20
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:96:13-46
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:97:13-46
 	android:launchMode
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:97:13-42
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:98:13-42
 	android:persistableMode
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:99:13-51
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:100:13-51
 	android:configChanges
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:94:13-74
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:95:13-74
 	android:documentLaunchMode
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:95:13-48
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:96:13-48
 	android:maxRecents
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:98:13-35
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:99:13-35
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:93:13-45
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:94:13-45
 intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:100:13-114:29
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:101:13-115:29
 action#android.intent.action.VIEW
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:101:17-69
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:102:17-69
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:101:25-66
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:102:25-66
 category#android.intent.category.DEFAULT
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:103:17-76
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:104:17-76
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:103:27-73
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:104:27-73
 category#android.intent.category.BROWSABLE
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:104:17-78
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:105:17-78
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:104:27-75
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:105:27-75
 data
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:106:17-109:45
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:107:17-110:45
 	android:host
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:107:21-52
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:108:21-52
 	android:scheme
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:109:21-42
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:110:21-42
 	android:pathPrefix
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:108:21-62
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:109:21-62
 activity#com.yupog2003.tripdiary.AllRecordActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:116:9-119:55
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:117:9-120:55
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:119:13-52
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:120:13-52
 	android:configChanges
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:118:13-74
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:119:13-74
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:117:13-46
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:118:13-46
 activity#com.yupog2003.tripdiary.MyActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:120:9-48
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:121:9-48
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:120:19-45
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:121:19-45
 activity#com.yupog2003.tripdiary.MultiFileChooseActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:121:9-123:52
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:122:9-124:52
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:123:13-49
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:124:13-49
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:122:13-52
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:123:13-52
 activity#com.yupog2003.tripdiary.RecordActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:124:9-127:52
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:125:9-128:52
 	android:screenOrientation
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:127:13-49
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:128:13-49
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:126:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:127:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:125:13-43
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:126:13-43
 service#com.yupog2003.tripdiary.services.GenerateVideoService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:129:9-131:40
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:130:9-132:40
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:131:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:132:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:130:13-58
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:131:13-58
 activity#com.yupog2003.tripdiary.GetContentActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:133:9-149:20
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:134:9-150:20
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:136:13-45
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:137:13-45
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:135:13-36
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:136:13-36
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:134:13-47
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:135:13-47
 intent-filter#android.intent.action.GET_CONTENT+android.intent.action.SEND+android.intent.action.SEND_MULTIPLE+android.intent.category.DEFAULT+android.intent.category.OPENABLE
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:137:13-148:29
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:138:13-149:29
 action#android.intent.action.SEND
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:138:17-69
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:139:17-69
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:138:25-66
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:139:25-66
 action#android.intent.action.SEND_MULTIPLE
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:139:17-78
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:140:17-78
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:139:25-75
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:140:25-75
 action#android.intent.action.GET_CONTENT
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:140:17-76
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:141:17-76
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:140:25-73
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:141:25-73
 category#android.intent.category.OPENABLE
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:143:17-77
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:144:17-77
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:143:27-74
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:144:27-74
 activity#com.yupog2003.tripdiary.ViewGraphActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:150:9-152:53
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:151:9-153:53
 	android:screenOrientation
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:152:13-50
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:153:13-50
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:151:13-46
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:152:13-46
 activity#com.yupog2003.tripdiary.RestoreTripActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:153:9-165:20
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:154:9-166:20
 	android:label
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:155:13-49
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:156:13-49
 	android:theme
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:156:13-69
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:157:13-69
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:154:13-48
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:155:13-48
 intent-filter#android.intent.action.SEND+android.intent.action.SEND_MULTIPLE+android.intent.category.DEFAULT
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:157:13-164:29
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:158:13-165:29
 service#com.yupog2003.tripdiary.services.BackupRestoreTripService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:167:9-169:40
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:168:9-170:40
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:169:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:170:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:168:13-62
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:169:13-62
 activity#com.yupog2003.tripdiary.DummyActivity
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:171:9-51
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:172:9-51
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:171:19-48
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:172:19-48
 service#com.yupog2003.tripdiary.services.UploadToDriveService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:173:9-175:40
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:174:9-176:40
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:175:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:176:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:174:13-58
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:175:13-58
 provider#com.yupog2003.tripdiary.providers.DriveProvider
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:177:9-180:39
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:178:9-181:39
 	android:authorities
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:179:13-72
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:180:13-72
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:180:13-36
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:181:13-36
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:178:13-52
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:179:13-52
 service#com.yupog2003.tripdiary.services.DownloadFromDriveService
-ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:182:9-184:40
+ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:183:9-185:40
 	android:exported
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:184:13-37
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:185:13-37
 	android:name
-		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:183:13-62
+		ADDED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:184:13-62
 uses-sdk
 INJECTED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:multidex:1.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/AndroidManifest.xml:18:5-42
@@ -587,6 +591,8 @@ MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b44
 MERGED from [com.android.support:cardview-v7:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.1/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:recyclerview-v7:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:20:5-43
+MERGED from [com.prolificinteractive:material-calendarview:0.8.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/0.8.1/AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:support-v4:23.0.1] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
 		INJECTED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
 		INJECTED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
@@ -608,7 +614,7 @@ ADDED from [com.google.android.gms:play-services-ads:7.8.0] /run/media/yupog2003
 	android:name
 		ADDED from [com.google.android.gms:play-services-ads:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:30:19-91
 android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-IMPLIED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:2:1-188:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
+IMPLIED from /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:2:1-189:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
 uses-permission#com.google.android.c2dm.permission.RECEIVE
 ADDED from [com.google.android.gms:play-services-gcm:7.8.0] /run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.8.0/AndroidManifest.xml:21:5-82
 	android:name

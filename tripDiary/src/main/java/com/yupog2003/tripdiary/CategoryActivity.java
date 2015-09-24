@@ -203,9 +203,7 @@ public class CategoryActivity extends MyActivity implements View.OnClickListener
             ab.show();
         }
 
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view,
-                                       final int position, long id) {
-
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int position, long id) {
             AlertDialog.Builder ab = new AlertDialog.Builder(CategoryActivity.this);
             ab.setTitle(getString(R.string.delete));
             ab.setMessage(getString(R.string.are_you_sure_to_delete));

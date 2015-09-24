@@ -102,17 +102,14 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                     if (viewFlipper.getChildAt(currentIndex) instanceof ImageView) {
                         final ImageView img = (ImageView) viewFlipper.getChildAt(currentIndex);
                         final ImgTag tag = (ImgTag) img.getTag();
-                        Bitmap bitmap;
-                        while (true) {
-                            try {
-                                bitmap = BitmapFactory.decodeStream(tag.file.getInputStream(), new Rect(0, 0, 0, 0), tag.option);
-                                break;
-                            } catch (OutOfMemoryError e) {
-                                e.printStackTrace();
-                                System.gc();
-                            } catch (IllegalArgumentException e) {
-                                e.printStackTrace();
-                            }
+                        Bitmap bitmap = null;
+                        try {
+                            bitmap = BitmapFactory.decodeStream(tag.file.getInputStream(), new Rect(0, 0, 0, 0), tag.option);
+                        } catch (OutOfMemoryError e) {
+                            e.printStackTrace();
+                            System.gc();
+                        } catch (IllegalArgumentException e) {
+                            e.printStackTrace();
                         }
                         final Bitmap b = bitmap;
                         if (b != null) {

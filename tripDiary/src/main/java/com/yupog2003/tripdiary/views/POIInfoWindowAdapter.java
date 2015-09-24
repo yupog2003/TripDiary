@@ -20,6 +20,7 @@ import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
+import com.yupog2003.tripdiary.data.documentfile.RestDriveDocumentFile;
 import com.yupog2003.tripdiary.data.documentfile.WebDocumentFile;
 
 import java.util.HashMap;
@@ -97,6 +98,8 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                 op.inJustDecodeBounds = true;
                 if (imgFile instanceof WebDocumentFile) {
                     BitmapFactory.decodeStream(((WebDocumentFile) imgFile).getThumbInputStream(), rect, op);
+                } else if (imgFile instanceof RestDriveDocumentFile) {
+                    BitmapFactory.decodeStream(((RestDriveDocumentFile) imgFile).getThumbInputStream(), rect, op);
                 } else {
                     BitmapFactory.decodeStream(imgFile.getInputStream(), rect, op);
                 }
@@ -107,6 +110,8 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                 Bitmap bitmap;
                 if (imgFile instanceof WebDocumentFile) {
                     bitmap = BitmapFactory.decodeStream(((WebDocumentFile) imgFile).getThumbInputStream(), rect, op);
+                } else if (imgFile instanceof RestDriveDocumentFile) {
+                    bitmap = BitmapFactory.decodeStream(((RestDriveDocumentFile) imgFile).getThumbInputStream(), rect, op);
                 } else {
                     bitmap = BitmapFactory.decodeStream(imgFile.getInputStream(), rect, op);
                 }

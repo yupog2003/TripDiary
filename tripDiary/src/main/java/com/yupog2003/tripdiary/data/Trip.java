@@ -125,7 +125,7 @@ public class Trip implements Comparable<Trip> {
 
     public void getCacheJava(GpxAnalyzerJava.ProgressChangedListener listener) {
         try {
-            GpxAnalyzerJava analyzer = new GpxAnalyzerJava(this, context);
+            GpxAnalyzerJava analyzer = new GpxAnalyzerJava(this);
             analyzer.setOnProgressChangedListener(listener);
             if (analyzer.analyze()) {
                 cache = analyzer.getCache();
