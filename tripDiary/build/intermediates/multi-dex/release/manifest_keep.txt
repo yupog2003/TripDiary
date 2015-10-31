@@ -29,6 +29,9 @@
 -keep class com.yupog2003.tripdiary.services.DownloadFromDriveService { <init>(); }
 -keep class com.google.android.gms.ads.AdActivity { <init>(); }
 -keep class com.google.android.gms.ads.purchase.InAppPurchaseActivity { <init>(); }
+-keep class com.google.android.gms.measurement.AppMeasurementContentProvider { <init>(); }
+-keep class com.google.android.gms.measurement.AppMeasurementReceiver { <init>(); }
+-keep class com.google.android.gms.measurement.AppMeasurementService { <init>(); }
 -keep public class * extends android.app.backup.BackupAgent {
     <init>();
 }

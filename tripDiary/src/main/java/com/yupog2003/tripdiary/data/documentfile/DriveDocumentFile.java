@@ -46,15 +46,15 @@ public class DriveDocumentFile extends DocumentFile {
     public static final String appRootFolderName = "TripDiary";
     public static final CustomPropertyKey propertyKey_isTrip = new CustomPropertyKey("isTrip", CustomPropertyKey.PUBLIC);
 
-    public DriveDocumentFile(DocumentFile parent, GoogleApiClient googleApiClient, DriveId driveId, Metadata metadata) {
+    public DriveDocumentFile(DocumentFile parent, GoogleApiClient googleApiClient, Metadata metadata) {
         super(parent);
         this.googleApiClient = googleApiClient;
-        this.driveId = driveId;
         updateFromMetaData(metadata);
     }
 
     public void updateFromMetaData(Metadata metadata) {
         if (metadata != null) {
+            this.driveId = metadata.getDriveId();
             this.fileName = metadata.getTitle();
             this.mimeType = metadata.getMimeType();
             this.isDir = metadata.isFolder();
@@ -79,7 +79,7 @@ public class DriveDocumentFile extends DocumentFile {
                 if (metadataBufferResult.getStatus().isSuccess()) {
                     for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                         if (!metadata.isFolder() && metadata.getTitle().equals(displayName)) {
-                            driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                            driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             break;
                         }
                     }
@@ -93,7 +93,7 @@ public class DriveDocumentFile extends DocumentFile {
                     DriveResource.MetadataResult metadataResult = file.getMetadata(googleApiClient).await();
                     if (metadataResult.getStatus().isSuccess()) {
                         Metadata metadata = metadataResult.getMetadata();
-                        driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                        driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                     }
                 }
             }
@@ -119,7 +119,7 @@ public class DriveDocumentFile extends DocumentFile {
                 if (metadataBufferResult.getStatus().isSuccess()) {
                     for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                         if (metadata.isFolder() && metadata.getTitle().equals(displayName)) {
-                            driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                            driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             break;
                         }
                     }
@@ -133,7 +133,7 @@ public class DriveDocumentFile extends DocumentFile {
                     DriveResource.MetadataResult metadataResult = folder.getMetadata(googleApiClient).await();
                     if (metadataResult.getStatus().isSuccess()) {
                         Metadata metadata = metadataResult.getMetadata();
-                        driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                        driveDocumentFiles.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                     }
                 }
             }
@@ -343,49 +343,49 @@ public class DriveDocumentFile extends DocumentFile {
                     switch (list_type) {
                         case list_all:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         case list_pics:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                                 if (!FileHelper.isPicture(metadata.getTitle())) continue;
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         case list_videos:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                                 if (!FileHelper.isVideo(metadata.getTitle())) continue;
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         case list_audios:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                                 if (!FileHelper.isAudio(metadata.getTitle())) continue;
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         case list_dirs:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                                 if (!metadata.isFolder() || metadata.getTitle().startsWith("."))
                                     continue;
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         case list_withoutdots:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                                 if (metadata.getTitle().startsWith(".")) continue;
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         case list_memory:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                                 if (!FileHelper.isMemory(metadata.getTitle())) continue;
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                         default:
                             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
-                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata.getDriveId(), metadata));
+                                children.add(new DriveDocumentFile(DriveDocumentFile.this, googleApiClient, metadata));
                             }
                             break;
                     }
@@ -416,7 +416,7 @@ public class DriveDocumentFile extends DocumentFile {
                             DriveApi.MetadataBufferResult result = rootFolder.queryChildren(googleApiClient, tripQuery).await();
                             if (result.getStatus().isSuccess()) {
                                 for (Metadata metadata1 : result.getMetadataBuffer()) {
-                                    children.add(new DriveDocumentFile(null, googleApiClient, metadata1.getDriveId(), metadata1));
+                                    children.add(new DriveDocumentFile(null, googleApiClient, metadata1));
                                 }
                             }
                             result.release();

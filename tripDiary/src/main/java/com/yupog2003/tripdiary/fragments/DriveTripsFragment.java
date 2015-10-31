@@ -120,7 +120,9 @@ public class DriveTripsFragment extends Fragment implements SwipeRefreshLayout.O
         ((MyActivity) getActivity()).connectToDriveApi(new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(Bundle bundle) {
-                googleApiClient = ((MyActivity) getActivity()).googleApiClient;
+                MyActivity myActivity = (MyActivity) getActivity();
+                if (myActivity == null) return;
+                googleApiClient = myActivity.googleApiClient;
                 new LoadTripsTask().execute();
             }
 

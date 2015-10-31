@@ -8,6 +8,6 @@ public final class BuildConfig {
   public static final String APPLICATION_ID = "com.yupog2003.tripdiary";
   public static final String BUILD_TYPE = "release";
   public static final String FLAVOR = "";
-  public static final int VERSION_CODE = 192;
-  public static final String VERSION_NAME = "1.3.4";
+  public static final int VERSION_CODE = 193;
+  public static final String VERSION_NAME = "1.3.5";
 }

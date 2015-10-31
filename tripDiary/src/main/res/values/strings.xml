@@ -356,5 +356,6 @@
     <string name="calendar">Calendar</string>
     <string name="year">Year</string>
     <string name="today">Today</string>
+    <string name="no_image_editor">No image editor</string>
 
 </resources>

@@ -46,11 +46,11 @@ import java.util.List;
 
 public class MyActivity extends AppCompatActivity {
 
-    public static final int REQUEST_PERMISSION = 8000;
-    public static final int REQUEST_ACCOUNT = 8001;
-    public static final int REQUEST_GET_TOKEN = 8002;
-    public static final int REQUEST_CONNECT_TO_DRIVE = 8003;
-    public static final int REQUEST_CONNECT_TO_REST_API = 8004;
+    public static final int REQUEST_PERMISSION = 80;
+    public static final int REQUEST_ACCOUNT = 81;
+    public static final int REQUEST_GET_TOKEN = 82;
+    public static final int REQUEST_CONNECT_TO_DRIVE = 83;
+    public static final int REQUEST_CONNECT_TO_REST_API = 84;
 
     public MyActivity getActivity() {
         return this;
@@ -83,7 +83,7 @@ public class MyActivity extends AppCompatActivity {
                     if (s != null && s.equals(tripName)) {
                         return task;
                     }
-                } catch (RuntimeException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

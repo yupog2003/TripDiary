@@ -5,6 +5,8 @@
       <root url="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.github.yukuku/ambilwarna/2.0/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.yukuku/ambilwarna/2.0/dc6820b0dd9d41fcf0cfed465a100408566284cc/ambilwarna-2.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

@@ -74,7 +74,7 @@ public class RawDocumentFile extends DocumentFile {
             if (file.isDirectory()) {
                 return null;
             } else {
-                FileHelper.getMimeFromFile(file);
+                return FileHelper.getMimeFromFile(file);
             }
         }
         return null;

@@ -48,7 +48,7 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     Button viewHistory;
     Button allRecord;
 
-    public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 130;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -39,6 +39,7 @@ import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.Trip;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
@@ -167,10 +168,12 @@ public class CalendarTripsFragment extends Fragment implements OnDateChangedList
 
         private int color;
         private HashSet<CalendarDay> dates;
+        private int dp3;
 
         public EventDecorator(int color, Collection<CalendarDay> dates) {
             this.color = color;
             this.dates = new HashSet<>(dates);
+            this.dp3 = (int) DeviceHelper.pxFromDp(getActivity(), 3);
         }
 
         @Override
@@ -180,7 +183,7 @@ public class CalendarTripsFragment extends Fragment implements OnDateChangedList
 
         @Override
         public void decorate(DayViewFacade view) {
-            view.addSpan(new DotSpan(5, color));
+            view.addSpan(new DotSpan(dp3, color));
         }
     }
 

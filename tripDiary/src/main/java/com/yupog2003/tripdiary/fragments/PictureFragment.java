@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -296,6 +297,20 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
                 });
                 ab.show();
                 mode.finish();
+            } else if (item.getItemId() == R.id.edit) {
+                if (checksName.size() < 1) {
+                    return true;
+                }
+                DocumentFile file = checksName.get(0);
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setDataAndType(file.getUri(), file.getType());
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), R.string.no_image_editor, Toast.LENGTH_SHORT).show();
+                }
             }
             return true;
         }
@@ -327,6 +342,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
             }
             mode.getMenu().findItem(R.id.rename).setVisible(selects == 1);
             mode.getMenu().findItem(R.id.print).setVisible(selects == 1);
+            mode.getMenu().findItem(R.id.edit).setVisible(selects == 1);
         }
     }
 
@@ -337,6 +353,7 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(intent);
     }
+
     @Override
     public void onDestroy() {
         if (moveFilesTask != null) {

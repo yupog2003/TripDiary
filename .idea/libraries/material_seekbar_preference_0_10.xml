@@ -5,6 +5,8 @@
       <root url="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.pavelsikun/material-seekbar-preference/0.10/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pavelsikun/material-seekbar-preference/0.10/ab6e5a3a18ca05cd422e39d19c16bfb818b43718/material-seekbar-preference-0.10-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

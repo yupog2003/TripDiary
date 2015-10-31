@@ -81,7 +81,7 @@ public class TreeDocumentFile extends DocumentFile {
     @Override
     public String getType() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && uri != null) {
-            FileHelper.getMIMEtype(Uri.decode(uri.toString()));
+            return FileHelper.getMIMEtype(Uri.decode(uri.toString()));
         }
         return null;
     }

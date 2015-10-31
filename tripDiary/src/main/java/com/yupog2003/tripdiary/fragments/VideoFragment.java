@@ -274,9 +274,9 @@ public class VideoFragment extends Fragment implements OnItemClickListener {
         }
 
         public boolean onCreateActionMode(final ActionMode mode, Menu menu) {
-
             mode.getMenuInflater().inflate(R.menu.poi_menu, menu);
             menu.findItem(R.id.print).setVisible(false);
+            menu.findItem(R.id.edit).setVisible(false);
             checks = new boolean[adapter.getCount()];
             Arrays.fill(checks, false);
             checkAll = false;

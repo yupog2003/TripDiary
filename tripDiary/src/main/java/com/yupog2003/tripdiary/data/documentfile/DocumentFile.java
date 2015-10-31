@@ -111,7 +111,7 @@ public abstract class DocumentFile {
 
     @Nullable
     public static DocumentFile findFile(DocumentFile[] files, String name) {
-        if (files == null) return null;
+        if (files == null || name == null) return null;
         for (DocumentFile file : files) {
             if (file == null) continue;
             if (name.equals(file.getName())) {
@@ -163,7 +163,7 @@ public abstract class DocumentFile {
                 DriveResource.MetadataResult metadataResult = driveFolder.getMetadata(googleApiClient).await();
                 if (metadataResult.getStatus().isSuccess()) {
                     Metadata metadata = metadataResult.getMetadata();
-                    result.add(new DriveDocumentFile(null, googleApiClient, metadata.getDriveId(), metadata));
+                    result.add(new DriveDocumentFile(null, googleApiClient, metadata));
                 }
             }
         };

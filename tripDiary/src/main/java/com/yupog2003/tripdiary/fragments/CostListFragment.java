@@ -240,7 +240,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-
+        if (adapter == null) return;
         if (v.equals(poiColumn)) {
             adapter.sort(CostData.sort_by_cost_POI);
         } else if (v.equals(typeColumn)) {

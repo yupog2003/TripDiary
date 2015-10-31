@@ -16,16 +16,19 @@
         android:title="@string/select_all"/>
     <item
         android:id="@+id/delete"
-        android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/delete"/>
     <item
         android:id="@+id/rename"
-        android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/rename"/>
+    <item
+        android:id="@+id/edit"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/edit"/>
     <item
         android:id="@+id/move"
         android:orderInCategory="100"

@@ -24,6 +24,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +80,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
     AllVideoFragment allVideoFragment;
     ViewCostFragment viewCostFragment;
     DrawerLayout drawerLayout;
-    RelativeLayout navigationHeader;
+    View navigationHeader;
     ActionBarDrawerToggle drawerToggle;
     FrameLayout fragmentLayout;
     public AppCompatSpinner spinner;
@@ -159,7 +160,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(this);
         navigationMenu = navigationView.getMenu();
-        navigationHeader = (RelativeLayout) findViewById(R.id.navigationHeader);
+        navigationHeader = navigationView.inflateHeaderView(R.layout.navigation_header_activity_view_trip);
         navigationHeader.setOnClickListener(this);
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment);
         spinner = (AppCompatSpinner) findViewById(R.id.spinner);
