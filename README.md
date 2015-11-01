@@ -2,4 +2,4 @@
 TripDiary
 
 https://play.google.com/store/apps/details?id=com.yupog2003.tripdiary  
-http://219.85.61.62/TripDiary  
+http://yupog2003.idv.tw/TripDiary  
