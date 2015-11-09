@@ -68,6 +68,7 @@ public class TextFragment extends Fragment implements OnClickListener {
         if (isEdit) {
             text.setVisibility(View.GONE);
             editText.setVisibility(View.VISIBLE);
+            editText.setSelection(editText.getText().length());
             buttomBar.setVisibility(View.VISIBLE);
             shadow.setVisibility(View.VISIBLE);
             edit.setVisibility(View.GONE);

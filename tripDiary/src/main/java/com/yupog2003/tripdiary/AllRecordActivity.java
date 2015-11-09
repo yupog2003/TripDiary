@@ -166,10 +166,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
             bd = BitmapDescriptorFactory.defaultMarker(hue);
         }
 
-        public void changeProgress(int progress) {
-            publishProgress(progress);
-        }
-
         public void showTrack(double[] latitudes, double[] longitudes) {
             publishProgress(latitudes, longitudes);
         }
@@ -230,6 +226,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                 Trip trip = trips[value];
                 progressBar.setProgress(value);
                 setTitle(String.format(progressFormat, value, tripNames.length));
+                if (trip == null) return;
                 POI[] pois = trip.pois;
                 int poisLength = pois.length;
                 record.num_POIs += poisLength;
@@ -278,12 +275,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         protected void onPostExecute(Boolean result) {
             setTitle(getString(R.string.lifetime_record));
             progressBar.setVisibility(View.GONE);
-        }
-    }
-
-    public void progressChanged(int progress) {
-        if (analysisTask != null) {
-            analysisTask.changeProgress(progress);
         }
     }
 

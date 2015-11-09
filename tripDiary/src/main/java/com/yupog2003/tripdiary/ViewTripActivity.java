@@ -24,7 +24,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -472,7 +470,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     bounds = latLngBoundsBuilder.build();
                 }
             } catch (Exception e) {
-                if (trip != null || trip.cacheFile != null) {
+                if (trip != null && trip.cacheFile != null) {
                     trip.cacheFile.delete();
                 }
                 e.printStackTrace();

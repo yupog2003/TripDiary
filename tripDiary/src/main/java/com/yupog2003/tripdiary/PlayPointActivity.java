@@ -158,14 +158,18 @@ public class PlayPointActivity extends MyActivity implements View.OnClickListene
                     } else if (viewFlipper.getChildAt(currentIndex) instanceof TextView) {
                         String audioName = ((TextView) viewFlipper.getChildAt(currentIndex)).getText().toString();
                         mp = MediaPlayer.create(PlayPointActivity.this, FileHelper.findfile(poi.audioDir, audioName).getUri());
-                        mp.start();
-                        mediafinish = false;
-                        mp.setOnCompletionListener(new OnCompletionListener() {
+                        if (mp != null) {
+                            mp.start();
+                            mediafinish = false;
+                            mp.setOnCompletionListener(new OnCompletionListener() {
 
-                            public void onCompletion(MediaPlayer mp) {
-                                mediafinish = true;
-                            }
-                        });
+                                public void onCompletion(MediaPlayer mp) {
+                                    mediafinish = true;
+                                }
+                            });
+                        } else {
+                            mediafinish = true;
+                        }
                         while (!mediafinish) {
                             try {
                                 Thread.sleep(50);
