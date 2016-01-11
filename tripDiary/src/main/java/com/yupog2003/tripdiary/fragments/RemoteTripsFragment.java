@@ -50,6 +50,8 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransportException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -352,13 +354,18 @@ public class RemoteTripsFragment extends Fragment implements OnRefreshListener {
                         intent.setData(Uri.parse(urlStr));
                         startActivity(intent);
                     } else if (which == 2) {
-                        String tripPublic = trip_option == option_public ? "yes" : "no";
-                        String urlStr = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + tripName + "&trippath=" + tripPath + "&public=" + tripPublic;
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_TEXT, urlStr);
-                        intent.putExtra(Intent.EXTRA_SUBJECT, tripName);
-                        startActivity(intent);
+                        try {
+                            String tripPublic = trip_option == option_public ? "yes" : "no";
+                            String urlStr = TripDiaryApplication.serverURL + "/Trip.html?tripname=" + URLEncoder.encode(tripName, "UTF-8") + "&trippath=" + URLEncoder.encode(tripPath, "UTF-8") + "&public=" + tripPublic;
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(Intent.EXTRA_TEXT, urlStr);
+                            intent.putExtra(Intent.EXTRA_SUBJECT, tripName);
+                            startActivity(intent);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                     dialog.dismiss();
                 }

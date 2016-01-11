@@ -118,7 +118,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
         private LayoutParams textParams = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1f);
         public String[] types = getResources().getStringArray(R.array.cost_types);
         public int[] colors;
-        public float[] totals = new float[5];
+        public float[] totals = new float[6];
         private boolean[] sortState = new boolean[4];
 
         public CostAdapter(int option) {
@@ -144,10 +144,10 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                     break;
             }
             summary.setText("");
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < totals.length - 1; i++) {
                 summary.append(types[i] + ":" + String.valueOf(totals[i]) + " ");
             }
-            summary.append(getString(R.string.total_cost) + ":" + totals[4]);
+            summary.append(getString(R.string.total_cost) + ":" + totals[totals.length - 1]);
         }
 
         private CostData readCostData(DocumentFile file, String POI) {
@@ -166,7 +166,7 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                     }
                 }
                 br.close();
-                totals[4] += costDollar;
+                totals[totals.length - 1] += costDollar;
                 if (costType != -1 && costDollar != -1) {
                     totals[costType] += costDollar;
                 }
@@ -233,10 +233,8 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
             layout.addView(column2);
             layout.addView(column3);
             convertView = layout;
-
             return convertView;
         }
-
     }
 
     public void onClick(View v) {
@@ -302,6 +300,9 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                     case 3:
                         costType.check(R.id.other);
                         break;
+                    case 4:
+                        costType.check(R.id.ticket);
+                        break;
                     default:
                         costType.check(R.id.other);
                         break;
@@ -325,6 +326,8 @@ public class CostListFragment extends Fragment implements View.OnClickListener {
                                 type = 2;
                             } else if (costType.getCheckedRadioButtonId() == R.id.other) {
                                 type = 3;
+                            } else if (costType.getCheckedRadioButtonId() == R.id.ticket) {
+                                type = 4;
                             } else {
                                 type = 0;
                             }

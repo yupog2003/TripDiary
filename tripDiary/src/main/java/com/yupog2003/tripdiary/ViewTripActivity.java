@@ -488,7 +488,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                 progressBar.setProgress(value0);
                 progressMessage.setText(values[1] + "\n" + String.valueOf(value0 / 10) + "%");
             } else if (value0 == setPOI) {
-                if (trip.pois != null) {
+                if (trip != null && trip.pois != null) {
                     new LoadNavigationHeaderBackgroundTask().execute();
                     allTextFragment.refresh();
                     allPictureFragment.refresh();
@@ -497,7 +497,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
                     viewCostFragment.refreshData(false);
                 }
             } else if (value0 == setTime) {
-                if (trip.tripName != null) {
+                if (trip != null && trip.tripName != null) {
                     setTitle(trip.tripName);
                     String dateDuration = trip.getDateDurationString();
                     TextView navigationTripName = (TextView) findViewById(R.id.navigationTripName);
@@ -717,7 +717,9 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
             trip = null;
         }
         ImageView imageView = (ImageView) findViewById(R.id.navigationHeaderBackground);
-        imageView.setImageBitmap(null);
+        if (imageView != null) {
+            imageView.setImageBitmap(null);
+        }
         System.gc();
         super.onDestroy();
     }

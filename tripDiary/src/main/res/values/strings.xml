@@ -56,6 +56,7 @@
         <item>Lodging</item>
         <item>Transportation</item>
         <item>Other</item>
+        <item>Ticket</item>
     </string-array>
 
     <string-array name="distance_units">
@@ -357,5 +358,6 @@
     <string name="year">Year</string>
     <string name="today">Today</string>
     <string name="no_image_editor">No image editor</string>
+    <string name="ticket">Ticket</string>
 
 </resources>

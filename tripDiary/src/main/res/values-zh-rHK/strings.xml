@@ -56,6 +56,7 @@
         <item>住</item>
         <item>行</item>
         <item>其他</item>
+        <item>門票</item>
     </string-array>
 
     <string-array name="distance_units">
@@ -344,4 +345,5 @@
     <string name="year">年</string>
     <string name="today">今天</string>
     <string name="no_image_editor">沒有圖片編輯器</string>
+    <string name="ticket">門票</string>
 </resources>

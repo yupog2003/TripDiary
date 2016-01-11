@@ -116,11 +116,11 @@ public class MyActivity extends AppCompatActivity {
         void onFailed();
     }
 
-    private OnGrantPermissionCompletedListener listener;
+    private OnGrantPermissionCompletedListener onGrantPermissionCompletedListener;
 
     public void checkHasPermission(OnGrantPermissionCompletedListener listener, String... permissions) {
         if (listener == null) return;
-        this.listener = listener;
+        this.onGrantPermissionCompletedListener = listener;
         ArrayList<String> permissionList = new ArrayList<>();
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -151,13 +151,13 @@ public class MyActivity extends AppCompatActivity {
             for (int grantResult : grantResults) {
                 granted &= grantResult == PackageManager.PERMISSION_GRANTED;
             }
-            if (listener != null) {
+            if (onGrantPermissionCompletedListener != null) {
                 if (granted) {
-                    listener.onGranted();
+                    onGrantPermissionCompletedListener.onGranted();
                 } else {
-                    listener.onFailed();
+                    onGrantPermissionCompletedListener.onFailed();
                 }
-                listener = null;
+                onGrantPermissionCompletedListener = null;
             }
         }
     }

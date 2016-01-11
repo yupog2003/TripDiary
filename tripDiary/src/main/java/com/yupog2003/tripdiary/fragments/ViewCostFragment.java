@@ -114,9 +114,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.activity_view_cost, menu);
-
     }
 
     @Override
@@ -150,6 +148,8 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             type = 2;
                         } else if (costType.getCheckedRadioButtonId() == R.id.other) {
                             type = 3;
+                        } else if (costType.getCheckedRadioButtonId() == R.id.ticket) {
+                            type = 4;
                         } else {
                             type = 0;
                         }

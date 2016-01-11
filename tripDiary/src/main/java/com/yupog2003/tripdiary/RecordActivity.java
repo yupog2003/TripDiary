@@ -449,6 +449,8 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                             type = 2;
                         } else if (costType.getCheckedRadioButtonId() == R.id.other) {
                             type = 3;
+                        } else if (costType.getCheckedRadioButtonId() == R.id.ticket) {
+                            type = 4;
                         } else {
                             type = 0;
                         }
