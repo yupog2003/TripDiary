@@ -348,5 +348,32 @@
     <string name="today">今天</string>
     <string name="no_image_editor">沒有圖片編輯器</string>
     <string name="ticket">門票</string>
+    <string name="Weather">天氣</string>
+    <string name="trip_image_viewer">旅程圖片檢視器</string>
+    <string name="aperture">光圈</string>
+    <string name="exposure_time">曝光時間</string>
+    <string name="flash">閃光燈</string>
+    <string name="focal_length">焦距</string>
+    <string name="length">長度</string>
+    <string name="width">寬度</string>
+    <string name="iso">ISO</string>
+    <string name="model">相機</string>
+    <string name="orientation">方向</string>
+    <string name="white_balance">白平衡</string>
+    <string name="auto_rotate">自動旋轉</string>
+    <string name="auto_rotate_image_according_to_screen_size">根據螢幕尺寸自動旋轉圖片</string>
+    <string name="auto_brightness">自動亮度</string>
+    <string name="highest_screen_brightness_while_viewing_image">觀看圖片時將螢幕調到最亮</string>
+    <string name="auto_resume_trip">自動接續旅程</string>
+    <string name="resume_trip_automatically_after_reboot">重開機後自動恢復紀錄旅程</string>
+    <string name="clear_sky">晴天</string>
+    <string name="few_clouds">晴時多雲</string>
+    <string name="scattered_clouds">多雲</string>
+    <string name="broken_clouds">陰天</string>
+    <string name="shower_rain">大雨</string>
+    <string name="rain">雨天</string>
+    <string name="thunderstorm">打雷</string>
+    <string name="snow">下雪</string>
+    <string name="mist">霧</string>
 
 </resources>

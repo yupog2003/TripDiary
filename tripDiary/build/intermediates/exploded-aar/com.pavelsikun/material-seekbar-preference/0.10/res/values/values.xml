@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="SeekBarPreference"><attr format="reference|integer" name="msbp_minValue"/><attr format="reference|integer" name="msbp_maxValue"/><attr format="reference|integer" name="msbp_interval"/><attr format="reference|string" name="msbp_measurementUnit"/></declare-styleable>
-</resources>

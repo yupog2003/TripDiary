@@ -40,6 +40,7 @@ public class POI implements Comparable<POI> {
     public double longitude;
     public double altitude;
     public String diary;
+    public String weather;
 
     public POI(Context context, DocumentFile dir, Trip trip) throws NullPointerException {
         this.context = context;
@@ -102,6 +103,7 @@ public class POI implements Comparable<POI> {
             this.longitude = 0;
             this.altitude = 0;
             this.diary = "";
+            this.weather = "unknown";
             if (basicInformationFile != null) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(basicInformationFile.getInputStream()));
                 String s;
@@ -116,6 +118,8 @@ public class POI implements Comparable<POI> {
                         this.longitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
                     } else if (s.startsWith("Altitude")) {
                         this.altitude = Double.parseDouble(s.substring(s.indexOf("=") + 1));
+                    } else if (s.startsWith("Weather")) {
+                        this.weather = s.substring(s.indexOf("=") + 1);
                     }
                 }
                 br.close();
@@ -128,7 +132,7 @@ public class POI implements Comparable<POI> {
         }
     }
 
-    public void updateBasicInformation(String title, MyCalendar time, Double latitude, Double longitude, Double altitude) {
+    public void updateBasicInformation(String title, MyCalendar time, Double latitude, Double longitude, Double altitude, String weather) {
         if (title != null)
             this.title = title;
         if (time != null)
@@ -139,6 +143,8 @@ public class POI implements Comparable<POI> {
             this.longitude = longitude;
         if (altitude != null)
             this.altitude = altitude;
+        if (weather != null)
+            this.weather = weather;
         this.time.setTimeZone("UTC");
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(basicInformationFile.getOutputStream()));
@@ -147,6 +153,7 @@ public class POI implements Comparable<POI> {
             bw.write("Latitude=" + String.valueOf(this.latitude) + "\n");
             bw.write("Longitude=" + String.valueOf(this.longitude) + "\n");
             bw.write("Altitude=" + String.valueOf(this.altitude) + "\n");
+            bw.write("Weather=" + String.valueOf(this.weather) + "\n");
             bw.flush();
             bw.close();
         } catch (NullPointerException | IOException | IllegalArgumentException e) {
@@ -278,7 +285,7 @@ public class POI implements Comparable<POI> {
         if (name == null || name.equals("") || dir == null) return;
         dir.renameTo(name);
         updateAllFields();
-        updateBasicInformation(name, null, null, null, null);
+        updateBasicInformation(name, null, null, null, null, null);
     }
 
     public void deleteSelf() {

@@ -26,23 +26,23 @@ public final class R {
 		public static final int ambilwarna_target = 0x7f02004d;
 	}
 	public static final class id {
-		public static final int ambilwarna_alphaCheckered = 0x7f0e00e7;
-		public static final int ambilwarna_alphaCursor = 0x7f0e00ea;
-		public static final int ambilwarna_cursor = 0x7f0e00e9;
-		public static final int ambilwarna_dialogView = 0x7f0e00e3;
-		public static final int ambilwarna_newColor = 0x7f0e00ee;
-		public static final int ambilwarna_oldColor = 0x7f0e00ed;
-		public static final int ambilwarna_overlay = 0x7f0e00e8;
-		public static final int ambilwarna_pref_widget_box = 0x7f0e00ef;
-		public static final int ambilwarna_state = 0x7f0e00ec;
-		public static final int ambilwarna_target = 0x7f0e00eb;
-		public static final int ambilwarna_viewContainer = 0x7f0e00e4;
-		public static final int ambilwarna_viewHue = 0x7f0e00e6;
-		public static final int ambilwarna_viewSatBri = 0x7f0e00e5;
+		public static final int ambilwarna_alphaCheckered = 0x7f0e00e9;
+		public static final int ambilwarna_alphaCursor = 0x7f0e00ec;
+		public static final int ambilwarna_cursor = 0x7f0e00eb;
+		public static final int ambilwarna_dialogView = 0x7f0e00e5;
+		public static final int ambilwarna_newColor = 0x7f0e00f0;
+		public static final int ambilwarna_oldColor = 0x7f0e00ef;
+		public static final int ambilwarna_overlay = 0x7f0e00ea;
+		public static final int ambilwarna_pref_widget_box = 0x7f0e00f1;
+		public static final int ambilwarna_state = 0x7f0e00ee;
+		public static final int ambilwarna_target = 0x7f0e00ed;
+		public static final int ambilwarna_viewContainer = 0x7f0e00e6;
+		public static final int ambilwarna_viewHue = 0x7f0e00e8;
+		public static final int ambilwarna_viewSatBri = 0x7f0e00e7;
 	}
 	public static final class layout {
-		public static final int ambilwarna_dialog = 0x7f030028;
-		public static final int ambilwarna_pref_widget = 0x7f030029;
+		public static final int ambilwarna_dialog = 0x7f030029;
+		public static final int ambilwarna_pref_widget = 0x7f03002a;
 	}
 	public static final class styleable {
 		public static final int[] AmbilWarnaPreference = { 0x7f01002f };

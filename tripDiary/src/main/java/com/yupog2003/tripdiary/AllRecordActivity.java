@@ -266,7 +266,12 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
                         System.gc();
                     }
                 } else {
-                    gmap = mapFragment.getMap();
+                    mapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+                            gmap = googleMap;
+                        }
+                    });
                 }
             }
         }

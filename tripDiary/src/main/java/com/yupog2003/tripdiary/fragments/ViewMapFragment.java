@@ -1,10 +1,12 @@
 package com.yupog2003.tripdiary.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -16,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -171,7 +174,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 gmap = googleMap;
-                gmap.setMyLocationEnabled(true);
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    gmap.setMyLocationEnabled(true);
+                }
                 gmap.getUiSettings().setZoomControlsEnabled(true);
                 switchMapMode.setOnClickListener(ViewMapFragment.this);
                 streetView.setOnClickListener(ViewMapFragment.this);
@@ -786,7 +791,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         if (trip == null) return;
         POI poi = trip.getPOI(marker.getTitle());
         if (poi == null) return;
-        poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
+        poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null, null);
         if (getActivity() != null && getActivity() instanceof ViewTripActivity) {
             ((ViewTripActivity) getActivity()).onPOIUpdate(poi.title);
         }
@@ -1149,7 +1154,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 bearing += 0.05;
                 if (bearing > 360)
                     bearing = 0;
-                if (gmap != null && mapFragment.getMap() != null && lat[index] != null)
+                if (gmap != null && lat[index] != null)
                     gmap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(lat[index], gmap.getCameraPosition().zoom, 90, bearing)), interval, null);
             } else {
                 playPoint.setPosition(lat[index]);
@@ -1414,7 +1419,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             markers.clear();
         }
         if (gmap != null) {
-            gmap.setMyLocationEnabled(false);
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                gmap.setMyLocationEnabled(false);
+            }
             gmap.clear();
         }
         if (importMemoryTask != null) {

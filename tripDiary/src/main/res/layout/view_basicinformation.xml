@@ -56,4 +56,19 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingLeft="10dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Weather"
+        android:textColor="@color/textColorDarkPrimary"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/accent"
+        android:paddingLeft="10dp"/>
+
 </LinearLayout>

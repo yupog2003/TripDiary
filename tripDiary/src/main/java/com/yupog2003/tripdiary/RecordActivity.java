@@ -17,9 +17,11 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -60,15 +62,23 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Weather;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.services.RecordService;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.TimeZone;
 
 public class RecordActivity extends MyActivity implements OnClickListener, OnInfoWindowClickListener, OnMarkerDragListener, Runnable, TextView.OnEditorActionListener {
@@ -93,6 +103,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     Button takePaint;
     Button takeMoney;
     Button save;
+    AppCompatSpinner weather;
     FloatingActionButton refresh;
     ProgressBar refreshProgress;
     Handler handler;
@@ -166,6 +177,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         save = (Button) findViewById(R.id.save);
         save.setOnClickListener(this);
         refreshProgress = (ProgressBar) findViewById(R.id.refreshProgress);
+        weather = (AppCompatSpinner) findViewById(R.id.weather);
         int accentColor = ContextCompat.getColor(this, R.color.accent);
         DrawableCompat.setTint(DrawableCompat.wrap(takePicture.getCompoundDrawables()[1].mutate()), accentColor);
         DrawableCompat.setTint(DrawableCompat.wrap(takeVideo.getCompoundDrawables()[1].mutate()), accentColor);
@@ -190,7 +202,9 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 gmap = googleMap;
-                gmap.setMyLocationEnabled(true);
+                if (ActivityCompat.checkSelfPermission(RecordActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(RecordActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    gmap.setMyLocationEnabled(true);
+                }
                 gmap.setOnMarkerDragListener(RecordActivity.this);
                 gmap.setOnInfoWindowClickListener(addPOIMode ? null : RecordActivity.this);
                 gmap.getUiSettings().setZoomControlsEnabled(true);
@@ -247,6 +261,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             addPOI.setVisibility(View.GONE);
             select.setVisibility(View.GONE);
             refresh.setVisibility(View.GONE);
+            weather.setVisibility(View.VISIBLE);
             hideKeyboard();
             if (gmap != null) {
                 gmap.setOnInfoWindowClickListener(null);
@@ -259,6 +274,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             addPOI.setVisibility(View.VISIBLE);
             select.setVisibility(View.VISIBLE);
             refresh.setVisibility(View.VISIBLE);
+            weather.setVisibility(View.GONE);
             hideKeyboard();
             poiName.setText("");
             if (gmap != null) {
@@ -320,13 +336,17 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 return;
             }
             setAddPOIMode(true);
+            Weather.WeatherAdapter weatherAdapter = new Weather.WeatherAdapter(getActivity(), 0, MyCalendar.getInstance().get(Calendar.HOUR_OF_DAY), poi);
+            weather.setAdapter(weatherAdapter);
+            weather.setOnItemSelectedListener(weatherAdapter);
             if (poi.latitude == 0 && poi.longitude == 0 && poi.altitude == 0) { // new_poi
                 final double latitude = userChosenLatLng == null ? location.getLatitude() : userChosenLatLng.latitude;
                 final double longitude = userChosenLatLng == null ? location.getLongitude() : userChosenLatLng.longitude;
                 final double altitude = location.getAltitude();
                 LatLng latLng = new LatLng(latitude, longitude);
                 POIMarker = gmap.addMarker(new MarkerOptions().position(latLng).title(poi.title).snippet(time.formatInCurrentTimezone()).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                poi.updateBasicInformation(null, time, latitude, longitude, altitude);
+                poi.updateBasicInformation(null, time, latitude, longitude, altitude, null);
+                new GetWeatherTask(latitude, longitude).execute();
             } else { // edit exist poi
                 if (markers != null) {
                     for (int i = 0; i < markers.size(); i++) {
@@ -339,6 +359,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                         }
                     }
                 }
+                weather.setSelection(Weather.WeatherAdapter.getPositionFromId(poi.weather));
             }
             if (POIMarker != null) {
                 gmap.animateCamera(CameraUpdateFactory.newLatLng(POIMarker.getPosition()));
@@ -554,7 +575,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
             nowFileForCameraIntent = null;
         } else if (requestCode == REQUEST_PICK_PLACE) {
             if (resultCode == Activity.RESULT_OK && data != null) {
-                Place place = PlacePicker.getPlace(data, this);
+                Place place = PlacePicker.getPlace(this, data);
                 if (!addPOIMode && place != null) {
                     userChosenLatLng = place.getLatLng();
                     poiName.setText(place.getName().toString());
@@ -718,6 +739,44 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
 
     }
 
+    class GetWeatherTask extends AsyncTask<Void, Void, String> {
+
+        double lat, lon;
+
+        public GetWeatherTask(double lat, double lon) {
+            this.lat = lat;
+            this.lon = lon;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                if (poi == null) return null;
+                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?appid=" + Weather.appId + "&lat=" + String.valueOf(lat) + "&lon=" + String.valueOf(lon));
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream is = connection.getInputStream();
+                String result = IOUtils.toString(is, "UTF-8");
+                JSONObject resultObject = new JSONObject(result);
+                JSONObject weatherObject = resultObject.getJSONArray("weather").getJSONObject(0);
+                int code = weatherObject.getInt("id");
+                String id = Weather.getIdFromCode(code);
+                if (poi == null) return null;
+                poi.updateBasicInformation(null, null, null, null, null, id);
+                return id;
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String id) {
+            if (weather != null && id != null) {
+                weather.setSelection(Weather.WeatherAdapter.getPositionFromId(id));
+            }
+        }
+    }
+
     @Override
     public void onInfoWindowClick(Marker marker) {
         if (!addPOIMode) {
@@ -734,7 +793,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     @Override
     public void onMarkerDragEnd(Marker marker) {
         if (poi != null && marker != null && marker.getTitle() != null && marker.getTitle().equals(poi.title)) {
-            poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null);
+            poi.updateBasicInformation(null, null, marker.getPosition().latitude, marker.getPosition().longitude, null, null);
         }
     }
 
@@ -746,7 +805,9 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
     @Override
     protected void onDestroy() {
         if (gmap != null) {
-            gmap.setMyLocationEnabled(false);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                gmap.setMyLocationEnabled(false);
+            }
             gmap.clear();
         }
         super.onDestroy();

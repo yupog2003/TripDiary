@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.yupog2003.tripdiary.ImageViewerActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -351,6 +352,9 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
         Uri uri = ((DocumentFile) adapter.getItem(position)).getUri();
         intent.setDataAndType(uri, "image/*");
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (poi != null && poi.parentTrip != null && poi.parentTrip.tripName != null) {
+            intent.putExtra(ImageViewerActivity.tag_tripName, poi.parentTrip.tripName);
+        }
         startActivity(intent);
     }
 

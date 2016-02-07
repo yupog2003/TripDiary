@@ -1,6 +1,7 @@
 package com.yupog2003.tripdiary;
 
 import android.Manifest;
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -27,7 +28,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -230,7 +231,7 @@ public class MyActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-                token = GoogleAuthUtil.getToken(getActivity(), account, "oauth2:https://www.googleapis.com/auth/userinfo.email");
+                token = GoogleAuthUtil.getToken(getActivity(), new Account(account, "com.google"), "oauth2:https://www.googleapis.com/auth/userinfo.email");
             } catch (UserRecoverableAuthException e) {
                 e.printStackTrace();
                 loginIntent = e.getIntent();
@@ -262,7 +263,7 @@ public class MyActivity extends AppCompatActivity {
                         .addConnectionCallbacks(callbacks)
                         .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
                             @Override
-                            public void onConnectionFailed(ConnectionResult connectionResult) {
+                            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
                                 if (connectionResult.hasResolution()) {
                                     try {
                                         connectionResult.startResolutionForResult(MyActivity.this, REQUEST_CONNECT_TO_DRIVE);
@@ -270,7 +271,7 @@ public class MyActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
                                 } else {
-                                    GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), MyActivity.this, 0).show();
+                                    GoogleApiAvailability.getInstance().getErrorDialog(MyActivity.this, connectionResult.getErrorCode(), 0).show();
                                 }
                             }
                         }).build();

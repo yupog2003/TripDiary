@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource;
@@ -159,7 +158,7 @@ public abstract class DocumentFile {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                DriveFolder driveFolder = Drive.DriveApi.getFolder(googleApiClient, driveId);
+                DriveFolder driveFolder = driveId.asDriveFolder();
                 DriveResource.MetadataResult metadataResult = driveFolder.getMetadata(googleApiClient).await();
                 if (metadataResult.getStatus().isSuccess()) {
                     Metadata metadata = metadataResult.getMetadata();
@@ -202,7 +201,7 @@ public abstract class DocumentFile {
         Cursor c = null;
         try {
             c = resolver.query(self, new String[]{column}, null, null, null);
-            if (c.moveToFirst() && !c.isNull(0)) {
+            if (c != null && c.moveToFirst() && !c.isNull(0)) {
                 return c.getLong(0);
             } else {
                 return defaultValue;

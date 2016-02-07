@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/audiolistview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:drawSelectorOnTop="true"/>
+
+<!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/fragment_audio.xml -->

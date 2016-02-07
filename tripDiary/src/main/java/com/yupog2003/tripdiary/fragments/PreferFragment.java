@@ -26,7 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.yupog2003.tripdiary.CategoryActivity;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
@@ -274,7 +274,7 @@ public class PreferFragment extends PreferenceFragment implements OnPreferenceCh
             }, true);
         } else if (preference.equals(legalNotice)) {
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-            ab.setMessage(GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(getActivity()));
+            ab.setMessage(GoogleApiAvailability.getInstance().getOpenSourceSoftwareLicenseInfo(getActivity()));
             ab.setTitle("Legal Notice");
             ab.show();
         }

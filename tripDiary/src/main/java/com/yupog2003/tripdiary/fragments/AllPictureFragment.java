@@ -24,16 +24,21 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.yupog2003.tripdiary.ImageViewerActivity;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.DrawableHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Weather;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
+
+import java.util.Calendar;
 
 public class AllPictureFragment extends Fragment {
     POI[] pois;
@@ -131,6 +136,7 @@ public class AllPictureFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(pictures[position].getUri(), "image/*");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(ImageViewerActivity.tag_tripName, ((ViewTripActivity) getActivity()).trip.tripName);
             startActivity(intent);
         }
     }
@@ -143,6 +149,7 @@ public class AllPictureFragment extends Fragment {
             public TextView poiName;
             public TextView poiTime;
             public UnScrollableGridView gridView;
+            public ImageView weather;
             public View.OnClickListener onClickListener;
             public int index;
 
@@ -153,6 +160,7 @@ public class AllPictureFragment extends Fragment {
                 this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
                 this.gridView = (UnScrollableGridView) cardView.findViewById(R.id.pictures);
                 this.gridView.setNumColumns(numColumns);
+                this.weather = (ImageView) cardView.findViewById(R.id.weather);
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -190,6 +198,15 @@ public class AllPictureFragment extends Fragment {
             holder.gridView.setVisibility(pictureAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
             holder.gridView.setAdapter(pictureAdapters[position]);
             holder.gridView.setOnItemClickListener(pictureAdapters[position]);
+            MyCalendar time = pois[position].time;
+            time.setTimeZone(timezone);
+            int weatherIcon = Weather.getIconForId(pois[position].weather, time.get(Calendar.HOUR_OF_DAY));
+            holder.weather.setImageResource(weatherIcon);
+            if (weatherIcon == R.drawable.ic_question_mark) {
+                holder.weather.setVisibility(View.GONE);
+            } else {
+                holder.weather.setVisibility(View.VISIBLE);
+            }
             holder.index = position;
         }
 

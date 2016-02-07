@@ -16,15 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DrawableHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Weather;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.UnScrollableListView;
+
+import java.util.Calendar;
 
 public class AllAudioFragment extends Fragment {
     POI[] pois;
@@ -124,6 +129,7 @@ public class AllAudioFragment extends Fragment {
             public TextView poiName;
             public TextView poiTime;
             public UnScrollableListView listView;
+            public ImageView weather;
             public View.OnClickListener onClickListener;
             public int index;
 
@@ -133,6 +139,7 @@ public class AllAudioFragment extends Fragment {
                 this.poiName = (TextView) cardView.findViewById(R.id.poiName);
                 this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
                 this.listView = (UnScrollableListView) cardView.findViewById(R.id.audios);
+                this.weather = (ImageView) cardView.findViewById(R.id.weather);
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -169,6 +176,15 @@ public class AllAudioFragment extends Fragment {
             holder.listView.setVisibility(audioAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
             holder.listView.setAdapter(audioAdapters[position]);
             holder.listView.setOnItemClickListener(audioAdapters[position]);
+            MyCalendar time = pois[position].time;
+            time.setTimeZone(timezone);
+            int weatherIcon = Weather.getIconForId(pois[position].weather, time.get(Calendar.HOUR_OF_DAY));
+            holder.weather.setImageResource(weatherIcon);
+            if (weatherIcon == R.drawable.ic_question_mark) {
+                holder.weather.setVisibility(View.GONE);
+            } else {
+                holder.weather.setVisibility(View.VISIBLE);
+            }
             holder.index = position;
         }
 

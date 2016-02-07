@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string-array name="altitude_units">
+        <item>公尺</item>
+        <item>英呎</item>
+    </string-array>
+    <string-array name="altitude_units_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="cost_types">
+        <item>食</item>
+        <item>住</item>
+        <item>行</item>
+        <item>其他</item>
+        <item>門票</item>
+    </string-array>
+    <string-array name="distance_units">
+        <item>公里</item>
+        <item>英哩</item>
+    </string-array>
+    <string-array name="distance_units_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="habit_of_adding_poi">
+        <item>在瀏覽興趣點之前新增它</item>
+        <item>在瀏覽興趣點時新增它</item>
+        <item>在瀏覽興趣點之後前增它</item>
+    </string-array>
+    <string-array name="habit_of_adding_poi_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="play_view_type">
+        <item>標準</item>
+        <item>鳥瞰圖</item>
+    </string-array>
+    <string-array name="play_view_type_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="speed">
+        <item>非常慢</item>
+        <item>慢</item>
+        <item>普通</item>
+        <item>快</item>
+        <item>非常快</item>
+    </string-array>
+    <string-array name="speed_play_poi_values">
+        <item>5000</item>
+        <item>2000</item>
+        <item>1000</item>
+        <item>500</item>
+        <item>200</item>
+    </string-array>
+    <string-array name="speed_play_trip_values">
+        <item>50</item>
+        <item>20</item>
+        <item>10</item>
+        <item>5</item>
+        <item>2</item>
+    </string-array>
+    <string name="Altitude">高度</string>
+    <string name="Category">類別</string>
+    <string name="Category_Name">類別名稱</string>
+    <string name="Color">顏色</string>
+    <string name="History">歷史紀錄</string>
+    <string name="Keep_in_memory">常駐記憶體</string>
+    <string name="Keep_in_memory_explanation">紀錄軌跡時旅遊日記會盡可能常駐記憶體，也許可以改善斷斷續續的軌跡紀錄</string>
+    <string name="Latitude">緯度</string>
+    <string name="Location">地點</string>
+    <string name="Longitude">經度</string>
+    <string name="Name">名稱</string>
+    <string name="Note">筆記</string>
+    <string name="Start_Trip">開始旅程</string>
+    <string name="Time">時間</string>
+    <string name="Title">標題</string>
+    <string name="Weather">天氣</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-zh-rTW/values-zh-rTW.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"瀏覽首頁"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s：%2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s - %2$s：%3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"向上瀏覽"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"更多選項"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"完成"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"查看全部"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"選擇應用程式"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"關閉"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"開啟"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"搜尋…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"清除查詢"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"搜尋查詢"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"搜尋"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"提交查詢"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"語音搜尋"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"選擇分享對象"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"與「%s」分享"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"收合"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="account">帳戶</string>
+    <string name="accuracy">精確度</string>
+    <string name="add">新增</string>
+    <string name="add_background_music">加入背景音樂</string>
+    <string name="add_poi">新增興趣點</string>
+    <string name="altitude_unit">高度單位</string>
+    <string name="analysis_gpx">解析.gpx檔</string>
+    <string name="aperture">光圈</string>
+    <string name="app_name">旅遊日記</string>
+    <string name="are_you_sure_to_delete">確定要刪除嗎?</string>
+    <string name="are_you_sure_to_delete_this_poi">確定要刪除這個興趣點嗎?</string>
+    <string name="audio_codec">聲音編碼</string>
+    <string name="audio_recorder_is_not_available">無錄音機</string>
+    <string name="auto_brightness">自動亮度</string>
+    <string name="auto_resume_trip">自動接續旅程</string>
+    <string name="auto_rotate">自動旋轉</string>
+    <string name="auto_rotate_image_according_to_screen_size">根據螢幕尺寸自動旋轉圖片</string>
+    <string name="average_speed">平均速度</string>
+    <string name="back_up_setting">備份設定</string>
+    <string name="background_music">背景音樂</string>
+    <string name="backup">備份</string>
+    <string name="backup_complete">備份完成</string>
+    <string name="barchart">直方圖</string>
+    <string name="be_careful">小心</string>
+    <string name="blur">模糊</string>
+    <string name="broken_clouds">陰天</string>
+    <string name="brush_mode">畫筆模式</string>
+    <string name="cache_has_been_cleared">快取已清除</string>
+    <string name="calendar">日曆</string>
+    <string name="camera_is_not_available">無相機服務</string>
+    <string name="cancel">取消</string>
+    <string name="cannot_add_nocategory">無法新增未分類</string>
+    <string name="cannot_delete_nocategory">無法刪除未分類</string>
+    <string name="choose_a_category">選擇一個類別</string>
+    <string name="choose_the_poi">選擇興趣點</string>
+    <string name="choose_the_trip">選擇旅程</string>
+    <string name="clear_cache">清除快取</string>
+    <string name="clear_sky">晴天</string>
+    <string name="click_or_swipe_down_to_view_detail">點擊或放大以了解細節</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-zh-rTW/base_strings.xml -->
+    <eat-comment/>
+    <string msgid="2785372108150982144" name="common_google_play_services_api_unavailable_text">"「<ns1:g id="APP_NAME">%1$s</ns1:g>」需要用到一或多項 Google Play 服務，但目前無法存取相關服務。請與開發人員聯絡以尋求協助。"</string>
+    <string msgid="7334167077229901382" name="common_google_play_services_enable_button">"啟用 Google Play 服務"</string>
+    <string msgid="2016066508617425489" name="common_google_play_services_enable_text">"您必須啟用 Google Play 服務，才能執行「<ns1:g id="APP_NAME">%1$s</ns1:g>」。"</string>
+    <string msgid="4763733806837472840" name="common_google_play_services_enable_title">"啟用 Google Play 服務"</string>
+    <string msgid="5765996826213593005" name="common_google_play_services_install_button">"取得 Google Play 服務"</string>
+    <string msgid="1545874412485515659" name="common_google_play_services_install_text_phone">"您的手機並未安裝 Google Play 服務，因此無法執行「<ns1:g id="APP_NAME">%1$s</ns1:g>」。"</string>
+    <string msgid="2742131317258851812" name="common_google_play_services_install_text_tablet">"您的平板電腦並未安裝 Google Play 服務，因此無法執行「<ns1:g id="APP_NAME">%1$s</ns1:g>」。"</string>
+    <string msgid="2110712637922504348" name="common_google_play_services_install_title">"取得 Google Play 服務"</string>
+    <string msgid="8004809446015217370" name="common_google_play_services_invalid_account_text">"這個裝置上沒有您所指定的帳戶，請選擇其他帳戶。"</string>
+    <string msgid="9894539456463288" name="common_google_play_services_invalid_account_title">"帳戶無效"</string>
+    <string msgid="2602915190038884860" name="common_google_play_services_network_error_text">"需要數據連線才能連上 Google Play 服務。"</string>
+    <string msgid="5183831421651758225" name="common_google_play_services_network_error_title">"網路錯誤"</string>
+    <string msgid="3936796119014022295" name="common_google_play_services_notification_ticker">"Google Play 服務錯誤"</string>
+    <string msgid="6951442375899151085" name="common_google_play_services_restricted_profile_text">"不支援透過設有限制的個人資料存取帳戶。"</string>
+    <string msgid="4958149393843193760" name="common_google_play_services_restricted_profile_title">"設有限制的個人資料"</string>
+    <string msgid="59739986196915578" name="common_google_play_services_sign_in_failed_text">"登入指定帳戶時發生錯誤，請選擇其他帳戶。"</string>
+    <string msgid="8431204498860131150" name="common_google_play_services_sign_in_failed_title">"登入失敗"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values-zh-rTW/common_strings.xml -->
+    <eat-comment/>
+    <string msgid="7170719956698345984" name="common_google_play_services_unknown_issue">"「<ns1:g id="APP_NAME">%1$s</ns1:g>」無法存取 Google Play 服務。如果問題無法解決，請與開發人員聯絡，向對方尋求協助。"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-zh-rTW/base_strings.xml -->
+    <eat-comment/>
+    <string msgid="4291190028362992831" name="common_google_play_services_unsupported_text">"「<ns1:g id="APP_NAME">%1$s</ns1:g>」需要搭配 Google Play 服務才能運作，但您的裝置並不支援相關服務。請與您的裝置製造商聯絡以尋求協助。"</string>
+    <string msgid="909734065366822541" name="common_google_play_services_unsupported_title">"Google Play 服務"</string>
+    <string msgid="2221302284291941971" name="common_google_play_services_update_button">"更新"</string>
+    <string msgid="6230553430311881723" name="common_google_play_services_update_text">"您必須更新 Google Play 服務，才能執行「<ns1:g id="APP_NAME">%1$s</ns1:g>」。"</string>
+    <string msgid="2926201203597631481" name="common_google_play_services_update_title">"更新 Google Play 服務"</string>
+    <string msgid="1576144479907495032" name="common_google_play_services_updating_text">"執行「<ns1:g id="APP_NAME">%1$s</ns1:g>」所需的 Google Play 服務正在更新。"</string>
+    <string msgid="1604540693139938838" name="common_google_play_services_updating_title">"Google Play 服務更新中"</string>
+    <string msgid="8334920661858223093" name="common_google_play_services_wear_update_text">"必須使用新版 Google Play 服務。該服務稍後就會自動更新。"</string>
+    <string msgid="311697239335516384" name="common_open_on_phone">"在手機上開啟"</string>
+    <string msgid="3156914698180786012" name="common_signin_button_text">"登入"</string>
+    <string msgid="1483290677806110088" name="common_signin_button_text_long">"使用 Google 帳戶登入"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="cost">花費</string>
+    <string name="cost_type">花費種類</string>
+    <string name="delete">刪除</string>
+    <string name="delete_poi">刪除興趣點</string>
+    <string name="diary">日記</string>
+    <string name="diary_font">日記字體</string>
+    <string name="diary_font_size">日記字體大小</string>
+    <string name="display_setting">顯示設定</string>
+    <string name="distance">距離</string>
+    <string name="distance_unit">距離單位</string>
+    <string name="do_you_want_to_install">要安裝嗎？</string>
+    <string name="dont_play_background_music">播放旅程時不播放背景音樂</string>
+    <string name="download">下載</string>
+    <string name="download_from_google_drive">從Google雲端硬碟下載</string>
+    <string name="downloading">下載中</string>
+    <string name="downloading_ffmpeg_binary_file_for_armv7_neon">為armv7-neon下載ffmpeg二進位檔中</string>
+    <string name="duration_between_record_each_location">間隔多少時間紀錄一個位置(毫秒)</string>
+    <string name="duration_between_update_the_notification">間隔多少時間更新一次通知(毫秒)</string>
+    <string name="edit">編輯</string>
+    <string name="edit_category">編輯類別</string>
+    <string name="emboss">浮雕</string>
+    <string name="encoding">編碼中</string>
+    <string name="enter">確定</string>
+    <string name="eraser_mode">橡皮擦模式</string>
+    <string name="explain_conflict_trip">有相同的旅程，請使用其他名稱</string>
+    <string name="explain_how_to_use_street_view">調整地圖使此人站在一條街上，然後點擊此人</string>
+    <string name="explain_same_trip">有相同的旅程，你要繼續該旅程嗎?</string>
+    <string name="explain_same_trip_when_import">有相同的旅程，請使用其他名稱</string>
+    <string name="explain_update_trip_timezone">原本TripDiary以當前時區顯示所有時間資訊，但現在你可以根據軌跡的第一個位置更新旅程時區，如此一來TripDiary就可以根據旅程時區顯示正確時間。(需要網際網路)</string>
+    <string name="exposure_time">曝光時間</string>
+    <string name="failed_to_loadlibrary">載入library失敗，使用較慢方法</string>
+    <string name="few_clouds">晴時多雲</string>
+    <string name="filename">文件名稱</string>
+    <string name="finish">完成</string>
+    <string name="flash">閃光燈</string>
+    <string name="focal_length">焦距</string>
+    <string name="food">食</string>
+    <string name="fps">Fps</string>
+    <string name="from_new_to_old">新 -> 舊</string>
+    <string name="from_old_to_new">舊 -> 新</string>
+    <string name="generate_video">生成影片</string>
+    <string name="google_drive">Google雲端硬碟</string>
+    <string name="gpx">Gpx</string>
+    <string name="habit_of_adding_poi">新增興趣點習慣</string>
+    <string name="has_not_been_installed">未安裝</string>
+    <string name="highest_screen_brightness_while_viewing_image">觀看圖片時將螢幕調到最亮</string>
+    <string name="image_loader_cache_size">圖片加載器快取大小</string>
+    <string name="image_loader_cache_size_explanation">圖片加載器快取佔heap大小百分比, 增加可取得較好的效能但有可能造成記憶體不足</string>
+    <string name="imagebutton_description">imagebutton</string>
+    <string name="import_audios">匯入聲音</string>
+    <string name="import_files">匯入多個檔案</string>
+    <string name="import_memory">匯入回憶</string>
+    <string name="import_memory_explanation">旅遊日記可以匯入回憶(圖片、影片、聲音)，只需要選擇一個含有回憶的資料夾，然後它就會根據建立時間(JPEG則根據EXIF時間)自動複製這些檔案到適當的POI資料夾，但你應該注意回憶的時區必須與旅程時區相同。</string>
+    <string name="import_pictures">匯入照片</string>
+    <string name="import_trip_with_gpx">以gpx檔匯入旅程</string>
+    <string name="import_videos">匯入影片</string>
+    <string name="importing">匯入中</string>
+    <string name="input_diary">撰寫日記</string>
+    <string name="input_poi_name">輸入興趣點名稱</string>
+    <string name="input_the_poi_title">輸入興趣點標題</string>
+    <string name="input_the_trip_name">輸入旅程名稱</string>
+    <string name="invalid_font">無效的字型</string>
+    <string name="invalid_gpx_file">錯誤的gpx檔</string>
+    <string name="invalid_trip_file">錯誤的旅程檔</string>
+    <string name="is_not_a_valid_directory">不是一個正確的目錄</string>
+    <string name="iso">ISO</string>
+    <string name="kilometer_or_mile">公里或英哩</string>
+    <string name="kml">KML</string>
+    <string name="kmz_with_explanation">KMZ (Google Earth, 包含壓縮後的圖片)</string>
+    <string name="length">長度</string>
+    <string name="lifetime_record">生涯紀錄</string>
+    <string name="list">列表</string>
+    <string name="local_trips">本機旅程</string>
+    <string name="location_not_found">位置未獲得</string>
+    <string name="lodging">住</string>
+    <string name="long_click_to_select_multiple_file">長按以選擇多個檔案</string>
+    <string name="make_it_public">讓他公開？</string>
+    <string name="make_it_public_to_share">為了分享給你朋友，你想要讓這個旅程公開嗎？</string>
+    <string name="manage_category">管理類別</string>
+    <string name="manage_category_summary">管理旅程類別</string>
+    <string name="map">地圖</string>
+    <string name="marker_color">標記顏色</string>
+    <string name="max_altitude">最高高度</string>
+    <string name="max_latitude">最高緯度</string>
+    <string name="max_speed">最高速</string>
+    <string name="measurementUnit_image">張圖片</string>
+    <string name="meter_or_ft">公尺或英呎</string>
+    <string name="min_altitude">最低高度</string>
+    <string name="min_latitude">最低緯度</string>
+    <string name="minimum_distance_between_record_localtions">間隔多少距離紀錄一個位置(公尺)</string>
+    <string name="mist">霧</string>
+    <string name="model">相機</string>
+    <string name="move_to">移動至</string>
+    <string name="move_to_category">移動至類別</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/values-zh-rTW/values-zh-rTW.xml -->
+    <eat-comment/>
+    <string msgid="8327680881775995150" name="mr_media_route_button_content_description">"投放"</string>
+    <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"正在搜尋裝置..."</string>
+    <string msgid="7106830097177242655" name="mr_media_route_chooser_title">"連線至裝置"</string>
+    <string msgid="109793632378378069" name="mr_media_route_controller_disconnect">"中斷連線"</string>
+    <string msgid="3641544772007543920" name="mr_media_route_controller_no_info_available">"沒有可用的資訊"</string>
+    <string msgid="8315773974194466049" name="mr_media_route_controller_pause">"暫停"</string>
+    <string msgid="5214423499524760404" name="mr_media_route_controller_play">"播放"</string>
+    <string msgid="379358765881274425" name="mr_media_route_controller_settings_description">"路由設定"</string>
+    <string msgid="5398645111664294430" name="mr_media_route_controller_stop">"停止投放"</string>
+    <string msgid="5441529851481176817" name="mr_system_route_name">"系統"</string>
+    <string msgid="7498112907524977311" name="mr_user_route_category_name">"裝置"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="music_path">音樂路徑</string>
+    <string name="no">否</string>
+    <string name="no_data_can_be_displayed">沒有資料可以顯示</string>
+    <string name="no_image_editor">沒有圖片編輯器</string>
+    <string name="no_internet_connection">沒有網路連線</string>
+    <string name="no_poi">沒有興趣點</string>
+    <string name="nocategory">未分類</string>
+    <string name="num_Audios">聲音個數</string>
+    <string name="num_POIs">興趣點個數</string>
+    <string name="num_Pics">圖片個數</string>
+    <string name="num_Trips">旅程個數</string>
+    <string name="num_Videos">影片個數</string>
+    <string name="num_of_images_in_a_row_in_landscape_mode">橫向模式中一列有幾張圖片</string>
+    <string name="num_of_images_in_a_row_in_portrait_mode">縱向模式中一列有幾張圖片</string>
+    <string name="open">開啟</string>
+    <string name="open_from_other_source">從其他來源開啟</string>
+    <string name="open_in_read_only_mode">以唯讀模式開啟</string>
+    <string name="orientation">方向</string>
+    <string name="other">其他</string>
+    <string name="others">其他</string>
+    <string name="paint">畫畫</string>
+    <string name="pause">暫停</string>
+    <string name="pausing">暫停中</string>
+    <string name="permission_explanation_location">旅遊日記需要位置權限以紀錄軌跡</string>
+    <string name="permission_explanation_write_external_storage">旅遊日記需要儲存裝置權限以儲存旅程在內部儲存裝置或外部儲存裝置</string>
+    <string name="photo">相片</string>
+    <string name="piechart">圓餅圖</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-zh-rTW/location_strings.xml -->
+    <eat-comment/>
+    <string msgid="2132213647576279742" name="place_autocomplete_clear_button">"清除搜尋"</string>
+    <string msgid="4600782048316473865" name="place_autocomplete_search_hint">"搜尋"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="play">播放</string>
+    <string name="play_background_music">播放旅程時播放背景音樂</string>
+    <string name="play_music">播放音樂</string>
+    <string name="play_poi_speed_summary">播放興趣點時的速度</string>
+    <string name="play_setting">播放設定</string>
+    <string name="play_trip_speed_summary">播放旅程時點移動的速度</string>
+    <string name="playing_poi_speed">播放興趣點速度</string>
+    <string name="playing_trip_mode">旅程播放模式</string>
+    <string name="playing_trip_speed">播放旅程速度</string>
+    <string name="please_connect_to_internet_for_downloading_google_map_background">請連線至網路以下載Google Map背景</string>
+    <string name="please_enable_the_gps_provider">請開啟GPS</string>
+    <string name="please_input_poi_name">請輸入興趣點名稱</string>
+    <string name="please_stop_previous_trip_first">請先停止之前的旅程</string>
+    <string name="poi">興趣點</string>
+    <string name="poi_has_been_saved">已儲存興趣點</string>
+    <string name="poi_not_found">找不到興趣點</string>
+    <string name="preset">Preset</string>
+    <string name="print">列印</string>
+    <string name="rain">雨天</string>
+    <string name="record_distance_interval">紀錄距離間隔</string>
+    <string name="record_duration">紀錄時間間隔</string>
+    <string name="record_setting">紀錄設定</string>
+    <string name="recording">紀錄中</string>
+    <string name="remote_personal_trips">雲端個人旅程</string>
+    <string name="remote_public_trips">雲端公開旅程</string>
+    <string name="rename">更名</string>
+    <string name="resolution">解析度</string>
+    <string name="restore_complete">還原完成</string>
+    <string name="restore_setting">還原設定</string>
+    <string name="restore_trip">還原旅程</string>
+    <string name="resume">繼續</string>
+    <string name="resume_trip">接續旅程</string>
+    <string name="resume_trip_automatically_after_reboot">重開機後自動恢復紀錄旅程</string>
+    <string name="root_path">根目錄</string>
+    <string name="same_trip">本機已有相同旅程</string>
+    <string name="satellite">衛星</string>
+    <string name="satellite_and_streets">衛星和街道</string>
+    <string name="save">儲存</string>
+    <string name="scattered_clouds">多雲</string>
+    <string name="search_poi">搜尋興趣點</string>
+    <string name="search_trip">搜尋旅程</string>
+    <string name="searching_for_satellite">定位中</string>
+    <string name="select">選擇</string>
+    <string name="select_a_directory">選一個資料夾</string>
+    <string name="select_all">全選</string>
+    <string name="select_diary_font">選擇日記字體</string>
+    <string name="select_music_path">選取音樂路徑</string>
+    <string name="select_output_directory">選擇輸出資料夾</string>
+    <string name="select_poi">選擇興趣點</string>
+    <string name="select_poi_name">選擇興趣點名稱</string>
+    <string name="select_speed">選擇速度</string>
+    <string name="select_the_audio_by">選取聲音</string>
+    <string name="select_the_file_to_restore">選擇檔案以還原(.zip)</string>
+    <string name="select_the_gpx">選取.gpx檔</string>
+    <string name="select_the_picture_by">選取圖片</string>
+    <string name="select_the_video_by">選取影片</string>
+    <string name="setting">設定</string>
+    <string name="setting_has_been_backed_up">設定已備份</string>
+    <string name="setting_has_been_restored">設定已還原</string>
+    <string name="shake_to_add_poi">甩動以新增興趣點</string>
+    <string name="shake_to_add_poi_during_recording_trip">紀錄旅程時，甩動手機以新增興趣點(先打開螢幕再甩動)</string>
+    <string name="share">分享</string>
+    <string name="share_diary">分享日記</string>
+    <string name="share_track_by...">分享軌跡…</string>
+    <string name="shower_rain">大雨</string>
+    <string name="snow">下雪</string>
+    <string name="some_fields_are_not_filled">有些欄位未填寫</string>
+    <string name="sort_by_time">依時間排序</string>
+    <string name="sound">聲音</string>
+    <string name="spend">花費</string>
+    <string name="start_time">起始時間</string>
+    <string name="statistics">統計資料</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-zh-rTW/values-zh-rTW.xml -->
+    <eat-comment/>
+    <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"999+"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="stop">停止</string>
+    <string name="stop_time">結束時間</string>
+    <string name="storage_access_framework_explanation">為棒棒糖開啟SD卡寫入權限，會降低一點效能，改變後請重新設定根目錄</string>
+    <string name="storage_error">儲存裝置錯誤</string>
+    <string name="street_view">街景服務</string>
+    <string name="street_view_is_not_available">無街景服務</string>
+    <string name="take_a_audio">錄音</string>
+    <string name="take_a_picture">拍照</string>
+    <string name="take_a_video">錄影</string>
+    <string name="terrain">地形</string>
+    <string name="there_is_a_same_poi">有相同的興趣點</string>
+    <string name="thickness">粗細</string>
+    <string name="thunderstorm">打雷</string>
+    <string name="ticket">門票</string>
+    <string name="title_activity_category">類別</string>
+    <string name="title_activity_main">旅遊日記</string>
+    <string name="title_activity_paint">畫圖</string>
+    <string name="title_activity_play_point">PlayPointActivity</string>
+    <string name="title_activity_preference">偏好設定</string>
+    <string name="title_activity_view">旅遊紀錄</string>
+    <string name="title_activity_view_point">ViewPointActivity</string>
+    <string name="today">今天</string>
+    <string name="together_view">一起觀看</string>
+    <string name="toggle_public">切換公開性</string>
+    <string name="total_ascent">總爬昇</string>
+    <string name="total_cost">總花費</string>
+    <string name="total_time">總時間</string>
+    <string name="track_color">軌跡顏色</string>
+    <string name="track_is_too_long">軌跡過長 (記憶體不足)</string>
+    <string name="transportation">行</string>
+    <string name="trip_category">旅程類別</string>
+    <string name="trip_has_been_stopped">旅程已結束</string>
+    <string name="trip_image_viewer">旅程圖片檢視器</string>
+    <string name="trip_not_found">未找到旅程</string>
+    <string name="unknown_error">不明錯誤</string>
+    <string name="unzipping">解壓縮中</string>
+    <string name="up_dir">回上層</string>
+    <string name="update_all_trips_timezone_by_the_first_location_in_the_track">根據軌跡的第一個位置更新旅程時區</string>
+    <string name="update_duration">更新時間間隔</string>
+    <string name="update_trip_timezone">更新旅程時區</string>
+    <string name="updating">更新中</string>
+    <string name="upload">上傳</string>
+    <string name="upload_to_google_drive">上傳到Google雲端硬碟</string>
+    <string name="upload_to_tripdiary">上傳到旅遊日記</string>
+    <string name="uploading">上傳中</string>
+    <string name="use_storage_access_framework">使用Storage Access Framework</string>
+    <string name="velocity">速率</string>
+    <string name="video">影片</string>
+    <string name="video_codec">影片編碼</string>
+    <string name="videoname">影片名稱</string>
+    <string name="view_trip">觀看旅程</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/res/values-zh-rTW/wallet_strings.xml -->
+    <eat-comment/>
+    <string msgid="4184147110658930238" name="wallet_buy_button_place_holder">"透過 Google 購物"</string>
+    <!-- From: file:/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="when_do_you_usually_add_a_poi">你新增興趣點的習慣，這會影響到匯入回憶的行為</string>
+    <string name="white_balance">白平衡</string>
+    <string name="width">寬度</string>
+    <string name="write_text">寫字</string>
+    <string name="year">年</string>
+    <string name="yes">是</string>
+    <string name="zipping">壓縮中</string>
+</resources>

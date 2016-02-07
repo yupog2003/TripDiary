@@ -116,6 +116,14 @@
     <init>();
 }
 
+-keep class com.yupog2003.tripdiary.ImageViewerActivity {
+    <init>();
+}
+
+-keep class com.yupog2003.tripdiary.receivers.BootCompleteReceiver {
+    <init>();
+}
+
 -keep class com.google.android.gms.ads.AdActivity {
     <init>();
 }

@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +19,8 @@ import com.yupog2003.tripdiary.fragments.CalendarTripsFragment;
 import com.yupog2003.tripdiary.fragments.DriveTripsFragment;
 import com.yupog2003.tripdiary.fragments.LocalTripsFragment;
 import com.yupog2003.tripdiary.fragments.RemoteTripsFragment;
+
+import java.util.List;
 
 public class ViewActivity extends MyActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,8 +57,14 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
         publicTripFragmentBundle.putInt(RemoteTripsFragment.tag_option, RemoteTripsFragment.option_public);
         publicFragment.setArguments(publicTripFragmentBundle);
         driveTripsFragment = new DriveTripsFragment();
-        calendarTripsFragment=new CalendarTripsFragment();
+        calendarTripsFragment = new CalendarTripsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                ft.remove(fragment);
+            }
+        }
         ft.add(R.id.fragment, localTripsFragment);
         ft.add(R.id.fragment, calendarTripsFragment);
         ft.add(R.id.fragment, personalFragment);
@@ -76,7 +86,7 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == DriveTripsFragment.REQUEST_PICK_DIR){
+        if (requestCode == DriveTripsFragment.REQUEST_PICK_DIR) {
             driveTripsFragment.onActivityResult(requestCode, resultCode, data);
         }
     }

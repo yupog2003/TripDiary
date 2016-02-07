@@ -28,11 +28,15 @@ import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.DrawableHelper;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.MyImageViewAware;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Weather;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 import com.yupog2003.tripdiary.views.SquareImageView;
 import com.yupog2003.tripdiary.views.UnScrollableGridView;
+
+import java.util.Calendar;
 
 public class AllVideoFragment extends Fragment {
     POI[] pois;
@@ -149,6 +153,7 @@ public class AllVideoFragment extends Fragment {
             public TextView poiName;
             public TextView poiTime;
             public UnScrollableGridView gridView;
+            public ImageView weather;
             public View.OnClickListener onClickListener;
             public int index;
 
@@ -159,6 +164,7 @@ public class AllVideoFragment extends Fragment {
                 this.poiTime = (TextView) cardView.findViewById(R.id.poiTime);
                 this.gridView = (UnScrollableGridView) cardView.findViewById(R.id.videos);
                 this.gridView.setNumColumns(numColumns);
+                this.weather = (ImageView) cardView.findViewById(R.id.weather);
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -197,6 +203,15 @@ public class AllVideoFragment extends Fragment {
             holder.gridView.setVisibility(videoAdapters[position].getCount() == 0 ? View.GONE : View.VISIBLE);
             holder.gridView.setAdapter(videoAdapters[position]);
             holder.gridView.setOnItemClickListener(videoAdapters[position]);
+            MyCalendar time = pois[position].time;
+            time.setTimeZone(timezone);
+            int weatherIcon = Weather.getIconForId(pois[position].weather, time.get(Calendar.HOUR_OF_DAY));
+            holder.weather.setImageResource(weatherIcon);
+            if (weatherIcon == R.drawable.ic_question_mark) {
+                holder.weather.setVisibility(View.GONE);
+            } else {
+                holder.weather.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

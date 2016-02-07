@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.DrawableHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
@@ -105,10 +105,11 @@ public class MainActivity extends MyActivity implements Button.OnClickListener {
     }
 
     private boolean checkPlayService() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(MainActivity.this);
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(MainActivity.this);
         if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, MainActivity.this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            if (googleApiAvailability.isUserResolvableError(resultCode)) {
+                googleApiAvailability.getErrorDialog(MainActivity.this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
                 Toast.makeText(MainActivity.this, "This device is not supported by Google Play Service", Toast.LENGTH_SHORT).show();
                 finishAndRemoveTask();

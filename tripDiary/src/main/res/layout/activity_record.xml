@@ -224,6 +224,11 @@
                     android:layout_weight="1"
                     android:text="@string/add_poi" />
 
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/weather"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp" />
+
             </LinearLayout>
 
             <LinearLayout

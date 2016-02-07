@@ -137,7 +137,7 @@ public class TreeDocumentFile extends DocumentFile {
             Cursor c = null;
             try {
                 c = resolver.query(uri, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID}, null, null, null);
-                return c.getCount() > 0;
+                return c != null && c.getCount() > 0;
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -159,7 +159,7 @@ public class TreeDocumentFile extends DocumentFile {
             try {
                 c = resolver.query(childrenUri, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_MIME_TYPE}, null, null, null);
                 Filter filter = getFilterFromListType(list_type);
-                while (c.moveToNext()) {
+                while (c != null && c.moveToNext()) {
                     final String documentId = c.getString(0);
                     final String mimeType = c.getString(1);
                     if (filter.accept(documentId, mimeType)) {
@@ -263,7 +263,8 @@ public class TreeDocumentFile extends DocumentFile {
     @Override
     public InputStream getInputStream() {
         try {
-            return context.getContentResolver().openInputStream(getUri());
+            InputStream is = context.getContentResolver().openInputStream(getUri());
+            return is == null ? new NullInputStream(0) : is;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -274,7 +275,8 @@ public class TreeDocumentFile extends DocumentFile {
     @Override
     public OutputStream getOutputStream() {
         try {
-            return context.getContentResolver().openOutputStream(getUri());
+            OutputStream os = context.getContentResolver().openOutputStream(getUri());
+            return os == null ? new NullOutputStream() : os;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

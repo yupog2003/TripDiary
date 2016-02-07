@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ import com.yupog2003.tripdiary.data.GpxAnalyzer2;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.Weather;
 import com.yupog2003.tripdiary.fragments.AudioFragment;
 import com.yupog2003.tripdiary.fragments.PictureFragment;
 import com.yupog2003.tripdiary.fragments.TextFragment;
@@ -292,6 +295,9 @@ public class ViewPointActivity extends MyActivity {
             TextView time = (TextView) layout.findViewById(R.id.time);
             String timeStr = poi.time.formatInTimezone(timezone);
             time.setText(timeStr);
+            poi.time.setTimeZone(timezone);
+            ImageView weather = (ImageView) layout.findViewById(R.id.weather);
+            weather.setImageResource(Weather.getIconForId(poi.weather, poi.time.get(MyCalendar.HOUR_OF_DAY)));
             ab.setView(layout);
             ab.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
 
@@ -316,6 +322,10 @@ public class ViewPointActivity extends MyActivity {
                     final TimePicker edittime = (TimePicker) layout.findViewById(R.id.edit_poi_time);
                     MyCalendar time = poi.time;
                     time.setTimeZone(timezone);
+                    final AppCompatSpinner weather = (AppCompatSpinner) layout.findViewById(R.id.weather);
+                    Weather.WeatherAdapter weatherAdapter = new Weather.WeatherAdapter(getActivity(), 0, time.get(MyCalendar.HOUR_OF_DAY), poi);
+                    weather.setAdapter(weatherAdapter);
+                    weather.setSelection(Weather.WeatherAdapter.getPositionFromId(poi.weather));
                     editdate.updateDate(time.get(Calendar.YEAR), time.get(Calendar.MONTH), time.get(Calendar.DAY_OF_MONTH));
                     edittime.setIs24HourView(true);
                     edittime.setCurrentHour(time.get(Calendar.HOUR_OF_DAY));
@@ -342,7 +352,8 @@ public class ViewPointActivity extends MyActivity {
                             if (TripDiaryApplication.altitude_unit == TripDiaryApplication.unit_ft) {
                                 altitude *= 0.3048;
                             }
-                            poi.updateBasicInformation(null, time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude);
+                            String weatherId = Weather.WeatherAdapter.getIdFromPosition(weather.getSelectedItemPosition());
+                            poi.updateBasicInformation(null, time, Double.parseDouble(editLatitudeStr), Double.parseDouble(editLongitudeStr), altitude, weatherId);
                             String newName = edittitle.getText().toString();
                             if (!newName.equals(oldName)) {
                                 if (FileHelper.findfile(poi.dir.getParentFile(), newName) == null) {

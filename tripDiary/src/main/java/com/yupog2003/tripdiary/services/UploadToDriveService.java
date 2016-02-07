@@ -123,7 +123,7 @@ public class UploadToDriveService extends Service implements GoogleApiClient.Con
         if (metadataBufferResult.getStatus().isSuccess()) {
             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                 if (metadata.isFolder() && metadata.getTitle().equals(folderName)) {
-                    resultFolder = Drive.DriveApi.getFolder(googleApiClient, metadata.getDriveId());
+                    resultFolder = metadata.getDriveId().asDriveFolder();
                     break;
                 }
             }
@@ -145,7 +145,7 @@ public class UploadToDriveService extends Service implements GoogleApiClient.Con
         if (metadataBufferResult.getStatus().isSuccess()) {
             for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                 if (!metadata.isFolder() && metadata.getTitle().equals(fileName)) {
-                    resultFile = Drive.DriveApi.getFile(googleApiClient, metadata.getDriveId());
+                    resultFile = metadata.getDriveId().asDriveFile();
                     break;
                 }
             }

@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -61,6 +62,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 
@@ -173,6 +175,12 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         args.putInt(ViewCostActivity.tag_option, ViewCostActivity.optionTrip);
         viewCostFragment.setArguments(args);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                ft.remove(fragment);
+            }
+        }
         ft.add(R.id.fragment, viewMapFragment, ViewMapFragment.class.getSimpleName());
         ft.add(R.id.fragment, allAudioFragment, AllAudioFragment.class.getSimpleName());
         ft.add(R.id.fragment, allPictureFragment, AllPictureFragment.class.getSimpleName());

@@ -29,12 +29,22 @@
 
             <TextView
                 android:id="@+id/poiTime"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="end"
                 android:singleLine="true"
-                android:textColor="@color/textColorDarkSecondary"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/textColorDarkSecondary" />
+
+            <ImageView
+                android:id="@+id/weather"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:tint="@color/accent" />
         </LinearLayout>
 
         <TextView

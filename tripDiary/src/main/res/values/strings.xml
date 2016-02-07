@@ -352,12 +352,43 @@
     <string name="same_trip">There is a same trip on local device</string>
     <string name="open_in_read_only_mode">Open in read-only mode</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="calendar">Calendar</string>
     <string name="year">Year</string>
     <string name="today">Today</string>
     <string name="no_image_editor">No image editor</string>
     <string name="ticket">Ticket</string>
+    <string name="Weather">Weather</string>
+
+    <string name="title_activity_image_viewer">ImageViewerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="trip_image_viewer">Trip Image Viewer</string>
+    <string name="aperture">Aperture</string>
+    <string name="exposure_time">Exposure Time</string>
+    <string name="flash">Flash</string>
+    <string name="focal_length">Focal Length</string>
+    <string name="length">Length</string>
+    <string name="width">Width</string>
+    <string name="iso">ISO</string>
+    <string name="model">Model</string>
+    <string name="orientation">Orientation</string>
+    <string name="white_balance">White Balance</string>
+    <string name="auto_rotate">Auto Rotate</string>
+    <string name="auto_rotate_image_according_to_screen_size">Rotate image automatically according to screen size</string>
+    <string name="auto_brightness">Auto Brightness</string>
+    <string name="highest_screen_brightness_while_viewing_image">Highest screen brightness while viewing image</string>
+    <string name="auto_resume_trip">Auto resume trip</string>
+    <string name="resume_trip_automatically_after_reboot">Resume recording trip automatically after reboot</string>
+    <string name="clear_sky">clear sky</string>
+    <string name="few_clouds">few clouds</string>
+    <string name="scattered_clouds">scattered clouds</string>
+    <string name="broken_clouds">broken clouds</string>
+    <string name="shower_rain">shower rain</string>
+    <string name="rain">rain</string>
+    <string name="thunderstorm">thunderstorm</string>
+    <string name="snow">snow</string>
+    <string name="mist">mist</string>
 
 </resources>

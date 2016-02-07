@@ -85,6 +85,7 @@ public class RecordService extends Service implements LocationListener, Runnable
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
     public static final String tag_tripName = "tag_tripName";
     public static final String tag_lastRecordTrip = "tag_lastRecordTrip";
+    public static final String tag_onRecording = "tag_onRecording";
 
     String labelDistance;
     String labelTotalTime;
@@ -144,6 +145,7 @@ public class RecordService extends Service implements LocationListener, Runnable
         }
         keepforeground = preferences.getBoolean("keepforeground", false);
         shaketoaddpoi = preferences.getBoolean("shaketoaddpoi", false);
+        preferences.edit().putBoolean(tag_onRecording, true).apply();
         preferences.edit().putString(tag_lastRecordTrip, name).apply();
         setupNotification(name);
         if (shaketoaddpoi) {
@@ -322,7 +324,9 @@ public class RecordService extends Service implements LocationListener, Runnable
             stopForeground(true);
             Toast.makeText(getApplicationContext(), getString(R.string.trip_has_been_stopped), Toast.LENGTH_SHORT).show();
             DeviceHelper.sendGATrack(RecordService.this, "Trip", "stop", trip.tripName, null);
-            PreferenceManager.getDefaultSharedPreferences(RecordService.this).edit().remove(RecordActivity.pref_tag_onaddpoi).apply();
+            SharedPreferences.Editor preferencesEditor = PreferenceManager.getDefaultSharedPreferences(RecordService.this).edit();
+            preferencesEditor.putBoolean(tag_onRecording, false).apply();
+            preferencesEditor.remove(RecordActivity.pref_tag_onaddpoi).apply();
             instance = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ActivityManager.AppTask task = MyActivity.findViewTripActivityTask(RecordService.this, trip.tripName);

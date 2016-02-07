@@ -73,7 +73,7 @@ public class DriveDocumentFile extends DocumentFile {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                DriveFolder parentFolder = Drive.DriveApi.getFolder(googleApiClient, driveId);
+                DriveFolder parentFolder = driveId.asDriveFolder();
                 Query query = getNameQuery(displayName);
                 DriveApi.MetadataBufferResult metadataBufferResult = parentFolder.queryChildren(googleApiClient, query).await();
                 if (metadataBufferResult.getStatus().isSuccess()) {
@@ -113,7 +113,7 @@ public class DriveDocumentFile extends DocumentFile {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                DriveFolder parentFolder = Drive.DriveApi.getFolder(googleApiClient, driveId);
+                DriveFolder parentFolder = driveId.asDriveFolder();
                 Query query = getNameQuery(displayName);
                 DriveApi.MetadataBufferResult metadataBufferResult = parentFolder.queryChildren(googleApiClient, query).await();
                 if (metadataBufferResult.getStatus().isSuccess()) {
@@ -206,16 +206,10 @@ public class DriveDocumentFile extends DocumentFile {
 
     @Override
     public boolean delete() {
-        final DriveResource driveResource;
-        if (isDirectory()) {
-            driveResource = Drive.DriveApi.getFolder(googleApiClient, driveId);
-        } else {
-            driveResource = Drive.DriveApi.getFile(googleApiClient, driveId);
-        }
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                status = driveResource.delete(googleApiClient).await();
+                status = driveId.asDriveResource().delete(googleApiClient).await();
             }
         };
         DeviceHelper.runOnBackgroundThread(r);
@@ -236,13 +230,7 @@ public class DriveDocumentFile extends DocumentFile {
             @Override
             public void run() {
                 MetadataChangeSet changeSet = new MetadataChangeSet.Builder().setTitle(displayName).build();
-                DriveResource resource;
-                if (isDirectory()) {
-                    resource = Drive.DriveApi.getFolder(googleApiClient, driveId);
-                } else {
-                    resource = Drive.DriveApi.getFile(googleApiClient, driveId);
-                }
-                DriveResource.MetadataResult metadataResult = resource.updateMetadata(googleApiClient, changeSet).await();
+                DriveResource.MetadataResult metadataResult = driveId.asDriveResource().updateMetadata(googleApiClient, changeSet).await();
                 if (metadataResult.getStatus().isSuccess()) {
                     updateFromMetaData(metadataResult.getMetadata());
                     renameSuccess = true;
@@ -263,7 +251,7 @@ public class DriveDocumentFile extends DocumentFile {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                DriveFile file = Drive.DriveApi.getFile(googleApiClient, driveId);
+                DriveFile file = driveId.asDriveFile();
                 DriveApi.DriveContentsResult driveContentsResult = file.open(googleApiClient, DriveFile.MODE_READ_ONLY, null).await();
                 if (driveContentsResult.getStatus().isSuccess()) {
                     is = driveContentsResult.getDriveContents().getInputStream();
@@ -284,7 +272,7 @@ public class DriveDocumentFile extends DocumentFile {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                DriveFile file = Drive.DriveApi.getFile(googleApiClient, driveId);
+                DriveFile file = driveId.asDriveFile();
                 DriveApi.DriveContentsResult driveContentsResult = file.open(googleApiClient, DriveFile.MODE_WRITE_ONLY, null).await();
                 if (driveContentsResult.getStatus().isSuccess()) {
                     os = new DriveOutputStream(driveContentsResult.getDriveContents());
@@ -337,7 +325,7 @@ public class DriveDocumentFile extends DocumentFile {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                DriveFolder folder = Drive.DriveApi.getFolder(googleApiClient, driveId);
+                DriveFolder folder = driveId.asDriveFolder();
                 DriveApi.MetadataBufferResult metadataBufferResult = folder.listChildren(googleApiClient).await();
                 if (metadataBufferResult.getStatus().isSuccess()) {
                     switch (list_type) {
@@ -411,7 +399,7 @@ public class DriveDocumentFile extends DocumentFile {
                 if (metadataBufferResult.getStatus().isSuccess()) {
                     for (Metadata metadata : metadataBufferResult.getMetadataBuffer()) {
                         if (metadata.isFolder() && metadata.getTitle().equals(appRootFolderName)) {
-                            DriveFolder rootFolder = Drive.DriveApi.getFolder(googleApiClient, metadata.getDriveId());
+                            DriveFolder rootFolder = metadata.getDriveId().asDriveFolder();
                             Query tripQuery = getTripQuery();
                             DriveApi.MetadataBufferResult result = rootFolder.queryChildren(googleApiClient, tripQuery).await();
                             if (result.getStatus().isSuccess()) {

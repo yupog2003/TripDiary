@@ -14,15 +14,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
+import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
+import com.yupog2003.tripdiary.data.Weather;
 
 import java.io.File;
+import java.util.Calendar;
 
 public class AllTextFragment extends Fragment {
     POI[] pois;
@@ -84,6 +88,7 @@ public class AllTextFragment extends Fragment {
             public TextView poiName;
             public TextView poiTime;
             public TextView text;
+            public ImageView weather;
             public View.OnClickListener onClickListener;
             public int index;
 
@@ -97,6 +102,7 @@ public class AllTextFragment extends Fragment {
                     text.setTypeface(typeFace);
                 }
                 this.text.setTextSize(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("diaryfontsize", 20));
+                this.weather = (ImageView) cardView.findViewById(R.id.weather);
                 this.onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -140,6 +146,15 @@ public class AllTextFragment extends Fragment {
             holder.index = position;
             holder.text.setVisibility(diarys[position].length() == 0 ? View.GONE : View.VISIBLE);
             holder.text.setText(diarys[position]);
+            MyCalendar time = pois[position].time;
+            time.setTimeZone(timezone);
+            int weatherIcon = Weather.getIconForId(pois[position].weather, time.get(Calendar.HOUR_OF_DAY));
+            holder.weather.setImageResource(weatherIcon);
+            if (weatherIcon == R.drawable.ic_question_mark) {
+                holder.weather.setVisibility(View.GONE);
+            } else {
+                holder.weather.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

@@ -320,4 +320,8 @@ public class MyCalendar extends GregorianCalendar {
         }
         return timeZone.getRawOffset();
     }
+
+    public static boolean isDayTime(int hour) {
+        return hour >= 6 && hour < 18;
+    }
 }

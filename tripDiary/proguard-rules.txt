@@ -1,0 +1,5 @@
+-dontwarn org.apache.**
+-dontwarn org.slf4j.**
+-dontwarn android.support.v7.media.**
+-dontwarn com.google.android.gms.internal.**
+-dontwarn yuku.ambilwarna.widget.**

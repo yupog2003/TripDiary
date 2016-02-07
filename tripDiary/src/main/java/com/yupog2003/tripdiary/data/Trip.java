@@ -222,7 +222,14 @@ public class Trip implements Comparable<Trip> {
                 bw.write("  <ele>" + String.valueOf(poi.altitude) + "</ele>\n");
                 bw.write("  <name><![CDATA[" + poi.title + "]]></name>\n");
                 bw.write("  <time>" + poi.time.format3339() + "</time>\n");
-                bw.write("  <desc><![CDATA[" + poi.diary + "]]></desc>\n");
+                StringBuilder descriptionBuilder = new StringBuilder();
+                descriptionBuilder.append("  <desc><![CDATA[");
+                if (!poi.weather.equals("unknown")) {
+                    descriptionBuilder.append(context.getString(R.string.Weather)).append(":").append(Weather.getDescriptionForId(context, poi.weather)).append("\n");
+                }
+                descriptionBuilder.append(poi.diary);
+                descriptionBuilder.append("]]></desc>\n");
+                bw.write(descriptionBuilder.toString());
                 bw.write(" </wpt>\n");
             }
             bw.write(" <trk>\n");
@@ -323,7 +330,14 @@ public class Trip implements Comparable<Trip> {
                 bw.write("<Placemark>\n");
                 bw.write("<name><![CDATA[" + poi.title + "]]></name>\n");
                 bw.write("<styleUrl>#iconColor</styleUrl>\n");
-                bw.write("<description><![CDATA[" + poi.time.formatInTimezone(timezone) + "<br/>" + poi.diary + "]]></description>\n");
+                StringBuilder descriptionBuilder = new StringBuilder();
+                descriptionBuilder.append("  <description><![CDATA[").append(poi.time.formatInTimezone(timezone)).append("<br/>");
+                if (!poi.weather.equals("unknown")) {
+                    descriptionBuilder.append(context.getString(R.string.Weather)).append(":").append(Weather.getDescriptionForId(context, poi.weather)).append("<br/>");
+                }
+                descriptionBuilder.append(poi.diary);
+                descriptionBuilder.append("]]></description>\n");
+                bw.write(descriptionBuilder.toString());
                 bw.write("<Point>\n");
                 bw.write("<coordinates>" + String.valueOf(poi.longitude) + "," + String.valueOf(poi.latitude) + "," + String.valueOf(poi.altitude) + "</coordinates>\n");
                 bw.write("</Point>\n");
@@ -427,7 +441,11 @@ public class Trip implements Comparable<Trip> {
                 if (poi == null) continue;
                 final int picSize = poi.picFiles.length;
                 StringBuilder descriptionBuilder = new StringBuilder();
-                descriptionBuilder.append(poi.time.formatInTimezone(timezone)).append("<br/>").append(poi.diary).append("<br/>");
+                descriptionBuilder.append(poi.time.formatInTimezone(timezone)).append("<br/>");
+                if (!poi.weather.equals("unknown")) {
+                    descriptionBuilder.append(context.getString(R.string.Weather)).append(":").append(Weather.getDescriptionForId(context, poi.weather)).append("<br/>");
+                }
+                descriptionBuilder.append(poi.diary).append("<br/>");
                 for (int j = 0; j < picSize; j++) {
                     DocumentFile picFile = poi.picFiles[j];
                     if (picFile == null) continue;
@@ -521,7 +539,7 @@ public class Trip implements Comparable<Trip> {
             return null;
         }
         poi = new POI(context, poiFile, this);
-        poi.updateBasicInformation(null, time, latitude, longitude, altitude);
+        poi.updateBasicInformation(null, time, latitude, longitude, altitude, null);
         ArrayList<POI> poiList = new ArrayList<>(Arrays.asList(pois));
         poiList.add(poi);
         this.pois = poiList.toArray(new POI[poiList.size()]);

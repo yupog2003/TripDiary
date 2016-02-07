@@ -28,6 +28,7 @@ import com.yupog2003.tripdiary.data.FileHelper;
 import com.yupog2003.tripdiary.data.MyCalendar;
 import com.yupog2003.tripdiary.data.POI;
 import com.yupog2003.tripdiary.data.Trip;
+import com.yupog2003.tripdiary.data.Weather;
 import com.yupog2003.tripdiary.fragments.ViewMapFragment;
 
 import java.io.BufferedReader;
@@ -376,10 +377,17 @@ public class GenerateVideoService extends IntentService {
         canvas.restore();
         MyCalendar time = poi.time;
         String timeStr = time.formatInTimezone(timeZone).replace("T", " ");
+        StringBuilder descriptionBuilder = new StringBuilder();
+        descriptionBuilder.append(timeStr);
+        if (!poi.weather.equals("unknown")) {
+            String weatherStr = getString(R.string.Weather) + ":" + Weather.getDescriptionForId(GenerateVideoService.this, poi.weather);
+            descriptionBuilder.append("\n").append(weatherStr);
+        }
+        String descriptionStr = descriptionBuilder.toString();
         textPaint.setTextSize(diaryTextSize);
-        int x = (videoWidth - (int) textPaint.measureText(timeStr)) / 2;
+        int x = (videoWidth - (int) textPaint.measureText(descriptionStr)) / 2;
         int y = videoHeight / 2 + staticLayout.getHeight() + 1;
-        canvas.drawText(timeStr, x, y, textPaint);
+        canvas.drawText(descriptionStr, x, y, textPaint);
         FileOutputStream fileOutputStream = new FileOutputStream(new File(tempDir, "title_0.jpg"));
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
         fileOutputStream.flush();
