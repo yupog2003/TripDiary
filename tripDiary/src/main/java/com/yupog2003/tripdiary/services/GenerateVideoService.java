@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.FileProvider;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -75,9 +76,9 @@ public class GenerateVideoService extends IntentService {
     public static final String tag_tripName = "tag_tripName";
     public static final String tag_timeZone = "tag_timezone";
 
-    public static final String url_ffmpeg_android_armv7 = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YbnAyMVM3NVhjX2s";
-    public static final String url_ffmpeg_android_armv7_neon = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YSzFVRjlVYUktZHc";
-    public static final String url_ffmpeg_android_x86 = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YdVhmOWh4Z2pMNzQ";
+    public static final String url_ffmpeg_android_armv7 = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YX1UyNG1xeXpDSUE";
+    public static final String url_ffmpeg_android_armv7_neon = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YY2tJWlNxbW8ySXc";
+    public static final String url_ffmpeg_android_x86 = "https://drive.google.com/uc?export=download&id=0Bw3NRKu9Kk0YMVY2dXN2a3VIRGc";
 
     public GenerateVideoService() {
         super("GenerateVideoService");
@@ -141,7 +142,8 @@ public class GenerateVideoService extends IntentService {
             nb.setContentIntent(PendingIntent.getActivity(this, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("video/*");
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(resultVideoPath)));
+            Uri uri = FileProvider.getUriForFile(GenerateVideoService.this, "com.yupog2003.tripdiary.provider", new File(resultVideoPath));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
             nb.addAction(android.R.drawable.ic_menu_share, getString(R.string.share), PendingIntent.getActivity(this, 0, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             nm.notify(0, nb.build());
             stopForeground(true);
@@ -186,7 +188,7 @@ public class GenerateVideoService extends IntentService {
             tripWriter.close();
             new File(resultVideoPath).delete();
             File tempVideo = new File(tempDir, "temp.mp4");
-            success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "trip_input.txt", "-c", "copy", tempVideo.getName()}, null, null);
+            success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-safe", "0", "-i", "trip_input.txt", "-c", "copy", tempVideo.getName()}, null, null);
             if (backgroundMusicPath != null) {
                 success &= addBackgroundMusic(tempVideo, backgroundMusicPath, resultVideoPath);
             } else {
@@ -236,7 +238,7 @@ public class GenerateVideoService extends IntentService {
             String addBackgroundMusicDescription = getString(R.string.add_background_music);
             String audioExt = backgroundMusicPath.substring(backgroundMusicPath.lastIndexOf(".") + 1);
             //extend music
-            runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "input.txt", "-c", "copy", "-strict", "-2", "atemp." + audioExt}, addBackgroundMusicDescription, null);
+            runCommand(new String[]{"ffmpeg", "-f", "concat", "-safe", "0", "-i", "input.txt", "-c", "copy", "-strict", "-2", "atemp." + audioExt}, addBackgroundMusicDescription, null);
             //cut music to video length
             runCommand(new String[]{"ffmpeg", "-ss", "0", "-t", String.valueOf(videoLength), "-i", "atemp." + audioExt, "-c", "copy", "-strict", "-2", "atemp2." + audioExt}, addBackgroundMusicDescription, null);
             //add audio fade out
@@ -345,7 +347,7 @@ public class GenerateVideoService extends IntentService {
             generateAudioVideo(bufferedWriter, poi);
             bufferedWriter.flush();
             bufferedWriter.close();
-            boolean success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-i", "poi_input.txt", "-c", "copy", poiVideoName}, poiVideoName, null);
+            boolean success = runCommand(new String[]{"ffmpeg", "-f", "concat", "-safe", "0", "-i", "poi_input.txt", "-c", "copy", poiVideoName}, poiVideoName, null);
             poiVideoNames[i] = success ? poiVideoName : null;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(tempDir, "poi_input.txt")));
             String s;

@@ -9,6 +9,7 @@ package com.yupog2003.tripdiary;
 
 public final class Manifest {
     public static final class permission {
+        public static final String C2D_MESSAGE="com.yupog2003.tripdiary.permission.C2D_MESSAGE";
         public static final String MAPS_RECEIVE="com.yupog2003.tripdiary.permission.MAPS_RECEIVE";
     }
 }

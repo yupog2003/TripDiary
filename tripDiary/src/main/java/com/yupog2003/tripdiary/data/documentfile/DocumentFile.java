@@ -224,4 +224,21 @@ public abstract class DocumentFile {
         }
     }
 
+    public DocumentFile[] listAllFiles() {
+        ArrayList<DocumentFile> result = listAllFilesInArray();
+        return result.toArray(new DocumentFile[result.size()]);
+    }
+
+    private ArrayList<DocumentFile> listAllFilesInArray() {
+        ArrayList<DocumentFile> fileArrayList = new ArrayList<>();
+        fileArrayList.add(this);
+        if (isDirectory()) {
+            DocumentFile[] files = listFiles();
+            for (DocumentFile file : files) {
+                fileArrayList.addAll(file.listAllFilesInArray());
+            }
+        }
+        return fileArrayList;
+    }
+
 }

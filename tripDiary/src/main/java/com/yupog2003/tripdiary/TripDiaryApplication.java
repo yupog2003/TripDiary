@@ -49,7 +49,7 @@ public class TripDiaryApplication extends Application {
     synchronized public Tracker getTracker() {
         if (appTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            analytics.setDryRun(false);
+            analytics.setDryRun(true);
             appTracker = analytics.newTracker("UA-44647804-2");
             appTracker.enableAutoActivityTracking(true);
             appTracker.enableExceptionReporting(true);

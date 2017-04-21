@@ -1,13 +1,11 @@
 package com.yupog2003.tripdiary;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -34,50 +32,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ImageViewerActivity extends MyActivity {
+public class ImageViewerActivity extends MyActivity implements View.OnClickListener {
 
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler();
     private ViewPager viewPager;
+    private View contentView;
     private Trip trip;
     public static final String tag_tripName = "tripName";
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
-    };
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-        }
-    };
-    private boolean mVisible;
     private boolean autoRotate;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    private final View.OnClickListener contentOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            toggle();
-        }
-    };
+    private boolean visible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,25 +47,60 @@ public class ImageViewerActivity extends MyActivity {
         setContentView(R.layout.activity_image_viewer);
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
-        mVisible = true;
+        contentView = findViewById(R.id.content);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         trip = ((TripDiaryApplication) getApplication()).getTrip(getIntent().getStringExtra(tag_tripName));
         ImageAdapter imageAdapter = new ImageAdapter();
         viewPager.setAdapter(imageAdapter);
         viewPager.addOnPageChangeListener(imageAdapter);
         findPicIndex(getIntent().getData());
+        visible = true;
         if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("autobrightness", false)) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             lp.screenBrightness = 1.0f;
             getWindow().setAttributes(lp);
         }
         autoRotate = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("autorotate", false);
+        hide();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        delayedHide(100);
+    private void toggle() {
+        if (visible) {
+            hide();
+        } else {
+            show();
+        }
+    }
+
+    private void hide() {
+        contentView.setFitsSystemWindows(false);
+        contentView.setPadding(0, 0, 0, 0);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.hide();
+        visible = false;
+    }
+
+    private void show() {
+        contentView.setFitsSystemWindows(true);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.show();
+        visible = true;
     }
 
     private void findPicIndex(Uri uri) {
@@ -122,46 +119,6 @@ public class ImageViewerActivity extends MyActivity {
                 index += poi.picFiles.length;
             }
         }
-    }
-
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
-
-    private void hide() {
-        // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mVisible = false;
-
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
-    }
-
-    @SuppressLint("InlinedApi")
-    private void show() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        mVisible = true;
-
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
-    }
-
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
     @Override
@@ -217,11 +174,17 @@ public class ImageViewerActivity extends MyActivity {
         return true;
     }
 
-    class ImageAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
+    @Override
+    public void onClick(View view) {
+        toggle();
+    }
+
+
+    private class ImageAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
         ArrayList<DocumentFile> images;
 
-        public ImageAdapter() {
+        private ImageAdapter() {
             images = new ArrayList<>();
             if (trip != null) {
                 for (POI poi : trip.pois) {
@@ -230,7 +193,7 @@ public class ImageViewerActivity extends MyActivity {
             }
         }
 
-        public DocumentFile getCurrentImage() {
+        private DocumentFile getCurrentImage() {
             return images.get(viewPager.getCurrentItem());
         }
 
@@ -246,10 +209,8 @@ public class ImageViewerActivity extends MyActivity {
 
         @Override
         public View instantiateItem(ViewGroup container, int position) {
-            //Log.i("trip", "instantiate " + String.valueOf(position));
             SubsamplingScaleImageView imageView = new SubsamplingScaleImageView(container.getContext());
             imageView.setImage(ImageSource.uri(images.get(position).getUri()));
-            imageView.setTag(position);
             if (autoRotate) {
                 BitmapFactory.Options o = new BitmapFactory.Options();
                 o.inJustDecodeBounds = true;
@@ -260,46 +221,30 @@ public class ImageViewerActivity extends MyActivity {
                     imageView.setOrientation(SubsamplingScaleImageView.ORIENTATION_270);
                 }
             }
-            imageView.setOnClickListener(contentOnClickListener);
+            imageView.setOnClickListener(ImageViewerActivity.this);
             container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             return imageView;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //Log.i("trip", "destroy " + String.valueOf(position));
-            ((SubsamplingScaleImageView) object).recycle();
             container.removeView((View) object);
         }
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            /*View previousView = viewPager.findViewWithTag(viewPager.getCurrentItem() - 1);
-            if (previousView != null && previousView instanceof SubsamplingScaleImageView) {
-                previousView.setVisibility(View.INVISIBLE);
-            }
-            View nextView = viewPager.findViewWithTag(viewPager.getCurrentItem() + 1);
-            if (nextView != null && nextView instanceof SubsamplingScaleImageView) {
-                nextView.setVisibility(View.INVISIBLE);
-            }*/
-            //Log.i("trip", String.valueOf(viewPager.getCurrentItem()) + "," + String.valueOf(position) + "," + String.valueOf(positionOffset) + "," + String.valueOf(positionOffsetPixels));
+
         }
 
         @Override
         public void onPageSelected(int position) {
-            //Log.i("trip", "onPageSelected " + String.valueOf(position));
             setTitle(images.get(position).getName());
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            //Log.i("trip", "ScrollState " + String.valueOf(state));
-            if (state == ViewPager.SCROLL_STATE_IDLE) {
-                /*View currentView = viewPager.findViewWithTag(viewPager.getCurrentItem());
-                if (currentView != null && currentView instanceof SubsamplingScaleImageView) {
-                    currentView.setVisibility(View.VISIBLE);
-                }*/
-            }
+
         }
     }
 }
+

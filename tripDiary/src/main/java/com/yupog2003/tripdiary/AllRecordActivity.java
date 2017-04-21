@@ -156,7 +156,6 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
 
         @Override
         protected void onPreExecute() {
-            setProgressBarIndeterminateVisibility(true);
             if (!libraryLoadSuccess) {
                 Toast.makeText(AllRecordActivity.this, getString(R.string.failed_to_loadlibrary), Toast.LENGTH_SHORT).show();
             }

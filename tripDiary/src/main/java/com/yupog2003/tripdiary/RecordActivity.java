@@ -239,6 +239,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
                 }
             }
             Intent i = new Intent(RecordService.actionPauseTrip);
+            i.putExtra(RecordService.PauseReceiver.tag_fromUser, true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             }

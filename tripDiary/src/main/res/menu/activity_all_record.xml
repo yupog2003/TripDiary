@@ -6,6 +6,6 @@
         android:icon="@drawable/ic_description"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title=""/>
+        android:title="" />
 
 </menu>

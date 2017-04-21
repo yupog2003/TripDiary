@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -348,14 +349,19 @@ public class PictureFragment extends Fragment implements OnItemClickListener {
     }
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = ((DocumentFile) adapter.getItem(position)).getUri();
-        intent.setDataAndType(uri, "image/*");
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        if (poi != null && poi.parentTrip != null && poi.parentTrip.tripName != null) {
-            intent.putExtra(ImageViewerActivity.tag_tripName, poi.parentTrip.tripName);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = ((DocumentFile) adapter.getItem(position)).getUri();
+            intent.setDataAndType(uri, "image/*");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if (poi != null && poi.parentTrip != null && poi.parentTrip.tripName != null) {
+                intent.putExtra(ImageViewerActivity.tag_tripName, poi.parentTrip.tripName);
+            }
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), R.string.no_application_can_open_it, Toast.LENGTH_SHORT).show();
         }
-        startActivity(intent);
     }
 
     @Override

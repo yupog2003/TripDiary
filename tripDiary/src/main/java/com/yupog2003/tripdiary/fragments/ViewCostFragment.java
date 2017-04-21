@@ -159,6 +159,7 @@ public class ViewCostFragment extends Fragment implements View.OnClickListener {
                             if (outFile == null) {
                                 outFile = outDir.createFile("", name);
                             }
+                            if (outFile == null) return;
                             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outFile.getOutputStream()));
                             bw.write("type=" + String.valueOf(type) + "\n");
                             bw.write("dollar=" + dollar);

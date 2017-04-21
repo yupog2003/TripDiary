@@ -154,7 +154,7 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.addDrawerListener(drawerToggle);
         int colorPrimaryDark = ContextCompat.getColor(this, R.color.colorPrimaryDark);
         drawerLayout.setStatusBarBackgroundColor(Color.argb(128, Color.red(colorPrimaryDark), Color.green(colorPrimaryDark), Color.blue(colorPrimaryDark)));
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);

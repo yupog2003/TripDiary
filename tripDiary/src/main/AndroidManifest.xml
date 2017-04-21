@@ -11,12 +11,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="com.yupog2003.tripdiary.permission.MAPS_RECEIVE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -24,6 +26,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:name=".TripDiaryApplication"
@@ -80,7 +83,7 @@
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
+            android:value="AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk" />
         <!-- publish key=  AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->
 
@@ -180,7 +183,15 @@
             android:name=".providers.DriveProvider"
             android:authorities="com.yupog2003.tripdiary.driveprovider"
             android:exported="true" />
-
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.yupog2003.tripdiary.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
         <service
             android:name=".services.DownloadFromDriveService"
             android:exported="false" />

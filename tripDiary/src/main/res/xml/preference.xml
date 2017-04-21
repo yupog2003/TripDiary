@@ -121,6 +121,10 @@
             android:key="autoresume"
             android:summary="@string/resume_trip_automatically_after_reboot"
             android:title="@string/auto_resume_trip" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="autopause"
+            android:title="@string/auto_pause_and_resume" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/play_setting">

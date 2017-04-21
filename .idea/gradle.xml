@@ -3,16 +3,16 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.5" />
-        <option name="gradleJvm" value="1.8" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
-            <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary" />
-            <option value="/run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary" />
+            <option value="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary" />
+            <option value="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary" />
           </set>
         </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -465,7 +465,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         @Override
         protected String doInBackground(Void... params) {
             publishProgress("Sorting...", "0");
-            if (trip.pois.length < 1 || cache.times == null || memoryDir == null)
+            if (trip == null || trip.pois == null || trip.pois.length < 1 || cache == null || cache.times == null || memoryDir == null)
                 return null;
             //prepare memories
             start = 0;
@@ -607,11 +607,11 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         for (POI poi : trip.pois) {
             String poiTime = poi.time.formatInTimezone(trip.timezone);
             markers.add(gmap.addMarker(new MarkerOptions()
-                            .position(new LatLng(poi.latitude, poi.longitude))
-                            .title(poi.title)
-                            .snippet(" " + poiTime + "\n " + poi.diary)
-                            .draggable(true)
-                            .icon(bd)
+                    .position(new LatLng(poi.latitude, poi.longitude))
+                    .title(poi.title)
+                    .snippet(" " + poiTime + "\n " + poi.diary)
+                    .draggable(true)
+                    .icon(bd)
             ));
         }
         if (poiInfoWindowAdapter != null) {

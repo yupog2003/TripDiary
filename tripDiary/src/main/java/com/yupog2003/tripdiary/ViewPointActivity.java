@@ -402,6 +402,12 @@ public class ViewPointActivity extends MyActivity {
             AlertDialog ad = ab2.create();
             ad.setIcon(DrawableHelper.getAlertDrawable(getActivity()));
             ad.show();
+        } else if (item.getItemId() == R.id.sharelocation) {
+            String text = "http://maps.google.com/maps?q=loc:" + String.valueOf(poi.latitude) + "," + String.valueOf(poi.longitude);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            startActivity(intent);
         }
         return false;
     }

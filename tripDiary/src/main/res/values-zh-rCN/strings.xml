@@ -376,4 +376,7 @@
     <string name="thunderstorm">打雷</string>
     <string name="snow">下雪</string>
     <string name="mist">雾</string>
+    <string name="no_application_can_open_it">没有程式可以开启它</string>
+    <string name="auto_pause_and_resume">自动暂停与恢复</string>
+    <string name="share_location">分享地点</string>
 </resources>

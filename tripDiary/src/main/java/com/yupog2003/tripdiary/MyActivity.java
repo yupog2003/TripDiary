@@ -333,7 +333,7 @@ public class MyActivity extends AppCompatActivity {
                         } catch (UserRecoverableAuthIOException e) {
                             e.printStackTrace();
                             startActivityForResult(e.getIntent(), REQUEST_CONNECT_TO_REST_API);
-                        } catch (IOException e) {
+                        } catch (IOException | IllegalArgumentException e) {
                             e.printStackTrace();
                         }
                     }

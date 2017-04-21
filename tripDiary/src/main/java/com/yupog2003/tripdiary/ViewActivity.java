@@ -11,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -42,7 +41,7 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.app_name, R.string.app_name);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(this);
         personalFragment = new RemoteTripsFragment();

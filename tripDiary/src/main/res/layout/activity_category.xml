@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
-    </ListView>
+        android:layout_below="@+id/toolbar"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add"
@@ -32,6 +31,6 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/accent"
         app:elevation="2dp"
-        app:borderWidth="0dp"/>
+        app:borderWidth="0dp" />
 
 </RelativeLayout>

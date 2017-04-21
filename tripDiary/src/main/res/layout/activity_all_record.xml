@@ -3,21 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AllRecordActivity" >
+    tools:context=".AllRecordActivity">
 
     <include
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <RelativeLayout
         android:id="@+id/maplayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
-    </RelativeLayout>
+        android:layout_below="@+id/toolbar"></RelativeLayout>
 
     <ProgressBar
         android:id="@+id/analysis_progress"
@@ -25,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="-7dp"/>
+        android:layout_marginTop="-7dp" />
 
 </RelativeLayout>

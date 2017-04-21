@@ -24,10 +24,17 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.ActivityRecognition;
+import com.google.android.gms.location.ActivityRecognitionResult;
+import com.google.android.gms.location.DetectedActivity;
 import com.yupog2003.tripdiary.DummyActivity;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.R;
@@ -52,7 +59,7 @@ import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class RecordService extends Service implements LocationListener, Runnable, SensorEventListener {
+public class RecordService extends Service implements LocationListener, Runnable, SensorEventListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public double latitude;
     public double longitude;
     public double elevation;
@@ -79,10 +86,14 @@ public class RecordService extends Service implements LocationListener, Runnable
     boolean keepforeground;
     long lastFixTime;
     boolean shaketoaddpoi;
+    boolean autopause;
     SensorManager sensorManager;
     Handler handler;
+    GoogleApiClient googleApiClient;
+    ActivityRecognitionReceiver activityRecognitionReceiver;
     public static final String actionStopTrip = "com.yupog2003.tripdiary.stopTrip";
     public static final String actionPauseTrip = "com.yupog2003.tripdiary.pauseTrip";
+    public static final String actionActivityChanged = "com.yupog2003.tripdiary.actionActivityChanged";
     public static final String tag_tripName = "tag_tripName";
     public static final String tag_lastRecordTrip = "tag_lastRecordTrip";
     public static final String tag_onRecording = "tag_onRecording";
@@ -145,6 +156,7 @@ public class RecordService extends Service implements LocationListener, Runnable
         }
         keepforeground = preferences.getBoolean("keepforeground", false);
         shaketoaddpoi = preferences.getBoolean("shaketoaddpoi", false);
+        autopause = preferences.getBoolean("autopause", false);
         preferences.edit().putBoolean(tag_onRecording, true).apply();
         preferences.edit().putString(tag_lastRecordTrip, name).apply();
         setupNotification(name);
@@ -181,9 +193,9 @@ public class RecordService extends Service implements LocationListener, Runnable
             } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
+            firstFixed = false;
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, this);
-            firstFixed = false;
             handler.postDelayed(RecordService.this, updateDuration);
         }
         stopTripReceiver = new StopTripReceiver();
@@ -210,6 +222,7 @@ public class RecordService extends Service implements LocationListener, Runnable
         nb.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         nb.setTicker(getString(R.string.Start_Trip));
         Intent pauseIntent = new Intent(actionPauseTrip);
+        pauseIntent.putExtra(PauseReceiver.tag_fromUser, true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             pauseIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         }
@@ -283,6 +296,10 @@ public class RecordService extends Service implements LocationListener, Runnable
             unregisterReceiver(screenOnOffReceiver);
             screenOnOffReceiver = null;
         }
+        if (activityRecognitionReceiver != null) {
+            unregisterReceiver(activityRecognitionReceiver);
+            activityRecognitionReceiver = null;
+        }
         if (shaketoaddpoi && sensorManager != null) {
             sensorManager.unregisterListener(RecordService.this);
         }
@@ -301,6 +318,25 @@ public class RecordService extends Service implements LocationListener, Runnable
         }
         handler = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        activityRecognitionReceiver = new ActivityRecognitionReceiver();
+        registerReceiver(activityRecognitionReceiver, new IntentFilter(actionActivityChanged));
+        Intent intent = new Intent(actionActivityChanged);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(googleApiClient, 30 * 1000, pendingIntent);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     public class StopTripReceiver extends BroadcastReceiver {
@@ -342,7 +378,9 @@ public class RecordService extends Service implements LocationListener, Runnable
         }
     }
 
+
     public class PauseReceiver extends BroadcastReceiver {
+        public static final String tag_fromUser = "fromUser";
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -357,10 +395,12 @@ public class RecordService extends Service implements LocationListener, Runnable
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, recordDuration, 0, RecordService.this);
                 }
-                firstFixed = false;
+                if (intent.getBooleanExtra(tag_fromUser, false))
+                    firstFixed = false;
                 handler.postDelayed(RecordService.this, updateDuration);
                 nb.setSmallIcon(R.drawable.ic_satellite);
                 Intent pauseIntent = new Intent(actionPauseTrip);
+                pauseIntent.putExtra(PauseReceiver.tag_fromUser, true);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     pauseIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                 }
@@ -373,6 +413,7 @@ public class RecordService extends Service implements LocationListener, Runnable
                 }
                 nb.setSmallIcon(R.drawable.ic_pause);
                 Intent pauseIntent = new Intent(actionPauseTrip);
+                pauseIntent.putExtra(PauseReceiver.tag_fromUser, true);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     pauseIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                 }
@@ -422,15 +463,48 @@ public class RecordService extends Service implements LocationListener, Runnable
         }
     }
 
+    public class ActivityRecognitionReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ActivityRecognitionResult.hasResult(intent)) {
+                ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
+                int type = result.getMostProbableActivity().getType();
+                if (type == DetectedActivity.UNKNOWN || type == DetectedActivity.TILTING) return;
+                if (type == DetectedActivity.STILL) { //user stop moving
+                    if (run) {
+                        Intent i = new Intent(RecordService.actionPauseTrip);
+                        i.putExtra(PauseReceiver.tag_fromUser, false);
+                        sendBroadcast(i);
+                    }
+                } else { //user start moving
+                    if (!run) {
+                        Intent i = new Intent(RecordService.actionPauseTrip);
+                        i.putExtra(PauseReceiver.tag_fromUser, false);
+                        sendBroadcast(i);
+                    }
+                }
+            }
+        }
+    }
+
     public void onLocationChanged(Location location) {
         if (location == null)
             return;
         lastFixTime = System.currentTimeMillis();
-        if (!firstFixed) {
+        if (!firstFixed) { //this is the first time fixed
             ((Vibrator) getSystemService(Service.VIBRATOR_SERVICE)).vibrate(200);
             nb.setSmallIcon(R.drawable.ic_play);
             startForeground(1, nb.build());
             firstFixed = true;
+            if (autopause && activityRecognitionReceiver == null) {
+                googleApiClient = new GoogleApiClient.Builder(this)
+                        .addApi(ActivityRecognition.API)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .build();
+                googleApiClient.connect();
+            }
         }
         latitude = location.getLatitude();
         longitude = location.getLongitude();

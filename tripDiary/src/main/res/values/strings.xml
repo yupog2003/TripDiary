@@ -390,5 +390,8 @@
     <string name="thunderstorm">thunderstorm</string>
     <string name="snow">snow</string>
     <string name="mist">mist</string>
+    <string name="no_application_can_open_it">No application can open it</string>
+    <string name="auto_pause_and_resume">Pause and resume automatically</string>
+    <string name="share_location">Share Location</string>
 
 </resources>

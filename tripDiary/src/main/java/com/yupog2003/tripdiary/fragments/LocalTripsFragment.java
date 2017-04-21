@@ -191,7 +191,7 @@ public class LocalTripsFragment extends Fragment {
                             trip.updateNote(note);
                             loadData();
                             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                            i.setType("application/gpx+xml");
+                            i.setType("*/*");
                             startActivityForResult(Intent.createChooser(i, getString(R.string.select_the_gpx)), REQUEST_IMPORT_TRIP);
                         }
                     } else {
@@ -220,7 +220,7 @@ public class LocalTripsFragment extends Fragment {
                 }
             });
             ab.show();
-        } else if (item.getItemId() == R.id.category){
+        } else if (item.getItemId() == R.id.category) {
             getActivity().startActivity(new Intent(getActivity(), CategoryActivity.class));
         }
         return false;
@@ -307,7 +307,7 @@ public class LocalTripsFragment extends Fragment {
         int dp25;
 
         public TripAdapter() {
-            dp25=(int)DeviceHelper.pxFromDp(getActivity(), 25);
+            dp25 = (int) DeviceHelper.pxFromDp(getActivity(), 25);
             Map<String, ?> map = categorysp.getAll();
             Set<String> set = map.keySet();
             categories = set.toArray(new String[set.size()]);
@@ -485,7 +485,7 @@ public class LocalTripsFragment extends Fragment {
                 ab.setNegativeButton(getString(R.string.no), null);
                 ab.show();
             } else if (item.getItemId() == R.id.backup) {
-                ((MyActivity)getActivity()).pickDir(getString(R.string.select_output_directory), new MyActivity.OnDirPickedListener() {
+                ((MyActivity) getActivity()).pickDir(getString(R.string.select_output_directory), new MyActivity.OnDirPickedListener() {
                     @Override
                     public void onDirPicked(File dir) {
                         Intent intent = new Intent(getActivity(), BackupRestoreTripService.class);

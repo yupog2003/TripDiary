@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -136,10 +138,15 @@ public class AllVideoFragment extends Fragment {
         }
 
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(videos[position].getUri(), "video/*");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            getActivity().startActivity(intent);
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(videos[position].getUri(), "video/*");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                getActivity().startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), R.string.no_application_can_open_it, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

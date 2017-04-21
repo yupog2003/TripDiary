@@ -105,7 +105,6 @@ public class POIInfoWindowAdapter implements InfoWindowAdapter {
                 }
                 op.inJustDecodeBounds = false;
                 op.inPreferredConfig = Bitmap.Config.RGB_565;
-                op.inPreferQualityOverSpeed = false;
                 op.inSampleSize = (int) Math.max((float) op.outWidth / imageWidth, (float) op.outHeight / imageWidth);
                 Bitmap bitmap;
                 if (imgFile instanceof WebDocumentFile) {

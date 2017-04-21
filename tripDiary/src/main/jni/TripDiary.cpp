@@ -57,10 +57,10 @@ bool stop;
 static bool contains(const string &haystack, const string &needle) {
     return haystack.find(needle) != string::npos;
 }
-static vector<string> split(string str, string sep) {
+static vector <string> split(string str, string sep) {
     char *cstr = const_cast<char *>(str.c_str());
     char *current;
-    vector<string> arr;
+    vector <string> arr;
     current = strtok(cstr, sep.c_str());
     while (current != NULL) {
         arr.push_back(current);
@@ -165,8 +165,8 @@ JNIEXPORT jboolean Java_com_yupog2003_tripdiary_data_GpxAnalyzer2_parse(JNIEnv *
     time_t timezoneOffset = timezoneO; //(second)
     ifstream fis(gpxPathChar, ifstream::in);
     string s;
-    vector<MyLatLng2> track;
-    vector<time_t> times;
+    vector <MyLatLng2> track;
+    vector <time_t> times;
     MyLatLng2 latlng;
     MyLatLng2 preLatLng;
     bool first = true;
@@ -439,8 +439,8 @@ JNIEXPORT bool Java_com_yupog2003_tripdiary_AllRecordActivity_parse(JNIEnv *env,
     bool first = true;
     const char *gpxPathChar = (char *) (env->GetStringUTFChars(gpxPath, 0));
     ifstream fis(gpxPathChar, ifstream::in);
-    vector<MyLatLng2> track;
-    vector<string> timeStrs;
+    vector <MyLatLng2> track;
+    vector <string> timeStrs;
     while (getline(fis, s)) {
         if (stop) {
             return false;

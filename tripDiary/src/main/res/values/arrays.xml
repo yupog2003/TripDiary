@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="cost_type_colors">
-        <item >#FF9D9D</item>
-        <item >#FCFF8F</item>
-        <item >#A7FFAA</item>
-        <item >#FF8EFC</item>
-        <item >#8E96FF</item>
+        <item>#FF9D9D</item>
+        <item>#FCFF8F</item>
+        <item>#A7FFAA</item>
+        <item>#FF8EFC</item>
+        <item>#8E96FF</item>
     </array>
 </resources>

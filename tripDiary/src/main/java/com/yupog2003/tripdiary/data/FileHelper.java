@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.zip.ZipEntry;
@@ -253,6 +254,36 @@ public class FileHelper {
 
     public static boolean isAudio(String fileName) {
         return getMIMEtype(fileName).startsWith("audio");
+    }
+
+    public static DocumentFile[] getPictureFiles(DocumentFile[] files) {
+        ArrayList<DocumentFile> result = new ArrayList<>();
+        for (DocumentFile file : files) {
+            if (isPicture(file)) {
+                result.add(file);
+            }
+        }
+        return result.toArray(new DocumentFile[result.size()]);
+    }
+
+    public static DocumentFile[] getVideoFiles(DocumentFile[] files) {
+        ArrayList<DocumentFile> result = new ArrayList<>();
+        for (DocumentFile file : files) {
+            if (isVideo(file)) {
+                result.add(file);
+            }
+        }
+        return result.toArray(new DocumentFile[result.size()]);
+    }
+
+    public static DocumentFile[] getAudioFiles(DocumentFile[] files) {
+        ArrayList<DocumentFile> result = new ArrayList<>();
+        for (DocumentFile file : files) {
+            if (isAudio(file)) {
+                result.add(file);
+            }
+        }
+        return result.toArray(new DocumentFile[result.size()]);
     }
 
 

@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 public class POI implements Comparable<POI> {
 
@@ -54,17 +55,11 @@ public class POI implements Comparable<POI> {
     }
 
     public void updateAllFields() {
-        DocumentFile[] files = dir.listFiles();
+        DocumentFile[] files = dir.listAllFiles();
         this.parentTripFile = dir.getParentFile();
-        this.picDir = FileHelper.findfile(files, "pictures");
-        if (picDir == null)
-            this.picDir = dir.createDirectory("pictures");
-        this.audioDir = FileHelper.findfile(files, "audios");
-        if (audioDir == null)
-            this.audioDir = dir.createDirectory("audios");
-        this.videoDir = FileHelper.findfile(files, "videos");
-        if (videoDir == null)
-            this.videoDir = dir.createDirectory("videos");
+        this.picDir = dir;
+        this.audioDir = dir;
+        this.videoDir = dir;
         this.costDir = FileHelper.findfile(files, "costs");
         if (costDir == null)
             this.costDir = dir.createDirectory("costs");
@@ -76,21 +71,21 @@ public class POI implements Comparable<POI> {
         if (basicInformationFile == null) {
             this.basicInformationFile = dir.createFile("", "basicinformation");
         }
-        if (picDir != null) {
-            this.picFiles = picDir.listFiles(DocumentFile.list_pics);
-        } else {
-            this.picFiles = new DocumentFile[0];
+        ArrayList<DocumentFile> picArrayList = new ArrayList<>();
+        ArrayList<DocumentFile> videoArrayList = new ArrayList<>();
+        ArrayList<DocumentFile> audioArrayList = new ArrayList<>();
+        for (DocumentFile file : files) {
+            if (FileHelper.isPicture(file)) {
+                picArrayList.add(file);
+            } else if (FileHelper.isVideo(file)) {
+                videoArrayList.add(file);
+            } else if (FileHelper.isAudio(file)) {
+                audioArrayList.add(file);
+            }
         }
-        if (audioDir != null) {
-            this.audioFiles = audioDir.listFiles(DocumentFile.list_audios);
-        } else {
-            this.audioFiles = new DocumentFile[0];
-        }
-        if (videoDir != null) {
-            this.videoFiles = videoDir.listFiles(DocumentFile.list_videos);
-        } else {
-            this.videoFiles = new DocumentFile[0];
-        }
+        this.picFiles = picArrayList.toArray(new DocumentFile[picArrayList.size()]);
+        this.videoFiles = videoArrayList.toArray(new DocumentFile[videoArrayList.size()]);
+        this.audioFiles = audioArrayList.toArray(new DocumentFile[audioArrayList.size()]);
         if (costDir != null) {
             this.costFiles = costDir.listFiles(DocumentFile.list_all);
         } else {

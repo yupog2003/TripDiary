@@ -261,8 +261,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                 switch (type) {
                     case picture:
                         setGridView(true);
-                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "pictures");
-                        String[] pictureNames = nowDirFile.listFileNames(DocumentFile.list_pics);
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
+                        DocumentFile[] picFiles = FileHelper.getPictureFiles(nowDirFile.listAllFiles());
+                        String[] pictureNames = new String[picFiles.length];
+                        for (int i = 0; i < pictureNames.length; i++) {
+                            pictureNames[i] = picFiles[i].getName();
+                        }
                         displayNames.addAll(Arrays.asList(pictureNames));
                         options = new DisplayImageOptions.Builder()
                                 .cacheInMemory(true)
@@ -275,8 +279,12 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         break;
                     case video:
                         setGridView(true);
-                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "videos");
-                        String[] videoNames = nowDirFile.listFileNames(DocumentFile.list_videos);
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
+                        DocumentFile[] videoFiles = FileHelper.getVideoFiles(nowDirFile.listAllFiles());
+                        String[] videoNames = new String[videoFiles.length];
+                        for (int i = 0; i < videoNames.length; i++) {
+                            videoNames[i] = videoFiles[i].getName();
+                        }
                         displayNames.addAll(Arrays.asList(videoNames));
                         options = new DisplayImageOptions.Builder()
                                 .cacheInMemory(true)
@@ -289,20 +297,37 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         break;
                     case audio:
                         setGridView(false);
-                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName, "audios");
-                        String[] audioNames = nowDirFile.listFileNames(DocumentFile.list_audios);
+                        nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
+                        DocumentFile[] audioFiles = FileHelper.getAudioFiles(nowDirFile.listAllFiles());
+                        String[] audioNames = new String[audioFiles.length];
+                        for (int i = 0; i < audioNames.length; i++) {
+                            audioNames[i] = audioFiles[i].getName();
+                        }
                         displayNames.addAll(Arrays.asList(audioNames));
                         break;
                     case other:
                         setGridView(false);
                         nowDirFile = FileHelper.findfile(TripDiaryApplication.rootDocumentFile, tripName, poiName);
-                        String[] pictureNames2 = FileHelper.findfile(nowDirFile, "pictures").listFileNames(DocumentFile.list_pics);
+                        DocumentFile[] files = nowDirFile.listAllFiles();
+                        DocumentFile[] picFiles2 = FileHelper.getPictureFiles(files);
+                        String[] pictureNames2 = new String[picFiles2.length];
+                        for (int i = 0; i < pictureNames2.length; i++) {
+                            pictureNames2[i] = picFiles2[i].getName();
+                        }
                         displayNames.addAll(Arrays.asList(pictureNames2));
                         lastPictureIndex = displayNames.size();
-                        String[] videoNames2 = FileHelper.findfile(nowDirFile, "videos").listFileNames(DocumentFile.list_videos);
+                        DocumentFile[] videoFiles2 = FileHelper.getVideoFiles(files);
+                        String[] videoNames2 = new String[videoFiles2.length];
+                        for (int i = 0; i < videoNames2.length; i++) {
+                            videoNames2[i] = videoFiles2[i].getName();
+                        }
                         displayNames.addAll(Arrays.asList(videoNames2));
                         lastVideoIndex = displayNames.size();
-                        String[] audioNames2 = FileHelper.findfile(nowDirFile, "audios").listFileNames(DocumentFile.list_audios);
+                        DocumentFile[] audioFiles2 = FileHelper.getAudioFiles(files);
+                        String[] audioNames2 = new String[audioFiles2.length];
+                        for (int i = 0; i < audioNames2.length; i++) {
+                            audioNames2[i] = audioFiles2[i].getName();
+                        }
                         displayNames.addAll(Arrays.asList(audioNames2));
                         lastAudioIndex = displayNames.size();
                         break;
@@ -349,11 +374,11 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
                         return FileHelper.findfile(nowDirFile, memoryName); //audio file
                     } else if (type == Type.other) {
                         if (position >= 0 && position < lastPictureIndex) { //is picture
-                            return FileHelper.findfile(nowDirFile, "pictures", memoryName);
+                            return FileHelper.findfile(nowDirFile, memoryName);
                         } else if (position >= lastPictureIndex && position < lastVideoIndex) { //is video
-                            return FileHelper.findfile(nowDirFile, "videos", memoryName);
+                            return FileHelper.findfile(nowDirFile, memoryName);
                         } else if (position >= lastVideoIndex && position < lastAudioIndex) { //is audio
-                            return FileHelper.findfile(nowDirFile, "audios", memoryName);
+                            return FileHelper.findfile(nowDirFile, memoryName);
                         }
                     }
             }
@@ -681,7 +706,7 @@ public class GetContentActivity extends MyActivity implements View.OnClickListen
     protected void onDestroy() {
         if (moveFilesTask != null) {
             moveFilesTask.cancel = true;
-            moveFilesTask=null;
+            moveFilesTask = null;
         }
         super.onDestroy();
     }

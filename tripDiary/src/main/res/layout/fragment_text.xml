@@ -94,6 +94,6 @@
         android:src="@drawable/ic_edit"
         app:backgroundTint="@color/accent"
         app:elevation="2dp"
-        app:borderWidth="0dp"/>
+        app:borderWidth="0dp" />
 
 </RelativeLayout>

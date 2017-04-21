@@ -1,5 +1,6 @@
 package com.yupog2003.tripdiary.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewPointActivity;
@@ -280,10 +282,15 @@ public class AudioFragment extends Fragment {
         }
 
         public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(audios[position].getUri(), "audio/*");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            getActivity().startActivity(intent);
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(audios[position].getUri(), "audio/*");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                getActivity().startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), R.string.no_application_can_open_it, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

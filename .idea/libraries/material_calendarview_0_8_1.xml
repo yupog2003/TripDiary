@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="material-calendarview-0.8.1">
     <ANNOTATIONS>
-      <root url="jar:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/0.8.1/annotations.zip!/" />
+      <root url="jar:///run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/0.8.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/0.8.1/res" />
-      <root url="jar:///run/media/yupog2003/1345b443-82c5-4d64-b39f-e68c01e04f53/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/0.8.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/4c362f32a7f55ed86cec1766bbd382e12f35c2b7/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4c362f32a7f55ed86cec1766bbd382e12f35c2b7/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

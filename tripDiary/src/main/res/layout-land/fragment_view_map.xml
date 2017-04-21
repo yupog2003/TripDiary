@@ -78,7 +78,7 @@
         android:layout_height="match_parent"
         android:layout_toEndOf="@+id/buttonbar"
         android:layout_toRightOf="@+id/buttonbar"
-        android:background="@drawable/actionbar_shadow_land"/>
+        android:background="@drawable/actionbar_shadow_land" />
 
     <LinearLayout
         android:id="@+id/buttonbar"
