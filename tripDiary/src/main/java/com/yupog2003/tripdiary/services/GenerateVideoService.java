@@ -142,7 +142,7 @@ public class GenerateVideoService extends IntentService {
             nb.setContentIntent(PendingIntent.getActivity(this, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("video/*");
-            Uri uri = FileProvider.getUriForFile(GenerateVideoService.this, "com.yupog2003.tripdiary.provider", new File(resultVideoPath));
+            Uri uri = FileProvider.getUriForFile(GenerateVideoService.this, TripDiaryApplication.fileProviderAuthority, new File(resultVideoPath));
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
             nb.addAction(android.R.drawable.ic_menu_share, getString(R.string.share), PendingIntent.getActivity(this, 0, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             nm.notify(0, nb.build());

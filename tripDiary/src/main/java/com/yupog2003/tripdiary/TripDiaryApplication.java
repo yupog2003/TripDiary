@@ -36,6 +36,7 @@ public class TripDiaryApplication extends Application {
     public static final String serverHost = "yupog2003.idv.tw";
     public static final String serverIP = "219.85.61.62";
     public static final String serverURL = "http://" + serverHost + "/TripDiary";
+    public static final String fileProviderAuthority="com.yupog2003.tripdiary.provider";
     public static int distance_unit;
     //public static final int unit_km = 0;
     public static final int unit_mile = 1;
@@ -49,7 +50,7 @@ public class TripDiaryApplication extends Application {
     synchronized public Tracker getTracker() {
         if (appTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            analytics.setDryRun(true);
+            analytics.setDryRun(false);
             appTracker = analytics.newTracker("UA-44647804-2");
             appTracker.enableAutoActivityTracking(true);
             appTracker.enableExceptionReporting(true);

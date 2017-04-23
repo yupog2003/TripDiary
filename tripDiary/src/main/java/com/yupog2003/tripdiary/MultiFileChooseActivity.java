@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -183,15 +184,18 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
                     setDir(file, filter);
                 } else if (FileHelper.isPicture(file)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "image/*");
+                    intent.setDataAndType(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, file), "image/*");
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 } else if (FileHelper.isVideo(file)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "video/*");
+                    intent.setDataAndType(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, file), "video/*");
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 } else if (FileHelper.isAudio(file)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "audio/*");
+                    intent.setDataAndType(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, file), "audio/*");
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 }
             }
@@ -241,7 +245,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
             Intent intent = new Intent();
             ArrayList<Uri> uris = new ArrayList<>();
             for (String path : chosenFiles) {
-                uris.add(Uri.fromFile(new File(path)));
+                uris.add(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, new File(path)));
             }
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

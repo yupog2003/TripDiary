@@ -68,7 +68,7 @@ public class AllRecordActivity extends MyActivity implements OnInfoWindowClickLi
         progressBar = (ProgressBar) findViewById(R.id.analysis_progress);
         mapFragment = SupportMapFragment.newInstance();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.maplayout, mapFragment, "mapFragment");
+        ft.replace(R.id.mapLayout, mapFragment, "mapFragment");
         ft.commit();
         markers = new ArrayList<>();
         record = new Record();

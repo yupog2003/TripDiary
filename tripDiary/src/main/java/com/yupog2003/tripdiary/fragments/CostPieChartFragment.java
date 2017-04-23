@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewCostActivity;
 
@@ -39,16 +40,16 @@ public class CostPieChartFragment extends Fragment {
             colors[i] = array.getColor(i, 0);
         array.recycle();
         totals = getArguments().getFloatArray(ViewCostActivity.tag_totals);
-        ArrayList<Entry> values = new ArrayList<>();
+        ArrayList<PieEntry> values = new ArrayList<>();
         String[] titles = getActivity().getResources().getStringArray(R.array.cost_types);
         for (int i = 0; i < totals.length; i++) {
-            values.add(new Entry(totals[i], i));
+            values.add(new PieEntry(totals[i], titles[i]));
         }
         PieDataSet pieDataSet = new PieDataSet(values, "");
         pieDataSet.setColors(colors);
-        PieData pieData = new PieData(titles, pieDataSet);
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setDescription(null);
         pieChart.setData(pieData);
-        pieChart.setDescription("");
         pieChart.invalidate();
     }
 

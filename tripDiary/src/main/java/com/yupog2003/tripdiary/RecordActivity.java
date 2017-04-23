@@ -142,7 +142,7 @@ public class RecordActivity extends MyActivity implements OnClickListener, OnInf
         pausing = getString(R.string.pausing);
         setTitle(tripName + " - " + recording);
         mapFragment = SupportMapFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.maplayout, mapFragment, "mapFragment").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mapLayout, mapFragment, "mapFragment").commit();
         preference = PreferenceManager.getDefaultSharedPreferences(this);
         handler = new Handler();
         addMemoryLayout = (LinearLayout) findViewById(R.id.addMemoryLayout);

@@ -12,6 +12,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.yupog2003.tripdiary.R;
 import com.yupog2003.tripdiary.ViewCostActivity;
 
@@ -43,15 +44,16 @@ public class CostBarChartFragment extends Fragment {
         String[] titles = getActivity().getResources().getStringArray(R.array.cost_types);
         ArrayList<BarEntry> values = new ArrayList<>();
         for (int i = 0; i < totals.length; i++) {
-            values.add(new BarEntry(totals[i], i));
+            values.add(new BarEntry(i, totals[i]));
         }
         BarDataSet barDataSet = new BarDataSet(values, "");
         barDataSet.setColors(colors);
-        BarData barData = new BarData(titles, barDataSet);
+        BarData barData = new BarData(barDataSet);
         barChart.setData(barData);
-        barChart.setDescription("");
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(titles));
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.getLegend().setEnabled(false);
+        barChart.setDescription(null);
         barChart.invalidate();
     }
 

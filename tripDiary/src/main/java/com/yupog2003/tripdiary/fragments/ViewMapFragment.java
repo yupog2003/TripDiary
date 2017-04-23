@@ -20,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -78,7 +79,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.yupog2003.tripdiary.MyActivity;
 import com.yupog2003.tripdiary.PlayPointActivity;
 import com.yupog2003.tripdiary.R;
-import com.yupog2003.tripdiary.ViewGraphActivity;
 import com.yupog2003.tripdiary.ViewPointActivity;
 import com.yupog2003.tripdiary.ViewTripActivity;
 import com.yupog2003.tripdiary.data.DeviceHelper;
@@ -110,6 +110,7 @@ import java.util.TimeZone;
 
 public class ViewMapFragment extends Fragment implements OnInfoWindowClickListener, OnMapLongClickListener, OnMarkerDragListener, OnClickListener {
     SupportMapFragment mapFragment;
+    GraphFragmentController graphFragmentController;
     GoogleMap gmap;
     ArrayList<Marker> markers;
     TrackCache cache;
@@ -138,6 +139,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_view_map, container, false);
         markers = new ArrayList<>();
         handler = new Handler();
+        graphFragmentController = new GraphFragmentController(rootView);
         viewInformation = (ImageButton) rootView.findViewById(R.id.viewinformation);
         switchMapMode = (ImageButton) rootView.findViewById(R.id.switchmapmode);
         playTrip = (ImageButton) rootView.findViewById(R.id.playtrip);
@@ -154,7 +156,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mapFragment = SupportMapFragment.newInstance();
-        getChildFragmentManager().beginTransaction().add(R.id.maplayout, mapFragment).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.mapLayout, mapFragment).commit();
 
     }
 
@@ -880,12 +882,12 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 tripPlayer.changeForward(TripPlayer.slow);
             }
         } else if (v.equals(viewGraph)) {
-            Intent intent = new Intent(getActivity(), ViewGraphActivity.class);
-            intent.putExtra(ViewGraphActivity.tag_tripname, trip.tripName);
-            startActivity(intent);
+            if (graphFragmentController != null) {
+                graphFragmentController.toggle();
+            }
         } else if (v.equals(streetView)) {
             if (PackageHelper.isAppInstalled(getActivity(), PackageHelper.StreetViewPackageNmae)) {
-                final RelativeLayout mapLayout = (RelativeLayout) rootView.findViewById(R.id.maplayout);
+                final RelativeLayout mapLayout = (RelativeLayout) rootView.findViewById(R.id.mapLayout);
                 final ImageButton streetMan = new ImageButton(getActivity());
                 streetMan.setImageResource(R.drawable.ic_streetman);
                 streetMan.setBackgroundColor(Color.TRANSPARENT);
@@ -990,7 +992,7 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             distance = (TextView) rootView.findViewById(R.id.distance);
             speed = (TextView) rootView.findViewById(R.id.speed);
             time = (TextView) rootView.findViewById(R.id.elapsedTime);
-            mapLayout = (RelativeLayout) rootView.findViewById(R.id.maplayout);
+            mapLayout = (RelativeLayout) rootView.findViewById(R.id.mapLayout);
             if (cache != null) {
                 latlength = cache.getTrackLength();
                 lat = cache.getLats();
@@ -1047,6 +1049,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
             } else { // pause
                 playTrip.setImageResource(R.drawable.ic_play);
             }
+            if (graphFragmentController != null) {
+                graphFragmentController.setMarkerEnabled(false);
+            }
         }
 
         public void pause() {
@@ -1081,6 +1086,10 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                 mp.stop();
                 mp.release();
                 mp = null;
+            }
+            if (graphFragmentController != null) {
+                graphFragmentController.setMarkerEnabled(true);
+                graphFragmentController.highlightIndex(-1);
             }
             tripPlayer = null;
         }
@@ -1158,6 +1167,9 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
                     gmap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(lat[index], gmap.getCameraPosition().zoom, 90, bearing)), interval, null);
             } else {
                 playPoint.setPosition(lat[index]);
+            }
+            if (graphFragmentController != null && graphFragmentController.isShow()) {
+                graphFragmentController.highlightIndex(index);
             }
         }
 
@@ -1403,6 +1415,85 @@ public class ViewMapFragment extends Fragment implements OnInfoWindowClickListen
         });
         ab.setNegativeButton(R.string.cancel, null);
         ab.show();
+    }
+
+    class GraphFragmentController implements ViewGraphFragment.OnGraphClickListener {
+        ViewGraphFragment viewGraphFragment;
+        boolean show;
+        View graphLayout;
+        ImageView point;
+        RelativeLayout mapLayout;
+
+        private GraphFragmentController(View rootView) {
+            show = false;
+            graphLayout = rootView.findViewById(R.id.graphLayout);
+        }
+
+        private void show() {
+            show = true;
+            if (viewGraphFragment == null) {
+                viewGraphFragment = new ViewGraphFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(ViewGraphFragment.tag_tripname, trip.tripName);
+                bundle.putBoolean(ViewGraphFragment.tag_showOpenButton, true);
+                viewGraphFragment.setArguments(bundle);
+                viewGraphFragment.setOnGraphClickListener(this);
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                ft.replace(R.id.graphLayout, viewGraphFragment);
+                ft.commit();
+            }
+            graphLayout.setVisibility(View.VISIBLE);
+        }
+
+        private void hide() {
+            show = false;
+            graphLayout.setVisibility(View.GONE);
+            if (mapLayout != null && point != null) {
+                mapLayout.removeView(point);
+                point = null;
+                mapLayout = null;
+            }
+        }
+
+        public void toggle() {
+            if (show) {
+                hide();
+            } else {
+                show();
+            }
+        }
+
+        public boolean isShow() {
+            return show;
+        }
+
+        public void highlightIndex(int index) {
+            if (viewGraphFragment != null) {
+                viewGraphFragment.highlightIndex(index);
+            }
+        }
+
+        public void setMarkerEnabled(boolean enabled) {
+            if (viewGraphFragment != null) {
+                viewGraphFragment.setMarkerEnabled(enabled);
+            }
+        }
+
+        @Override
+        public void onGraphClicked(int xIndex) {
+            LatLng[] latLngs = trip.cache.getLats();
+            if (xIndex >= 0 && xIndex < latLngs.length) {
+                gmap.moveCamera(CameraUpdateFactory.newLatLng(latLngs[xIndex]));
+            }
+            if (mapLayout == null || point == null) {
+                mapLayout = (RelativeLayout) rootView.findViewById(R.id.mapLayout);
+                point = new ImageView(getContext());
+                point.setImageResource(R.drawable.runpoint);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                mapLayout.addView(point, params);
+            }
+        }
     }
 
     @Override

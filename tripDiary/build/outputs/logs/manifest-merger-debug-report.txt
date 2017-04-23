@@ -468,6 +468,7 @@ ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Andr
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:215:25-76
 uses-sdk
 INJECTED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:multidex:1.0.1] /home/yupog2003/.android/build-cache/2ae8ae2aaf1e0c0fc55713999724af61bf1e8845/output/AndroidManifest.xml:18:5-42
 MERGED from [com.github.yukuku:ambilwarna:2.0] /home/yupog2003/.android/build-cache/1e3efbae91a746540cb592957d34247a751ca81a/output/AndroidManifest.xml:8:5-10:41
 MERGED from [com.pavelsikun:material-seekbar-preference:2.3.0] /home/yupog2003/.android/build-cache/c2eb3211a3fe1e1db85819d0a0bb658f75efc38a/output/AndroidManifest.xml:8:5-10:41
 MERGED from [com.android.support:preference-v7:23.4.0] /home/yupog2003/.android/build-cache/6951e282ac1c3cf3eb8a0f0cc5f2607a77504188/output/AndroidManifest.xml:7:5-43
@@ -537,7 +538,6 @@ MERGED from [com.android.support:support-media-compat:25.3.1] /home/yupog2003/.a
 MERGED from [com.android.support:support-core-ui:25.3.1] /home/yupog2003/.android/build-cache/2a8b2b9013fbd1e89e85c3888fcf0da9a925a53f/output/AndroidManifest.xml:21:5-23:58
 MERGED from [com.android.support:support-core-utils:25.3.1] /home/yupog2003/.android/build-cache/c84066d29e52c987c3afcd949de7a606e8e7426d/output/AndroidManifest.xml:21:5-23:61
 MERGED from [com.android.support:support-compat:25.3.1] /home/yupog2003/.android/build-cache/29a5bea3a995174dbaebb8179cd54f7b4433fe44/output/AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:multidex:1.0.1] /home/yupog2003/.android/build-cache/2ae8ae2aaf1e0c0fc55713999724af61bf1e8845/output/AndroidManifest.xml:18:5-42
 	tools:overrideLibrary
 		ADDED from [com.android.support:design:25.2.0] /home/yupog2003/.android/build-cache/f050a588e4ba57d337df632f3a0fc2d40ab85f99/output/AndroidManifest.xml:23:9-59
 	android:targetSdkVersion

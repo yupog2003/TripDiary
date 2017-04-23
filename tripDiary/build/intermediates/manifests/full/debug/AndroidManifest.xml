@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yupog2003.tripdiary"
     android:installLocation="auto"
-    android:versionCode="199"
+    android:versionCode="200"
     android:versionName="1.4.1" >
 
     <uses-sdk
@@ -103,7 +103,7 @@
             android:value="AEdPqrEAAAAI70FoJq0n2rVYt_ETDwHhXfMLcPdoi9lLBBtpqA" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk" />
+            android:value="AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4" />
         <!-- publish key=  AIzaSyAzPVZdjSt1ODGT9gNuTvbjZWUgpgKG-Q4 -->
         <!-- debug key=    AIzaSyC4u43XXHl2AEk92DS-W13IC8vNDQRBJNk -->
 

@@ -1,16 +1,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewMapActivity">
+    >
 
-    <RelativeLayout
-        android:id="@+id/maplayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_toEndOf="@+id/buttonbar"
-        android:layout_toRightOf="@+id/buttonbar" />
+        android:layout_toRightOf="@+id/buttonbar"
+        android:orientation="horizontal"
+        android:animateLayoutChanges="true"
+        android:baselineAligned="false">
+
+        <RelativeLayout
+            android:id="@+id/mapLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:id="@+id/graphLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+    </LinearLayout>
 
     <android.support.v7.widget.CardView
         android:id="@+id/playPanel"

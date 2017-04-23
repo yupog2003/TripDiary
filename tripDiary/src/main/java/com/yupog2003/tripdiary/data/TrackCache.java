@@ -16,6 +16,7 @@ public class TrackCache implements Serializable, Parcelable {
     public double[] longitudes;
     public float[] altitudes;
     public String[] times;
+    public LatLng[] latLngs;
     public String startTime;
     public String endTime;
     public String totalTime;
@@ -83,13 +84,14 @@ public class TrackCache implements Serializable, Parcelable {
 
     @NonNull
     public LatLng[] getLats() {
+        if (latLngs != null) return latLngs;
         if (latitudes == null || longitudes == null) return new LatLng[0];
         int length = Math.min(latitudes.length, longitudes.length);
-        LatLng[] result = new LatLng[length];
+        latLngs = new LatLng[length];
         for (int i = 0; i < length; i++) {
-            result[i] = new LatLng(latitudes[i], longitudes[i]);
+            latLngs[i] = new LatLng(latitudes[i], longitudes[i]);
         }
-        return result;
+        return latLngs;
     }
 
     public int getTrackLength() {
