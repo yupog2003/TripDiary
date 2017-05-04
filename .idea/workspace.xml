@@ -11,119 +11,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a556523-8722-48f6-a1ce-9dc4235a3ece" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/jni/Android.mk" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_analytics_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_analytics_impl_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_appindexing_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_auth_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_common_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_config_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_crash_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_database_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_database_connection_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_iid_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_messaging_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_storage_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/firebase_storage_common_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_ads_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_ads_lite_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_analytics_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_analytics_impl_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_appinvite_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_auth_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_auth_base_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_awareness_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_base_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_basement_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_cast_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_cast_framework_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_clearcut_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_drive_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_fitness_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_games_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_gass_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_gcm_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_identity_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_iid_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_instantapps_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_location_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_maps_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_nearby_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_panorama_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_places_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_plus_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_safetynet_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_tagmanager_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_tagmanager_api_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_tagmanager_v4_impl_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_tasks_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_vision_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_wallet_10_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/play_services_wearable_10_2_1.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/resources-debug.ap_" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/tripDiary-release.apk" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/tripDiary-release.apk" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/MPAndroidChart_v3_0_2.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/MPAndroidChart_v3_0_2.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/ambilwarna_2_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/ambilwarna_2_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/animated_vector_drawable_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/animated_vector_drawable_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/appcompat_v7_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/appcompat_v7_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/cardview_v7_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/cardview_v7_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/commons_io_2_4.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/commons_io_2_4.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/design_25_2_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/design_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_client_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_client_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_client_android_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_client_android_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_client_gson_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_client_gson_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_services_drive_v2_rev170_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_api_services_drive_v2_rev170_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_android_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_android_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_gson_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_gson_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_jackson2_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_http_client_jackson2_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_oauth_client_1_20_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/google_oauth_client_1_20_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/gson_2_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/gson_2_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/guava_jdk5_13_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/guava_jdk5_13_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/httpclient_4_5.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/httpclient_4_5.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/httpcore_4_4_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/httpcore_4_4_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/jackson_core_2_1_3.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/jackson_core_2_1_3.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/jsr305_1_3_9.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/jsr305_1_3_9.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/libthrift_0_9_2.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/libthrift_0_9_2.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/material_calendarview_0_8_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/material_calendarview_0_8_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/material_seekbar_preference_2_3_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/material_seekbar_preference_2_3_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/mediarouter_v7_24_0_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/mediarouter_v7_24_0_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/multidex_1_0_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/multidex_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/multidex_instrumentation_1_0_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/multidex_instrumentation_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/palette_v7_24_0_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/palette_v7_24_0_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/preference_v7_23_4_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/preference_v7_23_4_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/recyclerview_v7_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/recyclerview_v7_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/slf4j_api_1_7_6.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/slf4j_api_1_7_6.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/subsampling_scale_image_view_3_6_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/subsampling_scale_image_view_3_6_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_annotations_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_annotations_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_compat_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_compat_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_core_ui_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_core_ui_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_core_utils_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_core_utils_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_fragment_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_fragment_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_media_compat_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_media_compat_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_v4_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_v4_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_vector_drawable_25_3_1.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/support_vector_drawable_25_3_1.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/transition_25_2_0.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/transition_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/universal_image_loader_1_9_5.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/libraries/universal_image_loader_1_9_5.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/vcs.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/drawable-hdpi/ic_open_in_new.png" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/drawable-mdpi/ic_open_in_new.png" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/drawable-xhdpi/ic_open_in_new.png" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/drawable-xxhdpi/ic_open_in_new.png" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/fragments/ViewGraphFragment.java" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/jni/Application.mk" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/layout/fragment_view_graph.xml" />
+      <change type="NEW" beforePath="" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/xml/provider_paths.xml" />
       <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/workspace.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/build/intermediates/dex-cache/cache.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/gradlew.bat" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/gradlew.bat" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/local.properties" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/local.properties" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build.gradle" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build.gradle" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/generated/source/buildConfig/androidTest/debug/com/yupog2003/tripdiary/test/BuildConfig.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/generated/source/buildConfig/androidTest/debug/com/yupog2003/tripdiary/test/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/generated/source/buildConfig/debug/com/yupog2003/tripdiary/BuildConfig.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/generated/source/buildConfig/debug/com/yupog2003/tripdiary/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/outputs/logs/manifest-merger-debug-report.txt" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/outputs/logs/manifest-merger-debug-report.txt" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ImageViewerActivity.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/ImageViewerActivity.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/MultiFileChooseActivity.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/MultiFileChooseActivity.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/TripDiaryApplication.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/TripDiaryApplication.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/FileHelper.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/documentfile/RawDocumentFile.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/data/documentfile/RawDocumentFile.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/GenerateVideoService.java" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/java/com/yupog2003/tripdiary/services/GenerateVideoService.java" />
-      <change type="MODIFICATION" beforePath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/tripDiary.iml" afterPath="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/tripDiary.iml" />
     </list>
     <ignored path="TripDiary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -3196,12 +3092,19 @@
       <option name="project" value="LOCAL" />
       <updated>1492958424697</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="V1.4.2">
+      <created>1493910178267</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1493910178267</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1014" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -3209,8 +3112,8 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26495728" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45299146" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -3232,6 +3135,24 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
       <collection />
@@ -3249,7 +3170,8 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="V1.4.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="V1.4.1" />
+    <MESSAGE value="V1.4.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="V1.4.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
