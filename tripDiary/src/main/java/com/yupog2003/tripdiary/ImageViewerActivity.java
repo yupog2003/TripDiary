@@ -112,7 +112,7 @@ public class ImageViewerActivity extends MyActivity implements View.OnClickListe
                     if (uri.equals(poi.picFiles[j].getUri())) {
                         index += j;
                         viewPager.setCurrentItem(index);
-                        setTitle(poi.picFiles[j].getName());
+                        ((ImageAdapter)viewPager.getAdapter()).onPageSelected(index);
                         return;
                     }
                 }
@@ -183,12 +183,18 @@ public class ImageViewerActivity extends MyActivity implements View.OnClickListe
     private class ImageAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
         ArrayList<DocumentFile> images;
+        ArrayList<POI> poiArrayList;
 
         private ImageAdapter() {
             images = new ArrayList<>();
+            poiArrayList = new ArrayList<>();
             if (trip != null) {
                 for (POI poi : trip.pois) {
                     images.addAll(Arrays.asList(poi.picFiles));
+                    int length = poi.picFiles.length;
+                    for (int i = 0; i < length; i++) {
+                        poiArrayList.add(poi);
+                    }
                 }
             }
         }
@@ -238,7 +244,9 @@ public class ImageViewerActivity extends MyActivity implements View.OnClickListe
 
         @Override
         public void onPageSelected(int position) {
-            setTitle(images.get(position).getName());
+            String poiName = poiArrayList.get(position).title;
+            String imageName = images.get(position).getName();
+            setTitle(poiName + "/" + imageName);
         }
 
         @Override

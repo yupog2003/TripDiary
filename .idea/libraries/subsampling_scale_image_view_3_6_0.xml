@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="subsampling-scale-image-view-3.6.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/21926219f2565091d0d8775a19b2e248d8f26469/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/21926219f2565091d0d8775a19b2e248d8f26469/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/913ce029362f9d42dfea05b24242c9c788d7eec5/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/913ce029362f9d42dfea05b24242c9c788d7eec5/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

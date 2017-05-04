@@ -1,6 +1,7 @@
 package com.yupog2003.tripdiary.data.documentfile;
 
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 
@@ -57,7 +58,7 @@ public class RawDocumentFile extends DocumentFile {
     @Override
     public Uri getUri() {
         if (file != null) {
-            return FileProvider.getUriForFile(TripDiaryApplication.instance, TripDiaryApplication.fileProviderAuthority, file);
+            return FileHelper.getUriFromFile(file);
         }
         return null;
     }

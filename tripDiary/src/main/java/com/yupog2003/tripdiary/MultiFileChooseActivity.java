@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
@@ -180,21 +181,22 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
 
             @Override
             public void onClick(View v) {
+                Uri uri = FileHelper.getUriFromFile(file);
                 if (file.isDirectory()) {
                     setDir(file, filter);
                 } else if (FileHelper.isPicture(file)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, file), "image/*");
+                    intent.setDataAndType(uri, "image/*");
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 } else if (FileHelper.isVideo(file)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, file), "video/*");
+                    intent.setDataAndType(uri, "video/*");
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 } else if (FileHelper.isAudio(file)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, file), "audio/*");
+                    intent.setDataAndType(uri, "audio/*");
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                 }
@@ -245,7 +247,7 @@ public class MultiFileChooseActivity extends MyActivity implements OnClickListen
             Intent intent = new Intent();
             ArrayList<Uri> uris = new ArrayList<>();
             for (String path : chosenFiles) {
-                uris.add(FileProvider.getUriForFile(getActivity(), TripDiaryApplication.fileProviderAuthority, new File(path)));
+                uris.add(FileHelper.getUriFromFile(new File(path)));
             }
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

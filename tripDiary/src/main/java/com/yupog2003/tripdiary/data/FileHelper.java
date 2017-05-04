@@ -9,8 +9,11 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Parcel;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yupog2003.tripdiary.R;
+import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.documentfile.DocumentFile;
 
 import java.io.BufferedInputStream;
@@ -43,6 +47,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -576,6 +581,15 @@ public class FileHelper {
             }
         }
 
+    }
+
+    public static Uri getUriFromFile(File file) {
+        if (file == null) return null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return FileProvider.getUriForFile(TripDiaryApplication.instance, TripDiaryApplication.fileProviderAuthority, file);
+        } else {
+            return Uri.fromFile(file);
+        }
     }
 
     public static class MoveFilesTask extends AsyncTask<Void, String, String> {

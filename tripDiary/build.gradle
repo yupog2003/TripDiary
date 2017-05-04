@@ -2,21 +2,21 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
         applicationId "com.yupog2003.tripdiary"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 200
-        versionName "1.4.1"
+        versionCode 201
+        versionName "1.4.2"
         multiDexEnabled true
 
-        ndk {
+        /*ndk {
             moduleName "TripDiary"
             stl "gnustl_static"
             ldLibs "log"
-        }
+        }*/
     }
 
     packagingOptions {
@@ -44,6 +44,11 @@ android {
         incremental true
         javaMaxHeapSize "1536m"
     }
+    externalNativeBuild {
+        ndkBuild {
+            path '../../../../../../../../../../home/yupog2003/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/jni/Android.mk'
+        }
+    }
 }
 
 
@@ -51,7 +56,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.github.yukuku:ambilwarna:2.0'
     compile 'com.pavelsikun:material-seekbar-preference:2.3.0'
-    compile 'com.google.android.gms:play-services:10.2.1'
+    compile 'com.google.android.gms:play-services:10.2.4'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
