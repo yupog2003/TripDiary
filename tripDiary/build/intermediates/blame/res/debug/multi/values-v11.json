@@ -493,27 +493,6 @@
                         "endOffset": 14072
                     }
                 }
-            },
-            {
-                "to": {
-                    "startLine": 192,
-                    "startColumn": 4,
-                    "startOffset": 14077,
-                    "endLine": 193,
-                    "endColumn": 8,
-                    "endOffset": 14198
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/res/values-v11/values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 172,
-                        "endLine": 5,
-                        "endColumn": 8,
-                        "endOffset": 293
-                    }
-                }
             }
         ]
     }

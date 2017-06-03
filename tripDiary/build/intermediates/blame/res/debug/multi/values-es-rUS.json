@@ -368,768 +368,8 @@
                     "startLine": 21,
                     "startColumn": 4,
                     "startOffset": 2100,
-                    "endColumn": 72,
-                    "endOffset": 2168
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 241,
-                        "endColumn": 68,
-                        "endOffset": 309
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 22,
-                    "startColumn": 4,
-                    "startOffset": 2173,
-                    "endColumn": 79,
-                    "endOffset": 2248
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 302,
-                        "endColumn": 75,
-                        "endOffset": 377
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 23,
-                    "startColumn": 4,
-                    "startOffset": 2253,
-                    "endColumn": 100,
-                    "endOffset": 2349
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 0,
-                        "startOffset": 378,
-                        "endColumn": 96,
-                        "endOffset": 474
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 24,
-                    "startColumn": 4,
-                    "startOffset": 2354,
-                    "endColumn": 100,
-                    "endOffset": 2450
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 0,
-                        "startOffset": 475,
-                        "endColumn": 96,
-                        "endOffset": 571
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 25,
-                    "startColumn": 4,
-                    "startOffset": 2455,
-                    "endColumn": 137,
-                    "endOffset": 2588
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 0,
-                        "startOffset": 572,
-                        "endColumn": 133,
-                        "endOffset": 705
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 26,
-                    "startColumn": 4,
-                    "startOffset": 2593,
-                    "endColumn": 85,
-                    "endOffset": 2674
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 0,
-                        "startOffset": 706,
-                        "endColumn": 81,
-                        "endOffset": 787
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 27,
-                    "startColumn": 4,
-                    "startOffset": 2679,
-                    "endColumn": 182,
-                    "endOffset": 2857
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 9,
-                        "startColumn": 0,
-                        "startOffset": 788,
-                        "endColumn": 178,
-                        "endOffset": 966
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 28,
-                    "startColumn": 4,
-                    "startOffset": 2862,
-                    "endColumn": 115,
-                    "endOffset": 2973
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 0,
-                        "startOffset": 967,
-                        "endColumn": 111,
-                        "endOffset": 1078
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 29,
-                    "startColumn": 4,
-                    "startOffset": 2978,
-                    "endColumn": 116,
-                    "endOffset": 3090
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 0,
-                        "startOffset": 1079,
-                        "endColumn": 112,
-                        "endOffset": 1191
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 30,
-                    "startColumn": 4,
-                    "startOffset": 3095,
-                    "endColumn": 124,
-                    "endOffset": 3215
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 12,
-                        "startColumn": 0,
-                        "startOffset": 1192,
-                        "endColumn": 120,
-                        "endOffset": 1312
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 31,
-                    "startColumn": 4,
-                    "startOffset": 3220,
-                    "endColumn": 100,
-                    "endOffset": 3316
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 13,
-                        "startColumn": 0,
-                        "startOffset": 1313,
-                        "endColumn": 96,
-                        "endOffset": 1409
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 32,
-                    "startColumn": 4,
-                    "startOffset": 3321,
-                    "endColumn": 103,
-                    "endOffset": 3420
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 14,
-                        "startColumn": 0,
-                        "startOffset": 1410,
-                        "endColumn": 99,
-                        "endOffset": 1509
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 33,
-                    "startColumn": 4,
-                    "startOffset": 3425,
-                    "endColumn": 78,
-                    "endOffset": 3499
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 15,
-                        "startColumn": 0,
-                        "startOffset": 1510,
-                        "endColumn": 74,
-                        "endOffset": 1584
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 34,
-                    "startColumn": 4,
-                    "startOffset": 3504,
-                    "endColumn": 95,
-                    "endOffset": 3595
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 16,
-                        "startColumn": 0,
-                        "startOffset": 1585,
-                        "endColumn": 91,
-                        "endOffset": 1676
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 35,
-                    "startColumn": 4,
-                    "startOffset": 3600,
-                    "endColumn": 98,
-                    "endOffset": 3694
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 0,
-                        "startOffset": 1677,
-                        "endColumn": 94,
-                        "endOffset": 1771
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 36,
-                    "startColumn": 4,
-                    "startOffset": 3699,
-                    "endColumn": 107,
-                    "endOffset": 3802
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 18,
-                        "startColumn": 0,
-                        "startOffset": 1772,
-                        "endColumn": 103,
-                        "endOffset": 1875
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 37,
-                    "startColumn": 4,
-                    "startOffset": 3807,
-                    "endColumn": 77,
-                    "endOffset": 3880
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 19,
-                        "startColumn": 0,
-                        "startOffset": 1876,
-                        "endColumn": 73,
-                        "endOffset": 1949
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 38,
-                    "startColumn": 4,
-                    "startOffset": 3885,
-                    "endColumn": 150,
-                    "endOffset": 4031
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/920d0ccf9c11ce4cac316e50e03fe2a22650bbae/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 292,
-                        "endColumn": 150,
-                        "endOffset": 442
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 39,
-                    "startColumn": 4,
-                    "startOffset": 4036,
-                    "endColumn": 151,
-                    "endOffset": 4183
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/920d0ccf9c11ce4cac316e50e03fe2a22650bbae/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 0,
-                        "startOffset": 443,
-                        "endColumn": 151,
-                        "endOffset": 594
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 40,
-                    "startColumn": 4,
-                    "startOffset": 4188,
-                    "endColumn": 98,
-                    "endOffset": 4282
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/920d0ccf9c11ce4cac316e50e03fe2a22650bbae/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 0,
-                        "startOffset": 595,
-                        "endColumn": 94,
-                        "endOffset": 689
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 41,
-                    "startColumn": 4,
-                    "startOffset": 4287,
-                    "endColumn": 75,
-                    "endOffset": 4358
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 0,
-                        "startOffset": 1950,
-                        "endColumn": 71,
-                        "endOffset": 2021
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 42,
-                    "startColumn": 4,
-                    "startOffset": 4363,
-                    "endColumn": 78,
-                    "endOffset": 4437
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 0,
-                        "startOffset": 2022,
-                        "endColumn": 74,
-                        "endOffset": 2096
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 43,
-                    "startColumn": 4,
-                    "startOffset": 4442,
-                    "endColumn": 80,
-                    "endOffset": 4518
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 22,
-                        "startColumn": 0,
-                        "startOffset": 2097,
-                        "endColumn": 76,
-                        "endOffset": 2173
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 44,
-                    "startColumn": 4,
-                    "startOffset": 4523,
-                    "endColumn": 97,
-                    "endOffset": 4616
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 23,
-                        "startColumn": 0,
-                        "startOffset": 2174,
-                        "endColumn": 93,
-                        "endOffset": 2267
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 45,
-                    "startColumn": 4,
-                    "startOffset": 4621,
-                    "endColumn": 100,
-                    "endOffset": 4717
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 24,
-                        "startColumn": 0,
-                        "startOffset": 2268,
-                        "endColumn": 96,
-                        "endOffset": 2364
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 46,
-                    "startColumn": 4,
-                    "startOffset": 4722,
-                    "endColumn": 110,
-                    "endOffset": 4828
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 25,
-                        "startColumn": 0,
-                        "startOffset": 2365,
-                        "endColumn": 106,
-                        "endOffset": 2471
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 47,
-                    "startColumn": 4,
-                    "startOffset": 4833,
-                    "endColumn": 97,
-                    "endOffset": 4926
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 26,
-                        "startColumn": 0,
-                        "startOffset": 2472,
-                        "endColumn": 93,
-                        "endOffset": 2565
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 48,
-                    "startColumn": 4,
-                    "startOffset": 4931,
-                    "endColumn": 96,
-                    "endOffset": 5023
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 27,
-                        "startColumn": 0,
-                        "startOffset": 2566,
-                        "endColumn": 92,
-                        "endOffset": 2658
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 49,
-                    "startColumn": 4,
-                    "startOffset": 5028,
-                    "endColumn": 75,
-                    "endOffset": 5099
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 28,
-                        "startColumn": 0,
-                        "startOffset": 2659,
-                        "endColumn": 71,
-                        "endOffset": 2730
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 50,
-                    "startColumn": 4,
-                    "startOffset": 5104,
-                    "endColumn": 110,
-                    "endOffset": 5210
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 29,
-                        "startColumn": 0,
-                        "startOffset": 2731,
-                        "endColumn": 106,
-                        "endOffset": 2837
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 51,
-                    "startColumn": 4,
-                    "startOffset": 5215,
-                    "endColumn": 96,
-                    "endOffset": 5307
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 30,
-                        "startColumn": 0,
-                        "startOffset": 2838,
-                        "endColumn": 92,
-                        "endOffset": 2930
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 52,
-                    "startColumn": 4,
-                    "startOffset": 5312,
-                    "endColumn": 100,
-                    "endOffset": 5408
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 31,
-                        "startColumn": 0,
-                        "startOffset": 2931,
-                        "endColumn": 96,
-                        "endOffset": 3027
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 53,
-                    "startColumn": 4,
-                    "startOffset": 5413,
-                    "endColumn": 122,
-                    "endOffset": 5531
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 32,
-                        "startColumn": 0,
-                        "startOffset": 3028,
-                        "endColumn": 118,
-                        "endOffset": 3146
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 54,
-                    "startColumn": 4,
-                    "startOffset": 5536,
-                    "endColumn": 143,
-                    "endOffset": 5675
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 33,
-                        "startColumn": 0,
-                        "startOffset": 3147,
-                        "endColumn": 143,
-                        "endOffset": 3290
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 55,
-                    "startColumn": 4,
-                    "startOffset": 5680,
-                    "endColumn": 135,
-                    "endOffset": 5811
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 34,
-                        "startColumn": 0,
-                        "startOffset": 3291,
-                        "endColumn": 131,
-                        "endOffset": 3422
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 56,
-                    "startColumn": 4,
-                    "startOffset": 5816,
-                    "endColumn": 134,
-                    "endOffset": 5946
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 35,
-                        "startColumn": 0,
-                        "startOffset": 3423,
-                        "endColumn": 130,
-                        "endOffset": 3553
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 57,
-                    "startColumn": 4,
-                    "startOffset": 5951,
-                    "endColumn": 97,
-                    "endOffset": 6044
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 36,
-                        "startColumn": 0,
-                        "startOffset": 3554,
-                        "endColumn": 93,
-                        "endOffset": 3647
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 58,
-                    "startColumn": 4,
-                    "startOffset": 6049,
-                    "endColumn": 95,
-                    "endOffset": 6140
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 37,
-                        "startColumn": 0,
-                        "startOffset": 3648,
-                        "endColumn": 91,
-                        "endOffset": 3739
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 59,
-                    "startColumn": 4,
-                    "startOffset": 6145,
-                    "endColumn": 105,
-                    "endOffset": 6246
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 38,
-                        "startColumn": 0,
-                        "startOffset": 3740,
-                        "endColumn": 101,
-                        "endOffset": 3841
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 60,
-                    "startColumn": 4,
-                    "startOffset": 6251,
-                    "endColumn": 88,
-                    "endOffset": 6335
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 39,
-                        "startColumn": 0,
-                        "startOffset": 3842,
-                        "endColumn": 84,
-                        "endOffset": 3926
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 61,
-                    "startColumn": 4,
-                    "startOffset": 6340,
                     "endColumn": 109,
-                    "endOffset": 6445
+                    "endOffset": 2205
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1144,11 +384,11 @@
             },
             {
                 "to": {
-                    "startLine": 62,
+                    "startLine": 22,
                     "startColumn": 4,
-                    "startOffset": 6450,
+                    "startOffset": 2210,
                     "endColumn": 197,
-                    "endOffset": 6643
+                    "endOffset": 2403
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1163,11 +403,11 @@
             },
             {
                 "to": {
-                    "startLine": 63,
+                    "startLine": 23,
                     "startColumn": 4,
-                    "startOffset": 6648,
+                    "startOffset": 2408,
                     "endColumn": 133,
-                    "endOffset": 6777
+                    "endOffset": 2537
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1182,11 +422,11 @@
             },
             {
                 "to": {
-                    "startLine": 64,
+                    "startLine": 24,
                     "startColumn": 4,
-                    "startOffset": 6782,
+                    "startOffset": 2542,
                     "endColumn": 109,
-                    "endOffset": 6887
+                    "endOffset": 2647
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1201,11 +441,11 @@
             },
             {
                 "to": {
-                    "startLine": 65,
+                    "startLine": 25,
                     "startColumn": 4,
-                    "startOffset": 6892,
+                    "startOffset": 2652,
                     "endColumn": 219,
-                    "endOffset": 7107
+                    "endOffset": 2867
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1220,11 +460,11 @@
             },
             {
                 "to": {
-                    "startLine": 66,
+                    "startLine": 26,
                     "startColumn": 4,
-                    "startOffset": 7112,
+                    "startOffset": 2872,
                     "endColumn": 132,
-                    "endOffset": 7240
+                    "endOffset": 3000
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1239,11 +479,11 @@
             },
             {
                 "to": {
-                    "startLine": 67,
+                    "startLine": 27,
                     "startColumn": 4,
-                    "startOffset": 7245,
+                    "startOffset": 3005,
                     "endColumn": 134,
-                    "endOffset": 7375
+                    "endOffset": 3135
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1258,11 +498,11 @@
             },
             {
                 "to": {
-                    "startLine": 68,
+                    "startLine": 28,
                     "startColumn": 4,
-                    "startOffset": 7380,
+                    "startOffset": 3140,
                     "endColumn": 204,
-                    "endOffset": 7580
+                    "endOffset": 3340
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/6963d786f97bef76b1ddf84b79b7a1bfbda85155/output/res/values-es-rUS/values.xml",
@@ -1277,11 +517,11 @@
             },
             {
                 "to": {
-                    "startLine": 69,
+                    "startLine": 29,
                     "startColumn": 4,
-                    "startOffset": 7585,
+                    "startOffset": 3345,
                     "endColumn": 229,
-                    "endOffset": 7810
+                    "endOffset": 3570
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1296,11 +536,11 @@
             },
             {
                 "to": {
-                    "startLine": 70,
+                    "startLine": 30,
                     "startColumn": 4,
-                    "startOffset": 7815,
+                    "startOffset": 3575,
                     "endColumn": 110,
-                    "endOffset": 7921
+                    "endOffset": 3681
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1315,11 +555,11 @@
             },
             {
                 "to": {
-                    "startLine": 71,
+                    "startLine": 31,
                     "startColumn": 4,
-                    "startOffset": 7926,
+                    "startOffset": 3686,
                     "endColumn": 200,
-                    "endOffset": 8122
+                    "endOffset": 3882
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1334,11 +574,11 @@
             },
             {
                 "to": {
-                    "startLine": 72,
+                    "startLine": 32,
                     "startColumn": 4,
-                    "startOffset": 8127,
+                    "startOffset": 3887,
                     "endColumn": 134,
-                    "endOffset": 8257
+                    "endOffset": 4017
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1353,11 +593,11 @@
             },
             {
                 "to": {
-                    "startLine": 73,
+                    "startLine": 33,
                     "startColumn": 4,
-                    "startOffset": 8262,
+                    "startOffset": 4022,
                     "endColumn": 235,
-                    "endOffset": 8493
+                    "endOffset": 4253
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1372,11 +612,11 @@
             },
             {
                 "to": {
-                    "startLine": 74,
+                    "startLine": 34,
                     "startColumn": 4,
-                    "startOffset": 8498,
+                    "startOffset": 4258,
                     "endColumn": 207,
-                    "endOffset": 8701
+                    "endOffset": 4461
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1391,11 +631,11 @@
             },
             {
                 "to": {
-                    "startLine": 75,
+                    "startLine": 35,
                     "startColumn": 4,
-                    "startOffset": 8706,
+                    "startOffset": 4466,
                     "endColumn": 99,
-                    "endOffset": 8801
+                    "endOffset": 4561
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1410,11 +650,11 @@
             },
             {
                 "to": {
-                    "startLine": 76,
+                    "startLine": 36,
                     "startColumn": 4,
-                    "startOffset": 8806,
+                    "startOffset": 4566,
                     "endColumn": 91,
-                    "endOffset": 8893
+                    "endOffset": 4653
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1429,11 +669,11 @@
             },
             {
                 "to": {
-                    "startLine": 77,
+                    "startLine": 37,
                     "startColumn": 4,
-                    "startOffset": 8898,
+                    "startOffset": 4658,
                     "endColumn": 106,
-                    "endOffset": 9000
+                    "endOffset": 4760
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/res/values-es-rUS/values.xml",
@@ -1448,524 +688,11 @@
             },
             {
                 "to": {
-                    "startLine": 78,
+                    "startLine": 38,
                     "startColumn": 4,
-                    "startOffset": 9005,
-                    "endColumn": 144,
-                    "endOffset": 9145
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 0,
-                        "startOffset": 310,
-                        "endColumn": 140,
-                        "endOffset": 450
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 79,
-                    "startColumn": 4,
-                    "startOffset": 9150,
-                    "endColumn": 109,
-                    "endOffset": 9255
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 0,
-                        "startOffset": 451,
-                        "endColumn": 105,
-                        "endOffset": 556
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 80,
-                    "startColumn": 4,
-                    "startOffset": 9260,
-                    "endColumn": 107,
-                    "endOffset": 9363
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 0,
-                        "startOffset": 557,
-                        "endColumn": 103,
-                        "endOffset": 660
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 81,
-                    "startColumn": 4,
-                    "startOffset": 9368,
-                    "endColumn": 113,
-                    "endOffset": 9477
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 0,
-                        "startOffset": 661,
-                        "endColumn": 109,
-                        "endOffset": 770
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 82,
-                    "startColumn": 4,
-                    "startOffset": 9482,
-                    "endColumn": 108,
-                    "endOffset": 9586
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 9,
-                        "startColumn": 0,
-                        "startOffset": 771,
-                        "endColumn": 104,
-                        "endOffset": 875
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 83,
-                    "startColumn": 4,
-                    "startOffset": 9591,
-                    "endColumn": 106,
-                    "endOffset": 9693
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 0,
-                        "startOffset": 876,
-                        "endColumn": 102,
-                        "endOffset": 978
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 84,
-                    "startColumn": 4,
-                    "startOffset": 9698,
-                    "endColumn": 74,
-                    "endOffset": 9768
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 0,
-                        "startOffset": 979,
-                        "endColumn": 70,
-                        "endOffset": 1049
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 85,
-                    "startColumn": 4,
-                    "startOffset": 9773,
-                    "endColumn": 109,
-                    "endOffset": 9878
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 109,
-                        "endOffset": 160
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 86,
-                    "startColumn": 4,
-                    "startOffset": 9883,
-                    "endColumn": 116,
-                    "endOffset": 9995
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 165,
-                        "endColumn": 116,
-                        "endOffset": 277
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 87,
-                    "startColumn": 4,
-                    "startOffset": 10000,
-                    "endColumn": 118,
-                    "endOffset": 10114
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 282,
-                        "endColumn": 118,
-                        "endOffset": 396
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 88,
-                    "startColumn": 4,
-                    "startOffset": 10119,
-                    "endColumn": 121,
-                    "endOffset": 10236
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 401,
-                        "endColumn": 121,
-                        "endOffset": 518
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 89,
-                    "startColumn": 4,
-                    "startOffset": 10241,
-                    "endColumn": 100,
-                    "endOffset": 10337
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 4,
-                        "startOffset": 523,
-                        "endColumn": 100,
-                        "endOffset": 619
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 90,
-                    "startColumn": 4,
-                    "startOffset": 10342,
-                    "endColumn": 86,
-                    "endOffset": 10424
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 4,
-                        "startOffset": 624,
-                        "endColumn": 86,
-                        "endOffset": 706
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 91,
-                    "startColumn": 4,
-                    "startOffset": 10429,
-                    "endColumn": 98,
-                    "endOffset": 10523
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 4,
-                        "startOffset": 711,
-                        "endColumn": 98,
-                        "endOffset": 805
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 92,
-                    "startColumn": 4,
-                    "startOffset": 10528,
-                    "endColumn": 109,
-                    "endOffset": 10633
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 9,
-                        "startColumn": 4,
-                        "startOffset": 810,
-                        "endColumn": 109,
-                        "endOffset": 915
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 93,
-                    "startColumn": 4,
-                    "startOffset": 10638,
-                    "endColumn": 96,
-                    "endOffset": 10730
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 4,
-                        "startOffset": 920,
-                        "endColumn": 96,
-                        "endOffset": 1012
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 94,
-                    "startColumn": 4,
-                    "startOffset": 10735,
-                    "endColumn": 94,
-                    "endOffset": 10825
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 4,
-                        "startOffset": 1017,
-                        "endColumn": 94,
-                        "endOffset": 1107
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 95,
-                    "startColumn": 4,
-                    "startOffset": 10830,
-                    "endColumn": 94,
-                    "endOffset": 10920
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 12,
-                        "startColumn": 4,
-                        "startOffset": 1112,
-                        "endColumn": 94,
-                        "endOffset": 1202
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 96,
-                    "startColumn": 4,
-                    "startOffset": 10925,
-                    "endColumn": 92,
-                    "endOffset": 11013
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 13,
-                        "startColumn": 4,
-                        "startOffset": 1207,
-                        "endColumn": 92,
-                        "endOffset": 1295
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 97,
-                    "startColumn": 4,
-                    "startOffset": 11018,
-                    "endColumn": 116,
-                    "endOffset": 11130
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 14,
-                        "startColumn": 4,
-                        "startOffset": 1300,
-                        "endColumn": 116,
-                        "endOffset": 1412
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 98,
-                    "startColumn": 4,
-                    "startOffset": 11135,
-                    "endColumn": 134,
-                    "endOffset": 11265
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 15,
-                        "startColumn": 4,
-                        "startOffset": 1417,
-                        "endColumn": 134,
-                        "endOffset": 1547
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 99,
-                    "startColumn": 4,
-                    "startOffset": 11270,
-                    "endColumn": 84,
-                    "endOffset": 11350
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 16,
-                        "startColumn": 4,
-                        "startOffset": 1552,
-                        "endColumn": 84,
-                        "endOffset": 1632
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 100,
-                    "startColumn": 4,
-                    "startOffset": 11355,
-                    "endColumn": 86,
-                    "endOffset": 11437
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 4,
-                        "startOffset": 1637,
-                        "endColumn": 86,
-                        "endOffset": 1719
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 101,
-                    "startColumn": 4,
-                    "startOffset": 11442,
-                    "endColumn": 99,
-                    "endOffset": 11537
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 18,
-                        "startColumn": 4,
-                        "startOffset": 1724,
-                        "endColumn": 99,
-                        "endOffset": 1819
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 102,
-                    "startColumn": 4,
-                    "startOffset": 11542,
-                    "endColumn": 116,
-                    "endOffset": 11654
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 19,
-                        "startColumn": 4,
-                        "startOffset": 1824,
-                        "endColumn": 116,
-                        "endOffset": 1936
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 103,
-                    "startColumn": 4,
-                    "startOffset": 11659,
-                    "endColumn": 86,
-                    "endOffset": 11741
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 4,
-                        "startOffset": 1941,
-                        "endColumn": 86,
-                        "endOffset": 2023
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 104,
-                    "startColumn": 4,
-                    "startOffset": 11746,
-                    "endColumn": 98,
-                    "endOffset": 11840
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/res/values-es-rUS/values-es-rUS.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 4,
-                        "startOffset": 2028,
-                        "endColumn": 98,
-                        "endOffset": 2122
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 105,
-                    "startColumn": 4,
-                    "startOffset": 11845,
+                    "startOffset": 4765,
                     "endColumn": 105,
-                    "endOffset": 11946
+                    "endOffset": 4866
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/76eeab63bf568dd070806b2983d906b41e97b804/output/res/values-es-rUS/values.xml",
@@ -1980,11 +707,11 @@
             },
             {
                 "to": {
-                    "startLine": 106,
+                    "startLine": 39,
                     "startColumn": 4,
-                    "startOffset": 11951,
+                    "startOffset": 4871,
                     "endColumn": 97,
-                    "endOffset": 12044
+                    "endOffset": 4964
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/76eeab63bf568dd070806b2983d906b41e97b804/output/res/values-es-rUS/values.xml",
@@ -1999,11 +726,11 @@
             },
             {
                 "to": {
-                    "startLine": 107,
+                    "startLine": 40,
                     "startColumn": 4,
-                    "startOffset": 12049,
+                    "startOffset": 4969,
                     "endColumn": 81,
-                    "endOffset": 12126
+                    "endOffset": 5046
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/values-es-rUS/values-es-rUS.xml",
@@ -2018,11 +745,11 @@
             },
             {
                 "to": {
-                    "startLine": 108,
+                    "startLine": 41,
                     "startColumn": 4,
-                    "startOffset": 12131,
+                    "startOffset": 5051,
                     "endColumn": 100,
-                    "endOffset": 12227
+                    "endOffset": 5147
                 },
                 "from": {
                     "file": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/values-es-rUS/values-es-rUS.xml",
@@ -2032,63 +759,6 @@
                         "startOffset": 2132,
                         "endColumn": 100,
                         "endOffset": 2228
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 109,
-                    "startColumn": 4,
-                    "startOffset": 12232,
-                    "endColumn": 156,
-                    "endOffset": 12384
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 12,
-                        "startColumn": 0,
-                        "startOffset": 1050,
-                        "endColumn": 152,
-                        "endOffset": 1202
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 110,
-                    "startColumn": 4,
-                    "startOffset": 12389,
-                    "endColumn": 92,
-                    "endOffset": 12477
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 13,
-                        "startColumn": 0,
-                        "startOffset": 1203,
-                        "endColumn": 88,
-                        "endOffset": 1291
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 111,
-                    "startColumn": 4,
-                    "startOffset": 12482,
-                    "endColumn": 106,
-                    "endOffset": 12584
-                },
-                "from": {
-                    "file": "/home/yupog2003/.android/build-cache/4288033f94dc1bc05daf6c51d7d02866a30f94db/output/res/values-es-rUS/values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 244,
-                        "endColumn": 102,
-                        "endOffset": 346
                     }
                 }
             }
