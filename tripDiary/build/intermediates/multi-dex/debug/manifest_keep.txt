@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:51
+-keep class com.yupog2003.tripdiary.data.MyBackupAgent { <init>(...); }
+

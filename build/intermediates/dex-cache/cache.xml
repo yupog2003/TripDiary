@@ -65,21 +65,21 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/5a571bffe92c3ccb0eb50f242b4650d287692a82/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4e5223997fa6032b326167ee4586ae0b3498647">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_edb2602273d3ef31b3a7fc7e1535a32f76f3a92a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev170-1.20.0/cac1b8bf96295246293ff03bd7c5daaa6f0adb47/google-api-services-drive-v2-rev170-1.20.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="cac1b8bf96295246293ff03bd7c5daaa6f0adb47">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-api-services-drive-v2-rev170-1.20.0_99bf62612d7575a94ed150e7c8d4ce9c7b4a7aa8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/182f94e6b6e3a2c86f6f3bd94975fce6e6602da0/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="6c8a4af7cf76d958c76ed7682f39e4b386b69305">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_54ac3a37c97824cc6fb36306cdaf36bbd5307727/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -92,21 +92,21 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/a2253137c49fc4cab7e9c53d20d2ae0b1851a6e8/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="079c035b2a1820bf455e0ae7fd484dec575e2182">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_34d3f6c9e839af1026e77de7ba2ccaf0c5efac17/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpclient-4.5.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="a1e6cbb3cc2c5f210dd1310ff9fcb2c09c0d1438">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/2/httpclient-4.5_6f84526de8948a629221448801fed42e7ec59d6b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="54933c89f90a872aa342004e82b23e776fe12736">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b72f00a38b1df4e19daad88ac4d2e29ac5ca782f/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -119,12 +119,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="143e5647b772c08c9f0d807b24bbc0b05ff6c7d2">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d41931a70afad383d5031ae857d73ece24564880/classes.dex" />
+        sha1="84a9797d6c3dd732d00f0433edc17778573cea17">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8f0ad3f9114b3e1605fc1b415166cd3d29c0f4e0/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -163,21 +163,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/f51c98dbbe0307702bf54ede6ef459355a9f84c9/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="32aa1b2a2f68f455403d10d41d8ded37c9812f11">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_067e4cc26208a25d383368d3f69c797274c3350b/classes.dex" />
+        sha1="9ff5114aff3bfb387577ba92a11408dcf0441c24">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_bfdc16b5c63497c4b47311744e3bdeda1c000e91/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/aa029d20ca5affbe6f59be6442d699f829ae86f6/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="183e4fb7cf95f4fa54963cfcdaf0f4d7e2397bad">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1a1052f64a101db816efd47e51bcb82f195ff848/classes.dex" />
+        sha1="577aa74e06e6b4b407ff23ac75043685ae26dcbb">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_06d4298f28068b8a27174f6fb1230a3015188ddd/classes.dex" />
     </item>
     <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev170-1.20.0/cac1b8bf96295246293ff03bd7c5daaa6f0adb47/google-api-services-drive-v2-rev170-1.20.0.jar"
@@ -215,12 +215,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/f0342bb259e7da7b4929a344bd71c1da24754f38/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/57e8f8ea02b29b75528ac0a52cc50415474898d5/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="1b95f2bf44857a158b097e9f80d5d18d69f32584">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_49fad727d79d757df9bead9807288ba8d5691693/classes.dex" />
+        sha1="8a43729dd397e849f2a8bdc5d57a2f3170efb3ed">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c0f4c0799ec01af0b0ad84ef34583d749ab4e62d/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -233,24 +233,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/dd66f403ca294c3b3155f759ddc6147c226c4e5c/output/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_6371caa36556b09f7f10d7014c0ec06cd8669d56/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/7b9d837733cd2224134ce7cd2601d593821c7d20/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="e51c2f662bb72419632af5192553c37e33890a99">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_89eb477648c4efaf9feef81f86b6bccad4c9618c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
         jumboMode="true"
         optimize="true"
@@ -260,21 +242,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/f59468f5473c0d1c074e726159775be417126b52/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="597d0d34e15e713c486e8f4ccf739f0c7d05bde4">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4e52a5f79fca13e1a2c76bc75daec6ffd6e198e4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.20.0/1d086ac5756475ddf451af2e2df6e288d18608ca/google-oauth-client-1.20.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="1d086ac5756475ddf451af2e2df6e288d18608ca">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-oauth-client-1.20.0_09e05bc9838267f765d4bf7626ab8104cce13d3f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/d48479414c09c745165c6dc2592895132cc86d13/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d068a922134f5f9b9f98bfc609145e09af03c2a4">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ead9debffe93c7a25fc3035bc578252147eb982d/classes.dex" />
     </item>
     <item
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/slf4j-api-1.7.6.jar"
@@ -295,12 +277,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/6d870e6ded4d1f09feeed57c27acb7c8e2c46897/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/ec73c513025e7d994c6c527176236ade854c838a/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="6b8ad09b76c4ffaedf443ca54bc2418760870689">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c5b12cc58a39181596b420851bd02d2f0cd1a2b8/classes.dex" />
+        sha1="3dbaff65d26258306561d545f88d6712ac41dd46">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_93f45430bdac0a19097ee675758311b2535e35ee/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/8728b1ec5622c2667e0de97f7d2a54108a09e1d5/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="dd057bc43f1c1e2f13566f5fe800d077b08b61b9">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_78d383a47ecbb29baab1b87c2e3425717111436d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/bb8601c1aca234d6ea8ad8b8fe3231dfe30ba4fc/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0c6924cbba8248329a8c58ead6a380efe7eee76e">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2cf243f48ac2bee7580cf58672d14e3b48029072/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -310,6 +310,15 @@
         revision="24.0.2"
         sha1="2408070b2abec043624d35b35e30450f1b663858">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-jackson2-1.20.0_2456660cb06c85ec17b154ec0c0f433ec7264306/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/9cd2960e585616c7cdbd6b11e49c453c531250a1/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b34276d1fea450411cedd49d3146b04838f9dd6e">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2724f6340f9876e7f91cbf51ef2e9df5dc1f8754/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -358,6 +367,24 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/3ec4d4b9015ac486a2afc1633be81f2d82cc2446/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7979972576b6dbb1688052e42e5199abb54f81ba">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f705b350dbc49b5a128a81767cd369b237a3f383/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/d6a2df85848978479b40c2a2362233d2f35be091/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9be5e957849eb82ad9addf9bdb2896de8bf5654b">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fe60ff1efd1083ea70a8ba3c712c263435f069e2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/yupog2003/.android/build-cache/61f7fa25d68b25d41090346f6fca2653be94e94e/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -375,6 +402,24 @@
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-2.1.3_66a9b05f00e4bc0901add1ebde26e2ebcdd68861/classes.dex" />
     </item>
     <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/019412cc01110e532b8ec34df5507856c439af41/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="cea6fccbfe2b9ca7701a8766710179cd41ae1974">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1f319fd128955c604b0578d3fd68a665585acdbe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/12adb9c07e54bfc28ed1f6142aee347396538826/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f1968b9614bc6851e99db64e356cf60063503e5d">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3828a8f6324062b7b938ac2265652b9ee7cc28f7/classes.dex" />
+    </item>
+    <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.20.0/d3e66209ae9e749b2d6833761e7885f60f285564/google-api-client-1.20.0.jar"
         jumboMode="true"
         optimize="true"
@@ -384,21 +429,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/0772b97ed41bf556949e41ff41783d666f32d9f4/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="5cba8868595f6aaff54cf7d1798591108cf5611c">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e28f9e7e88ad1aa0dfc0f365179e2495f9d889f0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.20.0/313dc99a7963523871495897ca11aa8472b3c6fd/google-http-client-android-1.20.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="313dc99a7963523871495897ca11aa8472b3c6fd">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-android-1.20.0_4ad6b455e6897e3b862b6e6f4d6d61b3c20f77ca/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/b20be899e3c5f3013c7c925d58f682ae699b0f0e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="aec5337725e7a3171f7f40a50d9837745693d429">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1ba8c270683b310dc4665d891b3bca6a02190ec9/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -420,39 +465,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/dd66f403ca294c3b3155f759ddc6147c226c4e5c/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b629162380fa98126f1840c95ac8796562534372/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev170-1.20.0/cac1b8bf96295246293ff03bd7c5daaa6f0adb47/google-api-services-drive-v2-rev170-1.20.0.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
         sha1="cac1b8bf96295246293ff03bd7c5daaa6f0adb47">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-api-services-drive-v2-rev170-1.20.0_99bf62612d7575a94ed150e7c8d4ce9c7b4a7aa8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/678ee7a7575ba9287fd2517c7df0ffd670406bda/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="2188ba20a948ec6e7fa671b818c69d876d8bf32d">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a11ded88b2c69422a88e982169f4f27f9bf4fded/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/990df62b96933f4ba40547a8275d6052823f6262/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b50fe5288bba9d1635ba619bd3c308319205543e">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_51f5d19820301e7e87dd07fd8a52789da699a05b/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -473,15 +491,6 @@
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/jsr305-1.3.9_0cb8f9d63cdb493c646c555b79591f365f0ca15c/classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/01345a7c5ffd3c9b089e4b2355f943fb8d1743d2/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="2ed7ba48801a0a361727833ade3b6cf096968cc0">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4b3b0b05305837dfff3a458541791c22131836d3/classes.dex" />
-    </item>
-    <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.20.0/9204765f39000f6109c927ac66c7963bf9c7df19/google-http-client-gson-1.20.0.jar"
         jumboMode="true"
         optimize="true"
@@ -491,12 +500,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/6963d786f97bef76b1ddf84b79b7a1bfbda85155/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="fe159787dd4c4bc9ed6a9d4f7430e9af1f3516c8">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1221f9d67b09baef789456b692952a343da04036/classes.dex" />
+        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_cab9efcb0df0d241b09ce4349fcc1bfef7338358/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/b81e6fce5a39164cd6b80158414111b0e9faa484/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5c1f80f62ccad560edcd6609fc75f385cf7cb45a">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_58bb3cc05e977bd89f5c0b9beb06d87493d65ae4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/7d530bdf7ed520a429797a9b0699870334b6df01/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2f2f16fde0c662116f735951b4e830afba373cc6">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c12ee5e1bc916cac20f07b78922f2d5d51c9a1e7/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -509,12 +536,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/920d0ccf9c11ce4cac316e50e03fe2a22650bbae/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="d72eb1ceff1b0bac4916088eb44bb93f86b1265c">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_63dff28ee53fffc94e85d92d506916bade865f7a/classes.dex" />
+        sha1="60a8cdd1ad9b8d22a5d44bc8e479257ced2bf075">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_dd5ff52128251aac97e7ee9abfe473777e770942/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -589,12 +616,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/4288033f94dc1bc05daf6c51d7d02866a30f94db/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="80ecaefc1035fde747999e4c20e18d207363efa2">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4bebac76f30279f9da5384648117c5d3922496dd/classes.dex" />
+        sha1="553e58050e91d4295a2f1d1f80ea63b41ee5bc4b">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2be547ce9ac7f1c04013e83ae87f427872151133/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/f30055c6d73247ebfdaaabff8e35535b8597e83b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1172091167cff5873cbcccad4c0e08ec9e3240de">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d30c2b1cee1cdc8a46a095ce62d5eaad2dc9619a/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -624,6 +660,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/3fdccc35d5a857f388d0ff4d006ea65265a82ded/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="cad5ae5774f39b7017a3ae3d103e7b78506397b0">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0d9c2a4fe24a71f9a129deb62bc29d1f8018e867/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/commons-io-2.4.jar"
         jumboMode="true"
         optimize="true"
@@ -642,21 +687,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/41d56abb3d09303c7671889ff45505ac591c003f/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/661df964e324993e350ebaad6688ba7ed23922f8/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="29d9916bd9ad8406a53edbafbbce5e18943aa882">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_77c6cae7cd74b6becec2b4b728cd4c524e96ea09/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/53dae672c500a46ea7f49a710f880b42d226f146/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="acc7a846f0bc56ecccda535fc919fd338b2b3e2c">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7011ac9cf63d1d1810d481a0c3204640c55de8ad/classes.dex" />
+        sha1="0c7e0d83e333a25f969bce43db78150c63e7aa0c">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8a93a1e932efc7b7cb203b8a794cee8064f1f345/classes.dex" />
     </item>
     <item
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpcore-4.4.1.jar"
@@ -749,12 +785,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/998b595b6c53785efe21466dde1bbf0a2c92da8b/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="287051610dd01cc6eeaed7fc689712c31ad1ff70">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_57e093973e284ffe142114235315180a0e710ade/classes.dex" />
+        sha1="ec94bba6a9bbd3461d90830e0a0752a6487f5484">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c31ef737be26fd8803084d5c3cd100ffd72afed3/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -776,21 +812,21 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f9aa417cd6d4373c413f6e60865133bcfdb7096b">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_25cd50c605b7fd7f35cc7316bdf393bbb0fdfef9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.20.0/9204765f39000f6109c927ac66c7963bf9c7df19/google-http-client-gson-1.20.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="9204765f39000f6109c927ac66c7963bf9c7df19">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-gson-1.20.0_8ddabe2646fce684c84d00e723c88da3de69f4bc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d2d27edb6fbc12fdf28008cdff920e66f08cf159">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b6caf646fc942cad1c218fcf8b8d7a9bc4c33624/classes.dex" />
     </item>
     <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.1/2e66da15851f9f5b5079228f856c2f090ba98c38/gson-2.1.jar"
@@ -817,15 +853,6 @@
         revision="25.0.1"
         sha1="280d4d9dd63c7510a54f3e1a2c011fb50cd232d2">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/2/libthrift-0.9.2_90a9133c3cb546e283bad98e736c9dd8db220ab7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/5cf96849f0b20f64c8a63315f240f9082313ec81/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="4eeba61bbc47e49a5fbdfd9aa21af5d10bf4df7c">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ce3289c7c2e56d64c5348249507118574a9fe51f/classes.dex" />
     </item>
     <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
@@ -855,6 +882,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0a534044236cf81b002604643d23e7ca56bd1ee0">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c027fcbdc3aa0691a3f0cb8848634d7ad1029c81/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev170-1.20.0/cac1b8bf96295246293ff03bd7c5daaa6f0adb47/google-api-services-drive-v2-rev170-1.20.0.jar"
         jumboMode="true"
         optimize="true"
@@ -873,12 +909,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/402a5d5e04c6bff400857ef35236296beb4eb0ae/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/947441917ea21e2a8b28ebe8e3b2bc54ca32c6ec/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="a9c8affe1f564ec0d063be68469d26e972455217">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5386f2899de506090ab7db77902ee0863dcbf4e3/classes.dex" />
+        sha1="81978250f6de6ffdf2ea4632e7955613103e984c">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1a09e6b715885d1a882e0df6fba0ca9075ab556c/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -888,24 +924,6 @@
         revision="25.0.3"
         sha1="a1e6cbb3cc2c5f210dd1310ff9fcb2c09c0d1438">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/2/httpclient-4.5_6f84526de8948a629221448801fed42e7ec59d6b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/6fa6bc27713c8abd99eacc4251a8ad4e1afd6d8c/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="a75030f7a3f5f96a15acdab44829bed93154d09f">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_50a8860d0d2b1b31252df7133a0220dae605a0cc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/5c30c136d002760f8ce635aede0d404d6b960c31/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="c76804333008c855433cad5cfd1256e86045e97b">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3bbf0fd42eae8874d341f01db7d5f47784315bf5/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -962,6 +980,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/7d7158c292235678c9877427994c21440d0ebc1a/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7b3eaf755284fb08a6d616a55fbb07dc3917d5e7">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_28e992fd5b3f22c650ee868a2a32b6fb6cec6d2b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
         jumboMode="true"
         optimize="true"
@@ -986,6 +1013,24 @@
         revision="25.0.1"
         sha1="47e63b821d3326550a1dab19985ed3cc521930ad">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_09a6c54a080fc0a317e961703dda3ae76ce0cfcc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/eda7276933694e4ad335971d83ce0d6744b8a1d4/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ba4defc8cb4ed5b90b8ef71602722cdeebe507cd">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_751de14ebbeea0df2344ed0259f9fd5f78398089/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="79100391e3b32d7323a04b7b8a9c8ad0adbae583">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_579bb99d22ed349efe68221f88aa45d8bc4f4fae/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1060,12 +1105,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/b77478726bc5810aae3a8619f28bbcccb5ce0c1d/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/fc300b56ea353644a6ecf5507ab26e0ce5db4798/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="6b8d1a53648f7ecfe9e7bf0baf9ca657c5a1ff91">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3485792c0fa7abe1518c09218dc1dedb39f80474/classes.dex" />
+        sha1="69e74a8b1cbf5b8ee0fc0cca6bab1ac6c45efef8">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_41567e695885e8c14ecb33e2d7a4ed68e7b54688/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/65f295fa88add6e7e7acce4fd13054c7d78a7785/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="de24d8023e8da79f30bee46b298f606e5e758432">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3fab3658d6aeacc8f0c35961ef44865c03c3226a/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1096,57 +1150,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/8f65f939ad37a9559095d6c9d06c028e1453ab14/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="9ed08fab37c3a572da1d9ed2bf2e36c8d3e2bc48">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_63ba273cf00a14027e4d0403e8aac0a08842c245/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/22be7c71c06f3820fe7e6a784ac52555f0fb2619/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="701c58abf53f488bc5bb0162f1305a38a32fb5f1">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_97b3f74ea7c1d5990f5a0e8ff800839faad2cc84/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/45f15640616da47202a5b4ae376ac72c9aba019f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="6d0d5e86f5b7203834df01ed78ebfdd5cbf74d48">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0501ddaaa8af7a5ef539b852b99994abbf19868b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.android/build-cache/57710e6256b0b4937f676f0a5a6736e4c79d0aa4/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_39cf80175c70141d1c313da08c095e53c0dd89ba/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="aa6a6e385297077a344e0bb95ab6c22f22119261">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2dc95f7f6beb4fb003d45fc709244f81c30b10de/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/0084fd9e6cee5c5e072f3366c4e55e9ca46a68fb/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="688809418e4c2b5014a028c02708d6aeaba466ff">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a329c0f0b1ddb20a862e367801de6fb47121e639/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1168,21 +1177,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/24daf89eee4eac34d2f7544e870e64a8ab24299c/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/47f04c662aaa4eaa1d03f5dfb7dc60a999ac22eb/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="c01990d0a9bbc67f4c2b9610c1170046c2e37b3e">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_52703780815a0c1c3dfc30cb65de8e7a454b03d8/classes.dex" />
+        sha1="215363c803a119c16058c8bc0ccd0a4ee62e7157">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_621cc3fedb0268e2953b7dde51203d70f1b4566c/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/dab04edec3d602ef71684f384c4f25f8fda1a7bd/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="7e0f082141b7aa90aab5d3a47ab09b0edc958f6b">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_dcb324b23e6d3e52f2100bccba76fd994f70d494/classes.dex" />
+        sha1="4d7184a651c5975b49928ce7c76175d491ee7a5e">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b11060ef78e86a8ad135f340d1ae243e148fbfc1/classes.dex" />
     </item>
     <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.guava/guava-jdk5/13.0/381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7/guava-jdk5-13.0.jar"
@@ -1194,21 +1203,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="dd1d0d84da2cff18f741c63a9c3af7d9aa89fdd6">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0ef703247a36333919ae6410ff5b43863dc9e83f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/0494efb5becebf2e3ca30723cad86daba5809e91/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8732c648c6064f5b6efc07cd93e7489e69fa1b59/classes.dex" />
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d6a108f525c215fae8b1dfc8ce11105f9a7faa08/classes.dex" />
     </item>
     <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.20.0/2408070b2abec043624d35b35e30450f1b663858/google-http-client-jackson2-1.20.0.jar"
@@ -1220,11 +1220,20 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/084b166581cb0cfe2804375bc84d4d8f9acaadee/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a00607e7cf55392edd324bc8fa3827ded7e9859b">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9184ea29efd276c4a563e853061f43750a732bf5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_ec96db7881900ec1a59e047ceafa37623da6e053/classes.dex" />
     </item>
     <item
@@ -1265,15 +1274,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/f28c291012e7232131ecaef138aa56ff93a6e33f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d66b8668122393a15c90471c5c974c25439d193a">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6d6b25e47b2363ed295ca1e84f2e3fef63cb24d6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.android/build-cache/b9f5f2006562d7d970000acda06272ced282aff3/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -1309,15 +1309,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="02e70fe04e0767ccfa16745b3398816d1171f0ad">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8e2d387fecb14676bdd9fb2559fecadf009ec5d1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
         jumboMode="true"
         optimize="true"
@@ -1336,15 +1327,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/90cc732f9faee5e54a345b1342f0701a7a7dae2f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b2b4d3ecd541814f08200f8171def113095d5f39">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4153f5bfd50f2a8eac19e82dfab121ffda60cf6d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.20.0/d3e66209ae9e749b2d6833761e7885f60f285564/google-api-client-1.20.0.jar"
         jumboMode="true"
         optimize="true"
@@ -1354,21 +1336,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="29e4e634375ab2ed25f8db5387b564c78980422a">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4486e97528b1dece0c207a09400ed14158c7bcfe/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/b1673fa2112a033cd90eac3b9cd618d794e031e3/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_72f3ce0706bd81ec4cb7a2ce66477672c380e25e/classes.dex" />
+        sha1="ab2c6111c9e733c965725976ca2a2e57670000f9">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1f2405ee386526c0d2ec7d312e0fe30be0bc2108/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1381,21 +1354,21 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/6b548b6ef0843905f101d2345462df7000884bbe/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c4ba6d53176502b2672a5d7d25a0000d1a6e701c">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ddf8fe2611291b49f752501b522db79c769ca648/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/yupog2003/.android/build-cache/913ce029362f9d42dfea05b24242c9c788d7eec5/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="ae3fb5e70b67cf542338288b0d68c6c367da7367">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_291799e38f1d360619fdbbd7a59038e8f8104f5f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/a66e63e5ab7aa9d86f890be00df88a92c5c31eca/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="8fdf15d202000492aefe43092b21af5332df0178">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_aea82932ed807a40a55b9da8c033c0994c138fc1/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1408,15 +1381,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/6f095be1bd852894f0166d679ff0167a86b57026/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="93094dbb2af50e23339620bebd7b4b6161410edb">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3a5296c3e7b58266c6124ee990daee4381ac795f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.20.0/9204765f39000f6109c927ac66c7963bf9c7df19/google-http-client-gson-1.20.0.jar"
         jumboMode="true"
         optimize="true"
@@ -1426,12 +1390,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/ea62189f012356b05f3a41d5ea9d253622d5fbea/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="657abe17c5ba58f5d24803ba303c6005b180897a">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_776446c2bf3089405b00435562c260be2e2a482b/classes.dex" />
+        sha1="9024225796c3f11342ef6a4a99439f2f988bafb0">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_44a1b95d2a6096876b264a20336fda97cc7a2ba5/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1471,12 +1435,57 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da832806828ba407284c0c4b1d87b8f9ed9f2520">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_39a4aa46d2db8e6e422592fb9de6fbd83a625773/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/76eeab63bf568dd070806b2983d906b41e97b804/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="cf5f630e354827a90ffe90ce2a330495108f0595">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_69c3c7bcec2c443c8b29e3592ba11c694ce025c5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d79c575e1d97b0298746a4c032a0c1dc201c2f82">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b6293dbb347f2c85e8800f71abb3bc381b6daf0b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/httpcore-4.4.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="f5aa318bda4c6c8d688c9d00b90681dcd82ce636">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/2/httpcore-4.4.1_48229664fa2db0063cf90dec6e394dad403c37bd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/4b9d0355c0b868bdc9b21e94dc6a98eb8a6e82a3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="740c4226d6bec1adaaf5fee4b9178674b695f75a">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_33a293ad44d3aa669dd13de67fb073f0aab9da24/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3f0a85e6000998ac322ddd50750e8cf91601a84b">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9c7fb586c633507b0901e937bf897feffcacf6e1/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1495,6 +1504,24 @@
         revision="25.0.1"
         sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-1.20.0_99c4f8476f9360ebc3e72b0ea6604a5d5ff6492a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="8f83a631abfdb790591a720e0cfb5f41329831c3">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f6d7912aaf28da58429fe903868f2a14acf48ba6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/1bd1573864859f1af6e376680bfda64e8780d298/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9b775d7b643397da3ab57e62ae8abb74a9cc9a83">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d4353da3d0d72e3c095bf5a02b7f9641f0fb6ca1/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1525,48 +1552,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/8d0e66b6b7b55a1af73365ddd3f253133bf6af82/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="dde643ce80b967f869e9b111255815ba4d391653">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4e8716e50acd749f89f15c8823bda7472c81f8c0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/a0f3e5b08e583ac6048a8582ecc7fde23acf8cf6/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="5803db663655ef5cb38c6bcb17ba326fdb9edfbd">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3fbac16466a65688f8d06188c8be52b56c97c123/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/4a9bfb1c55f14e5571c174a97f1fd907201cf747/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="98ac18f891a8279ae57c4771cbf4a2a65f95b04c">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_113c63a831c1431b8f2694faa9aee11827596675/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/libs/libthrift-0.9.2.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="280d4d9dd63c7510a54f3e1a2c011fb50cd232d2">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/2/libthrift-0.9.2_90a9133c3cb546e283bad98e736c9dd8db220ab7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/f77291ec16ec6f2e6ef2ea82f3a9f3c68da76ccb/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="8748e15968514ff1708deb3bb7f0c17623e50bbb">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_17532582a51745c3d44eaa0b91616a89aa10e445/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1579,12 +1570,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/06df95378881b17ec683da32527a55d347f99134/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="90236fba9ac4dfb1f4196e231aab964522143ef6">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_01ba683b378fc8f04d2988111955552ef173d26e/classes.dex" />
+        sha1="af13a350b71b437ebf4be335d02a8f785c39b111">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0c283fd84418d294594727f6358b4949162cc49f/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1597,12 +1588,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/4a502f9a00a728614f0692f788e091f2b1a399b1/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/9da1e22ee75f356cbc3128fc2980a410187e2c7d/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="88ae4c6ceaeab7beca5e396e0698c6958e26a2d2">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_72764758595082ef6ae34e52a1ff2f9f5dcae3e2/classes.dex" />
+        sha1="29bd9a40adebb952fbe97515aac9db5dfbd90d93">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4ee4ceab5c22c00329217d06e31e489e3ce7baf3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/yupog2003/.android/build-cache/98db63f5960f6f9b7b05e24bc96a7890c23acb5b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d54a722583c1b99735f62d395806fa38bf5669ae">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b17676ea3cf6af1c8ba0ec8c0599b8fa36715876/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1619,7 +1619,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="0e22edc631f8e07f24120f847197879189c29368">
+        sha1="0bc708c7e8056f83deb41e5a7e970dff5d7e8ef1">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_09a6c54a080fc0a317e961703dda3ae76ce0cfcc/classes.dex" />
     </item>
     <item
@@ -1633,21 +1633,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/e3322c72d55b9e60ad9a2f752735b9bd15632314/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/308d33c3f315660e013a7e5a1ab228726ea2b760/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="0e23941db151e67886844de6586e180bb2b860ad">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d13ad928d8a50bb099bc2a172e51af2c70aa1ee9/classes.dex" />
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_db061f798ff566ba8ba0499019c8c568e378204b/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/d9b01dfef7abcf2ce0db7b6976dd60a15f558019/output/jars/classes.jar"
+        jar="/home/yupog2003/.android/build-cache/2253552a1a2b053f69567ccd9be919cf6c636b69/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="610ae6a6872d9718fc05e2c726758206bd367595">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5b8605c30a96731918bc553b8e1bf5c9f579e3be/classes.dex" />
+        sha1="1b41f7538ea1af0aad76cb3253b87b13744788c2">
+        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_289afcbb6b5820589fa5a80190c409fff49e0932/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1666,15 +1666,6 @@
         revision="25.0.1"
         sha1="d3e66209ae9e749b2d6833761e7885f60f285564">
         <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/google-api-client-1.20.0_fbac344c7de16c3ca99233f32de20fe3a6aec7cc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="43df709c95f6b0501b3adbc7da992b6a69a03214">
-        <dex dex="/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9de2101192b54229988766f058a5808114bebd84/classes.dex" />
     </item>
     <item
         jar="/home/yupog2003/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.20.0/313dc99a7963523871495897ca11aa8472b3c6fd/google-http-client-android-1.20.0.jar"

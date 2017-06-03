@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="100"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:orderInCategory="100"
+        android:title="@string/edit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/backup"
+        android:icon="@drawable/ic_backup"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/backup"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category"
+        android:icon="@drawable/ic_folder"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/move_to_category"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/timezone"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/update_trip_timezone"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/selectall"
+        android:icon="@drawable/ic_select_all"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/select_all"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/upload"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/upload"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/viewtogether"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/together_view"
+        app:showAsAction="never" />
+
+</menu>

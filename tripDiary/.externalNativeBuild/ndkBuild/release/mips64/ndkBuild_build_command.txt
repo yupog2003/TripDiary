@@ -1,0 +1,17 @@
+Executable : /home/yupog2003/Android/android-ndk-r14b/ndk-build
+arguments : 
+NDK_PROJECT_PATH=null
+APP_BUILD_SCRIPT=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/jni/Android.mk
+NDK_APPLICATION_MK=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/jni/Application.mk
+APP_ABI=mips64
+NDK_ALL_ABIS=mips64
+NDK_DEBUG=0
+APP_PLATFORM=android-21
+NDK_OUT=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/ndkBuild/release/obj
+NDK_LIBS_OUT=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/ndkBuild/release/lib
+APP_SHORT_COMMANDS=false
+LOCAL_SHORT_COMMANDS=false
+-B
+-n
+jvmArgs : 
+

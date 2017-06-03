@@ -178,7 +178,8 @@ public class ViewTripActivity extends MyActivity implements View.OnClickListener
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment fragment : fragments) {
-                ft.remove(fragment);
+                if (fragment != null)
+                    ft.remove(fragment);
             }
         }
         ft.add(R.id.fragment, viewMapFragment, ViewMapFragment.class.getSimpleName());

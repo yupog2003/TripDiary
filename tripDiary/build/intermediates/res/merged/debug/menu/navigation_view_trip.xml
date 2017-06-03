@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/map"
+            android:checked="true"
+            android:icon="@drawable/ic_map_black"
+            android:title="@string/map" />
+        <item
+            android:id="@+id/diary"
+            android:checked="true"
+            android:icon="@drawable/ic_diary_black"
+            android:title="@string/diary" />
+        <item
+            android:id="@+id/photo"
+            android:checked="true"
+            android:icon="@drawable/ic_picture"
+            android:title="@string/photo" />
+        <item
+            android:id="@+id/video"
+            android:checked="true"
+            android:icon="@drawable/ic_takevideo"
+            android:title="@string/video" />
+        <item
+            android:id="@+id/audio"
+            android:checked="true"
+            android:icon="@drawable/ic_music"
+            android:title="@string/sound" />
+        <item
+            android:id="@+id/money"
+            android:checked="true"
+            android:icon="@drawable/ic_money_white"
+            android:title="@string/cost" />
+    </group>
+</menu>

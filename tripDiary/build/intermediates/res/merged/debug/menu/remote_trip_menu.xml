@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/edit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/selectall"
+        android:icon="@drawable/ic_select_all"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/select_all"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/togglepublic"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/toggle_public"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/delete"
+        app:showAsAction="never" />
+
+
+</menu>

@@ -1,0 +1,45 @@
+[
+    {
+        "outputFile": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/incremental/mergeDebugResources/merged.dir/values-xlarge-land-v4/values-xlarge-land-v4.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 52,
+                    "endOffset": 103
+                },
+                "from": {
+                    "file": "/home/yupog2003/.android/build-cache/61f7fa25d68b25d41090346f6fca2653be94e94e/output/res/values-xlarge-land/values-xlarge-land.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 172,
+                        "endColumn": 52,
+                        "endOffset": 220
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 108,
+                    "endColumn": 51,
+                    "endOffset": 155
+                },
+                "from": {
+                    "file": "/home/yupog2003/.android/build-cache/61f7fa25d68b25d41090346f6fca2653be94e94e/output/res/values-xlarge-land/values-xlarge-land.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 225,
+                        "endColumn": 51,
+                        "endOffset": 272
+                    }
+                }
+            }
+        ]
+    }
+]

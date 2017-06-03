@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/notification_template_big_media_narrow_custom.xml",
+        "source": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/layout-v11/notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/notification_template_big_media_narrow.xml",
+        "source": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/layout-v11/notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/preference.xml",
+        "source": "/home/yupog2003/.android/build-cache/3c379335736d7c19471ded92f089663e5cecc7e8/output/res/layout-v11/preference.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/notification_media_cancel_action.xml",
+        "source": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/layout-v11/notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/notification_template_big_media_custom.xml",
+        "source": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/layout-v11/notification_template_big_media_custom.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/notification_template_big_media.xml",
+        "source": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/layout-v11/notification_template_big_media.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/layout-v11/notification_media_action.xml",
+        "source": "/home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/res/layout-v11/notification_media_action.xml"
+    }
+]

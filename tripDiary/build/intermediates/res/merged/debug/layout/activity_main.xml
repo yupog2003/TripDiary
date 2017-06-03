@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yupog2003.tripdiary.MainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/starttrip"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_play"
+            android:drawableStart="@drawable/ic_play"
+            android:text="@string/Start_Trip"
+            android:textColor="@color/textColorDarkPrimary"
+            android:textSize="50sp" />
+
+        <Button
+            android:id="@+id/resume_trip"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/resume_trip"
+            android:textColor="@color/textColorDarkSecondary" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/viewhistory"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawableStart="@drawable/ic_search"
+            android:text="@string/History"
+            android:textColor="@color/textColorDarkPrimary"
+            android:textSize="50sp" />
+
+        <Button
+            android:id="@+id/all_record"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/lifetime_record"
+            android:textColor="@color/textColorDarkSecondary" />
+    </RelativeLayout>
+
+</LinearLayout>

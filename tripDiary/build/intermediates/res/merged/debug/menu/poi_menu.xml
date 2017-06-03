@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/share"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/selectall"
+        android:icon="@drawable/ic_select_all"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="@string/select_all" />
+    <item
+        android:id="@+id/delete"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/delete" />
+    <item
+        android:id="@+id/rename"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/rename" />
+    <item
+        android:id="@+id/edit"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/edit" />
+    <item
+        android:id="@+id/move"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/move_to" />
+    <item
+        android:id="@+id/print"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/print" />
+
+</menu>

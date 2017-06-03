@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/today"
+        android:showAsAction="always"
+        android:title="@string/today"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/year"
+        android:showAsAction="always"
+        android:title="@string/year"
+        app:showAsAction="ifRoom" />
+</menu>

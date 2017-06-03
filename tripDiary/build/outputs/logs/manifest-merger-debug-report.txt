@@ -35,18 +35,18 @@ ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Andr
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:12:22-78
 uses-permission#android.permission.INTERNET
 ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:13:5-67
-MERGED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:19:5-66
-MERGED from [com.google.android.gms:play-services-analytics:10.2.4] /home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/AndroidManifest.xml:20:5-66
-MERGED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:18:5-66
-MERGED from [com.google.firebase:firebase-crash:10.2.4] /home/yupog2003/.android/build-cache/6fa6bc27713c8abd99eacc4251a8ad4e1afd6d8c/output/AndroidManifest.xml:18:5-66
-MERGED from [com.google.android.gms:play-services-gcm:10.2.4] /home/yupog2003/.android/build-cache/0772b97ed41bf556949e41ff41783d666f32d9f4/output/AndroidManifest.xml:21:5-66
-MERGED from [com.google.android.gms:play-services-iid:10.2.4] /home/yupog2003/.android/build-cache/41d56abb3d09303c7671889ff45505ac591c003f/output/AndroidManifest.xml:21:5-66
-MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:20:5-66
-MERGED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:20:5-66
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:20:5-66
-MERGED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:20:5-66
-MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/01345a7c5ffd3c9b089e4b2355f943fb8d1743d2/output/AndroidManifest.xml:20:5-66
-MERGED from [com.google.android.gms:play-services-maps:10.2.4] /home/yupog2003/.android/build-cache/45f15640616da47202a5b4ae376ac72c9aba019f/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:19:5-66
+MERGED from [com.google.android.gms:play-services-analytics:10.2.6] /home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:18:5-66
+MERGED from [com.google.firebase:firebase-crash:10.2.6] /home/yupog2003/.android/build-cache/9da1e22ee75f356cbc3128fc2980a410187e2c7d/output/AndroidManifest.xml:18:5-66
+MERGED from [com.google.android.gms:play-services-gcm:10.2.6] /home/yupog2003/.android/build-cache/47f04c662aaa4eaa1d03f5dfb7dc60a999ac22eb/output/AndroidManifest.xml:21:5-66
+MERGED from [com.google.android.gms:play-services-iid:10.2.6] /home/yupog2003/.android/build-cache/98db63f5960f6f9b7b05e24bc96a7890c23acb5b/output/AndroidManifest.xml:21:5-66
+MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/3fdccc35d5a857f388d0ff4d006ea65265a82ded/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-maps:10.2.6] /home/yupog2003/.android/build-cache/bb8601c1aca234d6ea8ad8b8fe3231dfe30ba4fc/output/AndroidManifest.xml:20:5-66
 	android:name
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:13:22-64
 uses-permission#com.google.android.gms.permission.ACTIVITY_RECOGNITION
@@ -71,15 +71,15 @@ ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Andr
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:18:22-63
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:19:5-79
-MERGED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:20:5-78
-MERGED from [com.google.android.gms:play-services-analytics:10.2.4] /home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/AndroidManifest.xml:21:5-78
-MERGED from [com.google.android.gms:play-services-nearby:10.2.4] /home/yupog2003/.android/build-cache/8d0e66b6b7b55a1af73365ddd3f253133bf6af82/output/AndroidManifest.xml:4:5-78
-MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:21:5-78
-MERGED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:21:5-78
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:21:5-78
-MERGED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:19:5-78
-MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/01345a7c5ffd3c9b089e4b2355f943fb8d1743d2/output/AndroidManifest.xml:21:5-78
-MERGED from [com.google.android.gms:play-services-maps:10.2.4] /home/yupog2003/.android/build-cache/45f15640616da47202a5b4ae376ac72c9aba019f/output/AndroidManifest.xml:19:5-78
+MERGED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:20:5-78
+MERGED from [com.google.android.gms:play-services-analytics:10.2.6] /home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.android.gms:play-services-nearby:10.2.6] /home/yupog2003/.android/build-cache/8728b1ec5622c2667e0de97f7d2a54108a09e1d5/output/AndroidManifest.xml:4:5-78
+MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:19:5-78
+MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/3fdccc35d5a857f388d0ff4d006ea65265a82ded/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.android.gms:play-services-maps:10.2.6] /home/yupog2003/.android/build-cache/bb8601c1aca234d6ea8ad8b8fe3231dfe30ba4fc/output/AndroidManifest.xml:19:5-78
 	android:name
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:19:22-76
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
@@ -92,7 +92,7 @@ ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Andr
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:21:22-72
 uses-feature#0x00020000
 ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:23:5-25:35
-MERGED from [com.google.android.gms:play-services-maps:10.2.4] /home/yupog2003/.android/build-cache/45f15640616da47202a5b4ae376ac72c9aba019f/output/AndroidManifest.xml:21:5-77
+MERGED from [com.google.android.gms:play-services-maps:10.2.6] /home/yupog2003/.android/build-cache/bb8601c1aca234d6ea8ad8b8fe3231dfe30ba4fc/output/AndroidManifest.xml:21:5-77
 	android:glEsVersion
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:24:9-41
 	android:required
@@ -110,50 +110,50 @@ ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Andr
 application
 ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:31:5-218:19
 MERGED from [com.android.support:preference-v7:23.4.0] /home/yupog2003/.android/build-cache/3c379335736d7c19471ded92f089663e5cecc7e8/output/AndroidManifest.xml:9:5-20
-MERGED from [com.google.android.gms:play-services:10.2.4] /home/yupog2003/.android/build-cache/f64ce493c0854b8f065e99cae961da10dffadc9b/output/AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:23:5-27:19
-MERGED from [com.google.android.gms:play-services-analytics:10.2.4] /home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/AndroidManifest.xml:26:5-19
-MERGED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:19:5-26:19
-MERGED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:19:5-25:19
-MERGED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:4:5-8:19
-MERGED from [com.google.android.gms:play-services-cast:10.2.4] /home/yupog2003/.android/build-cache/998b595b6c53785efe21466dde1bbf0a2c92da8b/output/AndroidManifest.xml:18:5-19
-MERGED from [com.android.support:mediarouter-v7:24.0.0] /home/yupog2003/.android/build-cache/dd66f403ca294c3b3155f759ddc6147c226c4e5c/output/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:palette-v7:24.0.0] /home/yupog2003/.android/build-cache/b1673fa2112a033cd90eac3b9cd618d794e031e3/output/AndroidManifest.xml:22:5-23:19
-MERGED from [com.google.android.gms:play-services-clearcut:10.2.4] /home/yupog2003/.android/build-cache/e3322c72d55b9e60ad9a2f752735b9bd15632314/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.firebase:firebase-config:10.2.4] /home/yupog2003/.android/build-cache/24daf89eee4eac34d2f7544e870e64a8ab24299c/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-awareness:10.2.4] /home/yupog2003/.android/build-cache/f51c98dbbe0307702bf54ede6ef459355a9f84c9/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.firebase:firebase-crash:10.2.4] /home/yupog2003/.android/build-cache/6fa6bc27713c8abd99eacc4251a8ad4e1afd6d8c/output/AndroidManifest.xml:22:5-23:19
-MERGED from [com.google.firebase:firebase-auth:10.2.4] /home/yupog2003/.android/build-cache/4a9bfb1c55f14e5571c174a97f1fd907201cf747/output/AndroidManifest.xml:19:5-20:19
-MERGED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:19:5-29:19
-MERGED from [com.google.android.gms:play-services-fitness:10.2.4] /home/yupog2003/.android/build-cache/402a5d5e04c6bff400857ef35236296beb4eb0ae/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-games:10.2.4] /home/yupog2003/.android/build-cache/6f095be1bd852894f0166d679ff0167a86b57026/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-drive:10.2.4] /home/yupog2003/.android/build-cache/f28c291012e7232131ecaef138aa56ff93a6e33f/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-gass:10.2.4] /home/yupog2003/.android/build-cache/ea62189f012356b05f3a41d5ea9d253622d5fbea/output/AndroidManifest.xml:4:5-19
-MERGED from [com.google.android.gms:play-services-gcm:10.2.4] /home/yupog2003/.android/build-cache/0772b97ed41bf556949e41ff41783d666f32d9f4/output/AndroidManifest.xml:23:5-19
-MERGED from [com.google.firebase:firebase-appindexing:10.2.4] /home/yupog2003/.android/build-cache/b77478726bc5810aae3a8619f28bbcccb5ce0c1d/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-iid:10.2.4] /home/yupog2003/.android/build-cache/41d56abb3d09303c7671889ff45505ac591c003f/output/AndroidManifest.xml:23:5-19
-MERGED from [com.google.android.gms:play-services-location:10.2.4] /home/yupog2003/.android/build-cache/dab04edec3d602ef71684f384c4f25f8fda1a7bd/output/AndroidManifest.xml:4:5-19
-MERGED from [com.google.android.gms:play-services-nearby:10.2.4] /home/yupog2003/.android/build-cache/8d0e66b6b7b55a1af73365ddd3f253133bf6af82/output/AndroidManifest.xml:5:5-19
-MERGED from [com.google.android.gms:play-services-panorama:10.2.4] /home/yupog2003/.android/build-cache/d9b01dfef7abcf2ce0db7b6976dd60a15f558019/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-places:10.2.4] /home/yupog2003/.android/build-cache/182f94e6b6e3a2c86f6f3bd94975fce6e6602da0/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-plus:10.2.4] /home/yupog2003/.android/build-cache/22be7c71c06f3820fe7e6a784ac52555f0fb2619/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-safetynet:10.2.4] /home/yupog2003/.android/build-cache/06df95378881b17ec683da32527a55d347f99134/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:23:5-33:19
-MERGED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:24:5-33:19
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:24:5-28:19
-MERGED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:28:5-49:19
-MERGED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:4:5-7:19
-MERGED from [com.google.android.gms:play-services-tagmanager-v4-impl:10.2.4] /home/yupog2003/.android/build-cache/5c30c136d002760f8ce635aede0d404d6b960c31/output/AndroidManifest.xml:19:5-19
-MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/01345a7c5ffd3c9b089e4b2355f943fb8d1743d2/output/AndroidManifest.xml:26:5-19
-MERGED from [com.google.android.gms:play-services-vision:10.2.4] /home/yupog2003/.android/build-cache/678ee7a7575ba9287fd2517c7df0ffd670406bda/output/AndroidManifest.xml:4:5-19
-MERGED from [com.google.android.gms:play-services-identity:10.2.4] /home/yupog2003/.android/build-cache/4a502f9a00a728614f0692f788e091f2b1a399b1/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-maps:10.2.4] /home/yupog2003/.android/build-cache/45f15640616da47202a5b4ae376ac72c9aba019f/output/AndroidManifest.xml:24:5-19
-MERGED from [com.google.android.gms:play-services-wearable:10.2.4] /home/yupog2003/.android/build-cache/f0342bb259e7da7b4929a344bd71c1da24754f38/output/AndroidManifest.xml:18:5-19
-MERGED from [com.google.android.gms:play-services-base:10.2.4] /home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/AndroidManifest.xml:18:5-20:19
-MERGED from [com.google.android.gms:play-services-tasks:10.2.4] /home/yupog2003/.android/build-cache/a0f3e5b08e583ac6048a8582ecc7fde23acf8cf6/output/AndroidManifest.xml:4:5-19
-MERGED from [com.google.android.gms:play-services-basement:10.2.4] /home/yupog2003/.android/build-cache/8f65f939ad37a9559095d6c9d06c028e1453ab14/output/AndroidManifest.xml:19:5-21:19
-MERGED from [com.android.support:design:25.2.0] /home/yupog2003/.android/build-cache/0494efb5becebf2e3ca30723cad86daba5809e91/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:transition:25.2.0] /home/yupog2003/.android/build-cache/7b9d837733cd2224134ce7cd2601d593821c7d20/output/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services:10.2.6] /home/yupog2003/.android/build-cache/3786c697d799d760961ea1773b172797be363990/output/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:23:5-27:19
+MERGED from [com.google.android.gms:play-services-analytics:10.2.6] /home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/AndroidManifest.xml:26:5-19
+MERGED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:19:5-26:19
+MERGED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:19:5-25:19
+MERGED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:4:5-8:19
+MERGED from [com.google.android.gms:play-services-cast:10.2.6] /home/yupog2003/.android/build-cache/920d0ccf9c11ce4cac316e50e03fe2a22650bbae/output/AndroidManifest.xml:18:5-19
+MERGED from [com.android.support:mediarouter-v7:25.2.0] /home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:palette-v7:25.2.0] /home/yupog2003/.android/build-cache/d6a2df85848978479b40c2a2362233d2f35be091/output/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-clearcut:10.2.6] /home/yupog2003/.android/build-cache/f30055c6d73247ebfdaaabff8e35535b8597e83b/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.firebase:firebase-config:10.2.6] /home/yupog2003/.android/build-cache/6b548b6ef0843905f101d2345462df7000884bbe/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-awareness:10.2.6] /home/yupog2003/.android/build-cache/a2253137c49fc4cab7e9c53d20d2ae0b1851a6e8/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.firebase:firebase-crash:10.2.6] /home/yupog2003/.android/build-cache/9da1e22ee75f356cbc3128fc2980a410187e2c7d/output/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.firebase:firebase-auth:10.2.6] /home/yupog2003/.android/build-cache/7d7158c292235678c9877427994c21440d0ebc1a/output/AndroidManifest.xml:19:5-20:19
+MERGED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:19:5-29:19
+MERGED from [com.google.android.gms:play-services-fitness:10.2.6] /home/yupog2003/.android/build-cache/7d530bdf7ed520a429797a9b0699870334b6df01/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-games:10.2.6] /home/yupog2003/.android/build-cache/2253552a1a2b053f69567ccd9be919cf6c636b69/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-drive:10.2.6] /home/yupog2003/.android/build-cache/b20be899e3c5f3013c7c925d58f682ae699b0f0e/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-gass:10.2.6] /home/yupog2003/.android/build-cache/1bd1573864859f1af6e376680bfda64e8780d298/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-gcm:10.2.6] /home/yupog2003/.android/build-cache/47f04c662aaa4eaa1d03f5dfb7dc60a999ac22eb/output/AndroidManifest.xml:23:5-19
+MERGED from [com.google.firebase:firebase-appindexing:10.2.6] /home/yupog2003/.android/build-cache/9cd2960e585616c7cdbd6b11e49c453c531250a1/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-iid:10.2.6] /home/yupog2003/.android/build-cache/98db63f5960f6f9b7b05e24bc96a7890c23acb5b/output/AndroidManifest.xml:23:5-19
+MERGED from [com.google.android.gms:play-services-location:10.2.6] /home/yupog2003/.android/build-cache/3ec4d4b9015ac486a2afc1633be81f2d82cc2446/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-nearby:10.2.6] /home/yupog2003/.android/build-cache/8728b1ec5622c2667e0de97f7d2a54108a09e1d5/output/AndroidManifest.xml:5:5-19
+MERGED from [com.google.android.gms:play-services-panorama:10.2.6] /home/yupog2003/.android/build-cache/661df964e324993e350ebaad6688ba7ed23922f8/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-places:10.2.6] /home/yupog2003/.android/build-cache/76eeab63bf568dd070806b2983d906b41e97b804/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-plus:10.2.6] /home/yupog2003/.android/build-cache/aa029d20ca5affbe6f59be6442d699f829ae86f6/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-safetynet:10.2.6] /home/yupog2003/.android/build-cache/d48479414c09c745165c6dc2592895132cc86d13/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:23:5-33:19
+MERGED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:24:5-33:19
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:24:5-28:19
+MERGED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:28:5-49:19
+MERGED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:4:5-7:19
+MERGED from [com.google.android.gms:play-services-tagmanager-v4-impl:10.2.6] /home/yupog2003/.android/build-cache/5a571bffe92c3ccb0eb50f242b4650d287692a82/output/AndroidManifest.xml:19:5-19
+MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/3fdccc35d5a857f388d0ff4d006ea65265a82ded/output/AndroidManifest.xml:26:5-19
+MERGED from [com.google.android.gms:play-services-vision:10.2.6] /home/yupog2003/.android/build-cache/4b9d0355c0b868bdc9b21e94dc6a98eb8a6e82a3/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-identity:10.2.6] /home/yupog2003/.android/build-cache/12adb9c07e54bfc28ed1f6142aee347396538826/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-maps:10.2.6] /home/yupog2003/.android/build-cache/bb8601c1aca234d6ea8ad8b8fe3231dfe30ba4fc/output/AndroidManifest.xml:24:5-19
+MERGED from [com.google.android.gms:play-services-wearable:10.2.6] /home/yupog2003/.android/build-cache/019412cc01110e532b8ec34df5507856c439af41/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-base:10.2.6] /home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/AndroidManifest.xml:18:5-20:19
+MERGED from [com.google.android.gms:play-services-tasks:10.2.6] /home/yupog2003/.android/build-cache/fc300b56ea353644a6ecf5507ab26e0ce5db4798/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-basement:10.2.6] /home/yupog2003/.android/build-cache/6963d786f97bef76b1ddf84b79b7a1bfbda85155/output/AndroidManifest.xml:19:5-21:19
+MERGED from [com.android.support:design:25.3.1] /home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:transition:25.3.1] /home/yupog2003/.android/build-cache/308d33c3f315660e013a7e5a1ab228726ea2b760/output/AndroidManifest.xml:26:5-20
 MERGED from [com.android.support:appcompat-v7:25.3.1] /home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:animated-vector-drawable:25.3.1] /home/yupog2003/.android/build-cache/67637527750e66e834aa3bbeaa3bf812065651de/output/AndroidManifest.xml:26:5-20
 MERGED from [com.android.support:support-vector-drawable:25.3.1] /home/yupog2003/.android/build-cache/3664f24cd62eb82a5acae93abbd327026491283d/output/AndroidManifest.xml:26:5-20
@@ -253,7 +253,7 @@ ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Andr
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:76:19-51
 meta-data#com.google.android.gms.version
 ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:78:9-80:69
-MERGED from [com.google.android.gms:play-services-basement:10.2.4] /home/yupog2003/.android/build-cache/8f65f939ad37a9559095d6c9d06c028e1453ab14/output/AndroidManifest.xml:20:9-121
+MERGED from [com.google.android.gms:play-services-basement:10.2.6] /home/yupog2003/.android/build-cache/6963d786f97bef76b1ddf84b79b7a1bfbda85155/output/AndroidManifest.xml:20:9-121
 	android:value
 		ADDED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml:80:13-66
 	android:name
@@ -471,59 +471,59 @@ INJECTED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/A
 MERGED from [com.github.yukuku:ambilwarna:2.0] /home/yupog2003/.android/build-cache/61f7fa25d68b25d41090346f6fca2653be94e94e/output/AndroidManifest.xml:8:5-10:41
 MERGED from [com.pavelsikun:material-seekbar-preference:2.3.0] /home/yupog2003/.android/build-cache/f766d34f5a736d1a9cc08d8660857e8a449dcbb9/output/AndroidManifest.xml:8:5-10:41
 MERGED from [com.android.support:preference-v7:23.4.0] /home/yupog2003/.android/build-cache/3c379335736d7c19471ded92f089663e5cecc7e8/output/AndroidManifest.xml:7:5-43
-MERGED from [com.google.android.gms:play-services:10.2.4] /home/yupog2003/.android/build-cache/f64ce493c0854b8f065e99cae961da10dffadc9b/output/AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-ads:10.2.4] /home/yupog2003/.android/build-cache/f59468f5473c0d1c074e726159775be417126b52/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:22:5-43
-MERGED from [com.google.android.gms:play-services-analytics:10.2.4] /home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-auth-base:10.2.4] /home/yupog2003/.android/build-cache/0084fd9e6cee5c5e072f3366c4e55e9ca46a68fb/output/AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-cast:10.2.4] /home/yupog2003/.android/build-cache/998b595b6c53785efe21466dde1bbf0a2c92da8b/output/AndroidManifest.xml:17:5-43
-MERGED from [com.android.support:mediarouter-v7:24.0.0] /home/yupog2003/.android/build-cache/dd66f403ca294c3b3155f759ddc6147c226c4e5c/output/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:palette-v7:24.0.0] /home/yupog2003/.android/build-cache/b1673fa2112a033cd90eac3b9cd618d794e031e3/output/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-clearcut:10.2.4] /home/yupog2003/.android/build-cache/e3322c72d55b9e60ad9a2f752735b9bd15632314/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-config:10.2.4] /home/yupog2003/.android/build-cache/24daf89eee4eac34d2f7544e870e64a8ab24299c/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-awareness:10.2.4] /home/yupog2003/.android/build-cache/f51c98dbbe0307702bf54ede6ef459355a9f84c9/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-crash:10.2.4] /home/yupog2003/.android/build-cache/6fa6bc27713c8abd99eacc4251a8ad4e1afd6d8c/output/AndroidManifest.xml:20:5-43
-MERGED from [com.google.firebase:firebase-auth:10.2.4] /home/yupog2003/.android/build-cache/4a9bfb1c55f14e5571c174a97f1fd907201cf747/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-database:10.2.4] /home/yupog2003/.android/build-cache/5cf96849f0b20f64c8a63315f240f9082313ec81/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.firebase:firebase-database-connection:10.2.4] /home/yupog2003/.android/build-cache/990df62b96933f4ba40547a8275d6052823f6262/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-storage:10.2.4] /home/yupog2003/.android/build-cache/f77291ec16ec6f2e6ef2ea82f3a9f3c68da76ccb/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.firebase:firebase-storage-common:10.2.4] /home/yupog2003/.android/build-cache/6d870e6ded4d1f09feeed57c27acb7c8e2c46897/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-fitness:10.2.4] /home/yupog2003/.android/build-cache/402a5d5e04c6bff400857ef35236296beb4eb0ae/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-games:10.2.4] /home/yupog2003/.android/build-cache/6f095be1bd852894f0166d679ff0167a86b57026/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-drive:10.2.4] /home/yupog2003/.android/build-cache/f28c291012e7232131ecaef138aa56ff93a6e33f/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-gass:10.2.4] /home/yupog2003/.android/build-cache/ea62189f012356b05f3a41d5ea9d253622d5fbea/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-gcm:10.2.4] /home/yupog2003/.android/build-cache/0772b97ed41bf556949e41ff41783d666f32d9f4/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-appindexing:10.2.4] /home/yupog2003/.android/build-cache/b77478726bc5810aae3a8619f28bbcccb5ce0c1d/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-iid:10.2.4] /home/yupog2003/.android/build-cache/41d56abb3d09303c7671889ff45505ac591c003f/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-instantapps:10.2.4] /home/yupog2003/.android/build-cache/a66e63e5ab7aa9d86f890be00df88a92c5c31eca/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-location:10.2.4] /home/yupog2003/.android/build-cache/dab04edec3d602ef71684f384c4f25f8fda1a7bd/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-nearby:10.2.4] /home/yupog2003/.android/build-cache/8d0e66b6b7b55a1af73365ddd3f253133bf6af82/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-panorama:10.2.4] /home/yupog2003/.android/build-cache/d9b01dfef7abcf2ce0db7b6976dd60a15f558019/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-places:10.2.4] /home/yupog2003/.android/build-cache/182f94e6b6e3a2c86f6f3bd94975fce6e6602da0/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-plus:10.2.4] /home/yupog2003/.android/build-cache/22be7c71c06f3820fe7e6a784ac52555f0fb2619/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-safetynet:10.2.4] /home/yupog2003/.android/build-cache/06df95378881b17ec683da32527a55d347f99134/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-tagmanager:10.2.4] /home/yupog2003/.android/build-cache/90cc732f9faee5e54a345b1342f0701a7a7dae2f/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-tagmanager-v4-impl:10.2.4] /home/yupog2003/.android/build-cache/5c30c136d002760f8ce635aede0d404d6b960c31/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/01345a7c5ffd3c9b089e4b2355f943fb8d1743d2/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-vision:10.2.4] /home/yupog2003/.android/build-cache/678ee7a7575ba9287fd2517c7df0ffd670406bda/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-wallet:10.2.4] /home/yupog2003/.android/build-cache/53dae672c500a46ea7f49a710f880b42d226f146/output/AndroidManifest.xml:18:5-43
-MERGED from [com.google.android.gms:play-services-identity:10.2.4] /home/yupog2003/.android/build-cache/4a502f9a00a728614f0692f788e091f2b1a399b1/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-maps:10.2.4] /home/yupog2003/.android/build-cache/45f15640616da47202a5b4ae376ac72c9aba019f/output/AndroidManifest.xml:23:5-43
-MERGED from [com.google.android.gms:play-services-wearable:10.2.4] /home/yupog2003/.android/build-cache/f0342bb259e7da7b4929a344bd71c1da24754f38/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-base:10.2.4] /home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/AndroidManifest.xml:17:5-43
-MERGED from [com.google.android.gms:play-services-tasks:10.2.4] /home/yupog2003/.android/build-cache/a0f3e5b08e583ac6048a8582ecc7fde23acf8cf6/output/AndroidManifest.xml:3:5-43
-MERGED from [com.google.android.gms:play-services-basement:10.2.4] /home/yupog2003/.android/build-cache/8f65f939ad37a9559095d6c9d06c028e1453ab14/output/AndroidManifest.xml:17:5-43
-MERGED from [com.android.support:design:25.2.0] /home/yupog2003/.android/build-cache/0494efb5becebf2e3ca30723cad86daba5809e91/output/AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:transition:25.2.0] /home/yupog2003/.android/build-cache/7b9d837733cd2224134ce7cd2601d593821c7d20/output/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services:10.2.6] /home/yupog2003/.android/build-cache/3786c697d799d760961ea1773b172797be363990/output/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-ads:10.2.6] /home/yupog2003/.android/build-cache/f307cf30dcd135fa7a996459cca592df0d11a09a/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:22:5-43
+MERGED from [com.google.android.gms:play-services-analytics:10.2.6] /home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-auth-base:10.2.6] /home/yupog2003/.android/build-cache/57e8f8ea02b29b75528ac0a52cc50415474898d5/output/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-cast:10.2.6] /home/yupog2003/.android/build-cache/920d0ccf9c11ce4cac316e50e03fe2a22650bbae/output/AndroidManifest.xml:17:5-43
+MERGED from [com.android.support:mediarouter-v7:25.2.0] /home/yupog2003/.android/build-cache/e4797d526cf598e82cbf58e174c6daba91a4afb2/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:palette-v7:25.2.0] /home/yupog2003/.android/build-cache/d6a2df85848978479b40c2a2362233d2f35be091/output/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-clearcut:10.2.6] /home/yupog2003/.android/build-cache/f30055c6d73247ebfdaaabff8e35535b8597e83b/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-config:10.2.6] /home/yupog2003/.android/build-cache/6b548b6ef0843905f101d2345462df7000884bbe/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-awareness:10.2.6] /home/yupog2003/.android/build-cache/a2253137c49fc4cab7e9c53d20d2ae0b1851a6e8/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-crash:10.2.6] /home/yupog2003/.android/build-cache/9da1e22ee75f356cbc3128fc2980a410187e2c7d/output/AndroidManifest.xml:20:5-43
+MERGED from [com.google.firebase:firebase-auth:10.2.6] /home/yupog2003/.android/build-cache/7d7158c292235678c9877427994c21440d0ebc1a/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-database:10.2.6] /home/yupog2003/.android/build-cache/65f295fa88add6e7e7acce4fd13054c7d78a7785/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.firebase:firebase-database-connection:10.2.6] /home/yupog2003/.android/build-cache/b81e6fce5a39164cd6b80158414111b0e9faa484/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-storage:10.2.6] /home/yupog2003/.android/build-cache/eda7276933694e4ad335971d83ce0d6744b8a1d4/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.firebase:firebase-storage-common:10.2.6] /home/yupog2003/.android/build-cache/ec73c513025e7d994c6c527176236ade854c838a/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-fitness:10.2.6] /home/yupog2003/.android/build-cache/7d530bdf7ed520a429797a9b0699870334b6df01/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-games:10.2.6] /home/yupog2003/.android/build-cache/2253552a1a2b053f69567ccd9be919cf6c636b69/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-drive:10.2.6] /home/yupog2003/.android/build-cache/b20be899e3c5f3013c7c925d58f682ae699b0f0e/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-gass:10.2.6] /home/yupog2003/.android/build-cache/1bd1573864859f1af6e376680bfda64e8780d298/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-gcm:10.2.6] /home/yupog2003/.android/build-cache/47f04c662aaa4eaa1d03f5dfb7dc60a999ac22eb/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-appindexing:10.2.6] /home/yupog2003/.android/build-cache/9cd2960e585616c7cdbd6b11e49c453c531250a1/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-iid:10.2.6] /home/yupog2003/.android/build-cache/98db63f5960f6f9b7b05e24bc96a7890c23acb5b/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-instantapps:10.2.6] /home/yupog2003/.android/build-cache/084b166581cb0cfe2804375bc84d4d8f9acaadee/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-location:10.2.6] /home/yupog2003/.android/build-cache/3ec4d4b9015ac486a2afc1633be81f2d82cc2446/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-nearby:10.2.6] /home/yupog2003/.android/build-cache/8728b1ec5622c2667e0de97f7d2a54108a09e1d5/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-panorama:10.2.6] /home/yupog2003/.android/build-cache/661df964e324993e350ebaad6688ba7ed23922f8/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-places:10.2.6] /home/yupog2003/.android/build-cache/76eeab63bf568dd070806b2983d906b41e97b804/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-plus:10.2.6] /home/yupog2003/.android/build-cache/aa029d20ca5affbe6f59be6442d699f829ae86f6/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-safetynet:10.2.6] /home/yupog2003/.android/build-cache/d48479414c09c745165c6dc2592895132cc86d13/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-tagmanager:10.2.6] /home/yupog2003/.android/build-cache/947441917ea21e2a8b28ebe8e3b2bc54ca32c6ec/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-tagmanager-v4-impl:10.2.6] /home/yupog2003/.android/build-cache/5a571bffe92c3ccb0eb50f242b4650d287692a82/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/3fdccc35d5a857f388d0ff4d006ea65265a82ded/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-vision:10.2.6] /home/yupog2003/.android/build-cache/4b9d0355c0b868bdc9b21e94dc6a98eb8a6e82a3/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-wallet:10.2.6] /home/yupog2003/.android/build-cache/4288033f94dc1bc05daf6c51d7d02866a30f94db/output/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-identity:10.2.6] /home/yupog2003/.android/build-cache/12adb9c07e54bfc28ed1f6142aee347396538826/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-maps:10.2.6] /home/yupog2003/.android/build-cache/bb8601c1aca234d6ea8ad8b8fe3231dfe30ba4fc/output/AndroidManifest.xml:23:5-43
+MERGED from [com.google.android.gms:play-services-wearable:10.2.6] /home/yupog2003/.android/build-cache/019412cc01110e532b8ec34df5507856c439af41/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-base:10.2.6] /home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-tasks:10.2.6] /home/yupog2003/.android/build-cache/fc300b56ea353644a6ecf5507ab26e0ce5db4798/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-basement:10.2.6] /home/yupog2003/.android/build-cache/6963d786f97bef76b1ddf84b79b7a1bfbda85155/output/AndroidManifest.xml:17:5-43
+MERGED from [com.android.support:design:25.3.1] /home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:transition:25.3.1] /home/yupog2003/.android/build-cache/308d33c3f315660e013a7e5a1ab228726ea2b760/output/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:appcompat-v7:25.3.1] /home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/AndroidManifest.xml:21:5-23:78
 MERGED from [com.android.support:animated-vector-drawable:25.3.1] /home/yupog2003/.android/build-cache/67637527750e66e834aa3bbeaa3bf812065651de/output/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:25.3.1] /home/yupog2003/.android/build-cache/3664f24cd62eb82a5acae93abbd327026491283d/output/AndroidManifest.xml:20:5-43
@@ -539,7 +539,7 @@ MERGED from [com.android.support:support-core-utils:25.3.1] /home/yupog2003/.and
 MERGED from [com.android.support:support-compat:25.3.1] /home/yupog2003/.android/build-cache/9dfa5c2fb295e987efe7f770b55cacabcfe30e89/output/AndroidManifest.xml:21:5-23:58
 MERGED from [com.android.support:multidex:1.0.1] /home/yupog2003/.android/build-cache/b9f5f2006562d7d970000acda06272ced282aff3/output/AndroidManifest.xml:18:5-42
 	tools:overrideLibrary
-		ADDED from [com.android.support:design:25.2.0] /home/yupog2003/.android/build-cache/0494efb5becebf2e3ca30723cad86daba5809e91/output/AndroidManifest.xml:23:9-59
+		ADDED from [com.android.support:design:25.3.1] /home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
 		INJECTED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
 		INJECTED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
@@ -547,205 +547,207 @@ MERGED from [com.android.support:multidex:1.0.1] /home/yupog2003/.android/build-
 		INJECTED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
 		INJECTED from /run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/AndroidManifest.xml
 activity#com.google.android.gms.ads.AdActivity
-ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:25:9-232
+ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:25:9-232
 	android:configChanges
-		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:25:72-181
+		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:25:72-181
 	android:theme
-		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:25:182-230
+		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:25:182-230
 	android:name
-		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:25:19-71
+		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:25:19-71
 activity#com.google.android.gms.ads.purchase.InAppPurchaseActivity
-ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:26:9-131
+ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:26:9-131
 	android:theme
-		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:26:92-129
+		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:26:92-129
 	android:name
-		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.4] /home/yupog2003/.android/build-cache/9f0b84b65cd58bcfdf3df7fc46aa5122bf8cfd8c/output/AndroidManifest.xml:26:19-91
+		ADDED from [com.google.android.gms:play-services-ads-lite:10.2.6] /home/yupog2003/.android/build-cache/6bc3e169ce02f10c0bb60496cc9fe7120d10dec1/output/AndroidManifest.xml:26:19-91
 uses-permission#android.permission.WAKE_LOCK
-ADDED from [com.google.android.gms:play-services-analytics:10.2.4] /home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/AndroidManifest.xml:24:5-67
-MERGED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:22:5-67
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:22:5-67
-MERGED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:21:5-67
-MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/01345a7c5ffd3c9b089e4b2355f943fb8d1743d2/output/AndroidManifest.xml:24:5-67
+ADDED from [com.google.android.gms:play-services-analytics:10.2.6] /home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/AndroidManifest.xml:24:5-67
+MERGED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:21:5-67
+MERGED from [com.google.android.gms:play-services-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/3fdccc35d5a857f388d0ff4d006ea65265a82ded/output/AndroidManifest.xml:24:5-67
 	android:name
-		ADDED from [com.google.android.gms:play-services-analytics:10.2.4] /home/yupog2003/.android/build-cache/1a2baadb220e18d2eeca322272dcc38f641cda84/output/AndroidManifest.xml:24:22-65
+		ADDED from [com.google.android.gms:play-services-analytics:10.2.6] /home/yupog2003/.android/build-cache/180a8509cfa30d09033b6a02d89f296228f341e0/output/AndroidManifest.xml:24:22-65
 activity#com.google.android.gms.appinvite.PreviewActivity
-ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:20:9-25:20
+ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:20:9-25:20
 	android:exported
-		ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:20:51-74
+		ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:20:51-74
 	android:theme
-		ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:20:75-121
+		ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:20:75-121
 	android:name
-		ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:20:19-50
+		ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:20:19-50
 intent-filter#android.intent.category.DEFAULT+com.google.android.gms.appinvite.ACTION_PREVIEW
-ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:21:13-24:29
+ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:21:13-24:29
 action#com.google.android.gms.appinvite.ACTION_PREVIEW
-ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:22:17-89
+ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:22:17-89
 	android:name
-		ADDED from [com.google.android.gms:play-services-appinvite:10.2.4] /home/yupog2003/.android/build-cache/4ec61a4b4c1b7dd56288c1f7527b7126c971ef29/output/AndroidManifest.xml:22:25-87
+		ADDED from [com.google.android.gms:play-services-appinvite:10.2.6] /home/yupog2003/.android/build-cache/f350dbc09b28f8f9f75033acbd1256aa3fa3fe11/output/AndroidManifest.xml:22:25-87
 activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
-ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:20:9-189
+ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:20:9-189
 	android:excludeFromRecents
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:20:129-162
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:20:129-162
 	android:exported
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:20:163-187
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:20:163-187
 	android:theme
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:20:69-128
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:20:69-128
 	android:name
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:20:19-68
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:20:19-68
 service#com.google.android.gms.auth.api.signin.RevocationBoundService
-ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:24:9-184
+ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:24:9-184
 	android:exported
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:24:64-87
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:24:64-87
 	android:permission
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:24:88-182
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:24:88-182
 	android:name
-		ADDED from [com.google.android.gms:play-services-auth:10.2.4] /home/yupog2003/.android/build-cache/62e6b5c32b08012cd44a912df8e10d033cfc51d2/output/AndroidManifest.xml:24:18-63
+		ADDED from [com.google.android.gms:play-services-auth:10.2.6] /home/yupog2003/.android/build-cache/bbf877489c8a37d953d17c4eab78142ad385c16b/output/AndroidManifest.xml:24:18-63
 receiver#com.google.android.gms.cast.framework.media.MediaIntentReceiver
-ADDED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:5:9-99
+ADDED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:5:9-99
 	android:name
-		ADDED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:5:19-97
+		ADDED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:5:19-97
 service#com.google.android.gms.cast.framework.media.MediaNotificationService
-ADDED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:6:9-103
+ADDED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:6:9-103
 	android:name
-		ADDED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:6:18-101
+		ADDED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:6:18-101
 service#com.google.android.gms.cast.framework.ReconnectionService
-ADDED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:7:9-92
+ADDED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:7:9-92
 	android:name
-		ADDED from [com.google.android.gms:play-services-cast-framework:10.2.4] /home/yupog2003/.android/build-cache/677bfc34cc10f224c5066dc4cebfbbccddad174e/output/AndroidManifest.xml:7:18-90
+		ADDED from [com.google.android.gms:play-services-cast-framework:10.2.6] /home/yupog2003/.android/build-cache/386a4be9d74b5893597787778f0631fa9d1d81ee/output/AndroidManifest.xml:7:18-90
 service#com.google.firebase.messaging.FirebaseMessagingService
-ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:23:9-27:19
+ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:23:9-27:19
 	android:exported
-		ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:23:88-111
+		ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:23:88-111
 	android:name
-		ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:23:18-87
+		ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:23:18-87
 intent-filter#com.google.firebase.MESSAGING_EVENT
-ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:24:13-26:29
+ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:24:13-26:29
 	android:priority
-		ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:24:28-51
+		ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:24:28-51
 action#com.google.firebase.MESSAGING_EVENT
-ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:25:17-77
+ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:25:17-77
 	android:name
-		ADDED from [com.google.firebase:firebase-messaging:10.2.4] /home/yupog2003/.android/build-cache/01efaaf4ca21c6037fc5d767fe0cefe962b3c1ae/output/AndroidManifest.xml:25:25-75
+		ADDED from [com.google.firebase:firebase-messaging:10.2.6] /home/yupog2003/.android/build-cache/7f6822c348db304eeef47c2b30d96e92c392e56c/output/AndroidManifest.xml:25:25-75
 uses-permission#com.google.android.c2dm.permission.RECEIVE
-ADDED from [com.google.android.gms:play-services-gcm:10.2.4] /home/yupog2003/.android/build-cache/0772b97ed41bf556949e41ff41783d666f32d9f4/output/AndroidManifest.xml:20:5-81
-MERGED from [com.google.android.gms:play-services-iid:10.2.4] /home/yupog2003/.android/build-cache/41d56abb3d09303c7671889ff45505ac591c003f/output/AndroidManifest.xml:20:5-81
-MERGED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:22:5-81
+ADDED from [com.google.android.gms:play-services-gcm:10.2.6] /home/yupog2003/.android/build-cache/47f04c662aaa4eaa1d03f5dfb7dc60a999ac22eb/output/AndroidManifest.xml:20:5-81
+MERGED from [com.google.android.gms:play-services-iid:10.2.6] /home/yupog2003/.android/build-cache/98db63f5960f6f9b7b05e24bc96a7890c23acb5b/output/AndroidManifest.xml:20:5-81
+MERGED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:22:5-81
 	android:name
-		ADDED from [com.google.android.gms:play-services-gcm:10.2.4] /home/yupog2003/.android/build-cache/0772b97ed41bf556949e41ff41783d666f32d9f4/output/AndroidManifest.xml:20:22-79
+		ADDED from [com.google.android.gms:play-services-gcm:10.2.6] /home/yupog2003/.android/build-cache/47f04c662aaa4eaa1d03f5dfb7dc60a999ac22eb/output/AndroidManifest.xml:20:22-79
 service#com.google.android.gms.tagmanager.TagManagerService
-ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:24:9-134
+ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:24:9-134
 	android:enabled
-		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:24:110-132
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:24:110-132
 	android:exported
-		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:24:85-109
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:24:85-109
 	android:name
-		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:24:18-84
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:24:18-84
 activity#com.google.android.gms.tagmanager.TagManagerPreviewActivity
-ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:25:9-32:20
+ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:25:9-32:20
 	android:noHistory
-		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:25:94-118
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:25:94-118
 	android:name
-		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.4] /home/yupog2003/.android/build-cache/c1aad6d78ce05c33f9dc4e7627e9127851f6669b/output/AndroidManifest.xml:25:19-93
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:10.2.6] /home/yupog2003/.android/build-cache/1e5ac719c4bb316855bca55861d8301f37a42df0/output/AndroidManifest.xml:25:19-93
 receiver#com.google.android.gms.measurement.AppMeasurementReceiver
-ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:25:7-26:18
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:25:7-26:18
+ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:25:7-26:18
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:25:7-26:18
 	android:enabled
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:25:90-112
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:25:90-112
 	android:exported
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:25:113-137
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:25:113-137
 	android:name
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:25:17-89
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:25:17-89
 receiver#com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver
-ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:27:7-31:18
+ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:27:7-31:18
 	android:enabled
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:27:162-184
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:27:162-184
 	android:permission
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:27:105-161
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:27:105-161
 	android:name
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:27:17-104
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:27:17-104
 intent-filter#com.android.vending.INSTALL_REFERRER
-ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:28:11-30:27
+ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:28:11-30:27
 action#com.android.vending.INSTALL_REFERRER
-ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:29:15-76
+ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:29:15-76
 	android:name
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:29:23-74
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:29:23-74
 service#com.google.android.gms.measurement.AppMeasurementService
-ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:32:7-137
-MERGED from [com.google.firebase:firebase-analytics-impl:10.2.4] /home/yupog2003/.android/build-cache/275e53e9479061602b326f728f7fa5dceb823b26/output/AndroidManifest.xml:27:7-137
+ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:32:7-137
+MERGED from [com.google.firebase:firebase-analytics-impl:10.2.6] /home/yupog2003/.android/build-cache/f451209bb531413c6fbebfbd0596e9100f83b6ee/output/AndroidManifest.xml:27:7-137
 	android:enabled
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:32:88-110
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:32:88-110
 	android:exported
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:32:111-135
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:32:111-135
 	android:name
-		ADDED from [com.google.firebase:firebase-analytics:10.2.4] /home/yupog2003/.android/build-cache/c04e1bd1e715077e9689e8d22bf01a8985352d86/output/AndroidManifest.xml:32:16-87
+		ADDED from [com.google.firebase:firebase-analytics:10.2.6] /home/yupog2003/.android/build-cache/9d9dc4004785681d27fbb45fb2690cd3901514d9/output/AndroidManifest.xml:32:16-87
 permission#${applicationId}.permission.C2D_MESSAGE
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:24:5-109
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:24:5-109
 	android:protectionLevel
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:24:72-107
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:24:72-107
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:24:17-71
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:24:17-71
 uses-permission#${applicationId}.permission.C2D_MESSAGE
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:26:5-78
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:26:5-78
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:26:22-76
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:26:22-76
 receiver#com.google.firebase.iid.FirebaseInstanceIdReceiver
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:30:9-35:20
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:30:9-35:20
 	android:exported
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:30:85-108
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:30:85-108
 	android:permission
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:30:109-169
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:30:109-169
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:30:19-84
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:30:19-84
 intent-filter#${applicationId}+com.google.android.c2dm.intent.RECEIVE
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:31:13-34:29
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:31:13-34:29
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:32:17-80
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:32:17-80
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:32:25-78
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:32:25-78
 category#${applicationId}
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:33:17-60
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:33:17-60
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:33:27-58
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:33:27-58
 receiver#com.google.firebase.iid.FirebaseInstanceIdInternalReceiver
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:39:9-119
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:39:9-119
 	android:exported
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:39:93-117
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:39:93-117
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:39:19-92
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:39:19-92
 service#com.google.firebase.iid.FirebaseInstanceIdService
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:43:9-47:19
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:43:9-47:19
 	android:exported
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:43:83-106
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:43:83-106
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:43:18-82
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:43:18-82
 intent-filter#com.google.firebase.INSTANCE_ID_EVENT
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:44:13-46:29
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:44:13-46:29
 	android:priority
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:44:28-51
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:44:28-51
 action#com.google.firebase.INSTANCE_ID_EVENT
-ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:45:17-79
+ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:45:17-79
 	android:name
-		ADDED from [com.google.firebase:firebase-iid:10.2.4] /home/yupog2003/.android/build-cache/ef065e46743d5171b42e9a575441f2a36abce42e/output/AndroidManifest.xml:45:25-77
+		ADDED from [com.google.firebase:firebase-iid:10.2.6] /home/yupog2003/.android/build-cache/051b7d51ce1305628a6cb012328b0d13fbc2be21/output/AndroidManifest.xml:45:25-77
 provider#com.google.firebase.provider.FirebaseInitProvider
-ADDED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:6:9-194
+ADDED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:6:9-194
 	android:authorities
-		ADDED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:6:19-78
+		ADDED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:6:19-78
 	android:exported
-		ADDED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:6:144-168
+		ADDED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:6:144-168
 	android:initOrder
-		ADDED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:6:169-192
+		ADDED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:6:169-192
 	android:name
-		ADDED from [com.google.firebase:firebase-common:10.2.4] /home/yupog2003/.android/build-cache/2246fec93f4b484d466743a178bd69518421f0ca/output/AndroidManifest.xml:6:79-143
+		ADDED from [com.google.firebase:firebase-common:10.2.6] /home/yupog2003/.android/build-cache/2c37b372a8e91a9b7be18e633836f79507b8f51a/output/AndroidManifest.xml:6:79-143
 activity#com.google.android.gms.common.api.GoogleApiActivity
-ADDED from [com.google.android.gms:play-services-base:10.2.4] /home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/AndroidManifest.xml:19:9-172
+ADDED from [com.google.android.gms:play-services-base:10.2.6] /home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/AndroidManifest.xml:19:9-172
 	android:exported
-		ADDED from [com.google.android.gms:play-services-base:10.2.4] /home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/AndroidManifest.xml:19:146-170
+		ADDED from [com.google.android.gms:play-services-base:10.2.6] /home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/AndroidManifest.xml:19:146-170
 	android:theme
-		ADDED from [com.google.android.gms:play-services-base:10.2.4] /home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/AndroidManifest.xml:19:86-145
+		ADDED from [com.google.android.gms:play-services-base:10.2.6] /home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/AndroidManifest.xml:19:86-145
 	android:name
-		ADDED from [com.google.android.gms:play-services-base:10.2.4] /home/yupog2003/.android/build-cache/34e651c1aa346317487a26dda0e0e7aca961b350/output/AndroidManifest.xml:19:19-85
+		ADDED from [com.google.android.gms:play-services-base:10.2.6] /home/yupog2003/.android/build-cache/24e2052b5a904ce254ebd0160f558b6e6a8027c5/output/AndroidManifest.xml:19:19-85
 meta-data#android.support.VERSION
-ADDED from [com.android.support:appcompat-v7:25.3.1] /home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/AndroidManifest.xml:25:5-27:34
+ADDED from [com.android.support:design:25.3.1] /home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:transition:25.3.1] /home/yupog2003/.android/build-cache/308d33c3f315660e013a7e5a1ab228726ea2b760/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] /home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/AndroidManifest.xml:25:5-27:34
 MERGED from [com.android.support:animated-vector-drawable:25.3.1] /home/yupog2003/.android/build-cache/67637527750e66e834aa3bbeaa3bf812065651de/output/AndroidManifest.xml:22:5-24:34
 MERGED from [com.android.support:support-vector-drawable:25.3.1] /home/yupog2003/.android/build-cache/3664f24cd62eb82a5acae93abbd327026491283d/output/AndroidManifest.xml:22:5-24:34
 MERGED from [com.android.support:cardview-v7:25.3.1] /home/yupog2003/.android/build-cache/3c5e627c6a77d0143f6d1e93efb5603385b17aaf/output/AndroidManifest.xml:22:5-24:34
@@ -757,6 +759,6 @@ MERGED from [com.android.support:support-core-ui:25.3.1] /home/yupog2003/.androi
 MERGED from [com.android.support:support-core-utils:25.3.1] /home/yupog2003/.android/build-cache/57710e6256b0b4937f676f0a5a6736e4c79d0aa4/output/AndroidManifest.xml:25:5-27:34
 MERGED from [com.android.support:support-compat:25.3.1] /home/yupog2003/.android/build-cache/9dfa5c2fb295e987efe7f770b55cacabcfe30e89/output/AndroidManifest.xml:25:5-27:34
 	android:value
-		ADDED from [com.android.support:appcompat-v7:25.3.1] /home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/AndroidManifest.xml:27:9-31
+		ADDED from [com.android.support:design:25.3.1] /home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/AndroidManifest.xml:27:9-31
 	android:name
-		ADDED from [com.android.support:appcompat-v7:25.3.1] /home/yupog2003/.android/build-cache/bb4f81f2b76cf007fcfb261f4e4867d37cd6356e/output/AndroidManifest.xml:26:9-47
+		ADDED from [com.android.support:design:25.3.1] /home/yupog2003/.android/build-cache/04100a547de2f6851769b3e4701a3a3f061a1a8f/output/AndroidManifest.xml:26:9-47

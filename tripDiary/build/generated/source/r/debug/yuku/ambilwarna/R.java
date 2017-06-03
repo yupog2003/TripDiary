@@ -8,7 +8,7 @@ package yuku.ambilwarna;
 
 public final class R {
     public static final class attr {
-        public static final int supportsAlpha = 0x7f010040;
+        public static final int supportsAlpha = 0x7f010036;
     }
     public static final class dimen {
         public static final int ambilwarna_hsvHeight = 0x7f090005;
@@ -45,7 +45,7 @@ public final class R {
         public static final int ambilwarna_pref_widget = 0x7f03002c;
     }
     public static final class styleable {
-        public static final int[] AmbilWarnaPreference = { 0x7f010040 };
+        public static final int[] AmbilWarnaPreference = { 0x7f010036 };
         public static final int AmbilWarnaPreference_supportsAlpha = 0;
     }
 }

@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_category.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_category.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_paint.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_paint.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/fragment_calendar_trips.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_calendar_trips.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_main.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_main.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/fragment_view_map.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_view_map.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_play_point.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_play_point.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_view_point.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_view_point.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/local_trip_menu.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/local_trip_menu.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_image_viewer.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_image_viewer.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/navigation_view.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/navigation_view.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/cost_menu.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/cost_menu.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/navigation_view_trip.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/navigation_view_trip.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/drive_trip_menu.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/drive_trip_menu.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_get_content.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_get_content.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_all_record.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_all_record.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/fragment_local_trip.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_local_trip.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/fragment_drive_trip.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_drive_trip.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/remote_trip_menu.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/remote_trip_menu.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_record.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_record.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/map_type.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/map_type.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/menu_view_graph_acivity.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/menu_view_graph_acivity.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/fragment_remote_trip.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_remote_trip.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/poi_menu.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/poi_menu.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/activity_view_cost.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/activity_view_cost.xml"
+    },
+    {
+        "merged": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/res/merged/debug/menu/fragment_all.xml",
+        "source": "/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/src/main/res/menu/fragment_all.xml"
+    }
+]

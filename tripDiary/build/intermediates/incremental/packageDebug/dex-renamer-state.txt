@@ -1,0 +1,7 @@
+#Tue May 30 19:08:01 CST 2017
+base.0=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_ec96db7881900ec1a59e047ceafa37623da6e053
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_09a6c54a080fc0a317e961703dda3ae76ce0cfcc/classes.dex
+base.1=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_09a6c54a080fc0a317e961703dda3ae76ce0cfcc
+file.0=/run/media/yupog2003/713fef35-39e1-4a52-9837-b8af3dfaf0c0/程式/Android/開發/Workspace/TripDiary/tripDiary/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_ec96db7881900ec1a59e047ceafa37623da6e053/classes.dex

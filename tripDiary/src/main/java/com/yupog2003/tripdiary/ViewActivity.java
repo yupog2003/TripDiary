@@ -61,7 +61,8 @@ public class ViewActivity extends MyActivity implements NavigationView.OnNavigat
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment fragment : fragments) {
-                ft.remove(fragment);
+                if (fragment != null)
+                    ft.remove(fragment);
             }
         }
         ft.add(R.id.fragment, localTripsFragment);
