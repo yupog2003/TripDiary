@@ -59,6 +59,8 @@ import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import static com.yupog2003.tripdiary.data.MyCalendar.formatNumberToTwoDigits;
+
 public class RecordService extends Service implements LocationListener, Runnable, SensorEventListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public double latitude;
     public double longitude;
@@ -528,7 +530,7 @@ public class RecordService extends Service implements LocationListener, Runnable
             if (run) {
                 bw.write("		<trkpt lat=\"" + String.valueOf(latitude) + "\" lon=\"" + String.valueOf(longitude) + "\">\n");
                 bw.write("			<ele>" + String.valueOf(elevation) + "</ele>\n");
-                bw.write("			<time>" + String.valueOf(time.get(Calendar.YEAR)) + "-" + String.valueOf(time.get(Calendar.MONTH) + 1) + "-" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "T" + String.valueOf(time.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(time.get(Calendar.MINUTE)) + ":" + String.valueOf(time.get(Calendar.SECOND)) + "Z</time>\n");
+                bw.write("			<time>" + formatNumberToTwoDigits(time.get(Calendar.YEAR)) + "-" + formatNumberToTwoDigits(time.get(Calendar.MONTH) + 1) + "-" + formatNumberToTwoDigits(time.get(Calendar.DAY_OF_MONTH)) + "T" + formatNumberToTwoDigits(time.get(Calendar.HOUR_OF_DAY)) + ":" + formatNumberToTwoDigits(time.get(Calendar.MINUTE)) + ":" + formatNumberToTwoDigits(time.get(Calendar.SECOND)) + "Z</time>\n");
                 bw.write("		</trkpt>\n");
                 bw.flush();
             }

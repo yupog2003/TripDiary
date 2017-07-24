@@ -213,7 +213,7 @@ public class Trip implements Comparable<Trip> {
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(gpxFile.getOutputStream()));
             bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            bw.write("<gpx version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"" + context.getString(R.string.app_name) + "\">\n");
+            bw.write("<gpx version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"TripDiary\">\n");
             bw.write("<metadata><name><![CDATA[" + tripName + "]]></name><desc><![CDATA[" + note + "]]></desc></metadata>\n");
             for (POI poi : pois) {
                 if (poi == null) continue;
@@ -240,7 +240,11 @@ public class Trip implements Comparable<Trip> {
             int count = 0;
             while ((s = br.readLine()) != null) {
                 if (s.contains("<trkpt") || s.contains("<ele>") || s.contains("<time>") || s.contains("</trkpt>")) {
-                    bw.write(s);
+                    if (s.contains("<time>")){
+                        bw.write(fixGpxTimeText(s));
+                    }else{
+                        bw.write(s);
+                    }
                     bw.write("\n");
                 }
                 count += s.getBytes().length;
@@ -259,6 +263,39 @@ public class Trip implements Comparable<Trip> {
             return null;
         }
         return gpxFile;
+    }
+
+    private String fixGpxTimeText(String s) {
+        if (s.contains("<time>") && s.contains("</time>")) {
+            String timeStr = s.substring(s.indexOf(">") + 1, s.lastIndexOf("Z"));
+            String yearStr = timeStr.substring(0, timeStr.indexOf("-"));
+            String monthStr = timeStr.substring(timeStr.indexOf("-") + 1, timeStr.lastIndexOf("-"));
+            String dayStr = timeStr.substring(timeStr.lastIndexOf("-") + 1, timeStr.indexOf("T"));
+            String hourStr = timeStr.substring(timeStr.indexOf("T") + 1, timeStr.indexOf(":"));
+            String minuteStr = timeStr.substring(timeStr.indexOf(":") + 1, timeStr.lastIndexOf(":"));
+            String secondStr = timeStr.substring(timeStr.lastIndexOf(":") + 1);
+            if (yearStr.length() == 1) {
+                yearStr = "0" + yearStr;
+            }
+            if (monthStr.length() == 1) {
+                monthStr = "0" + monthStr;
+            }
+            if (dayStr.length() == 1) {
+                dayStr = "0" + dayStr;
+            }
+            if (hourStr.length() == 1) {
+                hourStr = "0" + hourStr;
+            }
+            if (minuteStr.length() == 1) {
+                minuteStr = "0" + minuteStr;
+            }
+            if (secondStr.length() == 1) {
+                secondStr = "0" + secondStr;
+            }
+            return "<time>" + yearStr + "-" + monthStr + "-" + dayStr + "T" + hourStr + ":" + minuteStr + ":" + secondStr + "Z</time>";
+        } else {
+            return s;
+        }
     }
 
     @Nullable

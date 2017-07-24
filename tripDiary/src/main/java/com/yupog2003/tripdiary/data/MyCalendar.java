@@ -89,12 +89,12 @@ public class MyCalendar extends GregorianCalendar {
     public String format3339() {
         String result = "";
         try {
-            result = String.valueOf(get(Calendar.YEAR))
-                    + "-" + String.valueOf(get(Calendar.MONTH) + 1)
-                    + "-" + String.valueOf(get(Calendar.DAY_OF_MONTH))
-                    + "T" + String.valueOf(get(Calendar.HOUR_OF_DAY))
-                    + ":" + String.valueOf(get(Calendar.MINUTE))
-                    + ":" + String.valueOf(get(Calendar.SECOND))
+            result = formatNumberToTwoDigits(get(Calendar.YEAR))
+                    + "-" + formatNumberToTwoDigits(get(Calendar.MONTH) + 1)
+                    + "-" + formatNumberToTwoDigits(get(Calendar.DAY_OF_MONTH))
+                    + "T" + formatNumberToTwoDigits(get(Calendar.HOUR_OF_DAY))
+                    + ":" + formatNumberToTwoDigits(get(Calendar.MINUTE))
+                    + ":" + formatNumberToTwoDigits(get(Calendar.SECOND))
                     + ".000";
             if (getTimeZone().getID().equals("UTC")) {
                 result += "Z";
@@ -179,6 +179,14 @@ public class MyCalendar extends GregorianCalendar {
         int min = (int) (totalSeconds % 86400 % 3600 / 60);
         int sec = (int) (totalSeconds % 86400 % 3600 % 60);
         return String.format("%dT%d:%d:%d", day, hour, min, sec);
+    }
+
+    public static String formatNumberToTwoDigits(int num) {
+        String result = String.valueOf(num);
+        if (result.length() == 1) {
+            result = "0" + result;
+        }
+        return result;
     }
 
     @NonNull
