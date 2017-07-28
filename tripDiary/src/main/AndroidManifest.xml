@@ -49,7 +49,7 @@
         <activity
             android:name=".ViewActivity"
             android:label="@string/title_activity_view"
-            android:screenOrientation="portrait" />
+             />
 
         <service
             android:name=".services.RecordService"
@@ -129,7 +129,7 @@
         <activity
             android:name=".RecordActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+             />
 
         <service
             android:name=".services.GenerateVideoService"
