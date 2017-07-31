@@ -32,7 +32,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import com.yupog2003.tripdiary.MyActivity;
@@ -52,7 +52,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CalendarTripsFragment extends Fragment implements OnDateChangedListener, OnMonthChangedListener {
+public class CalendarTripsFragment extends Fragment implements OnDateSelectedListener, OnMonthChangedListener {
 
     MaterialCalendarView calendarView;
     ListView tripList;
@@ -150,18 +150,21 @@ public class CalendarTripsFragment extends Fragment implements OnDateChangedList
     }
 
     @Override
-    public void onDateChanged(@NonNull MaterialCalendarView materialCalendarView, CalendarDay calendarDay) {
-        ArrayList<Trip> trips = tripDateMap.get(calendarDay);
-        if (trips != null) {
-            adapter.setTrips(trips.toArray(new Trip[trips.size()]));
-        } else {
-            adapter.setTrips(new Trip[0]);
-        }
+    public void onMonthChanged(MaterialCalendarView materialCalendarView, CalendarDay calendarDay) {
+        adapter.setTrips(new Trip[0]);
     }
 
     @Override
-    public void onMonthChanged(MaterialCalendarView materialCalendarView, CalendarDay calendarDay) {
-        adapter.setTrips(new Trip[0]);
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+        if (selected){
+            ArrayList<Trip> trips = tripDateMap.get(date);
+            if (trips != null) {
+                adapter.setTrips(trips.toArray(new Trip[trips.size()]));
+            } else {
+                adapter.setTrips(new Trip[0]);
+            }
+        }
+
     }
 
     public class EventDecorator implements DayViewDecorator {

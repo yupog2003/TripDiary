@@ -11,9 +11,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.services.drive.model.File;
 import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.DeviceHelper;
 import com.yupog2003.tripdiary.data.FileHelper;
@@ -82,7 +79,7 @@ public class DriveProvider extends ContentProvider {
                     };
                     DeviceHelper.runOnBackgroundThread(r);
                 } else if (id.startsWith("ResourceId:")) {
-                    final com.google.api.services.drive.Drive service = TripDiaryApplication.service;
+                    final com.google.api.services.drive.Drive service = TripDiaryApplication.driveService;
                     if (service == null) return null;
                     final String resourceId = uri.getPathSegments().get(0).substring(11);
                     final java.io.File cache = new java.io.File(getContext().getCacheDir(), resourceId);
@@ -91,12 +88,9 @@ public class DriveProvider extends ContentProvider {
                             @Override
                             public void run() {
                                 FileOutputStream fos = null;
-                                HttpResponse response = null;
                                 try {
-                                    File file = service.files().get(resourceId).execute();
-                                    response = service.getRequestFactory().buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
                                     fos = new FileOutputStream(cache);
-                                    response.download(fos);
+                                    service.files().get(resourceId).executeMediaAndDownloadTo(fos);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 } finally {
@@ -107,15 +101,7 @@ public class DriveProvider extends ContentProvider {
                                             e.printStackTrace();
                                         }
                                     }
-                                    if (response != null) {
-                                        try {
-                                            response.disconnect();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
                                 }
-
                             }
                         };
                         DeviceHelper.runOnBackgroundThread(r);

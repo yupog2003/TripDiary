@@ -1,11 +1,8 @@
 package com.yupog2003.tripdiary.data.documentfile;
 
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
 
-import com.yupog2003.tripdiary.TripDiaryApplication;
 import com.yupog2003.tripdiary.data.FileHelper;
 
 import org.apache.commons.io.input.NullInputStream;

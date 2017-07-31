@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.FileProvider;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;

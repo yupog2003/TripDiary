@@ -33,7 +33,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.yupog2003.tripdiary.data.FileHelper;
@@ -323,10 +323,10 @@ public class MyActivity extends AppCompatActivity {
                         scopes.add(DriveScopes.DRIVE);
                         GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(MyActivity.this, scopes);
                         credential.setSelectedAccountName(account);
-                        Drive service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
+                        Drive service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), JacksonFactory.getDefaultInstance(), credential).build();
                         try {
                             service.about().get().execute();
-                            TripDiaryApplication.service = service;
+                            TripDiaryApplication.driveService = service;
                             if (listener != null) {
                                 listener.onConnected(service, account);
                             }

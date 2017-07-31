@@ -45,7 +45,7 @@ public class TripDiaryApplication extends Application {
     public static final int unit_ft = 1;
 
     public static GoogleApiClient googleApiClient;
-    public static Drive service;
+    public static Drive driveService;
 
     synchronized public Tracker getTracker() {
         if (appTracker == null) {

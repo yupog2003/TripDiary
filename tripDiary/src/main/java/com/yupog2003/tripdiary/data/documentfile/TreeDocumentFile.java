@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 public class TreeDocumentFile extends DocumentFile {
 
-    Context context;
-    Uri uri;
-    boolean isFile;
+    private Context context;
+    private Uri uri;
+    private boolean isFile;
 
     public TreeDocumentFile(TreeDocumentFile parent, Uri uri, boolean isFile) {
         super(parent);
@@ -38,7 +38,12 @@ public class TreeDocumentFile extends DocumentFile {
             if ((file = findFile(displayName)) != null) {
                 return (TreeDocumentFile) file;
             }
-            Uri result = DocumentsContract.createDocument(context.getContentResolver(), uri, mimeType, displayName);
+            Uri result = null;
+            try {
+                result = DocumentsContract.createDocument(context.getContentResolver(), uri, mimeType, displayName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             if (result != null) {
                 return new TreeDocumentFile(this, result, true);
             }
@@ -53,7 +58,12 @@ public class TreeDocumentFile extends DocumentFile {
             if ((file = findFile(displayName)) != null) {
                 return (TreeDocumentFile) file;
             }
-            Uri result = DocumentsContract.createDocument(context.getContentResolver(), uri, DocumentsContract.Document.MIME_TYPE_DIR, displayName);
+            Uri result = null;
+            try {
+                result = DocumentsContract.createDocument(context.getContentResolver(), uri, DocumentsContract.Document.MIME_TYPE_DIR, displayName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             if (result != null) {
                 return new TreeDocumentFile(this, result, false);
             }
@@ -125,7 +135,12 @@ public class TreeDocumentFile extends DocumentFile {
     @Override
     public boolean delete() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && uri != null) {
-            return DocumentsContract.deleteDocument(context.getContentResolver(), uri);
+            try {
+                return DocumentsContract.deleteDocument(context.getContentResolver(), uri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }
@@ -248,7 +263,12 @@ public class TreeDocumentFile extends DocumentFile {
     @Override
     public boolean renameTo(String displayName) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && uri != null) {
-            Uri result = DocumentsContract.renameDocument(context.getContentResolver(), uri, displayName);
+            Uri result = null;
+            try {
+                result = DocumentsContract.renameDocument(context.getContentResolver(), uri, displayName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             if (result != null) {
                 uri = result;
                 return true;

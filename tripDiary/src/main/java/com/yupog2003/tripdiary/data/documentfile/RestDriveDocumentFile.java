@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.drive.DriveFolder;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
@@ -27,14 +25,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class RestDriveDocumentFile extends DocumentFile {
 
-    String id;
-    Drive service;
-    File file;
-    static final String folderMimeType = DriveFolder.MIME_TYPE;
+    private String id;
+    private Drive service;
+    private File file;
+    private static final String folderMimeType = DriveFolder.MIME_TYPE;
 
     public RestDriveDocumentFile(DocumentFile parent, Drive service, File file) {
         super(parent);
@@ -74,7 +71,7 @@ public class RestDriveDocumentFile extends DocumentFile {
 
     @Override
     public String getName() {
-        return file.getTitle();
+        return file.getName();
     }
 
     @Override
@@ -94,12 +91,12 @@ public class RestDriveDocumentFile extends DocumentFile {
 
     @Override
     public long lastModified() {
-        return file.getModifiedDate().getValue();
+        return file.getModifiedTime().getValue();
     }
 
     @Override
     public long length() {
-        return file.getFileSize();
+        return file.getSize();
     }
 
     @Override
@@ -131,7 +128,7 @@ public class RestDriveDocumentFile extends DocumentFile {
 
     @NonNull
     public InputStream getThumbInputStream() {
-        if (!FileHelper.isPicture(file.getTitle())) return new NullInputStream(0);
+        if (!FileHelper.isPicture(file.getName())) return new NullInputStream(0);
         if (thumbCache != null) {
             if (shouldDeleteLocalCache) {
                 thumbCache.delete();
@@ -154,7 +151,7 @@ public class RestDriveDocumentFile extends DocumentFile {
                         thumbCache = new java.io.File(TripDiaryApplication.instance.getCacheDir(), String.valueOf(System.currentTimeMillis()));
                         FileOutputStream fos = new FileOutputStream(thumbCache);
                         FileHelper.copyByStream(is, fos);
-                        Log.i("trip", "getThumbInputStream:" + file.getTitle() + ", spend: " + String.valueOf(System.currentTimeMillis() - startTime) + " ms");
+                        Log.i("trip", "getThumbInputStream:" + file.getName() + ", spend: " + String.valueOf(System.currentTimeMillis() - startTime) + " ms");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -186,17 +183,12 @@ public class RestDriveDocumentFile extends DocumentFile {
             @Override
             public void run() {
                 try {
-                    String downloadUrl = file.getDownloadUrl();
-                    if (downloadUrl != null && downloadUrl.length() > 0) {
-                        long startTime = System.currentTimeMillis();
-                        HttpResponse response = service.getRequestFactory().buildGetRequest(new GenericUrl(downloadUrl)).executeAsync().get();
-                        InputStream is = response.getContent();
-                        localCache = new java.io.File(TripDiaryApplication.instance.getCacheDir(), String.valueOf(System.currentTimeMillis()));
-                        FileOutputStream fos = new FileOutputStream(localCache);
-                        FileHelper.copyByStream(is, fos);
-                        Log.i("trip", "getInputStream:" + file.getTitle() + ", spend: " + String.valueOf(System.currentTimeMillis() - startTime) + " ms");
-                    }
-                } catch (IOException | InterruptedException | ExecutionException e) {
+                    long startTime = System.currentTimeMillis();
+                    localCache = new java.io.File(TripDiaryApplication.instance.getCacheDir(), String.valueOf(System.currentTimeMillis()));
+                    FileOutputStream fos = new FileOutputStream(localCache);
+                    service.files().get(id).executeMediaAndDownloadTo(fos);
+                    Log.i("trip", "getInputStream:" + file.getName() + ", spend: " + String.valueOf(System.currentTimeMillis() - startTime) + " ms");
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -254,29 +246,30 @@ public class RestDriveDocumentFile extends DocumentFile {
                     Drive.Files.List request = service.files().list().setQ("'" + id + "' in parents");
                     do {
                         FileList fileList = request.execute();
-                        for (File file : fileList.getItems()) {
+                        for (File file : fileList.getFiles()) {
                             boolean accept;
+                            final String fileName = file.getName();
                             switch (list_type) {
                                 case list_all:
                                     accept = true;
                                     break;
                                 case list_pics:
-                                    accept = FileHelper.isPicture(file.getTitle());
+                                    accept = FileHelper.isPicture(fileName);
                                     break;
                                 case list_videos:
-                                    accept = FileHelper.isVideo(file.getTitle());
+                                    accept = FileHelper.isVideo(fileName);
                                     break;
                                 case list_audios:
-                                    accept = FileHelper.isAudio(file.getTitle());
+                                    accept = FileHelper.isAudio(fileName);
                                     break;
                                 case list_dirs:
-                                    accept = file.getMimeType().equals(folderMimeType) && !file.getTitle().startsWith(".");
+                                    accept = file.getMimeType().equals(folderMimeType) && !fileName.startsWith(".");
                                     break;
                                 case list_withoutdots:
-                                    accept = !file.getTitle().startsWith(".");
+                                    accept = !fileName.startsWith(".");
                                     break;
                                 case list_memory:
-                                    accept = FileHelper.isMemory(file.getTitle());
+                                    accept = FileHelper.isMemory(fileName);
                                     break;
                                 default:
                                     accept = true;
